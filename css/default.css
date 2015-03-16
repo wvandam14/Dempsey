@@ -1,0 +1,167 @@
+body, html {
+    width:100%;
+    height:100%;
+    font-family: 'RobotoWeb';
+    color:#1B3D67;
+    background: url('../img/background.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+h1 {
+    font-size: 32px;
+    font-family: 'RobotoBoldWeb';
+}
+
+h2 {
+    font-size: 28px;
+}
+
+h3 {
+    font-size: 24px;
+}
+
+p {
+    font-size: 20px;
+}
+
+select,
+textarea,
+input {
+    color:#1B3D67;
+    font-size: 20px;
+    width:100%;
+}
+
+input {
+    border: 1px solid #DDD;
+    padding: 11px;
+    margin-bottom: 15px;
+}
+
+
+/* Flex Styles */
+.flex {
+    display: -webkit-box !important;
+    display: -moz-box !important;
+    display: -ms-flexbox !important;
+    display: -ms-flex !important;
+    display: -webkit-flex !important;
+    display: flex !important;
+}
+
+.flex-center {
+    -webkit-align-items: center;
+    -ms-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+.flex-center-horizontal {
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+.flex-center-vertical {
+    -webkit-align-items: center;
+    -ms-align-items: center;
+    align-items: center;
+}
+
+.flex-stretch {
+    -webkit-align-items: stretch;
+    -ms-align-items: stretch;
+    align-items: stretch;
+}
+
+.flex-column {
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+
+.flex-space-between {
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+}
+
+.flex-one {
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+}
+
+.flex-two {
+    -webkit-flex: 2;
+    -ms-flex: 2;
+    flex: 2;
+}
+
+.flex-three {
+    -webkit-flex: 3 !important;
+    -ms-flex: 3 !important;
+    flex: 3 !important;
+}
+
+.flex-initial {
+    -webkit-flex: initial !important;
+    -ms-flex: initial !important;
+    flex: initial !important;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.ellipse {
+    padding-top: 1px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    padding-bottom: 1px;
+}
+
+
+/* Button */
+.button {
+    width:100%;
+    height: 84px;
+    padding: 22px;
+    cursor: pointer;
+}
+
+.button.navy {
+    background-color: #1C3D68;
+}
+
+    .button.navy:active {
+        background-color: #FFF;
+    }
+
+    .button.navy:active h1 {
+        color: #1C3D68;
+    }
+
+
+.button.green {
+    background-color: #5DA97B;
+}
+
+    .button.green:active {
+        background-color: #FFF;
+    }
+
+    .button.green:active h1 {
+        color: #5DA97B;
+    }
+
+.button h1 {
+    color:#FFF;
+    text-align: center;
+}

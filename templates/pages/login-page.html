@@ -1,31 +1,31 @@
-<!-- I know this is terrible. I'm a work in progress! -->
-<div class="login-page">
-    <div style="width: 456px; margin: 0 auto">
-    	<div>
+<div class="login-page flex flex-center">
+    <div class="modal login">
+    	<div class="head">
     		<h1>Welcome to Soccer Stats!</h1>
     	</div>
-    	<div style="height: 200px; width: 200px; display: inline-block">
-			<div style="margin: 0 auto; display: inline-block">
-				<label style="margin-right: 100%">Username:</label>
-				<input type="text" style="margin-right: 100%; width: 100px">
-				<label style="margin-right: 100%">Password:</label>
-				<input type="password" style="">
-			</div>
-		</div>
-		<div style="height: 200px; width: 200px; display: inline-block">
-			<h3 style="text-align:center; width:50%; margin: 0 auto; border-style: solid; border-color: red">Are you a coach or a manager?<br>Register now!</h3>
-		</div>
 
-		<div style="display: inline-block; height: 100px; width: 200px">
-			<h3>Log In</h3>
-		</div>
-		<div style="display: inline-block; height: 100px; width: 200px">
-			<h3>Register</h3>
-		</div>
+        <div class="flex body">
+            <div class="flex-one">
+                <h3 class="ellipse">Username</h3>
+                <input type="text" />
+                <h3 class="ellipse">Password</h3>
+                <input type="password" />
+            </div>
+            <div class="flex-one flex flex-center-horizontal flex-column">
+                <img src="./img/manager-icon.svg"/>
+                <h3 class="text-center">Are you a coach or a manager of a team?</h3>
+            </div>
+        </div>
+
+        <div class="foot flex">
+            <div class="button green flex-one">
+                <h1>Log In</h1>
+            </div>
+            <div class="button navy flex-one">
+                <h1>Sign Up</h1>
+            </div>
+        </div>
     </div>
-
-
-    <h1 style="clear">Hello Login {{test}}</h1>
 
 
 
