@@ -15,6 +15,7 @@ soccerStats.controller('loginController',
         };
 
         //user register
+            //need to make sure database and user submission is consistent 
         $scope.newUser = {
             name: '',
             email: '',
