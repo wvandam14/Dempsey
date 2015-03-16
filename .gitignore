@@ -5,6 +5,10 @@
 *.suo
 *.user
 *.sln.docstates
+[Ww]eb.config
+
+# Webstorm
+.idea/
 
 # Build results
 [Dd]ebug/
