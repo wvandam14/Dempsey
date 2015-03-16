@@ -6,7 +6,7 @@
 
         <div class="flex body">
             <div class="flex-one">
-                <form name="login" novalidate>
+                <form name="loginForm" novalidate>
                     <h3 class="ellipse">Username</h3>
                     <input ng-model="user.name" type="text" required/>
                     <h3 class="ellipse">Password</h3>
@@ -20,7 +20,7 @@
         </div>
 
         <div class="foot flex">
-            <div class="button green flex-one">
+            <div ng-click="login(user)" class="button green flex-one">
                 <h1>Log In</h1>
             </div>
             <div class="button navy flex-one">

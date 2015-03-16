@@ -7,8 +7,8 @@ var soccerStats = angular.module('soccerStats', ['ngRoute','ngSanitize','ngResou
         $routeProvider.when('/login', {
             templateUrl: './templates/pages/login-page.html',
             controller: 'loginController',
-            scope:{}
-        })
+            scope: {}
+        });
 
     }
 );
