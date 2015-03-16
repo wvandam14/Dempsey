@@ -6,10 +6,12 @@
 
         <div class="flex body two-column">
             <div class="flex-one">
-                <h3 class="ellipse">Username</h3>
-                <input type="text" />
-                <h3 class="ellipse">Password</h3>
-                <input type="password" />
+                <form name="loginForm" novalidate>
+                    <h3 class="ellipse">Username</h3>
+                    <input ng-model="user.name" type="text" required/>
+                    <h3 class="ellipse">Password</h3>
+                    <input ng-model="user.password" type="password" required/>
+                </form>
             </div>
             <div class="flex-one flex flex-center-horizontal flex-column">
                 <img src="./img/manager-icon.svg"/>
@@ -18,10 +20,10 @@
         </div>
 
         <div class="foot flex">
-            <div class="button green flex-one">
+            <div ng-click="login(user)" class="button green flex-one">
                 <h1>Log In</h1>
             </div>
-            <div class="button navy flex-one">
+            <div ng-click="register(newUser)" class="button navy flex-one">
                 <h1>Sign Up</h1>
             </div>
         </div>

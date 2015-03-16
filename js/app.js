@@ -16,6 +16,5 @@ var soccerStats = angular.module('soccerStats', ['ngRoute','ngSanitize','ngResou
         	scope:{}
         });
 
-
     }
 );
