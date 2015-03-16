@@ -41,6 +41,16 @@ input {
     margin-bottom: 15px;
 }
 
+input:focus {
+    outline:0;
+    border: 1px solid #5DA97B;
+}
+
+input.ng-dirty.ng-invalid-required {
+    background-color: #FFE1E1;
+    border:1px solid #FF7373;
+}
+
 
 /* Flex Styles */
 .flex {
