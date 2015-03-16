@@ -8,7 +8,14 @@ var soccerStats = angular.module('soccerStats', ['ngRoute','ngSanitize','ngResou
             templateUrl: './templates/pages/login-page.html',
             controller: 'loginController',
             scope:{}
-        })
+        });
+
+        $routeProvider.when('/registration', {
+        	templateUrl: './templates/pages/registration-page.html',
+        	controller: 'registrationController',
+        	scope:{}
+        });
+
 
     }
 );

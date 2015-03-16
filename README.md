@@ -1,2 +1,2 @@
 # Dempsey
-Soccer statistics tracking application for recreational level soccer steams
+Soccer statistics tracking application for recreational level soccer teams

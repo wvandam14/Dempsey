@@ -35,10 +35,28 @@ input {
     width:100%;
 }
 
-input {
+input, select {
     border: 1px solid #DDD;
     padding: 11px;
     margin-bottom: 15px;
+}
+
+::-webkit-input-placeholder {
+   color: #DDD;
+   padding: 3px;
+
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   color: #DDD;  
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   color: #DDD;  
+}
+
+:-ms-input-placeholder {  
+   color: #DDD;  
 }
 
 
@@ -125,6 +143,26 @@ input {
     text-overflow: ellipsis;
     overflow: hidden;
     padding-bottom: 1px;
+}
+
+/* TODO: remove these silly circle style things */
+
+.circle {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    background-color: #DDD;
+    margin: 10px;
+    /* width and height can be anything, as long as they're equal */
+}
+
+.circle:active{
+    background-color: #5DA97B;
+}
+
+.circle > h1 {
+    color: #FFF;
+    margin: -17px -9px;
 }
 
 

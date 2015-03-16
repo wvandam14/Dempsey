@@ -8,14 +8,19 @@
     margin-bottom: 5px;
 }
 
-.modal .head h1 {
+.modal .head {
     padding: 24px 20px;
 }
 
-.modal .foot > .button:first-child {
-    border-right:1px solid #DDD;
+.modal .head h1 {
+    margin-bottom: 10px;
 }
 
+.modal .body > div {
+    padding: 20px;
+    border-top: 1px solid #DDD;
+    border-bottom: 1px solid #DDD;
+}
 
 .modal.login {
 
@@ -25,12 +30,8 @@
     margin-bottom: 15px;
 }
 
-.modal.login .body > div {
-    padding: 20px;
-    border-top: 1px solid #DDD;
-    border-bottom: 1px solid #DDD;
-}
 
-.modal.login .body > div:first-child {
+
+.modal .body.two-column > div:first-child {
     border-right:1px solid #DDD;
 }
