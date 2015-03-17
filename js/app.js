@@ -5,7 +5,7 @@ var soccerStats = angular.module('soccerStats', ['ngRoute','ngSanitize','ngResou
         $routeProvider.otherwise({ redirectTo: '/login' });
 
         $routeProvider.when('/login', {
-            templateUrl: './templates/pages/login-page.html',
+            templateUrl: 'templates/pages/login-page.html',
             controller: 'loginController',
             scope:{}
         });
