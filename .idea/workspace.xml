@@ -23,11 +23,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="index.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-17.0" vertical-offset="0" max-vertical-offset="986">
-              <caret line="26" column="46" selection-start-line="26" selection-start-column="46" selection-end-line="26" selection-end-column="46" />
+            <state vertical-scroll-proportion="0.5238589" vertical-offset="22" max-vertical-offset="986">
+              <caret line="31" column="36" selection-start-line="31" selection-start-column="36" selection-end-line="31" selection-end-column="36" />
               <folding />
             </state>
           </provider>
@@ -46,7 +46,7 @@
       <file leaf-file-name="mobile.css" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/css/mobile.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="136">
+            <state vertical-scroll-proportion="0.0" vertical-offset="17" max-vertical-offset="136">
               <caret line="1" column="17" selection-start-line="1" selection-start-column="17" selection-end-line="1" selection-end-column="17" />
               <folding />
             </state>
@@ -56,7 +56,7 @@
       <file leaf-file-name="login-page.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/pages/login-page.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-16.346153" vertical-offset="0" max-vertical-offset="612">
+            <state vertical-scroll-proportion="0.0" vertical-offset="425" max-vertical-offset="612">
               <caret line="25" column="59" selection-start-line="25" selection-start-column="59" selection-end-line="25" selection-end-column="59" />
               <folding />
             </state>
@@ -66,11 +66,9 @@
       <file leaf-file-name="registration-page.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/pages/registration-page.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-11.076923" vertical-offset="103" max-vertical-offset="1411">
+            <state vertical-scroll-proportion="0.0" vertical-offset="748" max-vertical-offset="1768">
               <caret line="44" column="45" selection-start-line="44" selection-start-column="45" selection-end-line="44" selection-end-column="45" />
-              <folding>
-                <element signature="tag#div#3;tag#div#0;tag#div#0" expanded="false" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -78,18 +76,18 @@
       <file leaf-file-name="registrationController.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/controllers/registrationController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1989">
-              <caret line="44" column="61" selection-start-line="44" selection-start-column="59" selection-end-line="44" selection-end-column="59" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="1105" max-vertical-offset="2346">
+              <caret line="65" column="61" selection-start-line="65" selection-start-column="42" selection-end-line="65" selection-end-column="42" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="loginController.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="loginController.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/controllers/loginController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.46363637" vertical-offset="0" max-vertical-offset="990">
-              <caret line="27" column="62" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="561">
+              <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -98,7 +96,7 @@
       <file leaf-file-name="home-page.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/pages/home-page.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.230769" vertical-offset="0" max-vertical-offset="238">
+            <state vertical-scroll-proportion="0.0" vertical-offset="136" max-vertical-offset="238">
               <caret line="8" column="57" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
               <folding />
             </state>
@@ -108,7 +106,7 @@
       <file leaf-file-name="viewService.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/services/viewService.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="714">
+            <state vertical-scroll-proportion="0.0" vertical-offset="85" max-vertical-offset="714">
               <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
               <folding />
             </state>
@@ -118,7 +116,7 @@
       <file leaf-file-name="shellController.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/controllers/shellController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="238">
+            <state vertical-scroll-proportion="0.0" vertical-offset="136" max-vertical-offset="238">
               <caret line="8" column="113" selection-start-line="8" selection-start-column="7" selection-end-line="8" selection-end-column="7" />
               <folding />
             </state>
@@ -325,7 +323,7 @@
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../ipar" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
     <property name="SearchEverywhereHistoryKey" value="home&#9;FILE&#9;file://C:/Users/MooreAlec/Documents/GitHub/Dempsey/templates/pages/home-page.html&#10;regi&#9;FILE&#9;file://C:/Users/MooreAlec/Documents/GitHub/Dempsey/js/controllers/registrationController.js&#10;registra&#9;FILE&#9;file://C:/Users/MooreAlec/Documents/GitHub/Dempsey/templates/pages/registration-page.html&#10;shell&#9;FILE&#9;file://C:/Users/MooreAlec/Documents/GitHub/Dempsey/js/controllers/shellController.js&#10;login&#9;FILE&#9;file://C:/Users/MooreAlec/Documents/GitHub/Dempsey/js/controllers/loginController.js&#10;&#9;FILE&#9;file://C:/Users/MooreAlec/Documents/GitHub/Dempsey/templates/pages/login-page.html&#10;defaul&#9;FILE&#9;file://C:/Users/MooreAlec/Documents/GitHub/Dempsey/css/default.css&#10;test&#9;FILE&#9;file://C:/Users/MooreAlec/Documents/GitHub/Dempsey/test.css" />
@@ -344,14 +342,6 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
-      <option name="VMOptions" />
-      <option name="arguments" />
-      <option name="filePath" />
-      <option name="scope" value="ALL" />
-      <option name="testName" />
-      <method />
-    </configuration>
     <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
       <option name="VMOptions" />
       <option name="arguments" />
@@ -362,14 +352,12 @@
       <option name="showConsoleOnStdOut" value="false" />
       <method />
     </configuration>
-    <configuration default="true" type="CucumberJavaScriptRunConfigurationType" factoryName="Cucumber.js">
-      <option name="cucumberJsArguments" />
-      <option name="executablePath" />
+    <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
+      <option name="VMOptions" />
+      <option name="arguments" />
       <option name="filePath" />
-      <method />
-    </configuration>
-    <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma" config-file="">
-      <envs />
+      <option name="scope" value="ALL" />
+      <option name="testName" />
       <method />
     </configuration>
     <configuration default="true" type="JSTestDriver:ConfigurationType" factoryName="JsTestDriver">
@@ -377,6 +365,16 @@
       <setting name="settingsFile" value="" />
       <setting name="serverType" value="INTERNAL" />
       <setting name="preferredDebugBrowser" value="Chrome" />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma" config-file="">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="CucumberJavaScriptRunConfigurationType" factoryName="Cucumber.js">
+      <option name="cucumberJsArguments" />
+      <option name="executablePath" />
+      <option name="filePath" />
       <method />
     </configuration>
     <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
@@ -459,7 +457,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="3094">
           <caret line="48" column="5" selection-start-line="48" selection-start-column="5" selection-end-line="48" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -522,7 +519,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="1016" max-vertical-offset="2924">
           <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -585,7 +581,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="102" max-vertical-offset="2924">
           <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -708,7 +703,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="489" max-vertical-offset="3876">
           <caret line="69" column="1" selection-start-line="69" selection-start-column="1" selection-end-line="69" selection-end-column="1" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -739,7 +733,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="136">
           <caret line="2" column="71" selection-start-line="2" selection-start-column="1" selection-end-line="2" selection-end-column="1" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -755,7 +748,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="977">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -763,15 +755,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="977">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-17.0" vertical-offset="0" max-vertical-offset="986">
-          <caret line="26" column="46" selection-start-line="26" selection-start-column="46" selection-end-line="26" selection-end-column="46" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -785,7 +768,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/pages/home-page.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.230769" vertical-offset="0" max-vertical-offset="238">
+        <state vertical-scroll-proportion="0.0" vertical-offset="136" max-vertical-offset="238">
           <caret line="8" column="57" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
           <folding />
         </state>
@@ -809,25 +792,23 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/js/controllers/registrationController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="51" max-vertical-offset="1989">
-          <caret line="44" column="61" selection-start-line="44" selection-start-column="59" selection-end-line="44" selection-end-column="59" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="1105" max-vertical-offset="2346">
+          <caret line="65" column="61" selection-start-line="65" selection-start-column="42" selection-end-line="65" selection-end-column="42" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/pages/registration-page.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.076923" vertical-offset="103" max-vertical-offset="1411">
+        <state vertical-scroll-proportion="0.0" vertical-offset="748" max-vertical-offset="1768">
           <caret line="44" column="45" selection-start-line="44" selection-start-column="45" selection-end-line="44" selection-end-column="45" />
-          <folding>
-            <element signature="tag#div#3;tag#div#0;tag#div#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/pages/login-page.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-16.346153" vertical-offset="0" max-vertical-offset="612">
+        <state vertical-scroll-proportion="0.0" vertical-offset="425" max-vertical-offset="612">
           <caret line="25" column="59" selection-start-line="25" selection-start-column="59" selection-end-line="25" selection-end-column="59" />
           <folding />
         </state>
@@ -835,8 +816,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/js/controllers/loginController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.46363637" vertical-offset="0" max-vertical-offset="990">
-          <caret line="27" column="62" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="561">
+          <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5238589" vertical-offset="22" max-vertical-offset="986">
+          <caret line="31" column="36" selection-start-line="31" selection-start-column="36" selection-end-line="31" selection-end-column="36" />
           <folding />
         </state>
       </provider>
