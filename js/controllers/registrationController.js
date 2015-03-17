@@ -1,7 +1,7 @@
-soccerStats.controller('registrationController',['$scope',
-    function registrationController($scope) {
+soccerStats.controller('registrationController',
+    function registrationController($scope, $timeout) {
     	
-        $scope.tabNumber = 1;
+        $scope.tabNumber = 3;
 
         $scope.setTab = function (tab) {
         	$scope.tabNumber = tab;
@@ -15,6 +15,15 @@ soccerStats.controller('registrationController',['$scope',
         	if($scope.tabNumber < 3) {
         		$scope.tabNumber++;
         	}
+        };
+
+        $scope.invite = {email: 'herpa derp'}
+        $scope.inviteEmails = [];
+        $scope.addInviteEmail = function () {
+        	$timeout(function() {
+        		$scope.inviteEmails.push($scope.invite.email)
+        		console.log("Pushed " + $scope.invite.email)
+        	});
         };
 
 		//user register
@@ -49,7 +58,7 @@ soccerStats.controller('registrationController',['$scope',
         };
 
         $scope.states = [
-	        {value:   "", label: "Select a state"},
+	        {value:   "", label: "Select a State"},
 	        {value: "AL", label: "Alabama"},
 	        {value: "AK", label: "Alaska"},
 	        {value: "AZ", label: "Arizona"},
@@ -103,4 +112,4 @@ soccerStats.controller('registrationController',['$scope',
 	        {value: "WY", label: "Wyoming"}
 	    ];
         $scope.newUser.state = $scope.states[0];
-    }]);
+    });

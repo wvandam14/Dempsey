@@ -44,3 +44,23 @@
 }
 
 /* ---------- END Login Modal ---------- */
+
+/* ---------- Registration Modal ---------- */
+.logo-text {
+    color: #B3B3B3;
+}
+
+.logo-container {
+    padding: 22px 0px 21px 0;
+}
+
+.modal.registration img {
+
+}
+
+.modal.registration .button.inline {
+    margin-left: 10px;
+}
+
+/* ---------- END Registration Modal ---------- */
+
