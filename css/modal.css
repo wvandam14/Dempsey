@@ -46,11 +46,14 @@
 /* ---------- END Login Modal ---------- */
 
 /* ---------- Registration Modal ---------- */
-.logo-text {
+.modal.registration {
+}
+
+.modal.registration .logo-text {
     color: #B3B3B3;
 }
 
-.logo-container {
+.modal.registration .logo-container {
     padding: 22px 0px 21px 0;
 }
 

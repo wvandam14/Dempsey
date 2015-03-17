@@ -17,12 +17,10 @@ soccerStats.controller('registrationController',
         	}
         };
 
-        $scope.invite = {};
-        $scope.invite.email = {};
+        // Array containing the emails who will receive the invitation to the team
         $scope.inviteEmails = [];
-        $scope.addInviteEmail = function () {
+        $scope.addEmail = function () {
         	$timeout(function() {
-        		console.log("Pushed " + $scope.invite.email)
         		$scope.inviteEmails.push($scope.invite.email)
         	});
         };
