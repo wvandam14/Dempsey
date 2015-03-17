@@ -88,8 +88,8 @@
       <file leaf-file-name="loginController.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/controllers/loginController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.15632184" vertical-offset="0" max-vertical-offset="870">
-              <caret line="8" column="113" selection-start-line="8" selection-start-column="39" selection-end-line="8" selection-end-column="39" />
+            <state vertical-scroll-proportion="0.46363637" vertical-offset="0" max-vertical-offset="990">
+              <caret line="27" column="62" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -160,10 +160,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1912" />
+    <option name="x" value="-8" />
     <option name="y" value="-8" />
     <option name="width" value="1936" />
-    <option name="height" value="1056" />
+    <option name="height" value="1176" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -325,7 +325,7 @@
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../ipar" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
     <property name="SearchEverywhereHistoryKey" value="home&#9;FILE&#9;file://C:/Users/MooreAlec/Documents/GitHub/Dempsey/templates/pages/home-page.html&#10;regi&#9;FILE&#9;file://C:/Users/MooreAlec/Documents/GitHub/Dempsey/js/controllers/registrationController.js&#10;registra&#9;FILE&#9;file://C:/Users/MooreAlec/Documents/GitHub/Dempsey/templates/pages/registration-page.html&#10;shell&#9;FILE&#9;file://C:/Users/MooreAlec/Documents/GitHub/Dempsey/js/controllers/shellController.js&#10;login&#9;FILE&#9;file://C:/Users/MooreAlec/Documents/GitHub/Dempsey/js/controllers/loginController.js&#10;&#9;FILE&#9;file://C:/Users/MooreAlec/Documents/GitHub/Dempsey/templates/pages/login-page.html&#10;defaul&#9;FILE&#9;file://C:/Users/MooreAlec/Documents/GitHub/Dempsey/css/default.css&#10;test&#9;FILE&#9;file://C:/Users/MooreAlec/Documents/GitHub/Dempsey/test.css" />
@@ -397,7 +397,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1912" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1176" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -835,8 +835,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/js/controllers/loginController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.15632184" vertical-offset="0" max-vertical-offset="870">
-          <caret line="8" column="113" selection-start-line="8" selection-start-column="39" selection-end-line="8" selection-end-column="39" />
+        <state vertical-scroll-proportion="0.46363637" vertical-offset="0" max-vertical-offset="990">
+          <caret line="27" column="62" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
           <folding />
         </state>
       </provider>
