@@ -1,12 +1,10 @@
-soccerStats.controller('loginController',
-    ['$scope', '$location', function loginController($scope, $location) {
-        //user login
+soccerStats.controller('loginController', function loginController($scope, $rootScope, $location) {
+        // User object
         $scope.user = {name: '', password: ''};
 
         $scope.go = function (path) {
             $location.path(path);
         };
-
 
         $scope.login = function(user) {
             if ($scope.isFormValid('loginForm')) {
@@ -68,4 +66,4 @@ soccerStats.controller('loginController',
         //         }
         //     });
         // };
-    }]);
+    });

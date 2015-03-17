@@ -1,4 +1,4 @@
-var soccerStats = angular.module('soccerStats', ['ngRoute','ngSanitize','ngResource'])
+var soccerStats = angular.module('soccerStats', ['ngRoute','ngSanitize','ngResource','ng.deviceDetector'])
     .config(function ($routeProvider) {
 
         //Default Route

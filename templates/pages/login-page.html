@@ -13,7 +13,7 @@
                     <input ng-model="user.password" type="password" required/>
                 </form>
             </div>
-            <div class="flex-one flex flex-center flex-column">
+            <div ng-if="$root.isDesktop" class="flex-one flex flex-center flex-column">
                 <img src="./img/manager-icon.svg"/>
                 <h3 class="text-center">Are you the coach or manager of a team?</h3>
             </div>
@@ -23,7 +23,7 @@
             <div ng-click="login(user)" class="button green flex-one">
                 <h1>Log In</h1>
             </div>
-            <div ng-click="go('/registration')" class="button navy flex-one">
+            <div ng-if="$root.isDesktop" ng-click="go('/registration')" class="button navy flex-one">
                 <h1>Sign Up</h1>
             </div>
         </div>
