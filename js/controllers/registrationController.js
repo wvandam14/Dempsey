@@ -17,12 +17,13 @@ soccerStats.controller('registrationController',
         	}
         };
 
-        $scope.invite = {email: 'herpa derp'}
+        $scope.invite = {};
+        $scope.invite.email = {};
         $scope.inviteEmails = [];
         $scope.addInviteEmail = function () {
         	$timeout(function() {
-        		$scope.inviteEmails.push($scope.invite.email)
         		console.log("Pushed " + $scope.invite.email)
+        		$scope.inviteEmails.push($scope.invite.email)
         	});
         };
 
