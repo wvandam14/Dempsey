@@ -165,7 +165,7 @@ input.ng-invalid-required.ng-touched {
     /* width and height can be anything, as long as they're equal */
 }
 
-.circle:active{
+.circle.active{
     background-color: #5DA97B;
 }
 

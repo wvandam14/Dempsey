@@ -5,24 +5,27 @@
             <p>Create your coach account so that you can start creating teams and inviting players!</p>
     	</div>
 
-        <div class="body flex two-column">
+        <div class="body flex two-column" ng-show="isTab(1)">
             <div class="flex-one">
                 <h3 class="ellipse">Name</h3>
-                <input type="text" placeholder="John Smith" />
+                <input type="text" ng-model="newUser.name" placeholder="John Smith" />
                 <h3 class="ellipse">Email</h3>
-                <input type="email"  placeholder="john.smith@example.com" />
+                <input type="email" ng-model="newUser.email" placeholder="john.smith@example.com" />
                 <h3 class="ellipse">Password</h3>
-                <input type="password"  placeholder="" />
+                <input type="password" ng-model="newUser.password" placeholder="" />
                 <h3 class="ellipse">Confirm Password</h3>
-                <input type="password"  placeholder="" />
+                <input type="password" placeholder="" />
             </div>
             <div class="flex-one">
                 <h3 class="ellipse">Phone</h3>
-                <input type="text" placeholder="ex. (123) 456-7890" />
+                <input type="text" ng-model="newUser.phone" placeholder="ex. (123) 456-7890" />
                 <h3 class="ellipse">City</h3>
-                <input type="text" placeholder="Spokane" />
+                <input type="text" ng-model="newUser.city" placeholder="Spokane" />
                 <h3 class="ellipse">State</h3>
-                <select>
+
+                <select ng-model="newUser.state" ng-options="state as state.label for state in states">
+                </select>
+<!--                 <select ng-model="newUser.state">
                     <option selected disabled>Select a state</option>
                     <option value="AL">Alabama</option>
                     <option value="AK">Alaska</option>
@@ -75,22 +78,23 @@
                     <option value="WV">West Virginia</option>
                     <option value="WI">Wisconsin</option>
                     <option value="WY">Wyoming</option>
-                </select>               
+                </select>   -->             
     
             </div>
         </div>
 
         <div class="body flex flex-center">
-            <!-- TODO: swap this temporary placeholder with osmething that works better-->
-            <!-- Maybe use ng-class or something -->
-                <div class="circle"><h1>1</h1></div>
-                <div class="circle"><h1>2</h1></div>
-                <div class="circle"><h1>3</h1></div>
+            <div class="circle" ng-click="setTab(1)" ng-class="{'active': isTab(1)}"><h1>1</h1></div>
+            <div class="circle" ng-click="setTab(2)" ng-class="{'active': isTab(2)}"><h1>2</h1></div>
+            <div class="circle" ng-click="setTab(3)" ng-class="{'active': isTab(3)}"><h1>3</h1></div>
         </div>
 
         <div class="foot flex">
-            <div class="button navy flex-one">
+            <div class="button navy flex-one" ng-click="incrementTab()" ng-hide="isTab(3)">
                 <h1>Continue</h1>
+            </div>
+            <div class="button navy flex-one" ng-click="register(user)" ng-show="isTab(3)">
+                <h1>Finish</h1>
             </div>
         </div>
     </div>
