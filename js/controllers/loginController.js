@@ -2,16 +2,16 @@ soccerStats.controller('loginController', function loginController($scope, $root
         // User object
         $scope.user = {name: '', password: ''};
 
-        $scope.go = function (path) {
-            $location.path(path);
-        };
+        $scope.goToPage = function(path) {
+            viewService.goToPage(path);
+        }
 
         $scope.login = function(user) {
             if (viewService.validateAreaByFormName('loginForm')) {
                 Parse.User.logIn(user.name, user.password, {
                     success: function(user) {
                         // Todo: Redirect to home page
-                        $scope.go('/home');
+                        $scope.goToPage('/home');
                     },
                     error: function(user, error) {
                         // Todo: Send Toast notification that the login was unsuccessful based on the error given

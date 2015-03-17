@@ -1,7 +1,7 @@
 soccerStats.controller('registrationController',
     function registrationController($scope, $timeout) {
     	
-        $scope.tabNumber = 3;
+        $scope.tabNumber = 1;
 
         $scope.setTab = function (tab) {
         	$scope.tabNumber = tab;
@@ -20,9 +20,7 @@ soccerStats.controller('registrationController',
         // Array containing the emails who will receive the invitation to the team
         $scope.inviteEmails = [];
         $scope.addEmail = function () {
-        	$timeout(function() {
-        		$scope.inviteEmails.push($scope.invite.email)
-        	});
+            $scope.inviteEmails.push($scope.invite.email)
         };
 
 		//user register
