@@ -9,8 +9,9 @@ soccerStats.controller('loginController', function loginController($scope, $root
         $scope.login = function(user) {
             if (viewService.validateAreaByFormName('loginForm')) {
                 Parse.User.logIn(user.name, user.password, {
-                    success: function(user) {
+                    success: function (user) {
                         // Todo: Redirect to home page
+                        // Todo: must click more than once on login in order to redirect to home page
                         $scope.goToPage('/home');
                     },
                     error: function(user, error) {
@@ -18,7 +19,6 @@ soccerStats.controller('loginController', function loginController($scope, $root
                         console.log("failed to login");
                     }
                 });
-
             } else {
                 // Todo: Send Toast notification that the form is invalid
             }

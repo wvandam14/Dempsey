@@ -34,15 +34,15 @@ soccerStats.controller('registrationController',
             state: ''
         };
 
-        $scope.register = function (newUser) {
+        $scope.register = function (newUser, team) {
             var registerUser = new Parse.User();
+            //TODO: username?
             registerUser.set("name", newUser.name);
             registerUser.set("email", newUser.email);
             registerUser.set("password", newUser.password);
             registerUser.set("phone", newUser.phone);
             registerUser.set("city", newUser.city);
             registerUser.set("state", newUser.state);
-            registerUser.set("birthday", newUser.birthday);
 
             user.signUp(null, {
                 success: function (registerUser) {
@@ -50,6 +50,27 @@ soccerStats.controller('registrationController',
                 },
                 error: function (registerUser, error) {
                     alert("Error: " + error.code + " " + error.message);
+                }
+            });
+
+            //TODO: test team registration - age group table?
+            var Team = Parse.Object.extend("Team");
+            var team = new Team();
+
+            team.set("age_group", team.ageGroup);
+            team.set("city", team.city);
+            team.set("league_name", team.leagueName);
+            team.set("logo", team.logo);
+            team.set("name", team.name);
+            team.set("number", team.number);
+            team.set("state", team.state);
+
+            team.save(null, {
+                success: function (team) {
+                    alert("Team registered");
+                },
+                error: function (team, error) {
+                    alert("failed to create new team");
                 }
             });
         };

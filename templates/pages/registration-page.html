@@ -42,23 +42,23 @@
             <div class="flex-one">
                     <h3 class="ellipse">Team Logo</h3>
                 <div class="flex flex-center logo-container">
-                    <img src="{{newUser.logo || './img/team-logo-icon.svg' }}" class="flex-one"/>
+                    <img src="{{team.logo || './img/team-logo-icon.svg' }}" class="flex-one"/>
                     <p class="flex-one text-center logo-text">Click the logo to add a new one</p>
                 </div>
                 <h3 class="ellipse">Team Name</h3>
-                <input type="text" ng-model="newUser.email" placeholder="Team Name" />
+                <input type="text" ng-model="team.name" placeholder="Team Name" />
                 <h3 class="ellipse">Team Number</h3>
-                <input type="password" placeholder="Team Number" />
+                <input type="password"  ng-model="team.number" placeholder="Team Number" />
             </div>
             <div class="flex-one">
                 <h3 class="ellipse">League Name</h3>
-                <input type="text" ng-model="newUser.phone" placeholder="League Name" />
+                <input type="text" ng-model="team.leagueName" placeholder="League Name" />
                 <h3 class="ellipse">Age Group</h3>
-                <input type="text" ng-model="newUser.city" placeholder="Age Group" />
+                <input type="text" ng-model="team.ageGroup" placeholder="Age Group" />
                 <h3 class="ellipse">City</h3>
-                <input type="text" ng-model="newUser.city" placeholder="City" />
+                <input type="text" ng-model="team.city" placeholder="City" />
                 <h3 class="ellipse">State</h3>
-                <select ng-model="newUser.state" ng-options="state as state.label for state in states">
+                <select ng-model="team.state" ng-options="state as state.label for state in states">
                 </select>           
             </div>
         </div>
@@ -85,12 +85,12 @@
             <div class="connection"></div>
             <div class="circle" ng-click="setTab(3)" ng-class="{'active': isTab(3)}"><h1>3</h1></div>
         </div>
-
+        <!--TODO: Do we want to only continue only when user finished page?-->
         <div class="foot flex">
             <div class="button navy flex-one" ng-click="incrementTab()" ng-hide="isTab(3)">
                 <h1>Continue</h1>
             </div>
-            <div class="button navy flex-one" ng-click="register(user)" ng-show="isTab(3)">
+            <div class="button navy flex-one" ng-click="register(user, team)" ng-show="isTab(3)">
                 <h1>Finish</h1>
             </div>
         </div>
