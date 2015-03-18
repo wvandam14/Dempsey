@@ -20,8 +20,15 @@ soccerStats.controller('registrationController',
         // Array containing the emails who will receive the invitation to the team
         $scope.inviteEmails = [];
         $scope.addEmail = function () {
-            $scope.inviteEmails.push($scope.invite.email)
+            if($scope.invite.email !== '') {
+                $scope.inviteEmails.unshift($scope.invite.email)
+                $scope.invite.email = '';
+            }
         };
+
+        $scope.removeEmail = function (index){
+            $scope.inviteEmails.splice(index, 1);
+        }
 
 		//user register
 		//need to make sure database and user submission is consistent 

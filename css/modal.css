@@ -49,6 +49,25 @@
 .modal.registration {
 }
 
+.modal.registration .email-box {
+    background-color: #5DA97B;
+    padding: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    max-width: 200px;
+    float: left;
+}
+
+.modal.registration .email-box p {
+    color: #FFF;
+    width: 100%;
+
+}
+
+.close-button {
+    margin-left: 5px;
+}
+
 .modal.registration .logo-text {
     color: #B3B3B3;
 }
