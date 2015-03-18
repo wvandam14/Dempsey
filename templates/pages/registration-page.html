@@ -52,9 +52,10 @@
             </div>
             <div class="flex-one">
                 <h3 class="ellipse">League Name</h3>
-                <input type="text" ng-model="team.leagueName" placeholder="League Name" />
+                <input type="text" ng-model="team.league_name" placeholder="League Name" />
                 <h3 class="ellipse">Age Group</h3>
-                <input type="text" ng-model="team.ageGroup" placeholder="Age Group" />
+                <select ng-model="team.age_group" ng-options="age_group as age_group.label for age_group in age_groups">
+                </select>
                 <h3 class="ellipse">City</h3>
                 <input type="text" ng-model="team.city" placeholder="City" />
                 <h3 class="ellipse">State</h3>
@@ -70,13 +71,14 @@
                     <input type="text" class="flex-three" ng-model="invite.email" placeholder="Add Email" />
                     <div class="button green inline flex-one" ng-click="addEmail(invite.email)"><h1>Add Email</h1></div>
                 </div>
+                <!-- TODO: change the close button into not an 'X' (make it pretty) -->
                 <div class="box">
-                    <div class="email-box" ng-repeat="email in inviteEmails track by $index">
-                        <p>{{email}}</p>
+                    <div class="email-box flex" ng-repeat="email in inviteEmails track by $index">
+                        <p>{{email}}</p><div class="close-button" ng-click="removeEmail($index)"><p>X</p></div>
                     </div>
                 </div>
             </div>
-        </div>
+        </div> 
 
         <div class="flex flex-center">
             <div class="circle" ng-click="setTab(1)" ng-class="{'active': isTab(1)}"><h1>1</h1></div>
@@ -90,8 +92,7 @@
             <div class="button navy flex-one" ng-click="incrementTab()" ng-hide="isTab(3)">
                 <h1>Continue</h1>
             </div>
-            <!--<div class="button navy flex-one" ng-click="register(user, team)" ng-show="isTab(3)">-->
-            <div class="button navy flex-one" ng-click="sendEmailInvite()" ng-show="isTab(3)">
+            <div class="button navy flex-one" ng-click="register(newUser, team)" ng-show="isTab(3)">
                 <h1>Finish</h1>
             </div>
         </div>

@@ -20,8 +20,15 @@ soccerStats.controller('registrationController',
         // Array containing the emails who will receive the invitation to the team
         $scope.inviteEmails = [];
         $scope.addEmail = function () {
-            $scope.inviteEmails.push($scope.invite.email)
+            if($scope.invite.email !== '') {
+                $scope.inviteEmails.unshift($scope.invite.email)
+                $scope.invite.email = '';
+            }
         };
+
+        $scope.removeEmail = function (index){
+            $scope.inviteEmails.splice(index, 1);
+        }
 
 		//user register
 		//need to make sure database and user submission is consistent 
@@ -34,17 +41,28 @@ soccerStats.controller('registrationController',
             state: ''
         };
 
-        $scope.register = function (newUser, team) {
+        $scope.team = {
+            logo: '',
+            name: '',
+            number: '',
+            league_name: '',
+            age_group: '',
+            city: '',
+            state: ''
+        };
+
+        $scope.register = function (newUser, newTeam) {
             var registerUser = new Parse.User();
             //TODO: username?
+            registerUser.set("username", newUser.email);
             registerUser.set("name", newUser.name);
             registerUser.set("email", newUser.email);
             registerUser.set("password", newUser.password);
             registerUser.set("phone", newUser.phone);
             registerUser.set("city", newUser.city);
-            registerUser.set("state", newUser.state);
+            registerUser.set("state", newUser.state.value);
 
-            user.signUp(null, {
+            registerUser.signUp(null, {
                 success: function (registerUser) {
                     alert("registration successful");
                 },
@@ -53,24 +71,24 @@ soccerStats.controller('registrationController',
                 }
             });
 
-            //TODO: test team registration - age group table?
+            //TODO: test team registration?
             var Team = Parse.Object.extend("Team");
-            var team = new Team();
+            var _team = new Team();
 
-            team.set("age_group", team.ageGroup);
-            team.set("city", team.city);
-            team.set("league_name", team.leagueName);
-            team.set("logo", team.logo);
-            team.set("name", team.name);
-            team.set("number", team.number);
-            team.set("state", team.state);
+            _team.set("age_group", newTeam.age_group.value);
+            _team.set("city", newTeam.city);
+            _team.set("league_name", newTeam.leagueName);
+            //TODO _team.set("logo", newTeam.logo);
+            _team.set("name", newTeam.name);
+            _team.set("number", newTeam.number);
+            _team.set("state", newTeam.state.value);
 
-            team.save(null, {
-                success: function (team) {
+            _team.save(null, {
+                success: function (_team) {
                     alert("Team registered");
                 },
-                error: function (team, error) {
-                    alert("failed to create new team");
+                error: function (_team, error) {
+                    alert("Error: " + error.code + " " + error.message);
                 }
             });
         };
@@ -80,6 +98,13 @@ soccerStats.controller('registrationController',
             // Todo: Email Service testing only
             emailService.sendEmailInvite('Gordon', '123', 'Seattle Sounders FC', 'alecmmoore@gmail.com');
         };
+
+        $scope.age_groups = [
+            { value: "", label: "Select an age group..." },
+            { value: "U12", label: "U12" },
+            { value: "U16", label: "U16" }
+        ];
+        $scope.team.age_group = $scope.age_groups[0];
 
         $scope.states = [
 	        {value:   "", label: "Select a State"},
@@ -136,4 +161,5 @@ soccerStats.controller('registrationController',
 	        {value: "WY", label: "Wyoming"}
 	    ];
         $scope.newUser.state = $scope.states[0];
+        $scope.team.state = $scope.states[0];
     });

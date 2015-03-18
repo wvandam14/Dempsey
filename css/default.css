@@ -190,9 +190,11 @@ input.ng-invalid-required.ng-touched {
 .box {
     background-color: #FFF;
     border: 1px solid #DDD;
-    padding: 11px;
+    padding: 11px 11px 0px 11px;
     margin-bottom: 15px;
-    min-height: 51px;
+    min-height: 63px;
+    float: left;
+    width: 100%;
 }
 
 /* ---------- Button ----------  */
