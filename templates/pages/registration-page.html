@@ -52,9 +52,10 @@
             </div>
             <div class="flex-one">
                 <h3 class="ellipse">League Name</h3>
-                <input type="text" ng-model="team.leagueName" placeholder="League Name" />
+                <input type="text" ng-model="team.league_name" placeholder="League Name" />
                 <h3 class="ellipse">Age Group</h3>
-                <input type="text" ng-model="team.ageGroup" placeholder="Age Group" />
+                <select ng-model="team.age_group" ng-options="age_group as age_group.label for age_group in age_groups">
+                </select>
                 <h3 class="ellipse">City</h3>
                 <input type="text" ng-model="team.city" placeholder="City" />
                 <h3 class="ellipse">State</h3>
@@ -90,7 +91,7 @@
             <div class="button navy flex-one" ng-click="incrementTab()" ng-hide="isTab(3)">
                 <h1>Continue</h1>
             </div>
-            <div class="button navy flex-one" ng-click="register(user, team)" ng-show="isTab(3)">
+            <div class="button navy flex-one" ng-click="register(newUser, team)" ng-show="isTab(3)">
                 <h1>Finish</h1>
             </div>
         </div>

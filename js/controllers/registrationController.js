@@ -34,9 +34,20 @@ soccerStats.controller('registrationController',
             state: ''
         };
 
-        $scope.register = function (newUser, team) {
+        $scope.team = {
+            logo: '',
+            name: '',
+            number: '',
+            league_name: '',
+            age_group: '',
+            city: '',
+            state: ''
+        };
+
+        $scope.register = function (newUser, newTeam) {
             var registerUser = new Parse.User();
             //TODO: username?
+            registerUser.set("username", newUser.name);
             registerUser.set("name", newUser.name);
             registerUser.set("email", newUser.email);
             registerUser.set("password", newUser.password);
@@ -44,7 +55,7 @@ soccerStats.controller('registrationController',
             registerUser.set("city", newUser.city);
             registerUser.set("state", newUser.state);
 
-            user.signUp(null, {
+            registerUser.signUp(null, {
                 success: function (registerUser) {
                     alert("registration successful");
                 },
@@ -55,25 +66,32 @@ soccerStats.controller('registrationController',
 
             //TODO: test team registration - age group table?
             var Team = Parse.Object.extend("Team");
-            var team = new Team();
+            var _team = new Team();
 
-            team.set("age_group", team.ageGroup);
-            team.set("city", team.city);
-            team.set("league_name", team.leagueName);
-            team.set("logo", team.logo);
-            team.set("name", team.name);
-            team.set("number", team.number);
-            team.set("state", team.state);
+            _team.set("age_group", '');
+            _team.set("city", newTeam.city);
+            _team.set("league_name", newTeam.leagueName);
+            _team.set("logo", newTeam.logo);
+            _team.set("name", newTeam.name);
+            _team.set("number", newTeam.number);
+            _team.set("state", newTeam.state);
 
-            team.save(null, {
-                success: function (team) {
+            _team.save(null, {
+                success: function (_team) {
                     alert("Team registered");
                 },
-                error: function (team, error) {
+                error: function (_team, error) {
                     alert("failed to create new team");
                 }
             });
         };
+
+        $scope.age_groups = [
+            { value: "", label: "Select an age group..." },
+            { value: "U12", label: "U12" },
+            { value: "U16", label: "U16" }
+        ];
+        $scope.team.age_group = $scope.age_groups[0];
 
         $scope.states = [
 	        {value:   "", label: "Select a State"},
