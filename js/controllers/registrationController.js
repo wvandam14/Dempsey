@@ -1,5 +1,5 @@
 soccerStats.controller('registrationController',
-    function registrationController($scope, $timeout) {
+    function registrationController($scope, emailService) {
     	
         $scope.tabNumber = 1;
 
@@ -73,6 +73,12 @@ soccerStats.controller('registrationController',
                     alert("failed to create new team");
                 }
             });
+        };
+
+        // Sends email via the cloud code with parse
+        $scope.sendEmailInvite = function() {
+            // Todo: Email Service testing only
+            emailService.sendEmailInvite('Gordon', '123', 'Seattle Sounders FC', 'alecmmoore@gmail.com');
         };
 
         $scope.states = [
