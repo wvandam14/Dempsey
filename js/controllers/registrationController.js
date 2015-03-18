@@ -47,13 +47,13 @@ soccerStats.controller('registrationController',
         $scope.register = function (newUser, newTeam) {
             var registerUser = new Parse.User();
             //TODO: username?
-            registerUser.set("username", newUser.name);
+            registerUser.set("username", newUser.email);
             registerUser.set("name", newUser.name);
             registerUser.set("email", newUser.email);
             registerUser.set("password", newUser.password);
             registerUser.set("phone", newUser.phone);
             registerUser.set("city", newUser.city);
-            registerUser.set("state", newUser.state);
+            registerUser.set("state", newUser.state.value);
 
             registerUser.signUp(null, {
                 success: function (registerUser) {
@@ -64,24 +64,24 @@ soccerStats.controller('registrationController',
                 }
             });
 
-            //TODO: test team registration - age group table?
+            //TODO: test team registration?
             var Team = Parse.Object.extend("Team");
             var _team = new Team();
 
-            _team.set("age_group", '');
+            _team.set("age_group", newTeam.age_group.value);
             _team.set("city", newTeam.city);
             _team.set("league_name", newTeam.leagueName);
-            _team.set("logo", newTeam.logo);
+            //TODO _team.set("logo", newTeam.logo);
             _team.set("name", newTeam.name);
             _team.set("number", newTeam.number);
-            _team.set("state", newTeam.state);
+            _team.set("state", newTeam.state.value);
 
             _team.save(null, {
                 success: function (_team) {
                     alert("Team registered");
                 },
                 error: function (_team, error) {
-                    alert("failed to create new team");
+                    alert("Error: " + error.code + " " + error.message);
                 }
             });
         };
@@ -148,4 +148,5 @@ soccerStats.controller('registrationController',
 	        {value: "WY", label: "Wyoming"}
 	    ];
         $scope.newUser.state = $scope.states[0];
+        $scope.team.state = $scope.states[0];
     });
