@@ -8,7 +8,7 @@
 [Ww]eb.config
 
 # Webstorm
-.idea/
+.idea/workspace.xml
 
 # Build results
 [Dd]ebug/
