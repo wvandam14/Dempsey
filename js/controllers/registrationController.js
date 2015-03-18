@@ -51,9 +51,9 @@ soccerStats.controller('registrationController',
             state: ''
         };
 
+        //TODO: accountType in parse?
         $scope.register = function (newUser, newTeam) {
             var registerUser = new Parse.User();
-            //TODO: username?
             registerUser.set("username", newUser.email);
             registerUser.set("name", newUser.name);
             registerUser.set("email", newUser.email);
@@ -71,7 +71,6 @@ soccerStats.controller('registrationController',
                 }
             });
 
-            //TODO: test team registration?
             var Team = Parse.Object.extend("Team");
             var _team = new Team();
 
