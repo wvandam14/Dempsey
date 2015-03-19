@@ -1,6 +1,7 @@
 soccerStats.controller('playerController', function loginController($scope, $rootScope, $location, viewService) {
         // User object
         $scope.player = {
+            photo: '',
             name: '',
             team: '',
             number: '',
