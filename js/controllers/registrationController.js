@@ -1,10 +1,10 @@
 soccerStats.controller('registrationController',
-    function registrationController($scope, emailService, viewService,$timeout) {
+    function registrationController($scope, emailService, viewService, $timeout) {
     	
         //tab functionality 
         $scope.tabNumber = 0;
         $scope.formList = ['accountForm', 'teamForm', 'inviteForm'];
-        $scope.team = {};
+        $scope.team = {}; //TODO: duplicate
 
         $scope.setTab = function (tab) {
             var currentForm = $scope.formList[$scope.tabNumber];
@@ -102,11 +102,10 @@ soccerStats.controller('registrationController',
             _team.set("ageGroup", newTeam.ageGroup.value);
             _team.set("city", newTeam.city);
             _team.set("leagueName", newTeam.leagueName);
-            //TODO _team.set("logo", newTeam.logo);
             _team.set("name", newTeam.name);
             _team.set("number", newTeam.number);
             _team.set("state", newTeam.state.value);
-            _team.set("logo",$scope.logoFile);
+            _team.set("logo", $scope.logoFile);
 
             _team.save(null, {
                 success: function (_team) {
@@ -132,7 +131,6 @@ soccerStats.controller('registrationController',
                             viewService.goToPage('/home');
                         },
                         error: function (registerUser, error) {
-                            newUser.signUpFlag = false;
                             console.log("Error: " + error.code + " " + error.message);
                         }
                     });
