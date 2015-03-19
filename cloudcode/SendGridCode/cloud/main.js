@@ -32,6 +32,7 @@ Parse.Cloud.define("sendEmailInvite", function(request, response) {
                     "<br/><br/>" +
                     "Temporary Password: <b>" + tempPassword + "</b><br/> " +
                     "<br/><br/><br/><br/>" +
+                    "Please logon and register your player.<br/><br/>" +
                     "Thanks!" +
                     "<br/>" +
                     "Soccer Stats Development Team</p>";
@@ -76,6 +77,7 @@ Parse.Cloud.define("sendEmailInvite", function(request, response) {
                     "<br/><br/>" +
                     "Looks like you already have an account with us, so go ahead and log in at http://alecmmoore.github.io#/login to accept the invitation." +
                     "<br/><br/><br/><br/>" +
+                    "Please logon and register your player" +
                     "Thanks!" +
                     "<br/>" +
                     "Soccer Stats Development Team</p>";
