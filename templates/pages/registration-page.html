@@ -16,35 +16,37 @@
         </div>
 
         <form name="accountForm" class="body flex two-column" ng-show="isTab(0)">
-                <div class="flex-one">
-                    <h3 class="ellipse">Name</h3>
-                    <input type="text" ng-model="newUser.name" placeholder="John Smith" required />
-                    <h3 class="ellipse">Email</h3>
-                    <input type="email" ng-model="newUser.email" placeholder="john.smith@example.com" required />
-                    <h3 class="ellipse">Password</h3>
-                    <input type="password" ng-model="newUser.password" placeholder="" required />
-                    <h3 class="ellipse">Confirm Password</h3>
-                    <input type="password" ng-model="newUser.confirmPassword" placeholder="" required />
-                    <p ng-show="!confirmPassword()">Passwords do not match</p>
-                </div>
-                <div class="flex-one">
-                    <h3 class="ellipse">Phone</h3>
-                    <input type="text" ng-model="newUser.phone" placeholder="ex. (123) 456-7890" required />
-                    <h3 class="ellipse">City</h3>
-                    <input type="text" ng-model="newUser.city" placeholder="Spokane" required />
-                    <h3 class="ellipse">State</h3>
+            <div class="flex-one">
+                <h3 class="ellipse">Name</h3>
+                <input type="text" ng-model="newUser.name" placeholder="John Smith" required />
+                <h3 class="ellipse">Email</h3>
+                <input type="email" ng-model="newUser.email" placeholder="john.smith@example.com" required />
+                <h3 class="ellipse">Password</h3>
+                <input type="password" ng-model="newUser.password" placeholder="" required />
+                <h3 class="ellipse">Confirm Password</h3>
+                <input type="password" ng-model="newUser.confirmPassword" placeholder="" required />
+                <p ng-show="!confirmPassword()">Passwords do not match</p>
+            </div>
+            <div class="flex-one">
+                <h3 class="ellipse">Phone</h3>
+                <input type="text" ng-model="newUser.phone" placeholder="ex. (123) 456-7890" required />
+                <h3 class="ellipse">City</h3>
+                <input type="text" ng-model="newUser.city" placeholder="Spokane" required />
+                <h3 class="ellipse">State</h3>
 
-                    <select ng-model="newUser.state" ng-options="state as state.label for state in states" required>
-                    </select>           
-                </div>
+                <select ng-model="newUser.state" ng-options="state as state.label for state in states" required>
+                </select>
+            </div>
         </form>
 
         <form name="teamForm" class="body flex two-column" ng-show="isTab(1)">
             <div class="flex-one">
                 <h3 class="ellipse">Team Logo</h3>
                 <div class="flex flex-center logo-container">
-                    <img ng-src="{{ team.logo || './img/team-logo-icon.svg'}}" id="logo" ng-click="selectFile()" class="flex-one"/>
-                    <input type="file" style="display:none" id="file" name='file' onchange="angular.element(this).scope().fileNameChanged(this)" />
+                    <div class="img-container" ng-click="selectFile()">
+                        <img ng-src="{{ team.logo || './img/team-logo-icon.svg'}}" class="flex-one"/>
+                    </div>
+                    <input type="file" style="display:none" id="file" name='file' accept="image/*" onchange="angular.element(this).scope().fileNameChanged(this)" />
                     <p class="flex-one text-center logo-text">Click the logo to add a new one</p>
                 </div>
                 <h3 class="ellipse">Team Name</h3>

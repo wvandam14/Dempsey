@@ -2,7 +2,7 @@ soccerStats.controller('registrationController',
     function registrationController($scope, emailService, viewService,$timeout) {
     	
         //tab functionality 
-        $scope.tabNumber = 0;
+        $scope.tabNumber = 1;
         $scope.formList = ['accountForm', 'teamForm', 'inviteForm'];
         $scope.team = {};
 
@@ -26,7 +26,6 @@ soccerStats.controller('registrationController',
         $scope.incrementTab = function () {
         	$scope.setTab($scope.tabNumber + 1);
         };
-
 
         // Array containing the emails who will receive the invitation to the team
         $scope.inviteEmails = [];
