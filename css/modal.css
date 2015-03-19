@@ -80,6 +80,11 @@
     width: 150px;
 }
 
+/* Hacky as shit */
+.modal.registration img[src="./img/team-logo-icon.svg"] {
+    padding-right: 12px;
+}
+
 /* ---------- END Registration Modal ---------- */
 
 /* ---------- Player Modal ---------- */
