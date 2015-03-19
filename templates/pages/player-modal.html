@@ -16,7 +16,7 @@
                 <h3 class="ellipse">Player Name</h3>
                 <input type="text" ng-model="player.name" placeholder="Player Name" required />
                 <h3 class="ellipse">Birthday</h3>
-                <input type="date" ng-model="player.birthday" required />
+                <input type="date" class="date" ng-model="player.birthday" required />
                 <h3 class="ellipse">Team</h3>
                 <select ng-model="player.team" ng-options="team as team.label for team in teamss" required>
                 </select>  
@@ -31,7 +31,7 @@
                 </select>
                 <h3 class="ellipse">Emergency Contact</h3>
                 <input type="text" ng-model="player.emergencyContact.name" placeholder="Contact Name" required />
-                <h3 class="ellipse">Phone Number</h3>
+                <h3 class="ellipse">Contact Phone Number</h3>
                 <input type="text"  ng-model="player.emergencyContact.phone" placeholder="ex. (123) 456-7890" required />
                 <h3 class="ellipse">Relationship to Player</h3>
                 <input type="text" ng-model="player.emergencyContact.relationship" placeholder="e.g. sibling, friend, etc." required />        
