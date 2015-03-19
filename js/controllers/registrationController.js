@@ -1,16 +1,19 @@
 soccerStats.controller('registrationController',
     function registrationController($scope, emailService, viewService) {
     	
+        //tab functionality 
         $scope.tabNumber = 0;
         $scope.formList = ['accountForm', 'teamForm', 'inviteForm'];
 
         $scope.setTab = function (tab) {
-            if($scope.tabNumber > tab) {
+            var currentForm = $scope.formList[$scope.tabNumber];
+            if ($scope.tabNumber > tab) {
                 $scope.tabNumber = tab;
             }
-            if(viewService.validateAreaByFormName($scope.formList[$scope.tabNumber]) && tab === ($scope.tabNumber + 1)) {
+            if ($scope.confirmPassword() && viewService.validateAreaByFormName(currentForm) && (tab === ($scope.tabNumber + 1))) {
                 $scope.tabNumber = tab;
             }
+
         };
 
         $scope.isTab = function (tab) {
@@ -20,6 +23,7 @@ soccerStats.controller('registrationController',
         $scope.incrementTab = function () {
         	$scope.setTab($scope.tabNumber + 1);
         };
+
 
         // Array containing the emails who will receive the invitation to the team
         $scope.inviteEmails = [];
@@ -36,17 +40,25 @@ soccerStats.controller('registrationController',
             $scope.inviteEmails.splice(index, 1);
         }
 
-		//user register
-		//need to make sure database and user submission is consistent 
+                // Sends email via the cloud code with parse
+        $scope.sendEmailInvite = function(newUser, team) {
+            _.each($scope.inviteEmails, function (email) {
+                emailService.sendEmailInvite(newUser.name, team.number, team.name, email);
+            });
+        };
+
+		//user information
         $scope.newUser = {
-            name: 'Tommy GLasser',
+            name: 'Tommy Glasser',
             email: 'example@example.com',
             password: '123',
+            confirmPassword: '123',
             phone: '1234567890',
             city: 'Spokane',
             state: 'Washington'
         };
 
+        //team information 
         $scope.team = {
             logo: '',
             name: 'Goliath',
@@ -56,8 +68,12 @@ soccerStats.controller('registrationController',
             city: 'Spokane',
             state: 'Montana'
         };
+        
+        $scope.confirmPassword = function() {
+            return $scope.newUser.password === $scope.newUser.confirmPassword;
+        };
 
-        //TODO: accountType in parse?
+
         $scope.register = function (newUser, newTeam) {
             var registerUser = new Parse.User();
             registerUser.set("username", newUser.email);
@@ -100,12 +116,7 @@ soccerStats.controller('registrationController',
             });
         };
 
-        // Sends email via the cloud code with parse
-        $scope.sendEmailInvite = function(newUser, team) {
-            _.each($scope.inviteEmails, function (email) {
-                emailService.sendEmailInvite(newUser.name, team.number, team.name, email);
-            });
-        };
+
 
         $scope.ageGroups = [
             { value: "", label: "Select an Age Group..." },
@@ -170,4 +181,6 @@ soccerStats.controller('registrationController',
 	    ];
         $scope.newUser.state = $scope.states[0];
         $scope.team.state = $scope.states[0];
+
+
     });
