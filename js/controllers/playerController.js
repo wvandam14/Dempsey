@@ -55,7 +55,6 @@ soccerStats.controller('playerController', function loginController($scope, $roo
             }
         };
 
-<<<<<<< HEAD
         //TODO: put this section into viewService - this code exists in registerController.js
         //triggers file upload
         $scope.selectFile = function(){
@@ -119,7 +118,6 @@ soccerStats.controller('playerController', function loginController($scope, $roo
         });
 
         //TODO: states
-=======
         $scope.states = [
             {value:   "", label: "Select a State"},
             {value: "AL", label: "Alabama"},
@@ -177,5 +175,4 @@ soccerStats.controller('playerController', function loginController($scope, $roo
         $scope.player.state = $scope.states[0];
 
 
->>>>>>> ede04ff5e8356ddf693c0d7fd49b19cf580a0029
     });

@@ -44,7 +44,7 @@
                 <h3 class="ellipse">Team Logo</h3>
                 <div class="flex flex-center logo-container">
                     <div class="img-container" ng-click="selectFile()">
-                        <img ng-src="{{ team.logo || './img/team-logo-icon.svg'}}" class="flex-one"/>
+                        <img src="{{ team.logo || './img/team-logo-icon.svg'}}" class="flex-one"/>
                     </div>
                     <input type="file" style="display:none" id="file" name='file' accept="image/*" onchange="angular.element(this).scope().fileNameChanged(this)" />
                     <p class="flex-one text-center logo-text">Click the logo to add a new one</p>

@@ -52,24 +52,24 @@ soccerStats.controller('registrationController',
         //test 
 		//user information
         $scope.newUser = {
-            name: 'Tommy Glasser',
-            email: 'tommyglasser@mailinator.com',
+            name: 'Pete Tucker',
+            email: 'petetucker@mailinator.com',
             password: '123',
             confirmPassword: '123',
             phone: '1234567890',
-            city: 'Spokane',
-            state: 'Washington'
+            city: 'Seattle',
+            state: 'WA'
         };
 
         //team information 
         $scope.team = {
             logo: '',
-            name: 'Goliath',
+            name: 'Seattle Sounders FC',
             number: '1234DGC',
-            leagueName: 'Champions',
+            leagueName: 'Major League Soccer',
             ageGroup: 'U12',
-            city: 'Spokane',
-            state: 'Montana'
+            city: 'Seattle',
+            state: 'WA'
         };
 
         // //user information
