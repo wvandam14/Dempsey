@@ -83,6 +83,7 @@ Parse.Cloud.define("sendEmailInvite", function(request, response) {
                     "<br/>" +
                     "Soccer Stats Development Team</p>";
 
+                Parse.Cloud.useMasterKey();
 
                 results[0].addUnique("teams", teamId);
                 results[0].save(null, {
@@ -102,7 +103,7 @@ Parse.Cloud.define("sendEmailInvite", function(request, response) {
                                 console.error(httpResponse);
                                 response.error(httpResponse);
                             });
-                    }, error: function (error) {
+                    }, error: function (obj, error) {
                        response.error(error);
                     }
                 });
