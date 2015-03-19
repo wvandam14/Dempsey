@@ -61,41 +61,44 @@ soccerStats.controller('registrationController',
             registerUser.set("phone", newUser.phone);
             registerUser.set("city", newUser.city);
             registerUser.set("state", newUser.state.value);
+            registerUser.set("accountType", 1);
 
             registerUser.signUp(null, {
                 success: function (registerUser) {
-                    alert("registration successful");
+                    Console.log("registration successful");
+                    var Team = Parse.Object.extend("Team");
+                    var _team = new Team();
+
+                    _team.set("age_group", newTeam.age_group.value);
+                    _team.set("city", newTeam.city);
+                    _team.set("league_name", newTeam.leagueName);
+                    //TODO _team.set("logo", newTeam.logo);
+                    _team.set("name", newTeam.name);
+                    _team.set("number", newTeam.number);
+                    _team.set("state", newTeam.state.value);
+
+                    _team.save(null, {
+                        success: function (_team) {
+                            Console.log("Team registered");
+                            $scope.sendEmailInvite(newUser, newTeam);
+                        },
+                        error: function (_team, error) {
+                            Console.log("Error: " + error.code + " " + error.message);
+                        }
+                    });
                 },
                 error: function (registerUser, error) {
-                    alert("Error: " + error.code + " " + error.message);
-                }
-            });
-
-            var Team = Parse.Object.extend("Team");
-            var _team = new Team();
-
-            _team.set("age_group", newTeam.age_group.value);
-            _team.set("city", newTeam.city);
-            _team.set("league_name", newTeam.leagueName);
-            //TODO _team.set("logo", newTeam.logo);
-            _team.set("name", newTeam.name);
-            _team.set("number", newTeam.number);
-            _team.set("state", newTeam.state.value);
-
-            _team.save(null, {
-                success: function (_team) {
-                    alert("Team registered");
-                },
-                error: function (_team, error) {
-                    alert("Error: " + error.code + " " + error.message);
+                    newUser.signUpFlag = false;
+                    Console.log("Error: " + error.code + " " + error.message);
                 }
             });
         };
 
         // Sends email via the cloud code with parse
-        $scope.sendEmailInvite = function() {
-            // Todo: Email Service testing only
-            emailService.sendEmailInvite('Gordon', '123', 'Seattle Sounders FC', 'alecmmoore@gmail.com');
+        $scope.sendEmailInvite = function(newUser, team) {
+            _.each($scope.inviteEmails, function (email) {
+                emailService.sendEmailInvite(newUser.name, team.number, team.name, email);
+            });
         };
 
         $scope.age_groups = [
