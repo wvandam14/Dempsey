@@ -11,7 +11,9 @@ soccerStats.controller('registrationController',
             if ($scope.tabNumber > tab) {
                 $scope.tabNumber = tab;
             }
-            if ($scope.confirmPassword() && viewService.validateAreaByFormName(currentForm) && (tab === ($scope.tabNumber + 1))) {
+            if ($scope.confirmPassword() 
+                && viewService.validateAreaByFormName(currentForm) 
+                && (tab === ($scope.tabNumber + 1))) {
                 $scope.tabNumber = tab;
             }
 
@@ -41,40 +43,58 @@ soccerStats.controller('registrationController',
             $scope.inviteEmails.splice(index, 1);
         }
 
-                // Sends email via the cloud code with parse
+        // Sends email via the cloud code with parse
         $scope.sendEmailInvite = function(newUser, team) {
             _.each($scope.inviteEmails, function (email) {
                 emailService.sendEmailInvite(newUser.name, team.number, team.name, email);
             });
         };
 
-		//user information
+		// //user information
+  //       $scope.newUser = {
+  //           name: 'Tommy Glasser',
+  //           email: 'example@example.com',
+  //           password: '123',
+  //           confirmPassword: '123',
+  //           phone: '1234567890',
+  //           city: 'Spokane',
+  //           state: 'Washington'
+  //       };
+
+  //       //team information 
+  //       $scope.team = {
+  //           logo: '',
+  //           name: 'Goliath',
+  //           number: '1234DGC',
+  //           leagueName: 'Champions',
+  //           ageGroup: 'U12',
+  //           city: 'Spokane',
+  //           state: 'Montana'
+  //       };
+
+        //user information
         $scope.newUser = {
-            name: 'Tommy Glasser',
-            email: 'example@example.com',
-            password: '123',
-            confirmPassword: '123',
-            phone: '1234567890',
-            city: 'Spokane',
-            state: 'Washington'
+            name: '',
+            email: '',
+            password: '',
+            confirmPassword: '',
+            phone: '',
+            city: '',
+            state: ''
         };
 
         //team information 
         $scope.team = {
             logo: '',
-            name: 'Goliath',
-            number: '1234DGC',
-            leagueName: 'Champions',
-            ageGroup: 'U12',
-            city: 'Spokane',
-            state: 'Montana'
+            name: '',
+            number: '',
+            leagueName: '',
+            ageGroup: '',
+            city: '',
+            state: ''
         };
         
-        $scope.confirmPassword = function() {
-            return $scope.newUser.password === $scope.newUser.confirmPassword;
-        };
-
-
+        //register coach
         $scope.register = function (newUser, newTeam) {
             var registerUser = new Parse.User();
             registerUser.set("username", newUser.email);
@@ -86,6 +106,7 @@ soccerStats.controller('registrationController',
             registerUser.set("state", newUser.state.value);
             registerUser.set("accountType", 1);
 
+            //register team
             registerUser.signUp(null, {
                 success: function (registerUser) {
                     console.log("registration successful");
@@ -104,6 +125,7 @@ soccerStats.controller('registrationController',
                     _team.save(null, {
                         success: function (_team) {
                             console.log("Team registered");
+                            //once coach and team information is filled, send invites
                             $scope.sendEmailInvite(newUser, newTeam);
                         },
                         error: function (_team, error) {
@@ -112,16 +134,22 @@ soccerStats.controller('registrationController',
                     });
                 },
                 error: function (registerUser, error) {
-                    newUser.signUpFlag = false;
                     console.log("Error: " + error.code + " " + error.message);
                 }
             });
         };
 
+        //compare new password with confirmation password
+        $scope.confirmPassword = function() {
+            return $scope.newUser.password === $scope.newUser.confirmPassword;
+        };
+
+        //triggers file upload
         $scope.selectFile = function(){
-            $("#file").click();
+            $("#file").trigger('click');
         }
 
+        //upload the selected picture
         $scope.fileNameChanged = function(files) {
           console.log("select file");
 
@@ -142,20 +170,11 @@ soccerStats.controller('registrationController',
                     });
                 }
                 reader.readAsDataURL(file);
-                
-                
                 //this.team = parseFile.url();
             }
         }
 
-        // Sends email via the cloud code with parse
-        $scope.sendEmailInvite = function(newUser, team) {
-            _.each($scope.inviteEmails, function (email) {
-                emailService.sendEmailInvite(newUser.name, team.number, team.name, email);
-            });
-        };
-
-
+        //below are static arrays
         $scope.ageGroups = [
             { value: "", label: "Select an Age Group..." },
             { value: "U12", label: "U12" },
