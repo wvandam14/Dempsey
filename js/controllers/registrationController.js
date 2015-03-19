@@ -1,10 +1,22 @@
 soccerStats.controller('registrationController',
-    function registrationController($scope, emailService, viewService) {
+    function registrationController($scope, emailService, viewService,$timeout) {
     	
-        $scope.tabNumber = 1;
+        //tab functionality 
+        $scope.tabNumber = 0;
+        $scope.formList = ['accountForm', 'teamForm', 'inviteForm'];
+        $scope.team = {};
 
         $scope.setTab = function (tab) {
-        	$scope.tabNumber = tab;
+            var currentForm = $scope.formList[$scope.tabNumber];
+            if ($scope.tabNumber > tab) {
+                $scope.tabNumber = tab;
+            }
+            if ($scope.confirmPassword() 
+                && viewService.validateAreaByFormName(currentForm) 
+                && (tab === ($scope.tabNumber + 1))) {
+                $scope.tabNumber = tab;
+            }
+
         };
 
         $scope.isTab = function (tab) {
@@ -12,18 +24,15 @@ soccerStats.controller('registrationController',
         };
 
         $scope.incrementTab = function () {
-        	if($scope.tabNumber < 3) {
-        		$scope.tabNumber++;
-        	}
+        	$scope.setTab($scope.tabNumber + 1);
         };
+
 
         // Array containing the emails who will receive the invitation to the team
         $scope.inviteEmails = [];
         $scope.addEmail = function () {
             if(viewService.validateAreaByFormName("inviteForm")){
                 $scope.inviteEmails.unshift($scope.invite.email);
-                console.log($scope.invite.email);
-                console.log($scope.inviteEmails);
             }
             else {
                 // TODO: pop up toast notification that they suck
@@ -34,28 +43,58 @@ soccerStats.controller('registrationController',
             $scope.inviteEmails.splice(index, 1);
         }
 
-		//user register
-		//need to make sure database and user submission is consistent 
+        // Sends email via the cloud code with parse
+        $scope.sendEmailInvite = function(newUser, team) {
+            _.each($scope.inviteEmails, function (email) {
+                emailService.sendEmailInvite(newUser.name, team.number, team.name, email);
+            });
+        };
+
+		// //user information
+  //       $scope.newUser = {
+  //           name: 'Tommy Glasser',
+  //           email: 'example@example.com',
+  //           password: '123',
+  //           confirmPassword: '123',
+  //           phone: '1234567890',
+  //           city: 'Spokane',
+  //           state: 'Washington'
+  //       };
+
+  //       //team information 
+  //       $scope.team = {
+  //           logo: '',
+  //           name: 'Goliath',
+  //           number: '1234DGC',
+  //           leagueName: 'Champions',
+  //           ageGroup: 'U12',
+  //           city: 'Spokane',
+  //           state: 'Montana'
+  //       };
+
+        //user information
         $scope.newUser = {
             name: '',
             email: '',
             password: '',
+            confirmPassword: '',
             phone: '',
             city: '',
             state: ''
         };
 
+        //team information 
         $scope.team = {
             logo: '',
             name: '',
             number: '',
-            league_name: '',
-            age_group: '',
+            leagueName: '',
+            ageGroup: '',
             city: '',
             state: ''
         };
-
-        //TODO: accountType in parse?
+        
+        //register coach
         $scope.register = function (newUser, newTeam) {
             var registerUser = new Parse.User();
             registerUser.set("username", newUser.email);
@@ -65,49 +104,83 @@ soccerStats.controller('registrationController',
             registerUser.set("phone", newUser.phone);
             registerUser.set("city", newUser.city);
             registerUser.set("state", newUser.state.value);
+            registerUser.set("accountType", 1);
 
+            //register team
             registerUser.signUp(null, {
                 success: function (registerUser) {
-                    alert("registration successful");
+                    console.log("registration successful");
+                    var Team = Parse.Object.extend("Team");
+                    var _team = new Team();
+
+                    _team.set("age_group", newTeam.ageGroup.value);
+                    _team.set("city", newTeam.city);
+                    _team.set("league_name", newTeam.leagueName);
+                    //TODO _team.set("logo", newTeam.logo);
+                    _team.set("name", newTeam.name);
+                    _team.set("number", newTeam.number);
+                    _team.set("state", newTeam.state.value);
+                    _team.set("logo",$scope.logoFile);
+
+                    _team.save(null, {
+                        success: function (_team) {
+                            console.log("Team registered");
+                            //once coach and team information is filled, send invites
+                            $scope.sendEmailInvite(newUser, newTeam);
+                        },
+                        error: function (_team, error) {
+                            console.log("Error: " + error.code + " " + error.message);
+                        }
+                    });
                 },
                 error: function (registerUser, error) {
-                    alert("Error: " + error.code + " " + error.message);
-                }
-            });
-
-            var Team = Parse.Object.extend("Team");
-            var _team = new Team();
-
-            _team.set("age_group", newTeam.age_group.value);
-            _team.set("city", newTeam.city);
-            _team.set("league_name", newTeam.leagueName);
-            //TODO _team.set("logo", newTeam.logo);
-            _team.set("name", newTeam.name);
-            _team.set("number", newTeam.number);
-            _team.set("state", newTeam.state.value);
-
-            _team.save(null, {
-                success: function (_team) {
-                    alert("Team registered");
-                },
-                error: function (_team, error) {
-                    alert("Error: " + error.code + " " + error.message);
+                    console.log("Error: " + error.code + " " + error.message);
                 }
             });
         };
 
-        // Sends email via the cloud code with parse
-        $scope.sendEmailInvite = function() {
-            // Todo: Email Service testing only
-            emailService.sendEmailInvite('Gordon', '123', 'Seattle Sounders FC', 'alecmmoore@gmail.com');
+        //compare new password with confirmation password
+        $scope.confirmPassword = function() {
+            return $scope.newUser.password === $scope.newUser.confirmPassword;
         };
 
-        $scope.age_groups = [
-            { value: "", label: "Select an age group..." },
+        //triggers file upload
+        $scope.selectFile = function(){
+            $("#file").trigger('click');
+        }
+
+        //upload the selected picture
+        $scope.fileNameChanged = function(files) {
+          console.log("select file");
+
+            var fileUploadControl = files;
+            if (fileUploadControl.files.length > 0) {
+                var file = fileUploadControl.files[0];
+                var name = "photo."+file.type.split('/').pop();
+                var parseFile = new Parse.File(name, file);
+
+                 $timeout(function(){
+                    $scope.logoFile = parseFile;
+                 });
+                    
+                var reader = new FileReader();
+                reader.onloadend = function() {
+                    $timeout(function(){
+                        $scope.team.logo = reader.result;
+                    });
+                }
+                reader.readAsDataURL(file);
+                //this.team = parseFile.url();
+            }
+        }
+
+        //below are static arrays
+        $scope.ageGroups = [
+            { value: "", label: "Select an Age Group..." },
             { value: "U12", label: "U12" },
             { value: "U16", label: "U16" }
         ];
-        $scope.team.age_group = $scope.age_groups[0];
+        $scope.team.ageGroup = $scope.ageGroups[0];
 
         $scope.states = [
 	        {value:   "", label: "Select a State"},
@@ -165,4 +238,6 @@ soccerStats.controller('registrationController',
 	    ];
         $scope.newUser.state = $scope.states[0];
         $scope.team.state = $scope.states[0];
+
+
     });

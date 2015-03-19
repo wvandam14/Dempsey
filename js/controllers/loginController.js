@@ -1,9 +1,12 @@
-soccerStats.controller('loginController', function loginController($scope, $rootScope, $location, viewService) {
+soccerStats.controller('loginController', function loginController($scope, $rootScope, $timeout, $location, viewService) {
         // User object
         $scope.user = {name: '', password: ''};
 
         $scope.goToPage = function(path) {
-            viewService.goToPage(path);
+            $timeout(function() {
+                console.log("loginsuccess");
+                viewService.goToPage(path);
+            });
         }
 
         $scope.login = function(user) {
@@ -12,6 +15,7 @@ soccerStats.controller('loginController', function loginController($scope, $root
                     success: function (user) {
                         // Todo: Redirect to home page
                         // Todo: must click more than once on login in order to redirect to home page
+                        console.log("loginsuccess");
                         $scope.goToPage('/home');
                     },
                     error: function(user, error) {
