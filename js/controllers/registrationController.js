@@ -1,9 +1,10 @@
 soccerStats.controller('registrationController',
-    function registrationController($scope, emailService, viewService) {
+    function registrationController($scope, emailService, viewService,$timeout) {
     	
         //tab functionality 
         $scope.tabNumber = 0;
         $scope.formList = ['accountForm', 'teamForm', 'inviteForm'];
+        $scope.team = {};
 
         $scope.setTab = function (tab) {
             var currentForm = $scope.formList[$scope.tabNumber];
@@ -87,7 +88,7 @@ soccerStats.controller('registrationController',
 
             registerUser.signUp(null, {
                 success: function (registerUser) {
-                    Console.log("registration successful");
+                    console.log("registration successful");
                     var Team = Parse.Object.extend("Team");
                     var _team = new Team();
 
@@ -98,24 +99,61 @@ soccerStats.controller('registrationController',
                     _team.set("name", newTeam.name);
                     _team.set("number", newTeam.number);
                     _team.set("state", newTeam.state.value);
+                    _team.set("logo",$scope.logoFile);
 
                     _team.save(null, {
                         success: function (_team) {
-                            Console.log("Team registered");
+                            console.log("Team registered");
                             $scope.sendEmailInvite(newUser, newTeam);
                         },
                         error: function (_team, error) {
-                            Console.log("Error: " + error.code + " " + error.message);
+                            console.log("Error: " + error.code + " " + error.message);
                         }
                     });
                 },
                 error: function (registerUser, error) {
                     newUser.signUpFlag = false;
-                    Console.log("Error: " + error.code + " " + error.message);
+                    console.log("Error: " + error.code + " " + error.message);
                 }
             });
         };
 
+        $scope.selectFile = function(){
+            $("#file").click();
+        }
+
+        $scope.fileNameChanged = function(files) {
+          console.log("select file");
+
+            var fileUploadControl = files;
+            if (fileUploadControl.files.length > 0) {
+                var file = fileUploadControl.files[0];
+                var name = "photo."+file.type.split('/').pop();
+                var parseFile = new Parse.File(name, file);
+
+                 $timeout(function(){
+                    $scope.logoFile = parseFile;
+                 });
+                    
+                var reader = new FileReader();
+                reader.onloadend = function() {
+                    $timeout(function(){
+                        $scope.team.logo = reader.result;
+                    });
+                }
+                reader.readAsDataURL(file);
+                
+                
+                //this.team = parseFile.url();
+            }
+        }
+
+        // Sends email via the cloud code with parse
+        $scope.sendEmailInvite = function(newUser, team) {
+            _.each($scope.inviteEmails, function (email) {
+                emailService.sendEmailInvite(newUser.name, team.number, team.name, email);
+            });
+        };
 
 
         $scope.ageGroups = [
