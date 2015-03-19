@@ -36,10 +36,20 @@ input {
     width:100%;
 }
 
-input, select {
+input {
     border: 1px solid #DDD;
     padding: 11px;
     margin-bottom: 15px;
+}
+
+select {
+    border: 1px solid #DDD;
+    padding: 12px;
+    margin-bottom: 15px;
+}
+
+input.date {
+    padding: 9px 11px 10px 11px;
 }
 
 ::-webkit-input-placeholder {
@@ -262,9 +272,8 @@ input.ng-invalid-required.ng-touched {
 
 .img-container {
     width: 120px;
-    height: 100px;
+    height: 120px;
     overflow: hidden;
-    padding: 0 10px;
 }
 
 .img-container img {

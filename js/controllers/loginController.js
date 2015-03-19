@@ -1,6 +1,6 @@
 soccerStats.controller('loginController', function loginController($scope, $rootScope, $timeout, $location, viewService) {
         // User object
-        $scope.user = {name: '', password: ''};
+        $scope.user = {email: '', password: ''};
 
         $scope.goToPage = function(path) {
             console.log("loginsuccess");
@@ -9,7 +9,7 @@ soccerStats.controller('loginController', function loginController($scope, $root
 
         $scope.login = function(user) {
             if (viewService.validateAreaByFormName('loginForm')) {
-                Parse.User.logIn(user.name, user.password, {
+                Parse.User.logIn(user.email, user.password, {
                     success: function (user) {
                         console.log("loginsuccess");
                         $scope.goToPage('/home');

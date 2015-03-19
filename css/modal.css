@@ -72,7 +72,7 @@
 }
 
 .modal.registration .logo-container {
-    padding: 22px 0 21px 0;
+    padding: 22px 0;
 }
 
 .modal.registration .button.inline {
@@ -96,7 +96,7 @@
 }
 
 .modal.player .photo-container {
-    padding: 22px 0 26px 0;
+    padding: 22px 0 22px 0;
 }
 
 /* ---------- END Player Modal ---------- */
