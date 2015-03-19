@@ -45,7 +45,7 @@ soccerStats.controller('registrationController',
         // Sends email via the cloud code with parse
         $scope.sendEmailInvite = function(newUser, team) {
             _.each($scope.inviteEmails, function (email) {
-                emailService.sendEmailInvite(newUser.name, team.number, team.name, email);
+                emailService.sendEmailInvite(newUser.name, team.id, team.get("name"), email);
             });
         };
 
@@ -96,49 +96,53 @@ soccerStats.controller('registrationController',
         
         //register coach
         $scope.register = function (newUser, newTeam) {
-            var registerUser = new Parse.User();
-            registerUser.set("username", newUser.email);
-            registerUser.set("name", newUser.name);
-            registerUser.set("email", newUser.email);
-            registerUser.set("password", newUser.password);
-            registerUser.set("phone", newUser.phone);
-            registerUser.set("city", newUser.city);
-            registerUser.set("state", newUser.state.value);
-            registerUser.set("accountType", 1);
+            var Team = Parse.Object.extend("Team");
+            var _team = new Team();
 
-            //register team
-            registerUser.signUp(null, {
-                success: function (registerUser) {
-                    console.log("registration successful");
-                    var Team = Parse.Object.extend("Team");
-                    var _team = new Team();
+            _team.set("ageGroup", newTeam.ageGroup.value);
+            _team.set("city", newTeam.city);
+            _team.set("leagueName", newTeam.leagueName);
+            //TODO _team.set("logo", newTeam.logo);
+            _team.set("name", newTeam.name);
+            _team.set("number", newTeam.number);
+            _team.set("state", newTeam.state.value);
+            _team.set("logo",$scope.logoFile);
 
-                    _team.set("ageGoup", newTeam.ageGroup.value);
-                    _team.set("city", newTeam.city);
-                    _team.set("leagueName", newTeam.leagueName);
-                    //TODO _team.set("logo", newTeam.logo);
-                    _team.set("name", newTeam.name);
-                    _team.set("number", newTeam.number);
-                    _team.set("state", newTeam.state.value);
-                    _team.set("logo",$scope.logoFile);
+            _team.save(null, {
+                success: function (_team) {
+                    console.log("Team registered");
 
-                    _team.save(null, {
-                        success: function (_team) {
-                            console.log("Team registered");
+                    var registerUser = new Parse.User();
 
-                            $scope.sendEmailInvite(newUser, newTeam);
+                    registerUser.set("username", newUser.email);
+                    registerUser.set("name", newUser.name);
+                    registerUser.set("email", newUser.email);
+                    registerUser.set("password", newUser.password);
+                    registerUser.set("phone", newUser.phone);
+                    registerUser.set("city", newUser.city);
+                    registerUser.set("state", newUser.state.value);
+                    registerUser.set("teams", [_team.id]);
+                    registerUser.set("accountType", 1);
+
+                    //register team
+                    registerUser.signUp(null, {
+                        success: function (registerUser) {
+                            console.log("registration successful");
+                            $scope.sendEmailInvite(newUser, _team);
                             viewService.goToPage('/home');
                         },
-                        error: function (_team, error) {
+                        error: function (registerUser, error) {
+                            newUser.signUpFlag = false;
                             console.log("Error: " + error.code + " " + error.message);
                         }
                     });
+
                 },
-                error: function (registerUser, error) {
-                    newUser.signUpFlag = false;
+                error: function (_team, error) {
                     console.log("Error: " + error.code + " " + error.message);
                 }
             });
+
         };
 
         //compare new password with confirmation password

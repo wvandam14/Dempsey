@@ -41,6 +41,7 @@ Parse.Cloud.define("sendEmailInvite", function(request, response) {
                 user.set("username", userEmail);
                 user.set("password", tempPassword);
                 user.set("email", userEmail);
+                user.set("teams", [teamId]);
                 user.set("accountType", 2);
 
                 user.signUp(null, {
@@ -77,29 +78,36 @@ Parse.Cloud.define("sendEmailInvite", function(request, response) {
                     "<br/><br/>" +
                     "Looks like you already have an account with us, so go ahead and log in at http://alecmmoore.github.io#/login to accept the invitation." +
                     "<br/><br/><br/><br/>" +
-                    "Please logon and register your player" +
+                    "Please logon and register your player." +
                     "Thanks!" +
                     "<br/>" +
                     "Soccer Stats Development Team</p>";
 
-                email = sendgrid.Email({to: userEmail});
-                email.setFrom('no-reply@soccerstats.com');
-                email.setFromName('Soccer Stats');
-                email.setSubject('Welcome to Soccer Stats!');
-                email.setHTML(emailBody);
 
-                sendgrid.sendEmail(email).then(
-                    function(httpResponse) {
-                        console.log(httpResponse);
-                        response.success("Email sent!");
-                    },
-                    function(httpResponse) {
-                        console.error(httpResponse);
-                        response.error(httpResponse);
-                    });
+                results[0].addUnique("teams", teamId);
+                results[0].save(null, {
+                    success: function (data) {
+                        email = sendgrid.Email({to: userEmail});
+                        email.setFrom('no-reply@soccerstats.com');
+                        email.setFromName('Soccer Stats');
+                        email.setSubject('Welcome to Soccer Stats!');
+                        email.setHTML(emailBody);
+
+                        sendgrid.sendEmail(email).then(
+                            function (httpResponse) {
+                                console.log(httpResponse);
+                                response.success("Email sent!");
+                            },
+                            function (httpResponse) {
+                                console.error(httpResponse);
+                                response.error(httpResponse);
+                            });
+                    }, error: function (error) {
+                       response.error(error);
+                    }
+                });
+
             }
-
-
         },
         error: function() {
             response.error("User lookup failed");
