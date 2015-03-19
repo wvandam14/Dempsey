@@ -1,7 +1,7 @@
 soccerStats.controller('registrationController',
     function registrationController($scope, emailService, viewService) {
     	
-        $scope.tabNumber = 2;
+        $scope.tabNumber = 0;
         $scope.formList = ['accountForm', 'teamForm', 'inviteForm'];
 
         $scope.setTab = function (tab) {
@@ -80,7 +80,7 @@ soccerStats.controller('registrationController',
             var Team = Parse.Object.extend("Team");
             var _team = new Team();
 
-            _team.set("age_group", newTeam.age_group.value);
+            _team.set("age_group", newTeam.ageGroup.value);
             _team.set("city", newTeam.city);
             _team.set("league_name", newTeam.leagueName);
             //TODO _team.set("logo", newTeam.logo);
@@ -104,12 +104,12 @@ soccerStats.controller('registrationController',
             emailService.sendEmailInvite('Gordon', '123', 'Seattle Sounders FC', 'alecmmoore@gmail.com');
         };
 
-        $scope.age_groups = [
-            { value: "", label: "Select an age group..." },
+        $scope.ageGroups = [
+            { value: "", label: "Select an Age Group..." },
             { value: "U12", label: "U12" },
             { value: "U16", label: "U16" }
         ];
-        $scope.team.age_group = $scope.age_groups[0];
+        $scope.team.ageGroup = $scope.ageGroups[0];
 
         $scope.states = [
 	        {value:   "", label: "Select a State"},
