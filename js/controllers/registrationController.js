@@ -85,17 +85,17 @@ soccerStats.controller('registrationController',
 
                     _team.save(null, {
                         success: function (_team) {
-                            Console.log("Team registered");
+                            console.log("Team registered");
                             $scope.sendEmailInvite(newUser, newTeam);
                         },
                         error: function (_team, error) {
-                            Console.log("Error: " + error.code + " " + error.message);
+                            console.log("Error: " + error.code + " " + error.message);
                         }
                     });
                 },
                 error: function (registerUser, error) {
                     newUser.signUpFlag = false;
-                    Console.log("Error: " + error.code + " " + error.message);
+                    console.log("Error: " + error.code + " " + error.message);
                 }
             });
         };
