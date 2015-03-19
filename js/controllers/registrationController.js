@@ -1,10 +1,16 @@
 soccerStats.controller('registrationController',
     function registrationController($scope, emailService, viewService) {
     	
-        $scope.tabNumber = 1;
+        $scope.tabNumber = 2;
+        $scope.formList = ['accountForm', 'teamForm', 'inviteForm'];
 
         $scope.setTab = function (tab) {
-        	$scope.tabNumber = tab;
+            if($scope.tabNumber > tab) {
+                $scope.tabNumber = tab;
+            }
+            if(viewService.validateAreaByFormName($scope.formList[$scope.tabNumber]) && tab === ($scope.tabNumber + 1)) {
+                $scope.tabNumber = tab;
+            }
         };
 
         $scope.isTab = function (tab) {
@@ -12,9 +18,7 @@ soccerStats.controller('registrationController',
         };
 
         $scope.incrementTab = function () {
-        	if($scope.tabNumber < 3) {
-        		$scope.tabNumber++;
-        	}
+        	$scope.setTab($scope.tabNumber + 1);
         };
 
         // Array containing the emails who will receive the invitation to the team
@@ -22,8 +26,6 @@ soccerStats.controller('registrationController',
         $scope.addEmail = function () {
             if(viewService.validateAreaByFormName("inviteForm")){
                 $scope.inviteEmails.unshift($scope.invite.email);
-                console.log($scope.invite.email);
-                console.log($scope.inviteEmails);
             }
             else {
                 // TODO: pop up toast notification that they suck
