@@ -1,10 +1,16 @@
 soccerStats.controller('registrationController',
-    function registrationController($scope, emailService) {
+    function registrationController($scope, emailService, viewService) {
     	
-        $scope.tabNumber = 1;
+        $scope.tabNumber = 0;
+        $scope.formList = ['accountForm', 'teamForm', 'inviteForm'];
 
         $scope.setTab = function (tab) {
-        	$scope.tabNumber = tab;
+            if($scope.tabNumber > tab) {
+                $scope.tabNumber = tab;
+            }
+            if(viewService.validateAreaByFormName($scope.formList[$scope.tabNumber]) && tab === ($scope.tabNumber + 1)) {
+                $scope.tabNumber = tab;
+            }
         };
 
         $scope.isTab = function (tab) {
@@ -12,17 +18,17 @@ soccerStats.controller('registrationController',
         };
 
         $scope.incrementTab = function () {
-        	if($scope.tabNumber < 3) {
-        		$scope.tabNumber++;
-        	}
+        	$scope.setTab($scope.tabNumber + 1);
         };
 
         // Array containing the emails who will receive the invitation to the team
         $scope.inviteEmails = [];
         $scope.addEmail = function () {
-            if($scope.invite.email !== '') {
-                $scope.inviteEmails.unshift($scope.invite.email)
-                $scope.invite.email = '';
+            if(viewService.validateAreaByFormName("inviteForm")){
+                $scope.inviteEmails.unshift($scope.invite.email);
+            }
+            else {
+                // TODO: pop up toast notification that they suck
             }
         };
 
@@ -33,22 +39,22 @@ soccerStats.controller('registrationController',
 		//user register
 		//need to make sure database and user submission is consistent 
         $scope.newUser = {
-            name: '',
-            email: '',
-            password: '',
-            phone: '',
-            city: '',
-            state: ''
+            name: 'Tommy GLasser',
+            email: 'example@example.com',
+            password: '123',
+            phone: '1234567890',
+            city: 'Spokane',
+            state: 'Washington'
         };
 
         $scope.team = {
             logo: '',
-            name: '',
-            number: '',
-            league_name: '',
-            age_group: '',
-            city: '',
-            state: ''
+            name: 'Goliath',
+            number: '1234DGC',
+            leagueName: 'Champions',
+            ageGroup: 'U12',
+            city: 'Spokane',
+            state: 'Montana'
         };
 
         //TODO: accountType in parse?
@@ -69,7 +75,7 @@ soccerStats.controller('registrationController',
                     var Team = Parse.Object.extend("Team");
                     var _team = new Team();
 
-                    _team.set("age_group", newTeam.age_group.value);
+                    _team.set("age_group", newTeam.ageGroup.value);
                     _team.set("city", newTeam.city);
                     _team.set("league_name", newTeam.leagueName);
                     //TODO _team.set("logo", newTeam.logo);
@@ -101,12 +107,12 @@ soccerStats.controller('registrationController',
             });
         };
 
-        $scope.age_groups = [
-            { value: "", label: "Select an age group..." },
+        $scope.ageGroups = [
+            { value: "", label: "Select an Age Group..." },
             { value: "U12", label: "U12" },
             { value: "U16", label: "U16" }
         ];
-        $scope.team.age_group = $scope.age_groups[0];
+        $scope.team.ageGroup = $scope.ageGroups[0];
 
         $scope.states = [
 	        {value:   "", label: "Select a State"},

@@ -54,18 +54,19 @@
     padding: 10px;
     margin-right: 10px;
     margin-bottom: 10px;
-    max-width: 200px;
+    max-width: 100%;
     float: left;
 }
 
 .modal.registration .email-box p {
     color: #FFF;
     width: 100%;
-
 }
 
 .close-button {
     margin-left: 5px;
+    cursor: pointer;
+
 }
 
 .modal.registration .logo-text {
@@ -82,6 +83,7 @@
 
 .modal.registration .button.inline {
     margin-left: 10px;
+    width: 150px;
 }
 
 /* ---------- END Registration Modal ---------- */

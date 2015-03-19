@@ -65,6 +65,7 @@ input:focus {
     border: 1px solid #5DA97B;
 }
 
+input.ng-invalid-email.ng-touched,
 input.ng-invalid-required.ng-touched {
     background-color: #FFE1E1;
     border:1px solid #FF7373;
