@@ -12,7 +12,7 @@
                         <img ng-src="{{ player.photo || './img/player-icon.svg'}}" class="flex-one"/>
                     </div>
                     <input type="file" style="display:none" id="file" name='file' accept="image/*" onchange="angular.element(this).scope().fileNameChanged(this)" />
-                    <p class="flex-one text-center logo-text">Click to add a new picture</p>
+                    <p class="flex-one text-center photo-text">Click to add a new picture</p>
                 </div>
                 <h3 class="ellipse">Player Name</h3>
                 <input type="text" ng-model="player.name" placeholder="Player Name" required />
