@@ -1,5 +1,5 @@
 soccerStats.controller('registrationController',
-    function registrationController($scope, emailService) {
+    function registrationController($scope, emailService, viewService) {
     	
         $scope.tabNumber = 1;
 
@@ -20,9 +20,13 @@ soccerStats.controller('registrationController',
         // Array containing the emails who will receive the invitation to the team
         $scope.inviteEmails = [];
         $scope.addEmail = function () {
-            if($scope.invite.email !== '') {
-                $scope.inviteEmails.unshift($scope.invite.email)
-                $scope.invite.email = '';
+            if(viewService.validateAreaByFormName("inviteForm")){
+                $scope.inviteEmails.unshift($scope.invite.email);
+                console.log($scope.invite.email);
+                console.log($scope.inviteEmails);
+            }
+            else {
+                // TODO: pop up toast notification that they suck
             }
         };
 

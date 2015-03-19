@@ -67,14 +67,16 @@
         <div class="body flex" ng-show="isTab(3)">
             <div class="flex-one">
                 <h3 class="ellipse">Email</h3>
-                <div class="flex">
-                    <input type="text" class="flex-three" ng-model="invite.email" placeholder="Add Email" />
-                    <div class="button green inline flex-one" ng-click="addEmail(invite.email)"><h1>Add Email</h1></div>
-                </div>
+                <form name="inviteForm">
+                    <div class="flex">
+                        <input type="email" class="flex-three" ng-model="invite.email" placeholder="Add Email" required/>
+                        <div class="button green inline flex-one" ng-click="addEmail(invite.email)"><h1>Add Email</h1></div>
+                    </div>
+                </form>
                 <!-- TODO: change the close button into not an 'X' (make it pretty) -->
                 <div class="box">
                     <div class="email-box flex" ng-repeat="email in inviteEmails track by $index">
-                        <p>{{email}}</p><div class="close-button" ng-click="removeEmail($index)"><p>X</p></div>
+                        <p class="ellipse">{{email}}</p><div class="close-button" ng-click="removeEmail($index)"><p>X</p></div>
                     </div>
                 </div>
             </div>
