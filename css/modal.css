@@ -1,0 +1,90 @@
+/* ---------- Default Modal ---------- */
+.modal {
+    background-color: #F2F2F2;
+    min-width: 420px;
+    max-width: 700px;
+    width: 60%;
+}
+
+.modal h3 {
+    margin-bottom: 5px;
+}
+
+.modal .head {
+    padding: 24px 20px;
+}
+
+.modal .head h1 {
+    margin-bottom: 10px;
+}
+
+.modal .body > div {
+    padding: 20px;
+    border-top: 1px solid #DDD;
+    border-bottom: 1px solid #DDD;
+}
+
+.modal .body.two-column > div:first-child {
+    border-right:1px solid #DDD;
+}
+/* ---------- END Default Modal ---------- */
+
+
+/* ---------- Login Modal ---------- */
+.modal.login {
+
+}
+
+.modal.login img {
+    margin-bottom: 15px;
+}
+
+.modal.login .text-center {
+    width:100%; /* A freaking IE fix */
+}
+
+/* ---------- END Login Modal ---------- */
+
+/* ---------- Registration Modal ---------- */
+.modal.registration {
+}
+
+.modal.registration .email-box {
+    background-color: #5DA97B;
+    padding: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    max-width: 100%;
+    float: left;
+}
+
+.modal.registration .email-box p {
+    color: #FFF;
+    width: 100%;
+}
+
+.close-button {
+    margin-left: 5px;
+    cursor: pointer;
+
+}
+
+.modal.registration .logo-text {
+    color: #B3B3B3;
+}
+
+.modal.registration .logo-container {
+    padding: 22px 0px 21px 0;
+}
+
+.modal.registration img {
+
+}
+
+.modal.registration .button.inline {
+    margin-left: 10px;
+    width: 150px;
+}
+
+/* ---------- END Registration Modal ---------- */
+
