@@ -252,4 +252,10 @@ input.ng-invalid-required.ng-touched {
     color:#FFF;
     text-align: center;
 }
+
+.close-button {
+    margin-left: 5px;
+    cursor: pointer;
+
+}
 /* ---------- END Button ----------  */

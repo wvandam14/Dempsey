@@ -89,3 +89,21 @@
 
 /* ---------- END Registration Modal ---------- */
 
+/* ---------- Player Modal ---------- */
+.modal.player {
+}
+
+.modal.player .photo-text {
+    color: #B3B3B3;
+}
+
+.modal.player .photo-container {
+    padding: 22px 0px 26px 0;
+}
+
+.modal.player img {
+
+}
+
+/* ---------- END Player Modal ---------- */
+

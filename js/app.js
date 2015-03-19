@@ -21,5 +21,11 @@ var soccerStats = angular.module('soccerStats', ['ngRoute','ngSanitize','ngResou
             controller: 'homeController',
             scope: {}
         });
+
+        $routeProvider.when('/player', {
+            templateUrl: 'templates/pages/player-modal.html',
+            controller: 'playerController',
+            scope:{}
+        });
     }
 );
