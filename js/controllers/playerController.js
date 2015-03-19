@@ -34,7 +34,7 @@ soccerStats.controller('playerController', function loginController($scope, $roo
                 newPlayer.set("team", player.team.value);
                 newPlayer.set("jerseyNumber", player.jerseyNumber);
                 newPlayer.set("city", player.city);
-                newPlayer.set("state", player.state);
+                newPlayer.set("state", player.state.value);
                 newPlayer.set("emergencyContact", player.emergencyContact.name);
                 newPlayer.set("phone", player.emergencyContact.phone);
                 newPlayer.set("relationship", player.emergencyContact.relationship);
