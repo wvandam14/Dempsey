@@ -2,7 +2,7 @@ soccerStats.controller('registrationController',
     function registrationController($scope, emailService, viewService,$timeout) {
     	
         //tab functionality 
-        $scope.tabNumber = 1;
+        $scope.tabNumber = 0;
         $scope.formList = ['accountForm', 'teamForm', 'inviteForm'];
         $scope.team = {};
 
@@ -176,7 +176,7 @@ soccerStats.controller('registrationController',
 
         //below are static arrays
         $scope.ageGroups = [
-            { value: "", label: "Select an Age Group..." },
+            { value: "", label: "Select an Age Group" },
             { value: "U12", label: "U12" },
             { value: "U16", label: "U16" }
         ];

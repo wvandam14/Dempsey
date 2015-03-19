@@ -1,4 +1,4 @@
-<div class="registration-page flex flex-center">
+<div class="registration-page flex flex-center-horizontal">
     <div class="modal registration">
     	<div class="head" ng-show="isTab(0)">
     		<h1>Create Coach Account</h1>
@@ -80,7 +80,7 @@
                 <!-- TODO: change the close button into not an 'X' (make it pretty) -->
                 <div class="box">
                     <div class="email-box flex" ng-repeat="email in inviteEmails track by $index">
-                        <p class="ellipse">{{email}}</p><div class="close-button" ng-click="removeEmail($index)"><p>X</p></div>
+                        <p class="ellipse">{{email}}</p><div class="close-button" ng-click="removeEmail($index)"><p>x</p></div>
                     </div>
                 </div>
             </div>

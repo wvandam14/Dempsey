@@ -1,4 +1,4 @@
-<div class="player-page flex flex-center">
+<div class="player-page flex flex-center-horizontal">
     <div class="modal player">
     	<div class="head">
     		<h1>Create A New Player</h1>
@@ -8,11 +8,15 @@
             <div class="flex-one">
                 <h3 class="ellipse">Player Photo</h3>
                 <div class="flex flex-center photo-container">
-                    <img src='./img/player-icon.svg' id="photo" class="flex-one"/>
+                    <div class="img-container">
+                        <img src='./img/player-icon.svg' id="photo" />
+                    </div>
                     <p class="flex-one text-center logo-text">Click to add a new picture</p>
                 </div>
                 <h3 class="ellipse">Player Name</h3>
-                <input type="text" ng-model="player.name" placeholder="Timmy Lee Jones" required />
+                <input type="text" ng-model="player.name" placeholder="Player Name" required />
+                <h3 class="ellipse">Birthday</h3>
+                <input type="date" ng-model="player.birthday" required />
                 <h3 class="ellipse">Team</h3>
                 <select ng-model="player.team" ng-options="team as team.label for team in teamss" required>
                 </select>  

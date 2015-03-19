@@ -1,4 +1,8 @@
 /* ---------- Default Modal ---------- */
+.modal:not(.login) {
+    margin: 48px auto 80px;
+}
+
 .modal {
     background-color: #F2F2F2;
     min-width: 420px;
@@ -71,17 +75,6 @@
     padding: 22px 0 21px 0;
 }
 
-.modal.registration .img-container {
-    width: 120px;
-    height: 120px;
-    overflow: hidden;
-    padding: 0 10px;
-}
-
-.modal.registration .img-container img {
-    width:100%;
-}
-
 .modal.registration .button.inline {
     margin-left: 10px;
     width: 150px;
@@ -98,11 +91,7 @@
 }
 
 .modal.player .photo-container {
-    padding: 22px 0px 26px 0;
-}
-
-.modal.player img {
-
+    padding: 22px 0 26px 0;
 }
 
 /* ---------- END Player Modal ---------- */

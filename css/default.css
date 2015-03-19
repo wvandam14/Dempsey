@@ -259,3 +259,14 @@ input.ng-invalid-required.ng-touched {
 
 }
 /* ---------- END Button ----------  */
+
+.img-container {
+    width: 120px;
+    height: 100px;
+    overflow: hidden;
+    padding: 0 10px;
+}
+
+.img-container img {
+    width: 100%;
+}
