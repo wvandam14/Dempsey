@@ -13,7 +13,7 @@ soccerStats.factory('viewService', function ($location) {
                     //set it to dirty
                     $(field).addClass('ng-touched');
                     //is there a value? set to ng-valid
-                    if (!field.value) {
+                    if (!field.value || field.hasClass('ng-invalid-email')) {
                         isValid = false;
                         $(field).addClass('ng-invalid');
                         $(field).addClass('ng-invalid-required');
@@ -24,7 +24,7 @@ soccerStats.factory('viewService', function ($location) {
                     }
 
                 }
-            })
+            });
 
             return isValid;
         };
