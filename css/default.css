@@ -28,6 +28,14 @@ p {
     font-size: 20px;
 }
 
+p.error {
+    color:#FF7373;
+}
+
+p.error img {
+    margin: 0 3px -3px 0;
+}
+
 select,
 textarea,
 input {

@@ -25,7 +25,7 @@
                 <input type="password" ng-model="newUser.password" placeholder="" required />
                 <h3 class="ellipse">Confirm Password</h3>
                 <input type="password" ng-model="newUser.confirmPassword" placeholder="" required />
-                <p ng-show="!confirmPassword()">Passwords do not match</p>
+                <p ng-show="!confirmPassword()" class="error"><img src="./img/alert-icon.svg"/> Passwords do not match</p>
             </div>
             <div class="flex-one">
                 <h3 class="ellipse">Phone</h3>
