@@ -49,49 +49,50 @@ soccerStats.controller('registrationController',
             });
         };
 
-		// //user information
-  //       $scope.newUser = {
-  //           name: 'Tommy Glasser',
-  //           email: 'example@example.com',
-  //           password: '123',
-  //           confirmPassword: '123',
-  //           phone: '1234567890',
-  //           city: 'Spokane',
-  //           state: 'Washington'
-  //       };
-
-  //       //team information 
-  //       $scope.team = {
-  //           logo: '',
-  //           name: 'Goliath',
-  //           number: '1234DGC',
-  //           leagueName: 'Champions',
-  //           ageGroup: 'U12',
-  //           city: 'Spokane',
-  //           state: 'Montana'
-  //       };
-
-        //user information
+        //test 
+		//user information
         $scope.newUser = {
-            name: '',
-            email: '',
-            password: '',
-            confirmPassword: '',
-            phone: '',
-            city: '',
-            state: ''
+            name: 'Tommy Glasser',
+            email: 'tommyglasser@mailinator.com',
+            password: '123',
+            confirmPassword: '123',
+            phone: '1234567890',
+            city: 'Spokane',
+            state: 'Washington'
         };
 
         //team information 
         $scope.team = {
             logo: '',
-            name: '',
-            number: '',
-            leagueName: '',
-            ageGroup: '',
-            city: '',
-            state: ''
+            name: 'Goliath',
+            number: '1234DGC',
+            leagueName: 'Champions',
+            ageGroup: 'U12',
+            city: 'Spokane',
+            state: 'Montana'
         };
+
+        // //user information
+        // $scope.newUser = {
+        //     name: '',
+        //     email: '',
+        //     password: '',
+        //     confirmPassword: '',
+        //     phone: '',
+        //     city: '',
+        //     state: ''
+        // };
+
+        // //team information 
+        // $scope.team = {
+        //     logo: '',
+        //     name: '',
+        //     number: '',
+        //     leagueName: '',
+        //     ageGroup: '',
+        //     city: '',
+        //     state: ''
+        // };
         
         //register coach
         $scope.register = function (newUser, newTeam) {
@@ -112,9 +113,9 @@ soccerStats.controller('registrationController',
                     var Team = Parse.Object.extend("Team");
                     var _team = new Team();
 
-                    _team.set("age_group", newTeam.ageGroup.value);
+                    _team.set("ageGoup", newTeam.ageGroup.value);
                     _team.set("city", newTeam.city);
-                    _team.set("league_name", newTeam.leagueName);
+                    _team.set("leagueName", newTeam.leagueName);
                     //TODO _team.set("logo", newTeam.logo);
                     _team.set("name", newTeam.name);
                     _team.set("number", newTeam.number);
@@ -126,6 +127,7 @@ soccerStats.controller('registrationController',
                             console.log("Team registered");
 
                             $scope.sendEmailInvite(newUser, newTeam);
+                            viewService.goToPage('/home');
                         },
                         error: function (_team, error) {
                             console.log("Error: " + error.code + " " + error.message);

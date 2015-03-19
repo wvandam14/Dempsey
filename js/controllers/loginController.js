@@ -3,18 +3,14 @@ soccerStats.controller('loginController', function loginController($scope, $root
         $scope.user = {name: '', password: ''};
 
         $scope.goToPage = function(path) {
-            $timeout(function() {
-                console.log("loginsuccess");
-                viewService.goToPage(path);
-            });
+            console.log("loginsuccess");
+            viewService.goToPage(path);
         }
 
         $scope.login = function(user) {
             if (viewService.validateAreaByFormName('loginForm')) {
                 Parse.User.logIn(user.name, user.password, {
                     success: function (user) {
-                        // Todo: Redirect to home page
-                        // Todo: must click more than once on login in order to redirect to home page
                         console.log("loginsuccess");
                         $scope.goToPage('/home');
                     },

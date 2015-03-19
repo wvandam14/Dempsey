@@ -1,8 +1,10 @@
-soccerStats.factory('viewService', function ($location) {
+soccerStats.factory('viewService', function ($location, $timeout) {
 
     var
         goToPage = function(path) {
-            $location.path(path);
+            $timeout(function() {
+                $location.path(path);
+            });
         },
 
         validateAreaByFormName = function (form) {
