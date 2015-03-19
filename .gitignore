@@ -186,3 +186,4 @@ UpgradeLog*.htm
 # Microsoft Fakes
 FakesAssemblies/
 
+js/controllers/min/registrationController.min.js
