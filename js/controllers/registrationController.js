@@ -126,7 +126,7 @@ soccerStats.controller('registrationController',
                     _team.save(null, {
                         success: function (_team) {
                             console.log("Team registered");
-                            //once coach and team information is filled, send invites
+
                             $scope.sendEmailInvite(newUser, newTeam);
                             viewService.goToPage('/home');
                         },
@@ -136,6 +136,7 @@ soccerStats.controller('registrationController',
                     });
                 },
                 error: function (registerUser, error) {
+                    newUser.signUpFlag = false;
                     console.log("Error: " + error.code + " " + error.message);
                 }
             });
