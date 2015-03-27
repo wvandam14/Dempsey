@@ -12,17 +12,35 @@
     <link rel="stylesheet" type="text/css" href="./css/reset.css">
     <link rel="stylesheet" type="text/css" href="./css/fonts.css">
     <link rel="stylesheet" type="text/css" href="./css/default.css">
+    <link rel="stylesheet" type="text/css" href="./css/animation.css">
     <link rel="stylesheet" type="text/css" href="./css/login-page.css">
     <link rel="stylesheet" type="text/css" href="./css/modal.css">
     <link rel="stylesheet" type="text/css" href="./css/registration-page.css">
     <link rel="stylesheet" type="text/css" href="./css/tablet.css">
     <link rel="stylesheet" type="text/css" href="./css/mobile.css">
+    <link rel="stylesheet" type="text/css" href="./css/toast.css">
     <link rel="stylesheet" type="text/css" href="./css/player-modal.css">
 
 </head>
 <body ng-controller="shellController"  ng-class="{'tablet': $root.isTablet, 'mobile': $root.isMobile}">
 
     <ng-view></ng-view>
+
+
+    <div class="toast-container">
+        <div class="flex flex-center-vertical toast" ng-repeat="toast in toasts" ng-class="{'slideOut': toast.slideOut,  'slideIn': toast.slideIn, 'error': toast.error, 'success': toast.success}">
+            <img ng-if="!toast.error && !toast.success" src="./img/ball-icon-large.svg"/>
+            <img ng-if="toast.error" src="./img/alert-icon-large.svg"/>
+            <img ng-if="toast.success" src="./img/success-icon-large.svg"/>
+            <p class="flex-one">{{toast.message}}</p>
+            <div ng-click="closeToast(toast)">
+                <img ng-if="!toast.error && !toast.success" src="./img/close-icon-dark.svg"/>
+                <img ng-if="toast.error || toast.success" src="./img/close-icon.svg"/>
+            </div>
+        </div>
+    </div>
+
+
 
     <!-- Libraries -->
     <script src="./lib/angular.js"></script>
@@ -63,6 +81,8 @@
     <!-- Services -->
     <script src="./js/services/viewService.js"></script>
     <script src="./js/services/emailService.js"></script>
+    <script src="./js/services/configService.js"></script>
+    <script src="./js/services/toastService.js"></script>
 
 </body>
 </html>

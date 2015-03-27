@@ -1,5 +1,5 @@
 soccerStats.controller('registrationController',
-    function registrationController($scope, emailService, viewService, $timeout) {
+    function registrationController($scope, emailService, viewService, $timeout, toastService, configService) {
     	
         //tab functionality 
         $scope.tabNumber = 0;
@@ -15,6 +15,9 @@ soccerStats.controller('registrationController',
                 && viewService.validateAreaByFormName(currentForm) 
                 && (tab === ($scope.tabNumber + 1))) {
                 $scope.tabNumber = tab;
+            }
+            else {
+                toastService.error(configService.toasts.requiredFields);
             }
 
         };
@@ -34,7 +37,7 @@ soccerStats.controller('registrationController',
                 $scope.inviteEmails.unshift($scope.invite.email);
             }
             else {
-                // TODO: pop up toast notification that they suck
+                toastService.error(configService.toasts.requiredFields);
             }
         };
 
@@ -126,18 +129,21 @@ soccerStats.controller('registrationController',
                     //register team
                     registerUser.signUp(null, {
                         success: function (registerUser) {
-                            console.log("registration successful");
+                            toastService.success(configService.toasts.registrationSuccess);
                             $scope.sendEmailInvite(newUser, _team);
                             viewService.goToPage('/home');
                         },
                         error: function (registerUser, error) {
                             console.log("Error: " + error.code + " " + error.message);
+                            toastService.error("There was a an error (" + error.code +"). Please try again.");
+
                         }
                     });
 
                 },
                 error: function (_team, error) {
                     console.log("Error: " + error.code + " " + error.message);
+                    toastService.error("There was a an error (" + error.code +"). Please try again.");
                 }
             });
 
