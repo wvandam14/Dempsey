@@ -17,24 +17,30 @@
 
         <form name="accountForm" class="body flex two-column" ng-show="isTab(0)">
             <div class="flex-one">
+                <h3>Profile Picture</h3>
+                <div class="flex flex-center logo-container">
+                    <image-upload image="newUser.photo" placeholder="'./img/manager-icon.svg'"></image-upload>
+                    <p class="flex-one text-center logo-text">Click the photo to add a new one</p>
+                </div>
                 <h3 class="ellipse">Name</h3>
-                <input type="text" ng-model="newUser.name" placeholder="John Smith" required />
+                <input type="text" ng-model="newUser.name" placeholder="Full Name" required />
                 <h3 class="ellipse">Email</h3>
-                <input type="email" ng-model="newUser.email" placeholder="john.smith@example.com" required />
+                <input type="email" ng-model="newUser.email" placeholder="Email" required />
                 <h3 class="ellipse">Password</h3>
-                <input type="password" ng-model="newUser.password" placeholder="" required />
+                <input type="password" ng-model="newUser.password" placeholder="Password" required />
                 <h3 class="ellipse">Confirm Password</h3>
-                <input type="password" ng-model="newUser.confirmPassword" placeholder="" required />
+                <input type="password" ng-model="newUser.confirmPassword" placeholder="Confirm Password" required />
                 <p ng-show="!confirmPassword()" class="error"><img src="./img/alert-icon.svg"/> Passwords do not match</p>
             </div>
             <div class="flex-one">
                 <h3 class="ellipse">Phone</h3>
-                <input type="text" ng-model="newUser.phone" placeholder="ex. (123) 456-7890" required />
+                <input type="text" ng-model="newUser.phone" placeholder="(123) 456-7890" required />
                 <h3 class="ellipse">City</h3>
-                <input type="text" ng-model="newUser.city" placeholder="Spokane" required />
+                <input type="text" ng-model="newUser.city" placeholder="City" required />
                 <h3 class="ellipse">State</h3>
 
                 <select ng-model="newUser.state" ng-options="state as state.label for state in states" required>
+                    <option value="">Select A State</option>
                 </select>
             </div>
         </form>
@@ -43,12 +49,13 @@
             <div class="flex-one">
                 <h3 class="ellipse">Team Logo</h3>
                 <div class="flex flex-center logo-container">
-                    <div class="img-container" ng-click="selectFile()">
-                        <img src="{{ team.logo || './img/team-logo-icon.svg'}}" class="flex-one"/>
-                    </div>
-                    <input type="file" style="display:none" id="file" name='file' accept="image/*" onchange="angular.element(this).scope().fileNameChanged(this)" />
+                    <image-upload image="team.logo" placeholder="'./img/team-logo-icon.svg'" get-color="getImageColor(color)"></image-upload>
                     <p class="flex-one text-center logo-text">Click the logo to add a new one</p>
                 </div>
+                <h3>Team Color</h3>
+
+                <color-picker ng-class="{'disabled': !team.logo}" color="team.primaryColor" required="true"></color-picker>
+
                 <h3 class="ellipse">Team Name</h3>
                 <input type="text" ng-model="team.name" placeholder="Team Name" required />
                 <h3 class="ellipse">Team Number</h3>
@@ -59,12 +66,14 @@
                 <input type="text" ng-model="team.leagueName" placeholder="League Name" required />
                 <h3 class="ellipse">Age Group</h3>
                 <select ng-model="team.ageGroup" ng-options="ageGroup as ageGroup.label for ageGroup in ageGroups" required>
+                    <option value="">Select an Age Group</option>
                 </select>
                 <h3 class="ellipse">City</h3>
                 <input type="text" ng-model="team.city" placeholder="City" required />
                 <h3 class="ellipse">State</h3>
                 <select ng-model="team.state" ng-options="state as state.label for state in states" required>
-                </select>           
+                    <option value="">Select a State</option>
+                </select>
             </div>
         </form>
 

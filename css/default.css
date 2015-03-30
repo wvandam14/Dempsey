@@ -78,15 +78,23 @@ input.date {
    color: #DDD;  
 }
 
+select:focus,
 input:focus {
     outline:0;
     border: 1px solid #5DA97B;
 }
 
+select.ng-invalid-required.ng-touched,
 input.ng-invalid-email.ng-touched,
+input.ng-invalid-pattern.ng-touched,
 input.ng-invalid-required.ng-touched {
     background-color: #FFE1E1;
     border:1px solid #FF7373;
+}
+
+.disabled {
+    opacity: .5;
+    pointer-events: none;
 }
 
 /* Flex Styles */
@@ -214,6 +222,10 @@ input.ng-invalid-required.ng-touched {
     min-height: 63px;
     float: left;
     width: 100%;
+}
+
+color-picker {
+    display: block;
 }
 
 /* ---------- Button ----------  */

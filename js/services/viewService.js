@@ -8,13 +8,15 @@ soccerStats.factory('viewService', function ($location, $timeout) {
         },
 
         validateAreaByFormName = function (form) {
-            //find all the required fields
+            // Find all the required fields
             var isValid = true;
-            _.each($('form[name=' + form + '] input'), function (field) {
+            _.each($('form[name=' + form + '] input, form[name=' + form + '] select'), function (field) {
                 if ($(field).is('[required]')) {
-                    //set it to dirty
+
+                    // Simulate the blur on the
                     $(field).addClass('ng-touched');
-                    //is there a value? set to ng-valid
+
+                    // Is there a value? set to ng-valid
                     if (!field.value || (field.className.indexOf('ng-invalid-email') != -1)) {
                         isValid = false;
                         $(field).addClass('ng-invalid');

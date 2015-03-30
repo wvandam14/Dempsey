@@ -1,0 +1,4 @@
+<div class="img-container" ng-click="selectFile()">
+    <img src="{{ thisImage || placeholder }}" class="flex-one"/>
+</div>
+<input type="file" style="display:none" id="file" name='file' accept="image/*" onchange="angular.element(this).scope().fileNameChanged(this)" />

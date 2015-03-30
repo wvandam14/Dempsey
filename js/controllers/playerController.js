@@ -1,5 +1,5 @@
-soccerStats.controller('playerController', function loginController($scope, $rootScope, $location, viewService, $timeout) {
-        // User object
+soccerStats.controller('playerController', function loginController($scope, $rootScope, $location, $timeout, viewService, toastService, configService) {
+        // Player object
         $scope.player = {
             photo: '',
             name: '',
@@ -22,13 +22,13 @@ soccerStats.controller('playerController', function loginController($scope, $roo
             });
         }
 
-        //register a player
+        // Register a player
         $scope.registerPlayer = function(player) {
             if (viewService.validateAreaByFormName('playerForm')) {
                 var Player = Parse.Object.extend("Players");
                 var newPlayer = new Player();
 
-                newPlayer.set("photo", $scope.logoFile);
+                newPlayer.set("photo", player.photo);
                 newPlayer.set("name", player.name);
                 newPlayer.set("birthday", player.birthday);
                 newPlayer.set("team", player.team.value);
@@ -42,84 +42,46 @@ soccerStats.controller('playerController', function loginController($scope, $roo
                 //update parse
                 newPlayer.save(null, {
                     success: function (newPlayer) {
-                        console.log("player registration successful");
-                        //return to home page
+                        toastService.success("Player, " + player.name + ", successfully added.");
+                        // Return to home page
                         viewService.goToPage('/home');
                     },
                     error: function (newPlayer, error) {
                         console.log("Error: " + error.code + " " + error.message);
+                        toastService.error("There was a an error (" + error.code +"). Please try again.");
                     }
                 });
             } else {
-                // Todo: Send Toast notification that the form is invalid
+                toastService.error(configService.toasts.requiredFields);
             }
         };
 
-        //TODO: put this section into viewService - this code exists in registerController.js
-        //triggers file upload
-        $scope.selectFile = function(){
-            $("#file").trigger('click');
-        }
-
-        //upload the selected picture
-        $scope.fileNameChanged = function(files) {
-          console.log("select file");
-
-            var fileUploadControl = files;
-            if (fileUploadControl.files.length > 0) {
-                var file = fileUploadControl.files[0];
-                var name = "photo."+file.type.split('/').pop();
-                var parseFile = new Parse.File(name, file);
-
-                 $timeout(function(){
-                    $scope.logoFile = parseFile;
-                 });
-                    
-                var reader = new FileReader();
-                reader.onloadend = function() {
-                    $timeout(function(){
-                        $scope.player.photo = reader.result;
-                    });
-                }
-                reader.readAsDataURL(file);
-                //this.team = parseFile.url();
-            }
-        }
-
-
         //TODO: verify if user is logged in
-        var currentUser = Parse.User.current();
-        console.log(currentUser.get("username"));
-        var user = Parse.Object.extend("_User");
-        var team = Parse.Object.extend("Team");
-        var query = new Parse.Query(user);
         $scope.teamDict = [];
+        var currentUser = Parse.User.current();
+        console.log(currentUser);
+
+        var user = Parse.Object.extend("_User");
+
+        var query = new Parse.Query(user);
+        query.include('teams');
         query.get(currentUser.id, {
             success: function(user) {
-                var teams = user.get("teams");
-                query = new Parse.Query(team);
-                _.each(teams, function (i) {
-                    console.log("1");
-                    query.get(i, {
-                        success: function(team) {
-                            console.log("2");
-                            $timeout(function(){
-                                $scope.teamDict.push({value: i, label: team.get("name")});
-                            });   
-                        }, error: function(team, error) {
-                            console.log("3");
-                            console.log("Error: " + error.code + " " + error.message);
-                        }
+                var teams = user.get("teams")
+                // Add each team associated with the current user to the team dropdown list
+                _.each(teams, function (team) {
+                    $timeout(function(){
+                        $scope.teamDict.push({value: team.id, label: team.get("name")});
                     });
                 });
-            }, error: function(user, error) {
 
+            }, error: function(user, error) {
+                toastService.error("There was a an error (" + error.code +"). Please try again.");
             }
         });
 
         //TODO: states
         $scope.states = [
-            {value:   "", label: "Select a State"},
             {value: "AL", label: "Alabama"},
             {value: "AK", label: "Alaska"},
             {value: "AZ", label: "Arizona"},
@@ -172,7 +134,5 @@ soccerStats.controller('playerController', function loginController($scope, $roo
             {value: "WI", label: "Wisconsin"},
             {value: "WY", label: "Wyoming"}
         ];
-        $scope.player.state = $scope.states[0];
-
 
     });

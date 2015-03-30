@@ -8,11 +8,20 @@ soccerStats.controller('registrationController',
 
         $scope.setTab = function (tab) {
             var currentForm = $scope.formList[$scope.tabNumber];
+
+            // If the passwords do not match, don't allow them to continue
+            if (!$scope.confirmPassword()) {
+                toastService.error(configService.toasts.requiredFields);
+                return;
+            }
+
+            // If you are going back in the registration process
             if ($scope.tabNumber > tab) {
                 $scope.tabNumber = tab;
+                return;
             }
-            if ($scope.confirmPassword() 
-                && viewService.validateAreaByFormName(currentForm) 
+
+            if (viewService.validateAreaByFormName(currentForm)
                 && (tab === ($scope.tabNumber + 1))) {
                 $scope.tabNumber = tab;
             }
@@ -52,50 +61,29 @@ soccerStats.controller('registrationController',
             });
         };
 
-        //test 
-		//user information
+		// User information
         $scope.newUser = {
-            name: 'Pete Tucker',
-            email: 'petetucker@mailinator.com',
-            password: '123',
-            confirmPassword: '123',
-            phone: '1234567890',
-            city: 'Seattle',
-            state: 'WA'
+            name: '',
+            email: '',
+            password: '',
+            confirmPassword: '',
+            phone: '',
+            city: '',
+            state: '',
+            photo: ''
         };
 
-        //team information 
+        // Team information
         $scope.team = {
             logo: '',
-            name: 'Seattle Sounders FC',
-            number: '1234DGC',
-            leagueName: 'Major League Soccer',
-            ageGroup: 'U12',
-            city: 'Seattle',
-            state: 'WA'
+            primaryColor: '',
+            name: '',
+            number: '',
+            leagueName: '',
+            ageGroup: '',
+            city: '',
+            state: ''
         };
-
-        // //user information
-        // $scope.newUser = {
-        //     name: '',
-        //     email: '',
-        //     password: '',
-        //     confirmPassword: '',
-        //     phone: '',
-        //     city: '',
-        //     state: ''
-        // };
-
-        // //team information 
-        // $scope.team = {
-        //     logo: '',
-        //     name: '',
-        //     number: '',
-        //     leagueName: '',
-        //     ageGroup: '',
-        //     city: '',
-        //     state: ''
-        // };
         
         //register coach
         $scope.register = function (newUser, newTeam) {
@@ -108,12 +96,11 @@ soccerStats.controller('registrationController',
             _team.set("name", newTeam.name);
             _team.set("number", newTeam.number);
             _team.set("state", newTeam.state.value);
-            _team.set("logo", $scope.logoFile);
+            _team.set("logo", newTeam.logo);
+            _team.set("primaryColor", newTeam.primaryColor);
 
             _team.save(null, {
                 success: function (_team) {
-                    console.log("Team registered");
-
                     var registerUser = new Parse.User();
 
                     registerUser.set("username", newUser.email);
@@ -123,7 +110,11 @@ soccerStats.controller('registrationController',
                     registerUser.set("phone", newUser.phone);
                     registerUser.set("city", newUser.city);
                     registerUser.set("state", newUser.state.value);
-                    registerUser.set("teams", [_team.id]);
+                    registerUser.set("photo", newUser.photo);
+                    // Adds a pointer to the team to an array of pointers
+                    var relateTeam = registerUser.relation("teams");
+                    relateTeam.addUnique(_team);
+                    //  registerUser.addUnique("teams", _team.id);
                     registerUser.set("accountType", 1);
 
                     //register team
@@ -154,46 +145,26 @@ soccerStats.controller('registrationController',
             return $scope.newUser.password === $scope.newUser.confirmPassword;
         };
 
-        //triggers file upload
-        $scope.selectFile = function(){
-            $("#file").trigger('click');
-        }
 
-        //upload the selected picture
-        $scope.fileNameChanged = function(files) {
-          console.log("select file");
-
-            var fileUploadControl = files;
-            if (fileUploadControl.files.length > 0) {
-                var file = fileUploadControl.files[0];
-                var name = "photo."+file.type.split('/').pop();
-                var parseFile = new Parse.File(name, file);
-
-                 $timeout(function(){
-                    $scope.logoFile = parseFile;
-                 });
-                    
-                var reader = new FileReader();
-                reader.onloadend = function() {
-                    $timeout(function(){
-                        $scope.team.logo = reader.result;
-                    });
-                }
-                reader.readAsDataURL(file);
-                //this.team = parseFile.url();
-            }
+        // Delegate function passed into the image upload directive for the color picker
+        // Gets the most dominant color from the image upload directive
+        // The function returns an array of three values: Red, Green and Blue
+        $scope.getImageColor = function(color) {
+            console.log('color');
+            $scope.team.primaryColor = color;
         }
 
         //below are static arrays
         $scope.ageGroups = [
-            { value: "", label: "Select an Age Group" },
             { value: "U12", label: "U12" },
-            { value: "U16", label: "U16" }
+            { value: "U16", label: "U16" },
+            { value: "U18", label: "U18" },
+            { value: "U20", label: "U20" },
+            { value: "U23", label: "U23" }
         ];
-        $scope.team.ageGroup = $scope.ageGroups[0];
+        //$scope.team.ageGroup = $scope.ageGroups[0];
 
         $scope.states = [
-	        {value:   "", label: "Select a State"},
 	        {value: "AL", label: "Alabama"},
 	        {value: "AK", label: "Alaska"},
 	        {value: "AZ", label: "Arizona"},
@@ -246,8 +217,8 @@ soccerStats.controller('registrationController',
 	        {value: "WI", label: "Wisconsin"},
 	        {value: "WY", label: "Wyoming"}
 	    ];
-        $scope.newUser.state = $scope.states[0];
-        $scope.team.state = $scope.states[0];
+        //$scope.newUser.state = $scope.states[0];
+        //$scope.team.state = $scope.states[0];
 
 
     });

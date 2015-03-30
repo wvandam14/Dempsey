@@ -1,4 +1,4 @@
-soccerStats.factory('emailService', function () {
+soccerStats.factory('emailService', function (toastService) {
 
     var
     /*
@@ -9,20 +9,25 @@ soccerStats.factory('emailService', function () {
     */
         sendEmailInvite = function(coachName, teamId, teamName, emailTo) {
 
-           // Run CloudCode script
+            toastService.info('Attempting to send email invites.', emailSuccess);
+
+            // Run CloudCode script
            Parse.Cloud.run('sendEmailInvite', {coachName: coachName, teamId: teamId, teamName: teamName, emailTo: emailTo, tempPassword: getTempPassword()}, {
                success: function (result) {
                    //console.log(result);
                    //console.log('Email Sent!');
+                   toastService.success('Email invites have been successfully sent!');
+                   emailSuccess();
                },
                error: function (error) {
-                   //console.log(error);
-                   //console.log('Email Failed.');
+                   toastService.error('Email invites failed to send. Please try again.');
                }
            });
 
        }
 
+    // Empty placeholder for email success delegate
+    function emailSuccess() {}
 
     function getTempPassword() {
         var array = new Uint32Array(1);

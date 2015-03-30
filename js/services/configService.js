@@ -28,13 +28,17 @@ soccerStats.factory('configService', function () {
                 return 'Welcome ' + name + '!';
             }, changedPassword : function(success){
                 return success ? 'Password successfully changed.' : 'There was an error updating your password. Please try again.'
+            }, fileTooLarge: function(size) {
+                return 'The image is too large (' + (size * 0.000001).toFixed(1) + 'mb)! It should be less than 2mb.';
             }
             , requiredFields : 'Please fill out the required fields.'
+            , passwordsDoNotMatch : 'The passwords you provided do not match.'
             , registrationSuccess : 'Registration successful!'
             , emailValidation : 'Please enter a valid email address.'
             , notAuthenticated: 'You could not be authenticated. Please login again.'
             , cannotConnectToServer: 'The server could not be contacted.  Please check your connection and try again.'
-            , savingInProgress: 'Saving is already in progress'
+            , savingInProgress: 'Saving is already in progress',
+
         }
     }
 });

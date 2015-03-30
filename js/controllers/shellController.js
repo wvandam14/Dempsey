@@ -9,11 +9,11 @@ soccerStats.controller('shellController',
         // Toast Functions
         $scope.toasts = [];
 
-        $scope.$on(configService.messages.toast, function (event, message, type) {
-            showToast(message.message, type);
+        $scope.$on(configService.messages.toast, function (event, message, type, callback) {
+            showToast(message.message, type, callback);
         })
 
-        var showToast = function (message, type) {
+        var showToast = function (message, type, callback) {
             // New Toast Item
             var item = {
                 message: message,
@@ -26,6 +26,11 @@ soccerStats.controller('shellController',
             $timeout(function () {
                 $scope.toasts.push(item);
             });
+
+            if (callback) {
+                callback = $scope.closeToast(item);
+                return;
+            }
 
             $timeout(function () {
                 $scope.closeToast(item);

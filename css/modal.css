@@ -69,10 +69,17 @@
 
 .modal.registration .logo-text {
     color: #B3B3B3;
+    padding: 15px;
 }
 
 .modal.registration .logo-container {
     padding: 22px 0;
+}
+
+.modal.registration .color-container .color {
+    width: 100px;
+    height: 50px;
+    margin-right: 10px;
 }
 
 .modal.registration .button.inline {
