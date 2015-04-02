@@ -1,32 +1,36 @@
 <!-- Scores div -->
-<div>
-	<div class="modal gameReview black">
+<div class="game-review flex flex-center">
+	<div class="gameReview">
 		<h5 class="header text-center">{{currGame.date}}</h5>
-		<div class="flex">
+		<div class="flex flex-center-horizontal">
 			<!-- User team logo/name -->
-			<div class="flex flex-center flex-one flex-column">
+			<div class="team-container flex flex-one flex-center-vertical flex-column">
 				<div class="img-container">
+					<!-- TODO: src should point to current team's logo -->
 					<img src="./img/team-logo-icon.svg">
 				</div>
-				<h5 class="text-center ellipse">{{team.name}}</h5>
+				<h5 class="text-center">{{team.name}}</h5>
 			</div>
 
 			<!-- Game score -->
-			<div class="flex flex-center-horizontal flex-two">
+			<div class="flex flex-center-horizontal">
 			<div class="score flex flex-center">
-				<h5 class="ellipse">2</h5>
+				<!-- TODO: replace these "scores" with actual game score variables -->
+				<h5 class="">{{team.score}}</h5>
 			</div>
 			<div class="score flex flex-center">
-				<h5 class="ellipse">1</h5>
+				<!--  -->
+				<h5 class="">{{against.score}}</h5>
 			</div>
 			</div>
 
 			<!-- Team against logo/name -->
-			<div class="flex flex-center flex-one flex-column">
+			<div class="team-container flex flex-one flex-center-vertical flex-column">
 				<div class="img-container">
+					<!-- TODO: src should point to team against's logo -->
 					<img src="./img/player-icon.svg">
 				</div>
-				<h5 class="text-center ellipse">{{teamAgainst.name}}</h5>
+				<h5 class="text-center">{{against.name}}</h5>
 			</div>
 		</div>
 	</div>
