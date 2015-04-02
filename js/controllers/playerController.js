@@ -67,7 +67,7 @@ soccerStats.controller('playerController', function loginController($scope, $roo
         query.include('teams');
         query.get(currentUser.id, {
             success: function(user) {
-                var teams = user.get("teams")
+                var teams = user.get("teams");
                 // Add each team associated with the current user to the team dropdown list
                 _.each(teams, function (team) {
                     $timeout(function(){

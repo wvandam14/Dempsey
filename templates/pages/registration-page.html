@@ -1,18 +1,33 @@
 <div class="registration-page">
     <div class="modal registration">
-    	<div class="head" ng-show="isTab(0)">
-    		<h1>Create Coach Account</h1>
-            <p>Create your coach account so that you can start creating teams and inviting players.</p>
+    	<div class="head flex" ng-show="isTab(0)">
+            <div class="flex-one">
+                <h1>Create Coach Account</h1>
+                <p>Create your coach account so that you can start creating teams and inviting players.</p>
+            </div>
+            <div>
+                <img src="./img/close-icon-dark.svg"/>
+            </div>
     	</div>
 
-        <div class="head" ng-show="isTab(1)">
-            <h1>Create a Team</h1>
-            <p>Create your team by filling out the following fields. You may add more teams after you have created your account.</p>
+        <div class="head flex" ng-show="isTab(1)">
+            <div class="flex-one">
+                <h1>Create a Team</h1>
+                <p>Create your team by filling out the following fields. You may add more teams after you have created your account.</p>
+            </div>
+            <div>
+                <img src="./img/close-icon-dark.svg"/>
+            </div>
         </div>
 
-        <div class="head" ng-show="isTab(2)">
-            <h1>Invite Members</h1>
-            <p>Send out invites to the parents or players on your team so they can log in and create an account registered to your team.</p>
+        <div class="head flex" ng-show="isTab(2)">
+            <div class="flex-one">
+                <h1>Invite Members</h1>
+                <p>Send out invites to the parents or players on your team so they can log in and create an account registered to your team.</p>
+            </div>
+            <div>
+                <img src="./img/close-icon-dark.svg"/>
+            </div>
         </div>
 
         <form name="accountForm" class="body flex two-column" ng-show="isTab(0)">
@@ -22,8 +37,6 @@
                     <image-upload image="newUser.photo" placeholder="'./img/manager-icon.svg'"></image-upload>
                     <p class="flex-one text-center logo-text">Click the photo to add a new one</p>
                 </div>
-                <h3 class="ellipse">Name</h3>
-                <input type="text" ng-model="newUser.name" placeholder="Full Name" required />
                 <h3 class="ellipse">Email</h3>
                 <input type="email" ng-model="newUser.email" placeholder="Email" required />
                 <h3 class="ellipse">Password</h3>
@@ -33,6 +46,8 @@
                 <p ng-show="!confirmPassword()" class="error"><img src="./img/alert-icon.svg"/> Passwords do not match</p>
             </div>
             <div class="flex-one">
+                <h3 class="ellipse">Name</h3>
+                <input type="text" ng-model="newUser.name" placeholder="Full Name" required />
                 <h3 class="ellipse">Phone</h3>
                 <input type="text" ng-model="newUser.phone" placeholder="(123) 456-7890" required />
                 <h3 class="ellipse">City</h3>
