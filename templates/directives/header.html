@@ -1,7 +1,19 @@
 <div class="flex">
     <div class="team flex flex-center-vertical">
-        <img src="./img/sample/logo-small.png"/>
-        <h4>Seattle Sounders FC</h4>
+        <div ng-click="toggleTeams()" class="flex flex-center-vertical">
+            <img src="./img/sample/logo-small.png"/>
+            <h4>Seattle Sounders FC</h4>
+        </div>
+
+        <div ng-show="showTeams" class="team-dropdown dropdown">
+            <div class="team flex flex-center-vertical">
+                <img src="./img/sample/logo-small.png"/>
+                <h4>FC Dallas</h4>
+            </div>
+            <div class="team flex flex-center-vertical">
+                <h4>Create A Team</h4>
+            </div>
+        </div>
     </div>
 
     <div class="buttons flex-one">
@@ -9,8 +21,18 @@
     </div>
 
     <div class="user flex flex-center">
-        <div class="circle flex flex-center">
+        <div ng-click="toggleAccount()" class="circle flex flex-center">
             <h5>AM</h5>
         </div>
+
+        <div ng-show="showAccount" class="user-dropdown dropdown">
+            <div>
+                <h4>Edit Account</h4>
+            </div>
+            <div ng-click="logout()">
+                <h4>Logout</h4>
+            </div>
+        </div>
     </div>
+
 </div>

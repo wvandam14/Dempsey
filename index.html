@@ -25,10 +25,9 @@
 </head>
 <body ng-controller="shellController"  ng-class="{'tablet': $root.isTablet, 'mobile': $root.isMobile}">
 
-    <header></header>
+    <header ng-if="currentPage != 'login' && currentPage != 'registration'"></header>
 
     <ng-view></ng-view>
-
 
     <div class="toast-container">
         <div class="flex flex-center-vertical toast" ng-repeat="toast in toasts" ng-class="{'slideOut': toast.slideOut,  'slideIn': toast.slideIn, 'error': toast.error, 'success': toast.success}">

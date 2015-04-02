@@ -1,4 +1,11 @@
-header > div {
+header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+}
+
+header > .flex {
     height: 60px;
     background-color: #5DA97B;
 }
@@ -11,13 +18,20 @@ header h5 {
     color: #FFF;
 }
 
-header .team {
-    background-color: #222222;
+header > div > .team {
     padding: 10px;
+}
+
+
+header .team {
+    height: 60px;
+    background-color: #222222;
+    position: relative;
 }
 
 header .team img {
     margin-right: 10px;
+    height: 42px;
 }
 
 header .user {
@@ -30,3 +44,32 @@ header .user .circle {
     height: 45px;
 }
 
+header .user-dropdown {
+    background-color: #222222;
+    position: absolute;
+    top:60px;
+    right:10px;
+}
+
+header .user-dropdown h4 {
+}
+
+header .team-dropdown {
+    width: 100%;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    border-top: 1px solid #444444;
+}
+
+header .dropdown > div {
+    cursor: pointer;
+    padding: 10px;
+    border-left: 1px solid #444444;
+    border-right: 1px solid #444444;
+    border-bottom: 1px solid #444444;
+}
+
+header .dropdown > div:active {
+    background-color: #444444;
+}
