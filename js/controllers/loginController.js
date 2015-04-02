@@ -5,7 +5,6 @@ soccerStats.controller('loginController', function loginController($scope, $root
         $scope.goToPage = function(path) {
             viewService.goToPage(path);
         }
-
         $scope.login = function(user) {
             if (viewService.validateAreaByFormName('loginForm')) {
                 Parse.User.logIn(user.email, user.password, {
