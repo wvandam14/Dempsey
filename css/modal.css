@@ -108,3 +108,34 @@
 
 /* ---------- END Player Modal ---------- */
 
+/* ---------- Game Review Modal ---------- */
+.gameReview {
+
+}
+
+.gameReview.black {
+    background-color: #222;
+}
+
+.gameReview .header {
+    padding: 10px;
+}
+
+.gameReview .score {
+    background-color: #5DA97B;
+    height: 100px;
+    width: 100px;
+    padding: 10px;
+    margin: 1px;
+}
+
+.gameReview .score h5 {
+    font-size: 72px;
+    color: #FFF;
+    text-align: center;
+}
+
+
+
+/* ---------- END Game Review Modal ---------- */
+
