@@ -1,10 +1,14 @@
 soccerStats.controller('registrationController',
     function registrationController($scope, emailService, viewService, $timeout, toastService, configService) {
     	
-        //tab functionality 
+        // Tab functionality
         $scope.tabNumber = 0;
         $scope.formList = ['accountForm', 'teamForm', 'inviteForm'];
         $scope.team = {}; //TODO: duplicate
+
+        $scope.goToPage = function(page) {
+            viewService.goToPage(page);
+        };
 
         $scope.setTab = function (tab) {
             var currentForm = $scope.formList[$scope.tabNumber];
@@ -162,7 +166,6 @@ soccerStats.controller('registrationController',
             { value: "U20", label: "U20" },
             { value: "U23", label: "U23" }
         ];
-        //$scope.team.ageGroup = $scope.ageGroups[0];
 
         $scope.states = [
 	        {value: "AL", label: "Alabama"},
@@ -217,8 +220,5 @@ soccerStats.controller('registrationController',
 	        {value: "WI", label: "Wisconsin"},
 	        {value: "WY", label: "Wyoming"}
 	    ];
-        //$scope.newUser.state = $scope.states[0];
-        //$scope.team.state = $scope.states[0];
-
 
     });
