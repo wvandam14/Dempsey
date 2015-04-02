@@ -20,9 +20,13 @@
     <link rel="stylesheet" type="text/css" href="./css/mobile.css">
     <link rel="stylesheet" type="text/css" href="./css/toast.css">
     <link rel="stylesheet" type="text/css" href="./css/player-modal.css">
+    <link rel="stylesheet" type="text/css" href="./css/game-review.css">
+    <link rel="stylesheet" type="text/css" href="./css/header.css">
 
 </head>
 <body ng-controller="shellController"  ng-class="{'tablet': $root.isTablet, 'mobile': $root.isMobile}">
+
+    <header></header>
 
     <ng-view></ng-view>
 
@@ -74,6 +78,7 @@
     <script src="./js/controllers/playerController.js"></script>
 
     <!-- Directives -->
+    <script src="./js/directives/header.js"></script>
     <script src="./js/directives/image-upload.js"></script>
     <script src="./js/directives/color-picker.js"></script>
 

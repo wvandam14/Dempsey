@@ -27,5 +27,11 @@ var soccerStats = angular.module('soccerStats', ['ngRoute','ngSanitize','ngResou
             controller: 'playerController',
             scope:{}
         });
+
+        $routeProvider.when('/game-review', {
+            templateUrl: 'templates/pages/game-review.html',
+            controller: 'gameReviewController',
+            scope:{}
+        });
     }
 );

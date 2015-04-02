@@ -76,7 +76,7 @@ soccerStats.controller('playerController', function loginController($scope, $roo
                 });
 
             }, error: function(user, error) {
-                toastService.error("There was a an error (" + error.code +"). Please try again.");
+                toastService.error("There was a an error (" + error.code + "). Please try again.");
             }
         });
 
