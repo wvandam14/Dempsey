@@ -52,11 +52,12 @@ soccerStats.controller('shellController',
         }
 
         $scope.logout = function () {
-            var currentUser = Parse.User.current();
-            console.log(currentUser.get("username"));
+            //comments below for validating user
+            //var currentUser = Parse.User.current();
+            //console.log(currentUser.get("username"));
             Parse.User.logOut();
-            currentUser = Parse.User.current();
-            console.log(currentUser);
+            //currentUser = Parse.User.current();
+            //console.log(currentUser);
             toastService.success(configService.toasts.logoutSuccess);
             viewService.goToPage('/login');
 
