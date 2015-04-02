@@ -2,6 +2,7 @@ soccerStats.factory('configService', function () {
     return {
 
         messages: {
+            navigate: 'navigate'
 
         }, toasts: {
             general: function(action, type, success){

@@ -1,13 +1,26 @@
 soccerStats.controller('shellController',
-    function shellController($scope, $rootScope, $timeout, configService, deviceDetector, viewService,
-        toastService, configService) {
+    function shellController($scope, $rootScope, $location, $route, $timeout, configService, deviceDetector, viewService, toastService) {
 
         // Global device flags: Can be used in any html as an attribute like so: ng-show="$root.isMobile"
         $rootScope.isDesktop = deviceDetector.isDesktop();
         $rootScope.isMobile = navigator.userAgent.match(/Android|iPhone|iPod/i);
         $rootScope.isTablet = navigator.userAgent.match(/iPad/i);
 
-        // Toast Functions
+        // -------------  Functions ------------- \\
+        var history = [];
+        $scope.currentPage = 'login';
+
+        $scope.$on('$locationChangeSuccess', function (next, current) {
+           $timeout(function() {
+                history.push({url: current.split('#')[1], state: {}});
+                $scope.currentPage = current.split('#')[1] ? current.split('#')[1].split('/')[1] : '';
+                $rootScope.$broadcast(configService.messages.navigate, history[history.length - 1].url);
+               console.log($scope.currentPage);
+           });
+        });
+
+
+        // ------------- Toast Functions ------------- \\
         $scope.toasts = [];
 
         $scope.$on(configService.messages.toast, function (event, message, type, callback) {
@@ -52,11 +65,12 @@ soccerStats.controller('shellController',
         }
 
         $scope.logout = function () {
-            var currentUser = Parse.User.current();
-            console.log(currentUser.get("username"));
+            //comments below for validating user
+            //var currentUser = Parse.User.current();
+            //console.log(currentUser.get("username"));
             Parse.User.logOut();
-            currentUser = Parse.User.current();
-            console.log(currentUser);
+            //currentUser = Parse.User.current();
+            //console.log(currentUser);
             toastService.success(configService.toasts.logoutSuccess);
             viewService.goToPage('/login');
 
