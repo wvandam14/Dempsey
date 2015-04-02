@@ -112,9 +112,9 @@ soccerStats.controller('registrationController',
                     registerUser.set("state", newUser.state.value);
                     registerUser.set("photo", newUser.photo);
                     // Adds a pointer to the team to an array of pointers
-                    var relateTeam = registerUser.relation("teams");
-                    relateTeam.addUnique(_team);
-                    //  registerUser.addUnique("teams", _team.id);
+                    //var relateTeam = registerUser.relation("teams");
+                    //relateTeam.addUnique(_team);
+                    registerUser.addUnique("teams", _team);
                     registerUser.set("accountType", 1);
 
                     //register team

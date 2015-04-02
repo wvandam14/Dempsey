@@ -1,5 +1,6 @@
 soccerStats.controller('shellController',
-    function shellController($scope, $rootScope, $timeout, configService, deviceDetector) {
+    function shellController($scope, $rootScope, $timeout, configService, deviceDetector, viewService,
+        toastService, configService) {
 
         // Global device flags: Can be used in any html as an attribute like so: ng-show="$root.isMobile"
         $rootScope.isDesktop = deviceDetector.isDesktop();
@@ -49,5 +50,16 @@ soccerStats.controller('shellController',
                 $scope.toasts.splice($scope.toasts.indexOf(item), 1);
             },1000);
         }
+
+        $scope.logout = function () {
+            var currentUser = Parse.User.current();
+            console.log(currentUser.get("username"));
+            Parse.User.logOut();
+            currentUser = Parse.User.current();
+            console.log(currentUser);
+            toastService.success(configService.toasts.logoutSuccess);
+            viewService.goToPage('/login');
+
+        };
 
     });
