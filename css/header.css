@@ -1,0 +1,32 @@
+header > div {
+    height: 60px;
+    background-color: #5DA97B;
+}
+
+header h4 {
+    color: #FFF;
+}
+
+header h5 {
+    color: #FFF;
+}
+
+header .team {
+    background-color: #222222;
+    padding: 10px;
+}
+
+header .team img {
+    margin-right: 10px;
+}
+
+header .user {
+    padding: 0 10px;
+}
+
+header .user .circle {
+    border: 5px solid #FFFFFF;
+    width: 45px;
+    height: 45px;
+}
+
