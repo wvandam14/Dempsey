@@ -1,5 +1,5 @@
 ﻿soccerStats.controller('homeController', 
-    function homeController($scope, $location) {
+    function homeController($scope, $location, toastService, configService) {
 
     	$scope.verified = false;
         $scope.user = {
@@ -12,7 +12,7 @@
             $scope.user.name = currentUser.get("username");
             //check for email verification 
             if (!currentUser.get("emailVerified")) {
-                console.log("Hey! You need to verify your account first");
+                 toastService.error(configService.toasts.emailVerification);
                 //TODO: disable user functionality until user verifies email
             } else {
             	$scope.verified = true;

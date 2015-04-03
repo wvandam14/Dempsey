@@ -39,7 +39,8 @@ soccerStats.factory('configService', function () {
             , notAuthenticated: 'You could not be authenticated. Please login again.'
             , cannotConnectToServer: 'The server could not be contacted.  Please check your connection and try again.'
             , savingInProgress: 'Saving is already in progress'
-            , logoutSuccess: 'You have successfully logged out',
+            , logoutSuccess: 'You have successfully logged out'
+            , emailVerification : 'Please verify your email before continuing',
 
         }
     }
