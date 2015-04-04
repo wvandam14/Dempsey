@@ -10,7 +10,10 @@ soccerStats.controller('loginController', function loginController($scope, $root
                 Parse.User.logIn(user.email, user.password, {
                     success: function (user) {
                         console.log(user);
-                        toastService.success(configService.toasts.loginSuccess(user.get('name')));
+                        var name = user.get('name');
+                            toastService.success(configService.toasts.loginSuccess(
+                                name === undefined ? "parent. Please edit your profile" : name)
+                            );
                         $scope.goToPage('/home');
                     },
                     error: function(user, error) {
