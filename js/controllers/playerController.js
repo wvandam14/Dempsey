@@ -56,11 +56,12 @@ soccerStats.controller('playerController', function loginController($scope, $roo
             }
         };
 
-        //TODO: verify if user is logged in
+        // TODO: verify if user is logged in
         // moved to dataService
-        $scope.teamDict = dataService.getTeams();  
-
-        //TODO: states
-        $scope.states = dataService.states;
+        if (Parse.User.current()) {
+            $scope.teamDict = dataService.getTeams();  
+            $scope.states = dataService.states;  
+        }
+        
 
     });

@@ -33,5 +33,11 @@ var soccerStats = angular.module('soccerStats', ['ngRoute','ngSanitize','ngResou
             controller: 'gameReviewController',
             scope:{}
         });
+
+        $routeProvider.when('/verifyEmail', {
+            templateUrl: 'templates/pages/email-verification.html',
+            controller: 'emailController',
+            scope:{}
+        });
     }
 );

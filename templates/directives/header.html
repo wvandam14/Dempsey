@@ -2,7 +2,9 @@
     <div class="team flex flex-center-vertical">
         <div ng-click="toggleTeams()" class="flex flex-center-vertical">
             <img src="./img/sample/logo-small.png"/>
-            <h4>{{teamDict[0].label}}</h4>
+            <div ng-repeat="(value, label) in teamDict|limitTo:1">
+                <h4>{{label.label}}</h4>
+            </div>
         </div>
 
         <div ng-show="showTeams" class="team-dropdown dropdown">
