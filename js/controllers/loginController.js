@@ -2,6 +2,15 @@ soccerStats.controller('loginController', function loginController($scope, $root
         // User object
         $scope.user = {email: '', password: ''};
 
+        $scope.init = function() {
+            if (Parse.User.current()) {
+                $scope.goToPage('/home');
+            }
+        };
+        $timeout(function() {
+            $scope.init();
+        });
+
         $scope.goToPage = function(path) {
             viewService.goToPage(path);
         }
@@ -11,10 +20,11 @@ soccerStats.controller('loginController', function loginController($scope, $root
                     success: function (user) {
                         console.log(user);
                         var name = user.get('name');
-                            toastService.success(configService.toasts.loginSuccess(
-                                name === undefined ? "parent. Please edit your profile" : name)
-                            );
+                        toastService.success(configService.toasts.loginSuccess(
+                            name === undefined ? "parent. Please edit your profile" : name)
+                        );
                         $scope.goToPage('/home');
+                        $rootScope.$broadcast(configService.messages.loginSuccess);
                     },
                     error: function(user, error) {
                         toastService.error(configService.toasts.notAuthenticated);

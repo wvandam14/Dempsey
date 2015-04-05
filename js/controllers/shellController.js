@@ -9,23 +9,25 @@ soccerStats.controller('shellController',
         // -------------  Functions ------------- \\
         var history = [];
         $scope.currentPage = 'login';
+        $scope.currentUser = {};
 
         $scope.$on('$locationChangeSuccess', function (next, current) {
            $timeout(function() {
+               // check if user is logged in if accessing most pages
+               var currentUser = Parse.User.current();
+               if ($scope.currentPage != 'login' && $scope.currentPage != 'registration'){
+                   if (currentUser){
+                       console.log("user logged in");
+                   }
+                   else {
+                       viewService.goToPage('/login');
+                       $scope.currentUser = {};
+                   }
+               }
+
                 history.push({url: current.split('#')[1], state: {}});
                 $scope.currentPage = current.split('#')[1] ? current.split('#')[1].split('/')[1] : '';
                 $rootScope.$broadcast(configService.messages.navigate, history[history.length - 1].url);
-               console.log($scope.currentPage);
-               // check if user is logged in if accessing most pages
-                var currentUser = Parse.User.current();
-                if ($scope.currentPage != 'login' && $scope.currentPage != 'registration'){
-                    if (currentUser){
-                        console.log("user logged in");
-                    }
-                    else {
-                        viewService.goToPage('/login');
-                    }
-                }
 
            });
         });
