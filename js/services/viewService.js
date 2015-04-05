@@ -1,13 +1,21 @@
-soccerStats.factory('viewService', function ($location, $timeout) {
+soccerStats.factory('viewService', function ($location, $timeout, $rootScope, configService) {
 
     var
         goToPage = function(path) {
             $timeout(function() {
                 $location.path(path);
             });
-        },
+        }
 
-        validateAreaByFormName = function (form) {
+        , closeModal = function (modal) {
+            $rootScope.$broadcast(configService.messages.closeModal, { modal: modal });
+        }
+
+        , openModal = function (modal) {
+            $rootScope.$broadcast(configService.messages.openModal, { modal: modal });
+        }
+
+        , validateAreaByFormName = function (form) {
             // Find all the required fields
             var isValid = true;
             _.each($('form[name=' + form + '] input, form[name=' + form + '] select'), function (field) {
@@ -35,6 +43,8 @@ soccerStats.factory('viewService', function ($location, $timeout) {
 
     return {
         goToPage: goToPage,
+        closeModal: closeModal,
+        openModal: openModal,
         validateAreaByFormName: validateAreaByFormName
     }
 

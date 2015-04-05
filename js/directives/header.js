@@ -1,4 +1,4 @@
-soccerStats.directive('header', function () {
+soccerStats.directive('header', function (viewService, dataService) {
     return {
         restrict: 'E',
         templateUrl: "./templates/directives/header.html",
@@ -15,10 +15,12 @@ soccerStats.directive('header', function () {
             }
 
             $scope.showCreateTeam = function() {
-                $scope.$emit('showTeamModal');
+                viewService.openModal('teamModal');
             }
 
-            $scope.defaultTeam = 'Seattle Sounders FC Cool Guys';
+            // $scope.teamDict = dataService.getTeams();
+            // $scope.defaultTeam = $scope.teamDict.0[label];
+            $scope.defaultTeam = 'Seattle Sounders FC';
         }
         
     };
