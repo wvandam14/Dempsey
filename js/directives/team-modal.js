@@ -1,13 +1,15 @@
-soccerStats.directive('teamModal', function () {
+soccerStats.directive('teamModal', function (viewService) {
     return {
         restrict: 'E',
-        require: "header",
         templateUrl: "./templates/directives/team-modal.html",
         controller: function($scope){
-            this.blah = function() {
-                alert('teamModal');
+            $scope.showTeamForm = false;
+            $scope.$on('teamModal', function(event) {
+                $scope.showTeamForm = true;
+            });
+            $scope.goToPage = function(page) {
+                viewService.goToPage(page);
             };
-        },
-
+        }
     };
 });

@@ -1,4 +1,4 @@
-soccerStats.directive('header', function ($timeout, viewService) {
+soccerStats.directive('header', function () {
     return {
         restrict: 'E',
         templateUrl: "./templates/directives/header.html",
@@ -13,10 +13,11 @@ soccerStats.directive('header', function ($timeout, viewService) {
             $scope.toggleAccount = function() {
                 $scope.showAccount = !$scope.showAccount;
             }
-        },
 
-        // link: function (scope, teamModalCtrl) {
-        //     teamModalCtrl.blah();
-        // };
+            $scope.showCreateTeam = function() {
+                $scope.$emit('showTeamModal');
+            }
+        }
+        
     };
 });

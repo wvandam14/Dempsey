@@ -6,9 +6,6 @@ soccerStats.controller('shellController',
         $rootScope.isMobile = navigator.userAgent.match(/Android|iPhone|iPod/i);
         $rootScope.isTablet = navigator.userAgent.match(/iPad/i);
 
-
-
-
         // -------------  Functions ------------- \\
         var history = [];
         $scope.currentPage = 'login';
@@ -40,6 +37,11 @@ soccerStats.controller('shellController',
         $scope.$on(configService.messages.toast, function (event, message, type, callback) {
             showToast(message.message, type, callback);
         })
+
+        // Team Modal Listening
+        $scope.$on('showTeamModal', function(event) {
+            $scope.$broadcast('teamModal');
+        });
 
         var showToast = function (message, type, callback) {
             // New Toast Item
