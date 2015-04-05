@@ -3,8 +3,10 @@ soccerStats.factory('configService', function () {
 
         messages: {
               navigate: 'navigate'
+            , loginSuccess: 'loginSuccess'
             , closeModal: 'closeModal'
             , openModal: 'openModal'
+
 
         }, toasts: {
             general: function(action, type, success){
