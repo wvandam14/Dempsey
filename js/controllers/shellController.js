@@ -6,9 +6,13 @@ soccerStats.controller('shellController',
         $rootScope.isMobile = navigator.userAgent.match(/Android|iPhone|iPod/i);
         $rootScope.isTablet = navigator.userAgent.match(/iPad/i);
 
+
+
+
         // -------------  Functions ------------- \\
         var history = [];
         $scope.currentPage = 'login';
+
 
         $scope.$on('$locationChangeSuccess', function (next, current) {
            $timeout(function() {
@@ -16,9 +20,19 @@ soccerStats.controller('shellController',
                 $scope.currentPage = current.split('#')[1] ? current.split('#')[1].split('/')[1] : '';
                 $rootScope.$broadcast(configService.messages.navigate, history[history.length - 1].url);
                console.log($scope.currentPage);
+               // check if user is logged in if accessing most pages
+                var currentUser = Parse.User.current();
+                if ($scope.currentPage != 'login' && $scope.currentPage != 'registration'){
+                    if (currentUser){
+                        console.log("user logged in");
+                    }
+                    else {
+                        viewService.goToPage('/login');
+                    }
+                }
+
            });
         });
-
 
         // ------------- Toast Functions ------------- \\
         $scope.toasts = [];
@@ -65,15 +79,8 @@ soccerStats.controller('shellController',
         }
 
         $scope.logout = function () {
-            //comments below for validating user
-            //var currentUser = Parse.User.current();
-            //console.log(currentUser.get("username"));
             Parse.User.logOut();
-            //currentUser = Parse.User.current();
-            //console.log(currentUser);
             toastService.success(configService.toasts.logoutSuccess);
             viewService.goToPage('/login');
-
         };
-
     });
