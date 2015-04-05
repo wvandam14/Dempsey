@@ -2,7 +2,9 @@ soccerStats.factory('configService', function () {
     return {
 
         messages: {
-            navigate: 'navigate'
+              navigate: 'navigate'
+            , closeModal: 'closeModal'
+            , openModal: 'openModal'
 
         }, toasts: {
             general: function(action, type, success){

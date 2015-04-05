@@ -46,6 +46,10 @@
     </div>
 
 
+    <div ng-if="currentModal != ''" class="modal-container flex flex-center-horizontal">
+        <div ng-if="checkModal('teamModal')"><team-modal></team-modal></div>
+    </div>
+
 
     <!-- Libraries -->
     <script src="./lib/angular.js"></script>

@@ -3,13 +3,11 @@ soccerStats.directive('teamModal', function (viewService) {
         restrict: 'E',
         templateUrl: "./templates/directives/team-modal.html",
         controller: function($scope){
-            $scope.showTeamForm = false;
-            $scope.$on('teamModal', function(event) {
-                $scope.showTeamForm = true;
-            });
-            $scope.goToPage = function(page) {
-                viewService.goToPage(page);
-            };
+            var self = 'teamModal';
+
+            $scope.closeModal = function() {
+                viewService.closeModal(self);
+            }
         }
     };
 });

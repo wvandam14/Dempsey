@@ -10,7 +10,6 @@ soccerStats.controller('shellController',
         var history = [];
         $scope.currentPage = 'login';
 
-
         $scope.$on('$locationChangeSuccess', function (next, current) {
            $timeout(function() {
                 history.push({url: current.split('#')[1], state: {}});
@@ -30,6 +29,15 @@ soccerStats.controller('shellController',
 
            });
         });
+
+        $scope.logout = function () {
+            Parse.User.logOut();
+            toastService.success(configService.toasts.logoutSuccess);
+            viewService.goToPage('/login');
+        };
+
+        // ------------- END Main Functions ------------- \\
+
 
         // ------------- Toast Functions ------------- \\
         $scope.toasts = [];
@@ -80,9 +88,46 @@ soccerStats.controller('shellController',
             },1000);
         }
 
-        $scope.logout = function () {
-            Parse.User.logOut();
-            toastService.success(configService.toasts.logoutSuccess);
-            viewService.goToPage('/login');
-        };
+        // ------------- END Toast Functions ------------- \\
+
+        // ------------- Modal Functions ------------- \\
+        $scope.currentModal = '';
+
+        // Message received when client wants to close a modal
+        $scope.$on(configService.messages.closeModal, function(msg, data) {
+            if (data.modal) {
+                $timeout(function() {
+                    $scope.currentModal = '';
+                });
+            }
+            else {
+                throw new Error('Must include modal ID when broadcasting this message.');
+            }
+        });
+
+        // Message received when client wants to open a modal
+        $scope.$on(configService.messages.openModal, function(msg, data) {
+            if (data.modal) {
+                $timeout(function() {
+                    $scope.currentModal = data.modal;
+                });
+            }
+            else {
+                throw new Error('Must include modal ID when broadcasting this message.');
+            }
+        });
+
+        // Function for when elements on the index.html want to open a modal
+        $scope.openModal = function(modal) {
+            $scope.currentModal = modal;
+        }
+
+        // Used on the modal directives to check whether each modal should be visible or not
+        $scope.checkModal = function(modal) {
+            return $scope.currentModal === modal;
+        }
+
+        // ------------- END Modal Functions ------------- \\
+
+
     });

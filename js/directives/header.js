@@ -1,4 +1,4 @@
-soccerStats.directive('header', function () {
+soccerStats.directive('header', function (viewService) {
     return {
         restrict: 'E',
         templateUrl: "./templates/directives/header.html",
@@ -15,7 +15,7 @@ soccerStats.directive('header', function () {
             }
 
             $scope.showCreateTeam = function() {
-                $scope.$emit('showTeamModal');
+                viewService.openModal('teamModal');
             }
         }
         
