@@ -20,8 +20,4 @@
         } else {
             //show login page
         }
-
-        $scope.test = function () {
-            alert('hello');
-        };
     });

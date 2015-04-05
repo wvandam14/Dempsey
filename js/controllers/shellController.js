@@ -79,14 +79,8 @@ soccerStats.controller('shellController',
         }
 
         $scope.logout = function () {
-            //comments below for validating user
-            //var currentUser = Parse.User.current();
-            //console.log(currentUser.get("username"));
             Parse.User.logOut();
-            //currentUser = Parse.User.current();
-            //console.log(currentUser);
             toastService.success(configService.toasts.logoutSuccess);
             viewService.goToPage('/login');
-
         };
     });
