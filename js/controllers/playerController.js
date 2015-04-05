@@ -58,9 +58,7 @@ soccerStats.controller('playerController', function loginController($scope, $roo
 
         //TODO: verify if user is logged in
         // moved to dataService
-        $scope.teamDict = dataService.getTeams();
-        console.log($scope.teamDict);
-        
+        $scope.teamDict = dataService.getTeams();  
 
         //TODO: states
         $scope.states = dataService.states;

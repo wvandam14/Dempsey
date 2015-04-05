@@ -36,6 +36,8 @@ soccerStats.directive('teamModal', function (viewService, toastService, register
                         currentUser.save(null, {
                             success: function(currenUser) {
                                 toastService.success(configService.toasts.teamAddSuccess);
+                                //TODO: not working
+                                viewService.goToPage('/home');
                             },
                             error: function(currentUser, error) {
                                 toastService.error("There was a an error (" + error.code +"). Please try again.");
