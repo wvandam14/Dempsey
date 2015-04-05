@@ -17,6 +17,8 @@ soccerStats.directive('header', function () {
             $scope.showCreateTeam = function() {
                 $scope.$emit('showTeamModal');
             }
+
+            $scope.defaultTeam = 'Seattle Sounders FC Cool Guys';
         }
         
     };

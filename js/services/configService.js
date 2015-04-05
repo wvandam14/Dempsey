@@ -40,7 +40,8 @@ soccerStats.factory('configService', function () {
             , cannotConnectToServer: 'The server could not be contacted.  Please check your connection and try again.'
             , savingInProgress: 'Saving is already in progress'
             , logoutSuccess: 'You have successfully logged out'
-            , emailVerification : 'Please verify your email before continuing',
+            , emailVerification : 'Please verify your email before continuing'
+            , teamAddSuccess: 'You have successfully added a new team'
 
         }
     }
