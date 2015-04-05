@@ -46,6 +46,7 @@ soccerStats.factory('configService', function () {
             , logoutSuccess: 'You have successfully logged out'
             , emailVerification : 'Please verify your email before continuing'
             , teamAddSuccess: 'You have successfully added a new team'
+            , accountUpdateSuccess: 'You have updated your profile'
 
         }
     }

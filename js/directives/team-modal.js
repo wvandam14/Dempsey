@@ -8,7 +8,6 @@ soccerStats.directive('teamModal', function (viewService, toastService, register
             $scope.closeModal = function() {
                 viewService.closeModal(self);
             }
-            $scope.showTeamForm = false;
             // Team information
             $scope.team = {
                 logo: '',
@@ -20,11 +19,6 @@ soccerStats.directive('teamModal', function (viewService, toastService, register
                 city: '',
                 state: ''
             };
-
-            // listener when 'Create A Team' is pressed from the dropdown menu on header
-            $scope.$on('teamModal', function(event) {
-                $scope.showTeamForm = true;
-            });
 
             $scope.addNewTeam = function(newTeam) {
                 var _team = registerService.registerTeam(newTeam);
