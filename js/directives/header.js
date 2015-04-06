@@ -1,13 +1,12 @@
-soccerStats.directive('header', function ($timeout, viewService, configService) {
+soccerStats.directive('header', function ($timeout, viewService, configService, dataService) {
     return {
         restrict: 'E',
         templateUrl: "./templates/directives/header.html",
-        controller: function($scope){
+        controller: function($scope, dataService){
             $scope.showTeams = false;
             $scope.showAccount = false;
 
             var parseUser = Parse.User.current();
-            // Todo: Update this code to get the initials when we have a first and last name field
             $scope.currentUser = {initials: (parseUser.get('firstName')[0] + parseUser.get('lastName')[0]) };
 
             $scope.toggleTeams = function() {
@@ -22,6 +21,16 @@ soccerStats.directive('header', function ($timeout, viewService, configService) 
                 viewService.openModal('teamModal');
             }
 
+            $scope.showEditAccount = function() {
+                viewService.openModal('accountModal');
+            }
+
+            // TODO: verify if user is logged in
+            if (Parse.User.current()) {
+                $scope.teamDict = [];
+                $scope.teamDict = dataService.getTeams();
+            }
+            
         }
     };
 });

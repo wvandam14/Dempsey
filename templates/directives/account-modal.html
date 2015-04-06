@@ -1,0 +1,49 @@
+<div class="modal account registration">
+    <div class="head flex">
+        <h1 class="flex-one">Edit your account information</h1>
+        <div>
+            <x ng-click="closeModal()"/>
+        </div>
+    </div>
+
+    <!-- Coach Registration Form -->
+    <form name="accountForm" class="body flex two-column">
+        <div class="flex-one">
+            <h3>Profile Picture</h3>
+            <div class="flex flex-center logo-container">
+                <image-upload image="newUser.photo" placeholder="'./img/manager-icon.svg'"></image-upload>
+                <p class="flex-one text-center logo-text">Change your profile picture?</p>
+            </div>
+            <h3 class="ellipse">Email</h3>
+            <input type="email" ng-model="newUser.email" placeholder="Email" required />
+            <h3 class="ellipse">Change your password?</h3>
+<!--             <h3 class="ellipse">Password</h3>
+            <input type="password" ng-model="newUser.password" placeholder="Password" required />
+            <h3 class="ellipse">Confirm Password</h3>
+            <input type="password" ng-model="newUser.confirmPassword" placeholder="Confirm Password" required />
+            <p ng-show="!confirmPassword()" class="error"><img src="./img/alert-icon.svg"/> Passwords do not match</p> -->
+        </div>
+        <div class="flex-one">
+            <h3 class="ellipse">Name</h3>
+            <input type="text" ng-model="newUser.name" placeholder="Full Name" required />
+            <h3 class="ellipse">Phone</h3>
+            <input type="text" ng-model="newUser.phone" placeholder="(123) 456-7890" required />
+            <h3 class="ellipse">City</h3>
+            <input type="text" ng-model="newUser.city" placeholder="City" required />
+            <h3 class="ellipse">State</h3>
+
+            <select ng-model="newUser.state" ng-options="state as state.label for state in states" required>
+                <option value="">Select A State</option>
+            </select>
+        </div>
+    </form>
+    <div class="foot flex">
+        <div class="button green flex-one" ng-click="updateAccount(newUser)">
+            <h1>Save</h1>
+        </div>
+        <div class="button navy flex-one" ng-click="closeModal()">
+            <h1>Cancel</h1>
+        </div>
+    </div>
+</div>
+

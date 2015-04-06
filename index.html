@@ -21,6 +21,7 @@
     <link rel="stylesheet" type="text/css" href="./css/mobile.css">
     <link rel="stylesheet" type="text/css" href="./css/toast.css">
     <link rel="stylesheet" type="text/css" href="./css/player-modal.css">
+    <link rel="stylesheet" type="text/css" href="./css/account-page.css">
     <link rel="stylesheet" type="text/css" href="./css/game-review.css">
     <link rel="stylesheet" type="text/css" href="./css/header.css">
     <link rel="stylesheet" type="text/css" href="./css/schedule.css">
@@ -47,11 +48,10 @@
         </div>
     </div>
 
-
     <div ng-if="currentModal != ''" class="modal-container flex flex-center-horizontal">
         <div ng-if="checkModal('teamModal')"><team-modal></team-modal></div>
+        <div ng-if="checkModal('accountModal')"><account-modal></account-modal></div>
     </div>
-
 
     <!-- Libraries -->
     <script src="./lib/angular.js"></script>
@@ -85,6 +85,7 @@
     <script src="./js/controllers/playerController.js"></script>
     <script src="./js/controllers/gameReviewController.js"></script>
     <script src="./js/controllers/testController.js"></script>
+    <script src="./js/controllers/emailController.js"></script>
 
     <!-- Directives -->
     <script src="./js/directives/header.js"></script>
@@ -94,7 +95,7 @@
     <script src="./js/directives/x-icon.js"></script>
     <script src="./js/directives/team-modal.js"></script>
     <script src="./js/directives/game-timeline.js"></script>
-    <!-- <script src="./js/directives/ngDialog.js"></script> -->
+    <script src="./js/directives/account-modal.js"></script>
 
     <!-- Services -->
     <script src="./js/services/viewService.js"></script>
@@ -102,6 +103,8 @@
     <script src="./js/services/configService.js"></script>
     <script src="./js/services/toastService.js"></script>
     <script src="./js/services/dropdownService.js"></script>
+    <script src="./js/services/registerService.js"></script>
+    <script src="./js/services/dataService.js"></script>
 
 </body>
 </html>

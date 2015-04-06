@@ -48,11 +48,6 @@ soccerStats.controller('shellController',
             showToast(message.message, type, callback);
         })
 
-        // Team Modal Listening
-        $scope.$on('showTeamModal', function(event) {
-            $scope.$broadcast('teamModal');
-        });
-
         var showToast = function (message, type, callback) {
             // New Toast Item
             var item = {

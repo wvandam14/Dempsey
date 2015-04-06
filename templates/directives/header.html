@@ -2,13 +2,15 @@
     <div class="team flex flex-center-vertical">
         <div ng-click="toggleTeams()" class="flex flex-center-vertical">
             <img src="./img/sample/logo-small.png"/>
-            <h4>Seattle Sounders FC</h4>
+            <div ng-repeat="(value, label) in teamDict|limitTo:1">
+                <h4>{{label.label}}</h4>
+            </div>
         </div>
 
         <div ng-show="showTeams" class="team-dropdown dropdown">
-            <div class="team flex flex-center-vertical">
+            <div class="team flex flex-center-vertical" ng-repeat="(value, label) in teamDict">
                 <img src="./img/sample/logo-small.png"/>
-                <h4>FC Dallas</h4>
+                <h4>{{label.label}}</h4>
             </div>
             <div class="team flex flex-center-vertical" ng-click="showCreateTeam()">
                 <h4>Create A Team</h4>
@@ -31,7 +33,7 @@
         </div>
 
         <div ng-show="showAccount" class="user-dropdown dropdown">
-            <div>
+            <div ng-click="showEditAccount()">
                 <h4>Edit Account</h4>
             </div>
             <div ng-click="logout()">
