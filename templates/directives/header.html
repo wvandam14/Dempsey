@@ -8,7 +8,7 @@
         </div>
 
         <div ng-show="showTeams" class="team-dropdown dropdown">
-            <div class="team flex flex-center-vertical" ng-repeat="(value, label) in teamDict">
+            <div class="team flex flex-center-vertical" ng-repeat="(value, label) in teamDict" ng-show="$index > 1">
                 <img src="./img/sample/logo-small.png"/>
                 <h4>{{label.label}}</h4>
             </div>
