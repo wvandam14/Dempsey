@@ -8,8 +8,8 @@ soccerStats.directive('header', function ($timeout, viewService, configService, 
             $scope.currentTeam = {};
             $scope.teams = [];
 
-            var parseUser = Parse.User.current();
-            $scope.currentUser = {initials: (parseUser.get('firstName')[0] + parseUser.get('lastName')[0]) };
+            // var parseUser = Parse.User.current();
+            // $scope.currentUser = {initials: (parseUser.get('firstName')[0] + parseUser.get('lastName')[0]) };
 
             $scope.toggleTeams = function() {
                 $scope.showTeams = !$scope.showTeams;
