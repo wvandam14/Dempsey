@@ -1,0 +1,29 @@
+<div>
+
+    <div class="event-container">
+        <div class="event" ng-class="{'opponent': event.opponent }" ng-repeat="event in events track by $index" style="left: {{event.time}}%">
+            <div ng-if="event.opponent" class="circle opponent-circle"></div>
+            <div class="flex">
+                <div>
+                    <img ng-if="event.type === 'goal'" src="./img/timeline-goal-light.svg"/>
+                    <img ng-if="event.type === 'yellow'" src="./img/timeline-card-yellow.svg"/>
+                    <img ng-if="event.type === 'red'" src="./img/timeline-card-red.svg"/>
+                    <img ng-if="event.type === 'double-yellow'" src="./img/timeline-card-double-yellow.svg"/>
+                    <img ng-if="event.type === 'sub'" src="./img/timeline-sub-in-out.svg"/>
+                </div>
+                <h5 class="minute">{{event.time}}'</h5>
+                <h5 class="flex-one">{{event.name}} <span ng-if="event.sub"><br/>{{event.sub}}</span></h5>
+            </div>
+            <div ng-if="!event.opponent" class="circle team-circle"></div>
+        </div>
+    </div>
+
+    <div class="back flex flex-center-vertical">
+        <div class="circle"></div>
+        <div class="line flex-one"></div>
+        <div class="circle"></div>
+        <div class="line flex-one"></div>
+        <div class="circle"></div>
+    </div>
+
+</div>

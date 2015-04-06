@@ -1,0 +1,83 @@
+game-timeline {
+    width:100%;
+}
+
+game-timeline > div {
+    padding: 52px 0;
+    position: relative;
+}
+
+game-timeline .event:hover {
+    z-index:1;
+}
+game-timeline .event:hover h5 {
+    display: block !important;
+}
+
+game-timeline h5 {
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #FFF;
+}
+
+game-timeline .event {
+    cursor: pointer;
+    position: absolute;
+    bottom:43%;
+}
+
+game-timeline .event > .flex {
+    padding: 5px;
+    margin: 12px 0;
+    background-color: #5DA97B;
+}
+
+game-timeline .circle.team-circle {
+    width: 16px;
+    height: 16px;
+    background-color: #FFF;
+    border:2px solid #5DA97B;
+
+}
+
+game-timeline .circle.opponent-circle {
+    width: 16px;
+    height: 16px;
+    background-color: #FFF;
+    border:2px solid #B4B4B4;
+}
+
+game-timeline .event.opponent  {
+    bottom: initial;
+}
+
+game-timeline .event.opponent > .flex {
+    background-color: #B4B4B4;
+}
+
+game-timeline .event .minute {
+    padding: 0 4px;
+}
+
+game-timeline .back .circle {
+    width:16px;
+    height: 16px;
+    background-color: #1C3D68;
+}
+
+game-timeline .back .line {
+    background-color: #1C3D68;
+    height: 4px;
+}
+
+@media (max-width: 1024px) {
+    game-timeline .event h5:not(.minute) {
+        display: none;
+    }
+}
+
+@media (max-width: 420px) {
+    game-timeline .event h5 {
+        display: none;
+    }
+}

@@ -15,6 +15,7 @@
     <link rel="stylesheet" type="text/css" href="./css/animation.css">
     <link rel="stylesheet" type="text/css" href="./css/login-page.css">
     <link rel="stylesheet" type="text/css" href="./css/modal.css">
+    <link rel="stylesheet" type="text/css" href="./css/container.css">
     <link rel="stylesheet" type="text/css" href="./css/registration-page.css">
     <link rel="stylesheet" type="text/css" href="./css/tablet.css">
     <link rel="stylesheet" type="text/css" href="./css/mobile.css">
@@ -23,10 +24,11 @@
     <link rel="stylesheet" type="text/css" href="./css/game-review.css">
     <link rel="stylesheet" type="text/css" href="./css/header.css">
     <link rel="stylesheet" type="text/css" href="./css/schedule.css">
+    <link rel="stylesheet" type="text/css" href="./css/game-timeline.css">
     <!-- <link rel="stylesheet" type="text/css" href="./css/ngDialog.css"> -->
 
 </head>
-<body ng-controller="shellController"  ng-class="{'tablet': $root.isTablet, 'mobile': $root.isMobile}">
+<body ng-controller="shellController"  ng-class="{'tablet': $root.isTablet, 'mobile': $root.isMobile, 'isModal': currentModal != ''}">
 
     <header ng-if="currentPage != 'login' && currentPage != 'registration'"></header>
 
@@ -82,6 +84,7 @@
     <script src="./js/controllers/homeController.js"></script>
     <script src="./js/controllers/playerController.js"></script>
     <script src="./js/controllers/gameReviewController.js"></script>
+    <script src="./js/controllers/testController.js"></script>
 
     <!-- Directives -->
     <script src="./js/directives/header.js"></script>
@@ -90,6 +93,7 @@
     <script src="./js/directives/schedule.js"></script>
     <script src="./js/directives/x-icon.js"></script>
     <script src="./js/directives/team-modal.js"></script>
+    <script src="./js/directives/game-timeline.js"></script>
     <!-- <script src="./js/directives/ngDialog.js"></script> -->
 
     <!-- Services -->

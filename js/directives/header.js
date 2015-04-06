@@ -8,7 +8,7 @@ soccerStats.directive('header', function ($timeout, viewService, configService) 
 
             var parseUser = Parse.User.current();
             // Todo: Update this code to get the initials when we have a first and last name field
-            $scope.currentUser = {initials: ((parseUser.get('name').split(' ')[0])[0] + (parseUser.get('name').split(' ')[1])[0]) };
+            $scope.currentUser = {initials: (parseUser.get('firstName')[0] + parseUser.get('lastName')[0]) };
 
             $scope.toggleTeams = function() {
                 $scope.showTeams = !$scope.showTeams;

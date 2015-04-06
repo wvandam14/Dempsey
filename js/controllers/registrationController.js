@@ -83,7 +83,8 @@ soccerStats.controller('registrationController',
 
 		// User information
         $scope.newUser = {
-            name: '',
+            firstName: '',
+            lastName: '',
             email: '',
             password: '',
             confirmPassword: '',
@@ -116,7 +117,9 @@ soccerStats.controller('registrationController',
                     var registerUser = new Parse.User();
 
                     registerUser.set("username", newUser.email);
-                    registerUser.set("name", newUser.name);
+                    registerUser.set("firstName", newUser.firstName);
+                    registerUser.set("lastName", newUser.lastName);
+                    registerUser.set("name", newUser.firstName + ' ' + newUser.lastName);
                     registerUser.set("email", newUser.email);
                     registerUser.set("password", newUser.password);
                     registerUser.set("phone", newUser.phone);

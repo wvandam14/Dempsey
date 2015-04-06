@@ -1,10 +1,16 @@
 /* ---------- Default Modal ---------- */
+body.isModal {
+    overflow-x: hidden;
+}
+
 .modal-container {
     width: 100%;
     height: 100%;
     position: fixed;
+    z-index: 3;
     top: 0;
     background-color: rgba(0,0,0,.5);
+    overflow-x: auto;
 }
 
 .modal-container > div {
