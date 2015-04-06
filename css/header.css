@@ -20,6 +20,7 @@ header h5 {
 }
 
 header > div > .team {
+    min-width: 200px;
     padding: 10px;
 }
 

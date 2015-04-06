@@ -5,6 +5,8 @@ soccerStats.directive('header', function ($timeout, viewService, configService, 
         controller: function($scope, dataService){
             $scope.showTeams = false;
             $scope.showAccount = false;
+            $scope.currentTeam = {};
+            $scope.teams = [];
 
             var parseUser = Parse.User.current();
             $scope.currentUser = {initials: (parseUser.get('firstName')[0] + parseUser.get('lastName')[0]) };
@@ -27,8 +29,9 @@ soccerStats.directive('header', function ($timeout, viewService, configService, 
 
             // TODO: verify if user is logged in
             if (Parse.User.current()) {
-                $scope.teamDict = [];
-                $scope.teamDict = dataService.getTeams();
+                $scope.teams = dataService.getTeams( function(_teams) {
+                    $scope.currentTeam = _teams[0];
+                });
             }
             
         }

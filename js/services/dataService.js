@@ -61,21 +61,25 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
                 {value: "WI", label: "Wisconsin"},
                 {value: "WY", label: "Wyoming"}
         ],
-        getTeams = function() {
+        getTeams = function(callback) {
             var teamDict = [];
             var currentUser = Parse.User.current();
-            var user = Parse.Object.extend("_User");
+            var userTable = Parse.Object.extend("_User");
 
-            var query = new Parse.Query(user);
+            var query = new Parse.Query(userTable);
             query.include('teams');
             query.get(currentUser.id, {
                 success: function(user) {
-                    var teams = user.get("teams");
-                    // Add each team associated with the current user to the team dropdown list
-                    _.each(teams, function (team) {
-                        $timeout(function(){
-                            teamDict.push({value: team.id, label: team.get("name")});
+                    $timeout(function(){
+                        var teams = user.get("teams");
+                        // Add each team associated with the current user to the team dropdown list
+                        _.each(teams, function (team) {
+                            var logo = team.get("logo");
+                            var teamName = team.get("name");
+                            teamDict.push({value: team.id, label: teamName, logo: logo._url });
                         });
+
+                        callback(teamDict);
                     });
 
                 }, error: function(user, error) {
