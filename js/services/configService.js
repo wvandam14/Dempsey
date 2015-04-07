@@ -47,7 +47,6 @@ soccerStats.factory('configService', function () {
             , emailVerification : 'Please verify your email before continuing'
             , teamAddSuccess: 'You have successfully added a new team'
             , accountUpdateSuccess: 'You have updated your profile'
-
         }
     }
 });

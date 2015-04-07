@@ -11,32 +11,35 @@
         <div class="flex-one">
             <h3>Profile Picture</h3>
             <div class="flex flex-center logo-container">
-                <image-upload image="newUser.photo" placeholder="'./img/manager-icon.svg'"></image-upload>
-                <p class="flex-one text-center logo-text">Change your profile picture?</p>
+                <image-upload image="newUser.photo" placeholder="newUser.photo"></image-upload>
+                <p class="flex-one text-center logo-text">Click the photo to add a new one</p>
             </div>
             <h3 class="ellipse">Email</h3>
             <input type="email" ng-model="newUser.email" placeholder="Email" required />
-            <h3 class="ellipse">Change your password?</h3>
-<!--             <h3 class="ellipse">Password</h3>
-            <input type="password" ng-model="newUser.password" placeholder="Password" required />
+            <h3 class="ellipse">New Password</h3>
+            <p>Note: This is to update your password</p>
+            <input type="password" ng-model="newUser.newPassword" placeholder="New Password" />
             <h3 class="ellipse">Confirm Password</h3>
-            <input type="password" ng-model="newUser.confirmPassword" placeholder="Confirm Password" required />
-            <p ng-show="!confirmPassword()" class="error"><img src="./img/alert-icon.svg"/> Passwords do not match</p> -->
+            <input type="password" ng-model="newUser.confirmPassword" placeholder="Confirm Password" />
+            <p ng-show="!confirmPassword()" class="error"><img src="./img/alert-icon.svg"/> Passwords do not match</p>
         </div>
         <div class="flex-one">
             <h3 class="ellipse">Name</h3>
-            <input type="text" ng-model="newUser.name" placeholder="Full Name" required />
+            <div class="flex">
+                <input type="text" ng-model="newUser.firstName" placeholder="First Name" required />
+                <input type="text" ng-model="newUser.lastName" placeholder="Last Name" required />
+            </div>
             <h3 class="ellipse">Phone</h3>
             <input type="text" ng-model="newUser.phone" placeholder="(123) 456-7890" required />
             <h3 class="ellipse">City</h3>
             <input type="text" ng-model="newUser.city" placeholder="City" required />
             <h3 class="ellipse">State</h3>
-
-            <select ng-model="newUser.state" ng-options="state as state.label for state in states" required>
-                <option value="">Select A State</option>
+            <select ng-model="newUser.state" ng-options="v for (k, v) in states" required>
+                <option value="k">Select A State</option>
             </select>
         </div>
     </form>
+
     <div class="foot flex">
         <div class="button green flex-one" ng-click="updateAccount(newUser)">
             <h1>Save</h1>
