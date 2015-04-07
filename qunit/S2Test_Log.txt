@@ -53,6 +53,21 @@ when valid is submitted after blank
 		// adding a team does not refresh the page, 
 			so new team does not show up until page refresh is manuely done by user
 		// non primary team can not be selected
-		// Create A New Team window stays up after new team is submitted
-		// long team names fill out more than their space and can shrink the team logo image
+		// Create A New Team window stays up after new team is submitted, and can be resubmitted, changed and submitted,
+			canceled after submition (stays submitted) and closed out of after submition (stays submitted)
+First image fix (team select menu)
+		// images now fill a square space limit
+		// wide images have space at the bottom, tall images the bottom is cut off
+		// long team names fill out more than their space (expanding up) and can shrink the team logo image,
+			there action box also expands past its space and covers the team above them's box,	
+		// long team names also get cut off at a certian point 
+			(dont know if hight is centered on the correct box location or if it just cuts off at a certain length)
+side problems
+	// having multiple browser windows with the project running causes problems 
+		(only one user per computer, possibly more problems)
+	// on coach registration, if there is an error elsewhere in the submition, the team will be created multiple times 
+		(each time submition is attempted)		
+
+
+
 
