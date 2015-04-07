@@ -42,7 +42,8 @@ header .team {
 }
 
 header .img-container {
-    width: 42px;
+    min-width: 42px;
+    max-width: 42px;
     height: 42px;
     margin-right: 10px;
 }

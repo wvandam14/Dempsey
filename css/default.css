@@ -348,3 +348,20 @@ x div:nth-of-type(2) {
     height: 18px !important;
     margin-left: 7px;
 }
+
+.slider {
+    -ms-transform: translate3d(0,0,0);
+    -webkit-transform: translate3d(0,0,0); /* Chrome, Safari, Opera */
+    transform: translate3d(0,0,0);
+}
+
+.animate {
+    transition: all .3s ease-out;
+}
+
+.slider:active {
+    -ms-transform: translate3d(x,y,z);
+    -webkit-transform: translate3d(x,y,z); /* Chrome, Safari, Opera */
+    transform: translate3d(x,y,z);
+}
+

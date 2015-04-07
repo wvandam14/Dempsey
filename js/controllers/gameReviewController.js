@@ -1,16 +1,15 @@
 soccerStats.controller('gameReviewController', 
-    function gameReviewController($scope, $location) {
+    function gameReviewController($scope, $rootScope, $location, configService) {
+        $rootScope.$on(configService.messages.setGame, function(msg, data) {
+            if(data.game) {
+                $scope.currGame = data.game;
+            }
+            else {
+                throw new Error('No game data received');
+            }
+        });
 
     	var currentUser = Parse.User.current();
-        $scope.currGame = {};
-        $scope.team = {};
-        $scope.against = {};
-        $scope.currGame.date = "April 1, 2015";
-        $scope.team.name = "Seattle Sounders FC";
-        $scope.against.name = "FC Dallas";
-        $scope.team.score = 2;
-        $scope.against.score = 1;
-        
-        
+        $scope.currGame = {};       
 
     });

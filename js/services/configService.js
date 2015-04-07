@@ -6,6 +6,7 @@ soccerStats.factory('configService', function () {
             , loginSuccess: 'loginSuccess'
             , closeModal: 'closeModal'
             , openModal: 'openModal'
+            , setGame: 'setGame'
 
 
         }, toasts: {
@@ -47,7 +48,6 @@ soccerStats.factory('configService', function () {
             , emailVerification : 'Please verify your email before continuing'
             , teamAddSuccess: 'You have successfully added a new team'
             , accountUpdateSuccess: 'You have updated your profile'
-
         }
     }
 });

@@ -1,0 +1,73 @@
+Test log Sprint 2
+Testing Toast in coach registration
+	testing fields with empty, filling out and removing and refilling out
+	// problem with email field remaining red after entering valid email, 
+		even after moving on and coming back to create coach account page
+	// does not require a coach photo
+	// can still add non-image files with no UI error
+	// after removing team color and leaving field blank, field does not rest, 
+		reselecting same image does not reset, changing images does/changing back
+	// trying to go from 1 page to 3 page brings up toast "Please fill out required fields"
+	// can back from page 2 to 1 with page 2 information not complete
+7:33
+	// submit problem solved
+	// non-square images (tall) are cut off on display (not save)
+	// non-square images (fat) are distplayed as such (not cut off, not stretched to square)
+	// submit successful
+	// toast stacks
+4/2/15 3:00
+before anything is entered
+	//ng-pristine ng-untouched ng-valid-email ng-invalid ng-invalid-required
+	// field is white
+
+when invalid is submitted
+	//ng-invalid ng-dirty ng-invalid-email ng-vali-required ng-touched ng-invalid-required
+	// field is red
+
+when valid is resubmitted after invalid
+	//ng-dirty ng-valid-required ng-touched ng-invalid-required ng-valid ng-valid-email
+	// field is red
+
+when valid is submitted from refresh
+	//ng-dirty ng-valid-required ng-valid ng-valid-email ng-touched
+	// field is white
+
+when blank is submitted
+	//ng-pristine ng-untouched ng-valid-email ng-invalid ng-invalid-required ng-touched
+	// field is red
+
+when valid is submitted after blank
+	//ng-touched ng-dirty ng-valid-required ng-valid ng-valid-email
+	// field is white
+
+
+4/6/15 6:47
+	back to registration
+		//display has shifted down, page is cut off and does not scroll
+		//known error for user not submitting a profile pic
+
+	testing create a team
+		//displaying the team select, names are not lined up if images are different sizes
+		//leaving Team logo blank generates toast "There was an error (111). Please try again."
+		// adding a team does not refresh the page, 
+			so new team does not show up until page refresh is manuely done by user
+		// non primary team can not be selected
+		// Create A New Team window stays up after new team is submitted, and can be resubmitted, changed and submitted,
+			canceled after submition (stays submitted) and closed out of after submition (stays submitted)
+First image fix (team select menu)
+		// images now fill a square space limit
+		// wide images have space at the bottom, tall images the bottom is cut off
+		// long team names fill out more than their space (expanding up) and can shrink the team logo image,
+			there action box also expands past its space and covers the team above them's box,	
+		// long team names also get cut off at a certian point 
+			(dont know if hight is centered on the correct box location or if it just cuts off at a certain length)
+		// create a new team does not find a primary color
+side problems
+	// having multiple browser windows with the project running causes problems 
+		(only one user per computer, possibly more problems)
+	// on coach registration, if there is an error elsewhere in the submition, the team will be created multiple times 
+		(each time submition is attempted)		
+
+
+
+

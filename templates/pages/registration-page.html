@@ -58,8 +58,8 @@
                 <input type="text" ng-model="newUser.city" placeholder="City" required />
                 <h3 class="ellipse">State</h3>
 
-                <select ng-model="newUser.state" ng-options="state as state.label for state in states" required>
-                    <option value="">Select A State</option>
+                <select ng-model="newUser.state" ng-options="v for (k, v) in states" required>
+                    <option value="">Select a state</option>
                 </select>
             </div>
         </form>
@@ -91,7 +91,7 @@
                 <h3 class="ellipse">City</h3>
                 <input type="text" ng-model="team.city" placeholder="City" required />
                 <h3 class="ellipse">State</h3>
-                <select ng-model="team.state" ng-options="state as state.label for state in states" required>
+                <select ng-model="team.state" ng-options="v for (k, v) in states" required>
                     <option value="">Select a State</option>
                 </select>
             </div>
