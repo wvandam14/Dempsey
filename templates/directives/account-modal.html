@@ -11,7 +11,7 @@
         <div class="flex-one">
             <h3>Profile Picture</h3>
             <div class="flex flex-center logo-container">
-                <image-upload image="newUser.photo" placeholder="newUser.photo"></image-upload>
+                <image-upload image="newUser.newPhoto" placeholder="newUser.photo"></image-upload>
                 <p class="flex-one text-center logo-text">Click the photo to add a new one</p>
             </div>
             <h3 class="ellipse">Email</h3>
@@ -35,7 +35,7 @@
             <input type="text" ng-model="newUser.city" placeholder="City" required />
             <h3 class="ellipse">State</h3>
             <select ng-model="newUser.state" ng-options="v for (k, v) in states" required>
-                <option value="k">Select A State</option>
+                <option value=""></option>
             </select>
         </div>
     </form>

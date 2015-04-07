@@ -38,8 +38,8 @@ soccerStats.directive('accountModal', function (viewService, toastService, regis
                 phone: currentUser.get("phone"),
                 city: currentUser.get("city"),
                 state: $scope.states[currentUser.get("state")],
-                // TODO: add profile picture
-                photo: currentUser.get("photo")._url        
+                photo: currentUser.get("photo")._url,  
+                newPhoto: ''      
             };
 
             $scope.updateAccount = function(newUser) {
@@ -50,10 +50,10 @@ soccerStats.directive('accountModal', function (viewService, toastService, regis
                         currentUser.set("email", newUser.email);
                         currentUser.set("phone", newUser.phone);
                         currentUser.set("city", newUser.city);
-                        //TODO: fix state values
-                        currentUser.set("state", newUser.state.value);
-                        //TODO: conditional statement if same picture since we are using the same url 
-                        //currentUser.set("photo", newUser.photo);
+                        currentUser.set("state", (_.invert($scope.states))[newUser.state]);
+                        console.log(newUser.newPhoto);
+                        if ($scope.newUser.newPhoto) 
+                            currentUser.set("photo", newUser.newPhoto);
                         currentUser.save(null, {
                             success: function (currentUser) {
                                 toastService.success(configService.toasts.accountUpdateSuccess);
