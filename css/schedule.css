@@ -2,10 +2,11 @@
 	width: 100%;
 	height: 100px;
 	background-color: #222;
+	color: #FFF;
 }
 
 .schedule h6 {
-	font-size: 12px;
+	font-size: 15px;
 }
 
 .schedule .scroll-arrow {
@@ -28,18 +29,60 @@
 	color: #FFF;
 }
 
+.schedule .games-container {
+	min-width: 1500px;
+	overflow: hidden;
+	position: absolute;
+	left: 50px;
+}
+
 .schedule .summary-box {
-	background-color: #555;
+	background-color: #444;
 	width: 100px;
-	border: solid 1px #222;
+	border: solid #222;
+	border-width: 2px 1px;
+}
+
+.schedule .summary-box > h1{
+	text-align: center;
+	color: #333;
+	font-size: 18px;
 }
 
 .schedule .summary-box .summary {
-	height: 80px;
-	padding: 10px;
+	height: 73px;
+	padding: 10px 15px;
+
+}
+
+.summary > div {
+	width: 100%;
+}
+
+
+
+.schedule .summary-box .summary .score {
+    height: 23px;
+    width: 23px;
+    margin: 1px;
+    position: relative;
+    left: 9px;
 }
 
 .schedule .summary-box .action {
-	height: 20px;
-	padding: 3px;
+	height: 23px;
+	padding: 4px;
+}
+
+.win {
+	background-color: #5DA97B;
+}
+
+.loss {
+	background-color: #FF7373;
+}
+
+.review {
+	background-color: #DDD;
+	color: #1C3D68;
 }

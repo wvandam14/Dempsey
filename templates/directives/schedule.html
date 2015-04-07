@@ -4,45 +4,42 @@
 	<h1>&#9664</h1>
 </div>
 
-<div class="summary-box">
-	<!-- Summary of the game -->
-	<div class="summary flex flex-center flex-column">
-		<div class="flex">
-			<h5>SEA</h5>
-		</div>
-		<div>
-
-		</div>
-	</div>
-
-	<!-- Action box thing -->
-	<div class="action">
-
-	</div>
-
-</div>
-
-<div class="summary-box">
-	<!-- Summary of the game -->
-	<div class="summary flex flex-center-horizontal flex-column">
-		<div class="flex">
-			<h5>SEA</h5>
-			<div class="score">
-				<h5>2</h5>
+<div class="games-container flex slider">
+	<div class="summary-box" ng-repeat="game in games track by $index" ng-click="selectGame($index)">
+		<!-- Summary of the game -->
+		<div class="summary flex flex-center flex-column">
+			<div class="flex flex-center flex-one">
+				<div class="flex flex-one">
+					<h5>{{game.team.symbol}}</h5>
+				</div>
+				<div class="flex flex-one">
+					<div class="score flex flex-center" ng-class="[game.status]">
+						<h5 class="text-center">{{game.team.score}}</h5>
+					</div>
+				</div>
+			</div>
+			<div class="flex flex-center flex-one">
+				<div class="flex flex-one">
+					<h5>{{game.opponent.symbol}}</h5>
+				</div>
+				<div class="flex flex-one">
+					<div class="score flex flex-center" ng-class="[game.status]">
+						<h5 class="text-center">{{game.opponent.score}}</h5>
+					</div>
+				</div>
 			</div>
 		</div>
-		<div>
 
+		<!-- Action box thing -->
+		<div class="action text-center flex flex-center" ng-class="[game.status]">
+			<h6>Review</h6>
 		</div>
 	</div>
 
-	<!-- Action box thing -->
-	<div class="action text-center">
-		<h6>Recap</h6>
+	<div class="summary-box flex flex-center" ng-repeat="n in range(15-games.length)">
+		<h1>No<br>Game<br>Data</h1>
 	</div>
-
 </div>
-
 
 <!-- NOT DONE Scroll right -->
 <div class="scroll-arrow right flex flex-center flex-right">
