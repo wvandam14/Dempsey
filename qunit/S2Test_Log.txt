@@ -9,7 +9,6 @@ Testing Toast in coach registration
 		reselecting same image does not reset, changing images does/changing back
 	// trying to go from 1 page to 3 page brings up toast "Please fill out required fields"
 	// can back from page 2 to 1 with page 2 information not complete
------------------------------->	// currently does not submit <-------------------------------------------------------------------
 7:33
 	// submit problem solved
 	// non-square images (tall) are cut off on display (not save)
@@ -62,6 +61,7 @@ First image fix (team select menu)
 			there action box also expands past its space and covers the team above them's box,	
 		// long team names also get cut off at a certian point 
 			(dont know if hight is centered on the correct box location or if it just cuts off at a certain length)
+		// create a new team does not find a primary color
 side problems
 	// having multiple browser windows with the project running causes problems 
 		(only one user per computer, possibly more problems)
