@@ -1,13 +1,17 @@
 <div class="flex">
     <div class="team flex flex-center-vertical">
         <div ng-click="toggleTeams()" class="flex flex-center-vertical">
-            <img ng-src="{{currentTeam.logo}}"/>
+            <div class="img-container">
+                <img ng-src="{{currentTeam.logo}}"/>
+            </div>
             <h4>{{currentTeam.label}}</h4>
         </div>
 
         <div ng-show="showTeams" class="team-dropdown dropdown">
-            <div class="team flex flex-center-vertical" ng-repeat="team in teams track by $index">
-                <img ng-src="{{team.logo}}"/>
+            <div class="team flex flex-center-vertical" ng-if="team != currentTeam" ng-repeat="team in teams track by $index">
+                <div class="img-container">
+                    <img ng-src="{{team.logo}}"/>
+                </div>
                 <h4>{{team.label}}</h4>
             </div>
             <div class="team flex flex-center-vertical" ng-click="showCreateTeam()">
