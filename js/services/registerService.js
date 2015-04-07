@@ -1,4 +1,4 @@
-soccerStats.factory('registerService', function ($location, $timeout) {
+soccerStats.factory('registerService', function ($location, $timeout, dataService) {
 
     var
         registerTeam = function(newTeam) {
@@ -10,7 +10,7 @@ soccerStats.factory('registerService', function ($location, $timeout) {
             _team.set("leagueName", newTeam.leagueName);
             _team.set("name", newTeam.name);
             _team.set("number", newTeam.number);
-            _team.set("state", newTeam.state.value);
+            _team.set("state", (_.invert(dataService.states))[newTeam.state]);
             _team.set("logo", newTeam.logo);
             _team.set("primaryColor", newTeam.primaryColor);
 
