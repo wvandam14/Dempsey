@@ -6,6 +6,7 @@ soccerStats.factory('configService', function () {
             , loginSuccess: 'loginSuccess'
             , closeModal: 'closeModal'
             , openModal: 'openModal'
+            , setGame: 'setGame'
 
 
         }, toasts: {

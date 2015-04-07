@@ -6,14 +6,13 @@
 .gameReview {
     background-color: #222;
     width: 500px;
-    color:#1B3D67;
+    color:#FFF;
     padding: 20px 0;
 }
 
 .gameReview h5 {
 	width: 100%;
     padding: 5px;
-    color: #FFF;
 }
 
 .gameReview .header {
@@ -24,7 +23,6 @@
     background-color: #5DA97B;
     height: 100px;
     width: 100px;
-    padding: 10px;
     margin: 1px;
 }
 
