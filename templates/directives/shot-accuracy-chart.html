@@ -1,0 +1,13 @@
+<div>
+    <div class="back-layer">
+        <img src="./img/shots-background.svg">
+    </div>
+
+    <svg class="lines" height="163" width="350">
+        <g ng-repeat="shot in data">
+            <line x1="{{shot.resultPos.x}}" y1="{{shot.resultPos.y}}" x2="{{shot.shotPos.x}}" y2="{{shot.shotPos.y}}" style="stroke:#5DA97B;stroke-width:2" />
+            <circle ng-if="shot.type === 'on'" cx="{{shot.shotPos.x}}" cy="{{shot.shotPos.y}}" r="5" stroke="#5DA97B" stroke-width="2" fill="#FFF" />
+            <circle ng-if="shot.type === 'goal'" cx="{{shot.shotPos.x}}" cy="{{shot.shotPos.y}}" r="5" fill="#5DA97B" />
+        </g>
+    </svg>
+</div>

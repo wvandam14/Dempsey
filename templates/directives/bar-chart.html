@@ -1,0 +1,22 @@
+<div class="flex flex-column">
+    <div class="bar-container flex flex-align-bottom flex-one">
+        <div class="shots flex-one">
+            <h5>{{data.shots}}</h5>
+        </div>
+        <div style="height: {{getHeight(data.onGoal)}}%" class="on flex-one">
+            <h5>{{data.onGoal}}</h5>
+        </div>
+        <div style="height: {{getHeight(data.offGoal)}}%"  class="off flex-one">
+            <h5>{{data.offGoal}}</h5>
+        </div>
+        <div style="height: {{getHeight(data.blocked)}}%"  class="blocked flex-one">
+            <h5>{{data.blocked}}</h5>
+        </div>
+    </div>
+    <div class="flex titles">
+        <h5 class="flex-one">SHOTS</h5>
+        <h5 class="flex-one">ON GOAL</h5>
+        <h5 class="flex-one">OFF GOAL</h5>
+        <h5 class="flex-one">BLOCKED</h5>
+    </div>
+</div>

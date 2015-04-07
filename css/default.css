@@ -151,6 +151,12 @@ input.ng-invalid-required.ng-touched {
     align-items: stretch;
 }
 
+.flex-align-bottom {
+    -webkit-align-items: flex-end;
+    -ms-align-items: flex-end;
+    align-items: flex-end;
+}
+
 .flex-column {
     -webkit-flex-direction: column;
     -ms-flex-direction: column;

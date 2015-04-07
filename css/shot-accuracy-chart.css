@@ -1,0 +1,17 @@
+shot-accuracy-chart > div {
+    height:163px;
+    width:350px;
+    position: relative;
+}
+
+shot-accuracy-chart .back-layer {
+    position: absolute;
+    top:0;
+    left:0;
+}
+
+shot-accuracy-chart .lines {
+    position: absolute;
+    top:0;
+    left:0;
+}

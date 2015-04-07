@@ -1,0 +1,34 @@
+bar-chart > div {
+    min-height: 100px;
+    width: 200px;
+}
+
+bar-chart h5 {
+    text-align: center;
+}
+
+bar-chart .shots {
+    height: 100%;
+}
+
+bar-chart .bar-container {
+    height: 145px;
+    border-bottom: 1px solid #DDD;
+    margin-bottom: 5px;
+}
+
+bar-chart .bar-container h5 {
+    color:#FFF;
+    font-size: 20px;
+    padding-top: 2px;
+}
+
+bar-chart .bar-container > div {
+    background-color: #5DA97B;
+    margin: 0 10px;
+}
+
+bar-chart .titles h5 {
+    color:#B4B4B4;
+    font-size: 10px;
+}
