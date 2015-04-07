@@ -92,9 +92,10 @@ soccerStats.controller('registrationController',
 
 
         
-        //register coach
+        // register coach
         $scope.register = function (newUser, newTeam) {
             var _team = registerService.registerTeam(newTeam);
+            // TODO: check if team name already exists
 
             _team.save(null, {
                 success: function (_team) {
