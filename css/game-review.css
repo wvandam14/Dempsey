@@ -3,6 +3,17 @@
     padding-top: 150px;
 }
 
+.game-review .numbers h6 {
+    font-size: 38px;
+    color:#5DA97A;
+}
+
+.game-review .numbers h5 {
+    font-size: 20px;
+    color:#B4B4B4;
+
+}
+
 .gameReview {
     background-color: #222;
     width: 500px;
@@ -47,8 +58,6 @@
 }
 
 .player-stats-container {
-    background-color: #F2F2F2;
-    padding: 100px;
 }
 
 .player-stats-container .circle {
