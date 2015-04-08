@@ -39,6 +39,11 @@ soccerStats.directive('header', function ($timeout, viewService, configService, 
                 viewService.openModal('inviteEmailModal');
             }
 
+            $scope.changeTeam = function(team) {
+                console.log(team);
+                 $scope.currentTeam = team;
+            }
+
             // TODO: verify if user is logged in
             if (Parse.User.current()) {
                 $scope.teams = dataService.getTeams( function(_teams) {
