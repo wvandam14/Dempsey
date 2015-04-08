@@ -62,12 +62,33 @@ First image fix (team select menu)
 		// long team names also get cut off at a certian point 
 			(dont know if hight is centered on the correct box location or if it just cuts off at a certain length)
 		// create a new team does not find a primary color
+	text ellipses added
+		//images are still to small but text is fixed
+	images fixed
 side problems
 	// having multiple browser windows with the project running causes problems 
 		(only one user per computer, possibly more problems)
 	// on coach registration, if there is an error elsewhere in the submition, the team will be created multiple times 
 		(each time submition is attempted)		
+Login verification
+	// currently does not work for pages /test /game-review
 
+4/7/15 6:30
+view/edit account
+	// "passwords do not match" error appears on load of edit account
+------->// change passwords does not work <------------------------------------------------------------------------------------
+view/edit account testing failed moved back to inprogress
+8:04 after fix
+	// "passwords do not match" error still present
+	// does nothing if new password is the same as current password
+		worse than that if breaks the password
+		(can not be reporduced keep an eye on this)
+		// reproduced, when new password is submitted
+
+
+Side problems
+	// users remain logged in possible indefinently until they log out
+	// user can be logged in on mulitple computers and can cause update issues
 
 
 
