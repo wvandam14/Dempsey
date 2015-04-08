@@ -13,7 +13,7 @@ soccerStats.directive('accountModal', function (viewService, toastService, regis
             $scope.states = dataService.states;
 
             $scope.checkPassword = function() {
-                if (!$scope.newUser.newPassword) 
+                if (!$scope.editUser.newPassword) 
                     return true;
                 if ($scope.confirmPassword()) 
                     return true;
@@ -23,12 +23,12 @@ soccerStats.directive('accountModal', function (viewService, toastService, regis
 
             //compare new password with confirmation password
             $scope.confirmPassword = function() {
-                return $scope.newUser.newPassword === $scope.newUser.confirmPassword;
+                return $scope.editUser.newPassword === $scope.editUser.confirmPassword;
             };
             
             var currentUser = Parse.User.current();
             // User information
-            $scope.newUser = {
+            $scope.editUser = {
                 firstName: currentUser.get('firstName'),
                 lastName: currentUser.get('lastName'),
                 name: currentUser.get("name"),
@@ -42,18 +42,19 @@ soccerStats.directive('accountModal', function (viewService, toastService, regis
                 newPhoto: ''      
             };
 
-            $scope.updateAccount = function(newUser) {
+            $scope.updateAccount = function(editUser) {
                 if (viewService.validateAreaByFormName('accountForm')) {
                     if ($scope.checkPassword()) {
-                        currentUser.set("username", newUser.email);
-                        currentUser.set("name", newUser.name);
-                        currentUser.set("email", newUser.email);
-                        currentUser.set("phone", newUser.phone);
-                        currentUser.set("city", newUser.city);
-                        currentUser.set("state", (_.invert($scope.states))[newUser.state]);
-                        console.log(newUser.newPhoto);
-                        if ($scope.newUser.newPhoto) 
-                            currentUser.set("photo", newUser.newPhoto);
+                        currentUser.set("username", editUser.email);
+                        currentUser.set("name", editUser.name);
+                        currentUser.set("email", editUser.email);
+                        currentUser.set("phone", editUser.phone);
+                        currentUser.set("city", editUser.city);
+                        currentUser.set("state", (_.invert($scope.states))[editUser.state]);
+                        console.log(editUser.newPhoto);
+                        if ($scope.editUser.newPhoto) 
+                            currentUser.set("photo", editUser.newPhoto);
+                        currentUser.set("password", editUser.newPassword);
                         currentUser.save(null, {
                             success: function (currentUser) {
                                 toastService.success(configService.toasts.accountUpdateSuccess);
