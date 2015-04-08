@@ -42,18 +42,18 @@
 
 <!-- Roster shtuff (will be converted to a directive -->
 <div class="player-stats-container flex">
-	<div class="roster-container flex-one">
+	<div class="roster-container flex-two">
 		<h5 class="title">LINEUP</h5>
 		<div class="player-selector flex flex-center-vertical" ng-repeat="player in players track by $index" ng-class="{selected: isSelected($index)}" ng-click="selectPlayer($index)">
 			<div class="circle flex flex-center">
 				<h5>{{player.number}}</h5>
 			</div>
 			<div class="flex flex-one">
-				<h5 class="ellipse">{{player.fname}} {{player.lname}}</h5><h5><span class="flex flex-center">{{player.position}}</span></h5>
+				<h5 class="ellipse flex-one">{{player.fname}} {{player.lname}}</h5><h5><span class="flex flex-center">{{player.position}}</span></h5>
 			</div>
 		</div>
 	</div>
-	<div class="stats-display-container flex-two">
+	<div class="stats-display-container flex-three">
 
 	</div>
 
