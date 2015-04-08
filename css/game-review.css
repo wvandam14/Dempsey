@@ -41,9 +41,26 @@
 
 .title {
     color: #5DA97B;
+    font-size: 20px;
+    padding: 10px;
+    border-bottom: solid 1px #DDD;
+}
+
+.player-stats-container {
+    background-color: #F2F2F2;
+    padding: 100px;
 }
 
 .roster-container {
-    background-color: #F2F2F2;
-    height: 100%;
+
+}
+
+.player-selector {
+    height: 50px;
+    width: 100%;
+    margin-top: 5px;
+}
+
+.player-selector.selected {
+    background-color: #5DA97B;
 }
