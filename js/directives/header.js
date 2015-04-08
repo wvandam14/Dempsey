@@ -20,12 +20,23 @@ soccerStats.directive('header', function ($timeout, viewService, configService, 
                 $scope.showAccount = !$scope.showAccount;
             }
 
+            // create a new team
             $scope.showCreateTeam = function() {
                 viewService.openModal('teamModal');
             }
-
+            // edit coach account
             $scope.showEditAccount = function() {
                 viewService.openModal('accountModal');
+            }
+
+            // edit team 
+            $scope.editTeam = function() {
+                viewService.openModal('editTeamModal');
+            }
+
+            // coach can invite more parents
+            $scope.inviteEmails = function() {
+                viewService.openModal('inviteEmailModal');
             }
 
             // TODO: verify if user is logged in
