@@ -54,6 +54,7 @@ soccerStats.directive('accountModal', function (viewService, toastService, regis
                         console.log(newUser.newPhoto);
                         if ($scope.newUser.newPhoto) 
                             currentUser.set("photo", newUser.newPhoto);
+                        currentUser.set("password", newUser.newPassword);
                         currentUser.save(null, {
                             success: function (currentUser) {
                                 toastService.success(configService.toasts.accountUpdateSuccess);
