@@ -1,6 +1,6 @@
 <div class="modal editTeam registration">
     <div class="head flex">
-        <h1 class="flex-one">Edit {{name}}</h1>
+        <h1 class="flex-one">Edit {{editTeam.name}}</h1>
         <div>
             <x ng-click="closeModal()"/>
         </div>
@@ -11,29 +11,29 @@
         <div class="flex-one">
             <h3 class="ellipse">Team Logo</h3>
             <div class="flex flex-center logo-container">
-                <image-upload image="team.logo" placeholder="'./img/team-logo-icon.svg'" get-color="getImageColor(color)"></image-upload>
+                <image-upload image="editTeam.logo" placeholder="'./img/team-logo-icon.svg'" get-color="getImageColor(color)"></image-upload>
                 <p class="flex-one text-center logo-text">Click the logo to add a new one</p>
             </div>
             <h3>Team Color</h3>
 
-            <color-picker ng-class="{'disabled': !team.logo}" color="team.primaryColor" required="true"></color-picker>
+            <color-picker ng-class="{'disabled': !editTeam.logo}" color="editTeam.primaryColor" required="true"></color-picker>
 
             <h3 class="ellipse">Team Name</h3>
-            <input type="text" ng-model="team.name" placeholder="Team Name" required />
+            <input type="text" ng-model="editTeam.name" placeholder="Team Name" required />
             <h3 class="ellipse">Team Number</h3>
-            <input type="text"  ng-model="team.number" placeholder="Team Number" required />
+            <input type="text"  ng-model="editTeam.number" placeholder="Team Number" required />
         </div>
         <div class="flex-one">
             <h3 class="ellipse">League Name</h3>
-            <input type="text" ng-model="team.leagueName" placeholder="League Name" required />
+            <input type="text" ng-model="editTeam.leagueName" placeholder="League Name" required />
             <h3 class="ellipse">Age Group</h3>
-            <select ng-model="team.ageGroup" ng-options="ageGroup as ageGroup.label for ageGroup in ageGroups" required>
+            <select ng-model="editTeam.ageGroup" ng-options="ageGroup as ageGroup.label for ageGroup in ageGroups" required>
                 <option value="">Select an Age Group</option>
             </select>
             <h3 class="ellipse">City</h3>
-            <input type="text" ng-model="team.city" placeholder="City" required />
+            <input type="text" ng-model="editTeam.city" placeholder="City" required />
             <h3 class="ellipse">State</h3>
-            <select ng-model="team.state" ng-options="v for (k, v) in states" required>
+            <select ng-model="editTeam.state" ng-options="v for (k, v) in states" required>
                 <option value=""></option>
             </select>
         </div>

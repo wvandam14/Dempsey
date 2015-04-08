@@ -8,20 +8,29 @@ soccerStats.directive('editTeamModal', function (viewService, toastService, regi
             $scope.closeModal = function() {
                 viewService.closeModal(self);
             }
+
+            var currentUser = Parse.User.current();
+            if (Parse.User.current()) {
+                $scope.teams = dataService.getTeams( function(_teams) {
+                    $scope.currentTeam = _teams[0];
+                    console.log(_teams[0]);
+                });
+            }
+            console.log($scope.currentTeam);
             // Team information
-            $scope.team = {
-                logo: '',
-                primaryColor: '',
-                name: '',
-                number: '',
-                leagueName: '',
-                ageGroup: '',
-                city: '',
-                state: ''
+            $scope.editTeam = {
+                logo: currentUser.get("photo")._url,
+                primaryColor: currentUser.get("primaryColor"),
+                name: currentUser.get("name"),
+                number: currentUser.get("number"),
+                leagueName: currentUser.get("leagueName"),
+                ageGroup: currentUser.get("ageGroup"),
+                city: currentUser.get("city"),
+                state: currentUser.get("state")
             };
 
-            $scope.addNewTeam = function(newTeam) {
-                var _team = registerService.registerTeam(newTeam);
+            $scope.addNewTeam = function(editTeam) {
+                var _team = registerService.registerTeam(editTeam);
 
                 _team.save(null, {
                     success: function(_team) {
