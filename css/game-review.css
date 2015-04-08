@@ -38,3 +38,12 @@
 .gameReview .team-container .img-container {
     padding: 0px 10px;
 }
+
+.title {
+    color: #5DA97B;
+}
+
+.roster-container {
+    background-color: #F2F2F2;
+    height: 100%;
+}
