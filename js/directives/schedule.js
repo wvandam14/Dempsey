@@ -13,8 +13,8 @@ soccerStats.directive('schedule', function () {
 	            $rootScope.$broadcast(configService.messages.setGame, {game: $scope.currGame});
 	        };
 
-        	$scope.selectGame = function (index) {
-        		$scope.currGame = $scope.games[index];
+        	$scope.selectGame = function (game) {
+        		$scope.currGame = game;
         	};
 
             $scope.games = [

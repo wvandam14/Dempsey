@@ -5,7 +5,7 @@
 </div>
 
 <div class="games-container flex slider">
-	<div class="summary-box" ng-repeat="game in games track by $index" ng-click="selectGame($index)">
+	<div class="summary-box" ng-repeat="game in games track by $index" ng-class="{'selected': currGame === game }" ng-click="selectGame(game)">
 		<!-- Summary of the game -->
 		<div class="summary flex flex-center flex-column">
 			<div class="flex flex-center flex-one">
