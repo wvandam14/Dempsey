@@ -95,7 +95,7 @@ soccerStats.controller('gameReviewController',
         // Test section
         $scope.players = [
             {
-                fname: "William",
+                fname: "Williamliamliamliamliamliamliamliamliamliamliamliamliamliamliamliamliamliamliamliamliamliamliamliamliam",
                 lname: "Van Dam",
                 number: 22,
                 position: "ST"

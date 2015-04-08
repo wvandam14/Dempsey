@@ -46,7 +46,9 @@ soccerStats.directive('accountModal', function (viewService, toastService, regis
                 if (viewService.validateAreaByFormName('accountForm')) {
                     if ($scope.checkPassword()) {
                         currentUser.set("username", editUser.email);
-                        currentUser.set("name", editUser.name);
+                        currentUser.set("firstName", editUser.firstName);
+                        currentUser.set("lastName", editUser.lastName);
+                        currentUser.set("name", editUser.firstName + " " + editUser.lastName);
                         currentUser.set("email", editUser.email);
                         currentUser.set("phone", editUser.phone);
                         currentUser.set("city", editUser.city);
