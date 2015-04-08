@@ -365,3 +365,15 @@ x div:nth-of-type(2) {
     transform: translate3d(x,y,z);
 }
 
+
+/* Default Page Styles */
+.content {
+    background-color: #F2F2F2;
+    padding: 100px;
+}
+
+.content .section {
+    margin: 0 -100px;
+    padding: 50px 100px;
+    border-bottom: 1px solid #ddd;
+}
