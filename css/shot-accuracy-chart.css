@@ -1,4 +1,4 @@
-shot-accuracy-chart > div {
+shot-accuracy-chart > div:first-child {
     height:163px;
     width:350px;
     position: relative;
@@ -14,4 +14,31 @@ shot-accuracy-chart .lines {
     position: absolute;
     top:0;
     left:0;
+}
+
+shot-accuracy-chart .key {
+    margin-top: 20px;
+}
+
+shot-accuracy-chart .key > div {
+    margin-right: 5px;
+}
+
+shot-accuracy-chart .key .circle {
+    width:10px;
+    height: 10px;
+}
+
+shot-accuracy-chart .key .circle.goal {
+    background-color:#5DA979;
+}
+
+shot-accuracy-chart .key .circle.on {
+    background-color:#FFF;
+    border: 1px solid #5DA979;
+}
+
+shot-accuracy-chart .key h5 {
+    font-size:10px;
+    color:#5DA979;
 }

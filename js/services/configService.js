@@ -35,7 +35,7 @@ soccerStats.factory('configService', function () {
             }, changedPassword : function(success){
                 return success ? 'Password successfully changed.' : 'There was an error updating your password. Please try again.'
             }, fileTooLarge: function(size) {
-                return 'The image is too large (' + (size * 0.000001).toFixed(1) + 'mb)! It should be less than 2mb.';
+                return 'The image is too large (' + (size * 0.000001).toFixed(1) + 'mb)! It should be less than 1mb.';
             }
             , requiredFields : 'Please fill out the required fields.'
             , passwordsDoNotMatch : 'The passwords you provided do not match.'

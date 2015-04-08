@@ -16,8 +16,8 @@ soccerStats.directive('imageUpload', function ($timeout, toastService, configSer
                 $(fileElement).trigger('click');
             }
 
-            // 2000000 bytes = 2 megabytes
-            var sizeLimit = 2000000;
+            // 1000000 bytes = 1 megabyte
+            var sizeLimit = 1000000;
 
             // Upload the selected picture
             $scope.fileNameChanged = function(files) {
