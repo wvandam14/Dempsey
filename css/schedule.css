@@ -16,6 +16,7 @@ schedule {
 
 .schedule .scroll-arrow {
     z-index: 1;
+    top: 0;
 	width: 50px;
 	height: 100px;
 	background-color: #222;
@@ -23,12 +24,12 @@ schedule {
 
 .schedule .scroll-arrow.left {
 	position: absolute;
-	left: 0px;
+	left: 0;
 }
 
 .schedule .scroll-arrow.right {
 	position: absolute;
-	right: 0px;
+	right: 0;
 }
 
 .schedule .scroll-arrow h1 {
@@ -37,23 +38,65 @@ schedule {
 
 .schedule .games-container {
     padding: 0 51px;
-	width: 100%;
-	overflow: hidden;
+    display: block;
+    -webkit-transition: all .3s ease-in-out;
+    -moz-transition: all .3s ease-in-out;
+    -ms-transition: all .3s ease-in-out;
+    -o-transition: all .3s ease-in-out;
+    transition: all .3s ease-in-out;
 }
 
 .schedule .summary-box {
     cursor: pointer;
 	background-color: #444;
 	width: 100px;
+    float: left;
 	border: solid #222;
 	border-width: 2px 1px;
+}
+
+.schedule .summary-box.win .action,
+.schedule .summary-box.win .score {
+    background-color: #5DA97B;
+}
+
+.schedule .summary-box.loss .action,
+.schedule .summary-box.loss .score {
+    background-color: #FF7373;
+}
+
+.schedule .summary-box.review .action,
+.schedule .summary-box.review .score {
+    background-color: #DDD;
+    color: #1C3D68;
 }
 
 .schedule .summary-box.selected {
     background-color: #222;
 }
+.schedule .summary-box.selected .summary {
+    padding: 8px 13px 10px 13px;
+}
 
-.schedule .summary-box > h1{
+.schedule .summary-box.win.selected .summary {
+    border-left: 2px solid #5DA97B;
+    border-right: 2px solid #5DA97B;
+    border-top: 2px solid #5DA97B;
+}
+
+.schedule .summary-box.loss.selected .summary {
+    border-left: 2px solid #FF7373;
+    border-right: 2px solid #FF7373;
+    border-top: 2px solid #FF7373;
+}
+
+.schedule .summary-box.review.selected .summary {
+    border-left: 2px solid #DDD;
+    border-right: 2px solid #DDD;
+    border-top: 2px solid #DDD;
+}
+
+.schedule .summary-box > h1 {
 	text-align: center;
 	color: #333;
 	font-size: 18px;
@@ -62,14 +105,11 @@ schedule {
 .schedule .summary-box .summary {
 	height: 73px;
 	padding: 10px 15px;
-
 }
 
 .summary > div {
 	width: 100%;
 }
-
-
 
 .schedule .summary-box .summary .score {
     height: 23px;
@@ -84,15 +124,3 @@ schedule {
 	padding: 4px;
 }
 
-.win {
-	background-color: #5DA97B;
-}
-
-.loss {
-	background-color: #FF7373;
-}
-
-.review {
-	background-color: #DDD;
-	color: #1C3D68;
-}
