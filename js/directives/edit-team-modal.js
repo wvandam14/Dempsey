@@ -13,10 +13,6 @@ soccerStats.directive('editTeamModal', function ($location, $timeout, $route, vi
             }
 
             // Team information
-            
-            console.log($scope.editTeam);
-
-
             $scope.updateTeam = function(editTeam) {
                 if (viewService.validateAreaByFormName('teamForm')) {
                     var teamTable = Parse.Object.extend("Team");
@@ -63,11 +59,15 @@ soccerStats.directive('editTeamModal', function ($location, $timeout, $route, vi
             $scope.ageGroups = dataService.ageGroups;
 
             $scope.states = dataService.states;
-
             
             if (currentUser) {
                 dataService.getTeams( function(_teams) {
-                    $scope.currentTeam = _teams[0];
+                    console.log(dataService.currentTeam);
+                    if (jQuery.isEmptyObject(dataService.currentTeam)) 
+                        $scope.currentTeam = _teams[0];
+                    else
+                        $scope.currentTeam = dataService.getCurrentTeam();
+                    console.log($scope.currentTeam)
                     $scope.editTeam = {
                         logo: $scope.currentTeam.logo,
                         primaryColor: $scope.currentTeam.color,
@@ -79,7 +79,7 @@ soccerStats.directive('editTeamModal', function ($location, $timeout, $route, vi
                         state: $scope.states[$scope.currentTeam.state],
                         newLogo: ''
                     };
-                    console.log($scope.editTeam);
+                    //console.log($scope.editTeam);
                 });
             }
 

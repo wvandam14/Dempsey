@@ -104,14 +104,24 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
                 }
             });
             return teamDict;
-        };
+        },
+        currentTeam = {},
+        setCurrentTeam = function(team) {
+            currentTeam = team;
+        },
+        getCurrentTeam = function() {
+            return currentTeam;
+        }
 
 
 
     return {
         ageGroups: ageGroups,
         states : states,
-        getTeams : getTeams
+        getTeams : getTeams,
+        currentTeam: currentTeam,
+        setCurrentTeam : setCurrentTeam,
+        getCurrentTeam : getCurrentTeam
     }
 
 });

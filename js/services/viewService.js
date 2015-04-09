@@ -8,11 +8,11 @@ soccerStats.factory('viewService', function ($location, $timeout, $rootScope, co
         }
 
         , closeModal = function (modal) {
-            $rootScope.$broadcast(configService.messages.closeModal, { modal: modal });
+            $rootScope.$broadcast(configService.messages.closeModal, { modal : modal});
         }
 
         , openModal = function (modal) {
-            $rootScope.$broadcast(configService.messages.openModal, { modal: modal });
+            $rootScope.$broadcast(configService.messages.openModal, { modal: modal});
         }
 
         , validateAreaByFormName = function (form) {

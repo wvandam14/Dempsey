@@ -1,4 +1,4 @@
-soccerStats.directive('header', function ($timeout, viewService, configService, dataService) {
+soccerStats.directive('header', function ($timeout, $route, viewService, configService, dataService) {
     return {
         restrict: 'E',
         templateUrl: "./templates/directives/header.html",
@@ -7,6 +7,8 @@ soccerStats.directive('header', function ($timeout, viewService, configService, 
             $scope.showAccount = false;
             $scope.currentTeam = {};
             $scope.teams = [];
+
+            var self = 'headerModal';
 
             var parseUser = Parse.User.current();
             if (parseUser)
@@ -40,8 +42,9 @@ soccerStats.directive('header', function ($timeout, viewService, configService, 
             }
 
             $scope.changeTeam = function(team) {
-                console.log(team);
-                 $scope.currentTeam = team;
+                $scope.currentTeam = team;
+                dataService.setCurrentTeam($scope.currentTeam);
+                //$route.reload();
             }
 
             // TODO: verify if user is logged in
