@@ -53,7 +53,7 @@ soccerStats.directive('accountModal', function ($location, $timeout, $route, vie
                         currentUser.set("phone", $scope.editUser.phone);
                         currentUser.set("city", $scope.editUser.city);
                         currentUser.set("state", (_.invert($scope.states))[$scope.editUser.state]);
-                        console.log($scope.editUser.newPhoto);
+                        console.log((_.invert($scope.states))[$scope.editUser.state]);
                         if ($scope.editUser.newPhoto) 
                             currentUser.set("photo", $scope.editUser.newPhoto);
                         if($scope.editUser.newPassword !== '')

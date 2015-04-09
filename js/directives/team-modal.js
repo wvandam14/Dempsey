@@ -21,6 +21,7 @@ soccerStats.directive('teamModal', function ($location, $route, $timeout, viewSe
             };
 
             $scope.addNewTeam = function(newTeam) {
+                console.log(newTeam);
                 var _team = registerService.registerTeam(newTeam);
 
                 _team.save(null, {

@@ -85,7 +85,7 @@
                 <h3 class="ellipse">League Name</h3>
                 <input type="text" ng-model="team.leagueName" placeholder="League Name" required />
                 <h3 class="ellipse">Age Group</h3>
-                <select ng-model="team.ageGroup" ng-options="ageGroup as ageGroup.label for ageGroup in ageGroups" required>
+                <select ng-model="team.ageGroup" ng-options="v for (k, v) in ageGroups" required>
                     <option value="">Select an Age Group</option>
                 </select>
                 <h3 class="ellipse">City</h3>
