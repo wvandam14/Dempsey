@@ -1,4 +1,4 @@
-soccerStats.directive('teamModal', function (viewService, toastService, registerService, configService, dataService) {
+soccerStats.directive('teamModal', function ($location, $route, $timeout, viewService, toastService, registerService, configService, dataService) {
     return {
         restrict: 'E',
         templateUrl: "./templates/directives/team-modal.html",
@@ -30,8 +30,7 @@ soccerStats.directive('teamModal', function (viewService, toastService, register
                         currentUser.save(null, {
                             success: function(currenUser) {
                                 toastService.success(configService.toasts.teamAddSuccess);
-                                //TODO: not working
-                                viewService.goToPage('/home');
+                                $scope.closeModal();
                             },
                             error: function(currentUser, error) {
                                 toastService.error("There was a an error (" + error.code +"). Please try again.");
