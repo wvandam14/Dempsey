@@ -90,5 +90,15 @@ Side problems
 	// users remain logged in possible indefinently until they log out
 	// user can be logged in on mulitple computers and can cause update issues
 
-
+4/9/15 2:46
+testing edit team & team select bar
+	// interactions with team select and edit team button often take multiple clicks before anything happens
+	// select team resets after page refresh but not page change
+	// option for delete team is needed somewhere
+	// if image is changed & modal is saved & closed bofore preview is loaded, 
+		then the wrong image can load for the team initialy
+	// team select bar is resizing when teams with longer names are selected
+3:03 
+	// multiple click problem might be resolved, can not reproduce at the present
+	//
 
