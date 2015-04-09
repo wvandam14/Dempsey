@@ -34,11 +34,14 @@ soccerStats.directive('inviteEmailModal', function (viewService, toastService, r
                 });
             };
 
-            // TODO: verify if user is logged in
             if (currentUser) {
                 dataService.getTeams( function(_teams) {
-                    $scope.currentTeam = _teams[0];
-                    console.log($scope.currentTeam);
+                    if (jQuery.isEmptyObject(dataService.getCurrentTeam())) 
+                        $scope.currentTeam = _teams[0];
+                    else
+                        $scope.currentTeam = dataService.getCurrentTeam();
+                    console.log($scope.currentTeam)
+                    //console.log($scope.editTeam);
                 });
             }
         }
