@@ -43,6 +43,7 @@ soccerStats.directive('header', function ($timeout, $route, viewService, configS
 
             $scope.changeTeam = function(team) {
                 $scope.currentTeam = team;
+                console.log($scope.currentTeam);
                 dataService.setCurrentTeam($scope.currentTeam);
                 //$route.reload();
             }

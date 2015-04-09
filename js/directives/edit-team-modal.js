@@ -60,10 +60,11 @@ soccerStats.directive('editTeamModal', function ($location, $timeout, $route, vi
 
             $scope.states = dataService.states;
             
+            // console.log(dataService.getCurrentTeam());
             if (currentUser) {
                 dataService.getTeams( function(_teams) {
                     console.log(dataService.currentTeam);
-                    if (jQuery.isEmptyObject(dataService.currentTeam)) 
+                    if (jQuery.isEmptyObject(dataService.getCurrentTeam())) 
                         $scope.currentTeam = _teams[0];
                     else
                         $scope.currentTeam = dataService.getCurrentTeam();
