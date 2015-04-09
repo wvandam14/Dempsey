@@ -11,7 +11,7 @@
         <div class="flex-one">
             <h3 class="ellipse">Team Logo</h3>
             <div class="flex flex-center logo-container">
-                <image-upload image="" placeholder="editTeam.logo" get-color="getImageColor(color)"></image-upload>
+                <image-upload image="editTeam.newLogo" placeholder="editTeam.logo" get-color="getImageColor(color)"></image-upload>
                 <p class="flex-one text-center logo-text">Click the logo to add a new one</p>
             </div>
             <h3>Team Color</h3>
@@ -39,7 +39,7 @@
         </div>
     </form>
     <div class="foot flex">
-        <div class="button green flex-one" ng-click="">
+        <div class="button green flex-one" ng-click="updateTeam(editTeam)">
             <h1>Save</h1>
         </div>
         <div class="button navy flex-one" ng-click="closeModal()">

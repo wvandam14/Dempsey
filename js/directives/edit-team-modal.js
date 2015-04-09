@@ -6,6 +6,7 @@ soccerStats.directive('editTeamModal', function ($location, $timeout, $route, vi
             var self = 'editTeamModal';
             $scope.currentTeam = {};
             $scope.editTeam = {};
+            var currentUser = Parse.User.current();
 
             $scope.closeModal = function() {
                 viewService.closeModal(self);
@@ -16,28 +17,42 @@ soccerStats.directive('editTeamModal', function ($location, $timeout, $route, vi
             console.log($scope.editTeam);
 
 
-            $scope.addNewTeam = function(editTeam) {
-                var _team = registerService.registerTeam(editTeam);
+            $scope.updateTeam = function(editTeam) {
+                if (viewService.validateAreaByFormName('teamForm')) {
+                    var teamTable = Parse.Object.extend("Team");
+                    var query = new Parse.Query(teamTable);
+                    query.get($scope.currentTeam.value, {
+                        success: function(team) {
 
-
-                _team.save(null, {
-                    success: function(_team) {
-                        var currentUser = Parse.User.current();
-                        currentUser.addUnique("teams", _team);
-                        currentUser.save(null, {
-                            success: function(currenUser) {
-                                toastService.success(configService.toasts.teamAddSuccess);
-                            },
-                            error: function(currentUser, error) {
-                                toastService.error("There was a an error (" + error.code +"). Please try again.");
-                            }
-                        });
-                        
-                    },
-                    error: function(_team, error) {
-                        toastService.error("There was a an error (" + error.code +"). Please try again.");
-                    }
-                });
+                            team.set("leagueName", $scope.editTeam.leagueName);
+                            team.set("ageGroup", $scope.editTeam.ageGroup);
+                            team.set("city", $scope.editTeam.city);
+                            team.set("name", $scope.editTeam.name);
+                            team.set("number", $scope.editTeam.number);
+                            team.set("state", (_.invert($scope.states))[$scope.editTeam.state]);
+                            if ($scope.editTeam.newLogo) 
+                                team.set("logo", $scope.editTeam.newLogo);
+                            console.log($scope.editTeam);
+                            team.save(null, {
+                                success: function (editTeam) {
+                                    toastService.success(configService.toasts.teamUpdateSuccess);
+                                    $scope.closeModal();
+                                    $route.reload();
+                                },
+                                error: function(editTeam, error) {
+                                    toastService.error("There was a an error (" + error.code +"). Please try again.");
+                                }
+                            });
+                            
+                        },
+                        error: function(team, error) {
+                            toastService.error("There was a an error (" + error.code +"). Please try again.");
+                        }
+                    });
+                    
+                } else {
+                    toastService.error(configService.toasts.requiredFields);
+                }
             }
 
             $scope.goToPage = function(page) {
@@ -49,7 +64,7 @@ soccerStats.directive('editTeamModal', function ($location, $timeout, $route, vi
 
             $scope.states = dataService.states;
 
-            var currentUser = Parse.User.current();
+            
             if (currentUser) {
                 dataService.getTeams( function(_teams) {
                     $scope.currentTeam = _teams[0];
@@ -61,10 +76,16 @@ soccerStats.directive('editTeamModal', function ($location, $timeout, $route, vi
                         leagueName: $scope.currentTeam.league,
                         ageGroup: $scope.ageGroups[$scope.currentTeam.age],
                         city: $scope.currentTeam.city,
-                        state: $scope.states[$scope.currentTeam.state]
+                        state: $scope.states[$scope.currentTeam.state],
+                        newLogo: ''
                     };
                     console.log($scope.editTeam);
                 });
+            }
+
+            $scope.getImageColor = function(color) {
+                //console.log('color');
+                $scope.editTeam.primaryColor = color;
             }
 
             $scope.ageGroups = dataService.ageGroups;
