@@ -1,9 +1,9 @@
-soccerStats.directive('accountModal', function ($location, $timeout, $route, viewService, toastService, registerService, configService, dataService) {
+soccerStats.directive('testModal', function ($location, $timeout, $route, viewService, toastService, registerService, configService, dataService) {
     return {
         restrict: 'E',
-        templateUrl: "./templates/directives/account-modal.html",
+        templateUrl: "./templates/directives/test-modal.html",
         controller: function($scope, viewService) {
-            var self = 'accountModal';
+            var self = 'testModal';
 
             $scope.closeModal = function() {
                 viewService.closeModal(self);

@@ -1,4 +1,4 @@
-soccerStats.directive('header', function ($timeout, viewService, configService, dataService) {
+soccerStats.directive('header', function ($timeout, $route, viewService, configService, dataService) {
     return {
         restrict: 'E',
         templateUrl: "./templates/directives/header.html",
@@ -7,6 +7,8 @@ soccerStats.directive('header', function ($timeout, viewService, configService, 
             $scope.showAccount = false;
             $scope.currentTeam = {};
             $scope.teams = [];
+
+            var self = 'headerModal';
 
             var parseUser = Parse.User.current();
             if (parseUser)
@@ -37,6 +39,13 @@ soccerStats.directive('header', function ($timeout, viewService, configService, 
             // coach can invite more parents
             $scope.inviteEmails = function() {
                 viewService.openModal('inviteEmailModal');
+            }
+
+            $scope.changeTeam = function(team) {
+                $scope.currentTeam = team;
+                console.log($scope.currentTeam);
+                dataService.setCurrentTeam($scope.currentTeam);
+                //$route.reload();
             }
 
             // TODO: verify if user is logged in

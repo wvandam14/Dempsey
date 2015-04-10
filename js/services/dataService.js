@@ -1,13 +1,13 @@
 soccerStats.factory('dataService', function ($location, $timeout, configService, toastService) {
 
     var
-        ageGroups = [
-                { value: "U12", label: "U12" },
-                { value: "U16", label: "U16" },
-                { value: "U18", label: "U18" },
-                { value: "U20", label: "U20" },
-                { value: "U23", label: "U23" }
-        ],
+        ageGroups = {
+                "U12" : "U12" ,
+                "U16" : "U16",
+                "U18" : "U18",
+                "U20" : "U20",
+                "U23" : "U23" 
+        },
         states = {
                 "AL" : "Alabama",
                 "AK" : "Alaska",
@@ -74,9 +74,26 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
                         var teams = user.get("teams");
                         // Add each team associated with the current user to the team dropdown list
                         _.each(teams, function (team) {
-                            var logo = team.get("logo");
-                            var teamName = team.get("name");
-                            teamDict.push({value: team.id, label: teamName, logo: logo._url });
+                            var leagueName = team.get("leagueName"),
+                                logo = team.get("logo"),
+                                teamName = team.get("name"),
+                                ageGroup = team.get("ageGroup"),
+                                city = team.get("city"),
+                                teamNumber = team.get("number"),
+                                state = team.get("state"),
+                                primaryColor = team.get("primaryColor")
+                            ;
+                            teamDict.push({
+                                league: leagueName,
+                                value: team.id, 
+                                label: teamName, 
+                                logo: logo._url,
+                                age: ageGroup,
+                                city: city,
+                                number: teamNumber,
+                                state: state,
+                                color: primaryColor 
+                            });
                         });
 
                         callback(teamDict);
@@ -87,14 +104,24 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
                 }
             });
             return teamDict;
-        };
+        },
+        currentTeam = {},
+        setCurrentTeam = function(team) {
+            currentTeam = team;
+        },
+        getCurrentTeam = function() {
+            return currentTeam;
+        }
 
 
 
     return {
         ageGroups: ageGroups,
         states : states,
-        getTeams : getTeams
+        getTeams : getTeams,
+        currentTeam: currentTeam,
+        setCurrentTeam : setCurrentTeam,
+        getCurrentTeam : getCurrentTeam
     }
 
 });

@@ -89,7 +89,7 @@ soccerStats.controller('shellController',
 
         // ------------- Modal Functions ------------- \\
         $scope.currentModal = '';
-
+        
         // Message received when client wants to close a modal
         $scope.$on(configService.messages.closeModal, function(msg, data) {
             if (data.modal) {

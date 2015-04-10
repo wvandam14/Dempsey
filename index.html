@@ -54,8 +54,10 @@
     <div ng-if="currentModal != ''" class="modal-container flex flex-center-horizontal">
         <div ng-if="checkModal('teamModal')"><team-modal></team-modal></div>
         <div ng-if="checkModal('accountModal')"><account-modal></account-modal></div>
-        <div ng-if="checkModal('editTeamModal')"><edit-team-modal></edit-team-modal></div>
-        <div ng-if="checkModal('inviteEmailModal')"><inviteEmail-modal></inviteEmailModal-modal></div>
+        <div ng-if="checkModal('editTeamModal')">
+            <edit-team-modal></edit-team-modal>
+        </div>
+        <div ng-if="checkModal('inviteEmailModal')"><invite-email-modal></invite-email-modal></div>
     </div>
 
     <!-- Libraries -->
@@ -106,7 +108,7 @@
     <script src="./js/directives/shot-accuracy-chart.js"></script>
     <script src="./js/directives/account-modal.js"></script>
     <script src="./js/directives/edit-team-modal.js"></script>
-    <script src="./js/directives/inviteEmail-modal.js"></script>
+    <script src="./js/directives/invite-email-modal.js"></script>
 
     <!-- Services -->
     <script src="./js/services/viewService.js"></script>

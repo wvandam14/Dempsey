@@ -12,7 +12,6 @@
                     </div>
                     <h5 class="text-center">{{currGame.team.name}}</h5>
                 </div>
-<<<<<<< HEAD
 
                 <!-- Game score -->
                 <div class="flex flex-center-horizontal">
@@ -116,20 +115,78 @@
 
         <!-- Roster shtuff (will be converted to a directive -->
         <div class="player-stats-container flex">
-            <div class="roster-container flex-two">
-                <h5 class="title">LINEUP</h5>
-                <div class="player-selector flex flex-center-vertical" ng-repeat="player in players track by $index" ng-class="{selected: isSelected($index)}" ng-click="selectPlayer($index)">
-                    <div class="circle flex flex-center">
-                        <h5>{{player.number}}</h5>
+            <div class="roster-container">
+                <div>
+                    <!-- TODO: Figure out how we want to store the roster vs lineup data and then display accodingly -->
+                    <h5 class="title">LINEUP</h5>
+                    <div class="player-selector flex flex-center-vertical" ng-repeat="player in players track by $index" ng-class="{selected: isSelected($index)}" ng-click="selectPlayer($index)">
+                        <div class="circle flex flex-center">
+                            <h5>{{player.number}}</h5>
+                        </div>
+                        <div class="flex flex-one">
+                            <h5 class="ellipse flex-one">{{player.fname}} {{player.lname}}</h5><h5><span class="flex flex-center">{{player.position}}</span></h5>
+                        </div>
                     </div>
-                    <div class="flex flex-one">
-                        <h5 class="ellipse flex-one">{{player.fname}} {{player.lname}}</h5><h5><span class="flex flex-center">{{player.position}}</span></h5>
+                </div>
+                <div>
+                    <h5 class="title">BENCH</h5>
+                    <div class="player-selector flex flex-center-vertical" ng-repeat="player in players track by $index" ng-class="{selected: isSelected($index)}" ng-click="selectPlayer($index)">
+                        <div class="circle flex flex-center">
+                            <h5>{{player.number}}</h5>
+                        </div>
+                        <div class="flex flex-one">
+                            <h5 class="ellipse flex-one">{{player.fname}} {{player.lname}}</h5><h5><span class="flex flex-center">{{player.position}}</span></h5>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="stats-display-container flex-three">
+            <div class="stats-display-container flex flex-column">
+                <div class="player-card flex">
+                    <div class="player-info">
+                        <div class="info flex">
+                            <div class="img-container">
+                                <img src="./img/player-icon.svg" />
+                            </div>
+                            <div  class="flex flex-column">
+                                <h3>{{currPlayer.fname}}<br>{{currPlayer.lname}}</h3>
+                                <div class="flex">
+                                    <h5>{{currPlayer.position}}</h5><span>{{currPlayer.number}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="notable-events">
+                            <div class="event-container flex flex-center-vertical" ng-repeat="event in currPlayer.notableEvents">
+                                <img src="./img/timeline-goal-dark.svg"/>
+                                <h5 class="minute">{{event.time}}</h5>
+                                <h5 class="event">{{event.type}}</h5>
+                            </div>
+                        </div>
+                    </div>
 
+                    <!-- TODO: replace this with actual content... -->
+                    <div class="stats-display">
+                        fasdfadfasasdfasdfadfasfasdfadfasdasdfasdf<br>
+                        fasdfadfasasdfasdfadfasfasdfadfasdasdfasdf<br>
+                        fasdfadfasasdfasdfadfasfasdfadfasdasdfasdf<br>
+                        fasdfadfasasdfasdfadfasfasdfadfasdasdfasdf<br>
+                        fasdfadfasasdfasdfadfasfasdfadfasdasdfasdf<br>
+                        fasdfadfasasdfasdfadfasfasdfadfasdasdfasdf<br>
+                        fasdfadfasasdfasdfadfasfasdfadfasdasdfasdf<br>
+                        fasdfadfasasdfasdfadfasfasdfadfasdasdfasdf<br>
+
+                    </div>
+                </div>
+
+                <!-- TODO: Replace this with actual content -->
+                <div class="formation-field">
+                    <img src="./img/sample/formation-field.png"  style="width: 100%; height: 100%"/>
+                </div>
+                <div class="game-notes">
+                    <h5 class="title">GAME NOTES</h5>
+                    <textarea class="notes" ng-model="game.notes"></textarea>
+                </div>
             </div>
+            
         </div>
     </div>
 </div>

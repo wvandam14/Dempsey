@@ -58,8 +58,8 @@ soccerStats.controller('gameReviewController',
 
         $scope.shotCountData = {
             shots: 5,
-            onGoal: 3,
-            offGoal: 1,
+            onGoal: 2,
+            offGoal: 2,
             blocked: 1
         }
 
@@ -95,34 +95,104 @@ soccerStats.controller('gameReviewController',
         // Test section
         $scope.players = [
             {
-                fname: "Williamliamliamliamliamliamliamliamliamliamliamliamliamliamliamliamliamliamliamliamliamliamliamliamliam",
+                fname: "William",
                 lname: "Van Dam",
                 number: 22,
-                position: "ST"
+                position: "ST",
+                notableEvents: [
+                    {
+                        type: "Subbed out",
+                        time: "88'"
+                    },
+                    {
+                        type: "Subbed out",
+                        time: "88'"
+                    },
+                    {
+                        type: "Subbed out",
+                        time: "88'"
+                    }
+                ]
             },
             {
                 fname: "Will",
                 lname: "Van Dam",
                 number: 3,
-                position: "LM"
+                position: "LM",
+                notableEvents: [
+                    {
+                        type: "Subbed out",
+                        time: "88'"
+                    },
+                    {
+                        type: "Subbed out",
+                        time: "88'"
+                    },
+                    {
+                        type: "Subbed out",
+                        time: "88'"
+                    }
+                ]
             },
             {
                 fname: "Bill",
                 lname: "Van Dam",
                 number: 6,
-                position: "CAM"
+                position: "CAM",
+                notableEvents: [
+                    {
+                        type: "Subbed out",
+                        time: "88'"
+                    },
+                    {
+                        type: "Subbed out",
+                        time: "88'"
+                    },
+                    {
+                        type: "Subbed out",
+                        time: "88'"
+                    }
+                ]
             },
             {
                 fname: "Willy",
                 lname: "Van Dam",
                 number: 9,
-                position: "CDM"
+                position: "CDM",
+                notableEvents: [
+                    {
+                        type: "Subbed out",
+                        time: "88'"
+                    },
+                    {
+                        type: "Subbed out",
+                        time: "88'"
+                    },
+                    {
+                        type: "Subbed out",
+                        time: "88'"
+                    }
+                ]
             },
             {
                 fname: "Billy",
                 lname: "Van Dam",
                 number: 10,
-                position: "RM"
+                position: "RM",
+                notableEvents: [
+                    {
+                        type: "Subbed out",
+                        time: "88'"
+                    },
+                    {
+                        type: "Subbed out",
+                        time: "88'"
+                    },
+                    {
+                        type: "Subbed out",
+                        time: "88'"
+                    }
+                ]
             }
 
         ];
@@ -141,6 +211,21 @@ soccerStats.controller('gameReviewController',
         $scope.selectPlayer = function (index) {
             $scope.currPlayer = $scope.players[index];
         };
+
+        $scope.notableEvents = [
+            {
+                type: "Subbed out",
+                time: "88'"
+            },
+            {
+                type: "Subbed out",
+                time: "88'"
+            },
+            {
+                type: "Subbed out",
+                time: "88'"
+            }
+        ];
 
 
     });
