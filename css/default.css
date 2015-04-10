@@ -61,6 +61,7 @@ input {
     width:100%;
 }
 
+textarea,
 input {
     border: 1px solid #DDD;
     padding: 11px;
@@ -95,6 +96,7 @@ input.date {
    color: #DDD;  
 }
 
+textarea:focus,
 select:focus,
 input:focus {
     outline:0;
@@ -369,7 +371,7 @@ x div:nth-of-type(2) {
 /* Default Page Styles */
 .content {
     background-color: #F2F2F2;
-    padding: 100px;
+    padding: 0px 100px;
 }
 
 .content .section {

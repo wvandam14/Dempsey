@@ -58,6 +58,8 @@
 }
 
 .player-stats-container {
+    padding-top: 50px;
+
 }
 
 .player-stats-container .circle {
@@ -76,6 +78,11 @@
 }
 
 .roster-container {
+    width: 30%;
+}
+
+.roster-container > div {
+    padding-bottom: 50px;
 }
 
 .player-selector {
@@ -105,6 +112,53 @@
 }
 
 .stats-display-container {
-
+    padding-left: 50px;
     padding-top: 41px;
+    width: 70%;
+}
+
+.stats-display-container > div {
+    padding-bottom: 40px;
+}
+
+.player-stats-container .stats-display-container .player-card .player-info {
+    padding-right: 20px;
+    text-transform: uppercase;
+}
+
+.player-stats-container .stats-display-container .player-card .player-info .info {
+    border-bottom: solid 1px #DDD;
+}
+
+.player-stats-container .stats-display-container .player-card .player-info .img-container {
+    padding-right: 10px;
+}
+
+.content .player-card {
+
+}
+
+.notable-events .event-container {
+    padding-top: 5px;
+    height: 30px;
+}
+
+.notable-events .event-container .minute {
+    padding-left: 5px;
+    color: #B4B4B4;
+}
+
+.notable-events .event-container .event {
+    padding-left: 5px;
+}
+
+.player-stats-container .formation-field {
+    width: 100%;
+    height: 100%;
+}
+
+.game-notes .notes {
+    margin-top: 5px;
+    min-height: 200px;
+    padding: 0;
 }
