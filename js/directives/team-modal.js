@@ -32,6 +32,8 @@ soccerStats.directive('teamModal', function ($location, $route, $timeout, viewSe
                             success: function(currenUser) {
                                 toastService.success(configService.toasts.teamAddSuccess);
                                 $scope.closeModal();
+                                //currentUser.fetch();
+                                $route.reload();
                             },
                             error: function(currentUser, error) {
                                 toastService.error("There was a an error (" + error.code +"). Please try again.");
@@ -48,6 +50,11 @@ soccerStats.directive('teamModal', function ($location, $route, $timeout, viewSe
             $scope.goToPage = function(page) {
                 viewService.goToPage(page);
             };
+
+            $scope.getImageColor = function(color) {
+                console.log('color');
+                $scope.team.primaryColor = color;
+            }
 
             //below are static arrays
             $scope.ageGroups = dataService.ageGroups;

@@ -22,6 +22,7 @@ soccerStats.directive('editTeamModal', function ($location, $timeout, $route, vi
 
                             team.set("leagueName", $scope.editTeam.leagueName);
                             team.set("ageGroup", $scope.editTeam.ageGroup);
+                            team.set("primaryColor", $scope.editTeam.primaryColor);
                             team.set("city", $scope.editTeam.city);
                             team.set("name", $scope.editTeam.name);
                             team.set("number", $scope.editTeam.number);

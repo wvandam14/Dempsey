@@ -25,9 +25,8 @@ soccerStats.directive('accountModal', function ($location, $timeout, $route, vie
             $scope.confirmPassword = function() {
                 return $scope.editUser.newPassword === $scope.editUser.confirmPassword;
             };
-            
+
             var currentUser = Parse.User.current();
-            // User information
             $scope.editUser = {
                 firstName: currentUser.get('firstName'),
                 lastName: currentUser.get('lastName'),
@@ -41,7 +40,8 @@ soccerStats.directive('accountModal', function ($location, $timeout, $route, vie
                 photo: currentUser.get("photo")._url,  
                 newPhoto: ''      
             };
-
+            
+            // User information
             $scope.updateAccount = function(editUser) {
                 if (viewService.validateAreaByFormName('accountForm')) {
                     if ($scope.checkPassword()) {
@@ -64,6 +64,7 @@ soccerStats.directive('accountModal', function ($location, $timeout, $route, vie
                                 toastService.success(configService.toasts.accountUpdateSuccess);
                                 $scope.closeModal();
                                 $route.reload();
+                                //currentUser.fetch();
                             },
                             error: function (currentUser, error) {
                                 console.log("Error: " + error.code + " " + error.message);
@@ -72,7 +73,6 @@ soccerStats.directive('accountModal', function ($location, $timeout, $route, vie
                         });
                     }
                 } else {
-                    
                     toastService.error(configService.toasts.requiredFields);
                 }
             }
