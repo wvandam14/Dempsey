@@ -1,0 +1,73 @@
+<?xml version="1.0" standalone="no"?>
+<!-- Generator: Adobe Fireworks 10, Export SVG Extension by Aaron Beall (http://fireworks.abeall.com) . Version: 0.6.1  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg id="soccerfeild.fw-Page%201" viewBox="0 0 458 339" style="background-color:#ffffff" version="1.1"
+	xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve"
+	x="0px" y="0px" width="458px" height="339px"
+>
+	<g id="Layer%201">
+		<rect x="0" y="0" width="458" height="339" fill="#5da97b"/>
+		<rect x="30.9129" y="54.4003" width="396.3731" height="32.2" fill="#6eb288"/>
+		<rect x="30.9129" y="117.4003" width="396.3731" height="32.2" fill="#6eb288"/>
+		<rect x="30.9129" y="179" width="396.3731" height="32.2002" fill="#6eb288"/>
+		<rect x="30.9129" y="242" width="396.3731" height="32.2002" fill="#6eb288"/>
+		<path opacity="0" d="M 0 31 L 458 31 L 458 339 L 0 339 L 0 31 Z" fill="none"/>
+		<path d="M 30.9128 27.8 L 427.2859 27.8 L 427.2859 293.8 L 30.9128 293.8 L 30.9128 27.8 ZM 23.9098 20.8 L 23.9098 300.8 L 434.2891 300.8 L 434.2891 20.8 L 23.9098 20.8 Z" fill="#a3ccb2"/>
+		<path id="Ellipse" d="M 222.7966 24.3 C 222.7966 20.8206 225.6185 18 229.0994 18 C 232.5803 18 235.4022 20.8206 235.4022 24.3 C 235.4022 27.7794 232.5803 30.6 229.0994 30.6 C 225.6185 30.6 222.7966 27.7794 222.7966 24.3 Z" fill="#a3ccb2"/>
+		<path d="M 344.6498 293.8 L 344.6498 189.0068 L 113.549 189.0068 L 113.549 293.8 L 120.552 293.8 L 120.552 195.993 L 337.6468 195.993 L 337.6468 293.8 L 344.6498 293.8 Z" fill="#a3ccb2"/>
+		<path d="M 299.8303 293.8 L 299.8303 237.9104 L 158.3685 237.9104 L 158.3685 293.8 L 165.3716 293.8 L 165.3716 244.8966 L 292.8272 244.8966 L 292.8272 293.8 L 299.8303 293.8 Z" fill="#a3ccb2"/>
+		<path id="Ellipse2" d="M 235.4022 217.6503 C 235.4022 221.1229 232.5803 223.9379 229.0994 223.9379 C 225.6185 223.9379 222.7966 221.1229 222.7966 217.6503 C 222.7966 214.1777 225.6185 211.3627 229.0994 211.3627 C 232.5803 211.3627 235.4022 214.1777 235.4022 217.6503 Z" fill="#a3ccb2"/>
+		<path d="M 180.7783 189.0068 L 170.974 189.0068 C 170.974 189.0068 193.3838 160.8 228.9243 160.8 C 267.1785 160.8 287.2248 189.0068 287.2248 189.0068 L 277.4205 189.0068 C 277.4205 189.0068 259.3876 167.8735 228.9243 167.8735 C 200.3868 167.8735 180.7783 189.0068 180.7783 189.0068 Z" fill="#a3ccb2"/>
+		<path d="M 164.6713 24.3 C 164.6713 22.6667 226.9006 25.3333 229.3333 25.3333 C 230.9006 25.3333 293.5275 23.6667 293.5275 24.3 C 293.5275 59.8676 264.6825 88.7 229.0994 88.7 C 193.5162 88.7 164.6713 59.8676 164.6713 24.3 ZM 158.3685 24.3 C 158.3685 63.347 190.0353 95 229.0994 95 C 268.1635 95 299.8303 63.347 299.8303 24.3 C 299.8303 23 229.5673 23.6667 229 23.6667 C 226.5673 23.6667 158.3685 22.3333 158.3685 24.3 Z" fill="#a3ccb2"/>
+		<path d="M 427.2859 281.2 L 427.2859 274.2 C 427.2859 274.2 407.6774 274.2 407.6774 293.8 C 407.6774 293.8875 414.6804 293.8 414.6804 293.8 C 414.6804 293.8 413.2798 281.2 427.2859 281.2 Z" fill="#a3ccb2"/>
+		<path d="M 43.5323 293.8 L 50.5214 293.8 C 50.5214 293.8 50.5214 274.2 30.9518 274.2 C 30.8644 274.2 30.9518 281.2 30.9518 281.2 C 30.9518 281.2 43.5323 279.8 43.5323 293.8 Z" fill="#a3ccb2"/>
+		<g>
+			<path id="Line" d="M 258.223 321.2378 L 258.223 301.4817 " stroke="#dddddd" stroke-width="1" fill="none"/>
+			<path id="Line2" d="M 256.2524 320.9086 L 256.2524 301.4817 " stroke="#dddddd" stroke-width="1" fill="none"/>
+			<path id="Line3" d="M 254.2819 320.9086 L 254.2819 301.4817 " stroke="#dddddd" stroke-width="1" fill="none"/>
+			<path id="Line4" d="M 252.3113 320.5792 L 252.3113 301.4817 " stroke="#dddddd" stroke-width="1" fill="none"/>
+			<path id="Line5" d="M 250.3407 320.5792 L 250.3407 301.4817 " stroke="#dddddd" stroke-width="1" fill="none"/>
+			<path id="Line6" d="M 248.3701 320.25 L 248.3701 301.4817 " stroke="#dddddd" stroke-width="1" fill="none"/>
+			<path id="Line7" d="M 246.3995 320.25 L 246.3995 301.4817 " stroke="#dddddd" stroke-width="1" fill="none"/>
+			<path id="Line8" d="M 244.4289 319.9208 L 244.4289 301.4817 " stroke="#dddddd" stroke-width="1" fill="none"/>
+			<path id="Line9" d="M 242.4583 319.9208 L 242.4583 301.4817 " stroke="#dddddd" stroke-width="1" fill="none"/>
+			<path id="Line10" d="M 240.4877 319.5914 L 240.4877 301.4817 " stroke="#dddddd" stroke-width="1" fill="none"/>
+			<path id="Line11" d="M 238.5172 319.5914 L 238.5172 301.4817 " stroke="#dddddd" stroke-width="1" fill="none"/>
+			<path id="Line12" d="M 236.5466 319.5914 L 236.5466 301.4817 " stroke="#dddddd" stroke-width="1" fill="none"/>
+			<path id="Line13" d="M 234.576 319.5914 L 234.576 301.4817 " stroke="#dddddd" stroke-width="1" fill="none"/>
+			<path id="Line14" d="M 232.6054 319.5914 L 232.6054 301.4817 " stroke="#dddddd" stroke-width="1" fill="none"/>
+			<path id="Line15" d="M 230.6348 319.5914 L 230.6348 301.4817 " stroke="#dddddd" stroke-width="1" fill="none"/>
+			<path id="Line16" d="M 228.6642 319.5914 L 228.6642 301.4817 " stroke="#dddddd" stroke-width="1" fill="none"/>
+			<path id="Line17" d="M 226.6936 319.5914 L 226.6936 301.4817 " stroke="#dddddd" stroke-width="1" fill="none"/>
+			<path id="Line18" d="M 224.723 319.5914 L 224.723 301.4817 " stroke="#dddddd" stroke-width="1" fill="none"/>
+			<path id="Line19" d="M 222.7524 319.5914 L 222.7524 301.4817 " stroke="#dddddd" stroke-width="1" fill="none"/>
+			<path id="Line20" d="M 220.7819 319.5914 L 220.7819 301.4817 " stroke="#dddddd" stroke-width="1" fill="none"/>
+			<path id="Line21" d="M 218.8113 319.9208 L 218.8113 301.4817 " stroke="#dddddd" stroke-width="1" fill="none"/>
+			<path id="Line22" d="M 216.8407 319.9208 L 216.8407 301.4817 " stroke="#dddddd" stroke-width="1" fill="none"/>
+			<path id="Line23" d="M 214.8701 320.25 L 214.8701 301.4817 " stroke="#dddddd" stroke-width="1" fill="none"/>
+			<path id="Line24" d="M 212.8995 320.25 L 212.8995 301.4817 " stroke="#dddddd" stroke-width="1" fill="none"/>
+			<path id="Line25" d="M 210.9289 320.5792 L 210.9289 301.4817 " stroke="#dddddd" stroke-width="1" fill="none"/>
+			<path id="Line26" d="M 208.9583 320.5792 L 208.9583 301.4817 " stroke="#dddddd" stroke-width="1" fill="none"/>
+			<path id="Line27" d="M 206.9877 320.9086 L 206.9877 301.4817 " stroke="#dddddd" stroke-width="1" fill="none"/>
+			<path id="Line28" d="M 205.0172 320.9086 L 205.0172 301.4817 " stroke="#dddddd" stroke-width="1" fill="none"/>
+			<path id="Line29" d="M 203.0466 321.2378 L 203.0466 301.4817 " stroke="#dddddd" stroke-width="1" fill="none"/>
+			<path id="Line30" d="M 201.076 321.2378 L 201.076 301.4817 " stroke="#dddddd" stroke-width="1" fill="none"/>
+			<rect x="198.7222" y="299.8905" width="60.103" height="1.6464" fill="#dddddd"/>
+			<path d="M 258.223 319.5914 L 199.1054 319.5914 " stroke="#dddddd" stroke-width="1" fill="none"/>
+			<path d="M 258.223 317.9451 L 199.1054 317.9451 " stroke="#dddddd" stroke-width="1" fill="none"/>
+			<path d="M 258.223 316.2988 L 199.1054 316.2988 " stroke="#dddddd" stroke-width="1" fill="none"/>
+			<path d="M 258.223 313.0061 L 199.1054 313.0061 " stroke="#dddddd" stroke-width="1" fill="none"/>
+			<path d="M 258.223 314.6525 L 199.1054 314.6525 " stroke="#dddddd" stroke-width="1" fill="none"/>
+			<path d="M 258.223 311.3597 L 199.1054 311.3597 " stroke="#dddddd" stroke-width="1" fill="none"/>
+			<path d="M 258.223 309.7134 L 199.1054 309.7134 " stroke="#dddddd" stroke-width="1" fill="none"/>
+			<path d="M 258.223 308.067 L 199.1054 308.067 " stroke="#dddddd" stroke-width="1" fill="none"/>
+			<path d="M 258.223 304.7744 L 199.1054 304.7744 " stroke="#dddddd" stroke-width="1" fill="none"/>
+			<path d="M 258.223 303.1281 L 199.1054 303.1281 " stroke="#dddddd" stroke-width="1" fill="none"/>
+			<path d="M 258.223 306.4208 L 199.1054 306.4208 " stroke="#dddddd" stroke-width="1" fill="none"/>
+			<path id="Ellipse3" d="M 262 326.1769 C 262 326.6315 261.6324 327 261.1789 327 C 260.7255 327 260.3578 326.6315 260.3578 326.1769 C 260.3578 325.7222 260.7255 325.3536 261.1789 325.3536 C 261.6324 325.3536 262 325.7222 262 326.1769 Z" fill="#dddddd"/>
+			<path id="Ellipse4" d="M 196.6422 326.1769 C 196.6422 326.6315 196.2745 327 195.8211 327 C 195.3676 327 195 326.6315 195 326.1769 C 195 325.7222 195.3676 325.3536 195.8211 325.3536 C 196.2745 325.3536 196.6422 325.7222 196.6422 326.1769 Z" fill="#dddddd"/>
+			<path id="Line31" d="M 195.8211 326.1769 L 199.1875 321.1555 " stroke="#dddddd" stroke-width="1" fill="none"/>
+			<path d="M 261.1789 326.1769 L 258.223 321.2378 L 228.7463 319.5092 L 199.1054 321.2378 L 199.1054 301.4817 " stroke="#dddddd" stroke-width="1" fill="none"/>
+		</g>
+	</g>
+</svg>
