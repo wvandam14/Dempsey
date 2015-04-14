@@ -17,8 +17,8 @@ var soccerStats = angular.module('soccerStats', ['ngRoute','ngSanitize','ngResou
         });
 
         $routeProvider.when('/home', {
-            templateUrl: 'templates/pages/game-review.html',
-            controller: 'gameReviewController',
+            templateUrl: './templates/pages/home-page.html',
+            controller: 'homeController',
             scope: {}
         });
 
