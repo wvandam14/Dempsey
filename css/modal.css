@@ -136,4 +136,27 @@ body.isModal {
 
 /* ---------- END Player Modal ---------- */
 
+/* ---------- Create a game Modal ---------- */
+.modal.create-game h2 {
+    padding-bottom: 5px;
+}
+
+.modal.create-game .body > div {
+    padding: 0 20px;
+    border-top: 0;
+    border-bottom: 0;
+}
+
+.modal.create-game .box {
+    margin-top: 15px;
+}
+
+.modal.create-game .button.inline {
+    margin: 0;
+    height: 50px;
+    width: 100%;
+}
+
+/* ---------- END Create a game Modal ---------- */
+
 
