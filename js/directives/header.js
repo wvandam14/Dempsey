@@ -8,13 +8,10 @@ soccerStats.directive('header', function ($timeout, $rootScope, $route, viewServ
             $scope.currentTeam = {};
             $scope.teams = [];
 
-            var self = 'headerModal';
-
             var parseUser = Parse.User.current();
             if (parseUser && parseUser.get('firstName')) {
                 $scope.currentUser = {initials: (parseUser.get('firstName')[0] + parseUser.get('lastName')[0]) };
             }
-
 
             $scope.toggleTeams = function() {
                 $scope.showTeams = !$scope.showTeams;
@@ -93,6 +90,10 @@ soccerStats.directive('header', function ($timeout, $rootScope, $route, viewServ
             if (Parse.User.current()) {
                 $scope.teams = dataService.getTeams( function(_teams) {
                     $scope.currentTeam = _teams[0];
+                    dataService.setCurrentTeam(_teams[0]);
+                    $timeout(function() {
+                       $rootScope.$broadcast(configService.messages.teamChanged, {team: _teams[0]});
+                    });
                     dataService.setCurrentTeam($scope.currentTeam);
                 });
             }
