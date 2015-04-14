@@ -164,16 +164,24 @@
                     </div>
 
                     <!-- TODO: replace this with actual content... -->
-                    <div class="stats-display">
-                        fasdfadfasasdfasdfadfasfasdfadfasdasdfasdf<br>
-                        fasdfadfasasdfasdfadfasfasdfadfasdasdfasdf<br>
-                        fasdfadfasasdfasdfadfasfasdfadfasdasdfasdf<br>
-                        fasdfadfasasdfasdfadfasfasdfadfasdasdfasdf<br>
-                        fasdfadfasasdfasdfadfasfasdfadfasdasdfasdf<br>
-                        fasdfadfasasdfasdfadfasfasdfadfasdasdfasdf<br>
-                        fasdfadfasasdfasdfadfasfasdfadfasdasdfasdf<br>
-                        fasdfadfasasdfasdfadfasfasdfadfasdasdfasdf<br>
-
+                    <div class="stats-display numbers flex flex-column flex-one">
+                        <div class="flex">
+                            <div class="flex flex-center flex-column flex-one">
+                                <h6>2</h6>
+                                <h5>GOALS</h5>
+                            </div>
+                            <div class="flex flex-center flex-column flex-one">
+                                <h6>97</h6>
+                                <h5>PASSES</h5>
+                            </div>
+                            <div class="flex flex-center flex-column flex-one">
+                                <h6>3</h6>
+                                <h5>CORNERS</h5>
+                            </div>
+                        </div>
+                        <div class="flex-one flex flex-center">
+                            <doughnut-chart data="player.passes.data" num="'8/10'" label="'PASSES COMPLETED'"></doughnut-chart>
+                        </div>
                     </div>
                 </div>
 

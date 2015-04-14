@@ -112,7 +112,24 @@ soccerStats.controller('gameReviewController',
                         type: "Subbed out",
                         time: "88'"
                     }
-                ]
+                ],
+                passes: {
+                    data: [
+                        {
+                            value: 10,
+                            color: "#B4B4B4",
+                            highlight: "#B4B4B4",
+                            label: "Attempted"
+                        },
+                        {
+                            value: 8,
+                            color:"#5DA97B",
+                            highlight: "#5DA97B",
+                            label: "Completed"
+                        }
+                    ]
+                }
+           
             },
             {
                 fname: "Will",
