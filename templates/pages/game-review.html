@@ -51,16 +51,15 @@
                 <doughnut-chart data="teamPossession.data" num="'52%'" label="'POSSESSION'"></doughnut-chart>
             </div>
 
-            <div class="flex-one flex flex-center">
-                <h5>SHOT ACCURACY</h5>
+            <div class="flex-one flex flex-column flex-center">
+                <h5 class="stat-title">SHOT ACCURACY</h5>
                 <shot-accuracy-chart data="shotLinesData"></shot-accuracy-chart>
             </div>
         </div>
 
         <div class="section flex">
-
-            <div class="flex-one flex flex-center">
-                <h5>SHOTS</h5>
+            <div class="flex-one flex flex-column flex-center">
+                <h5 class="stat-title">SHOTS</h5>
                 <bar-chart data="shotCountData"></bar-chart>
             </div>
 
@@ -70,7 +69,7 @@
 
             <div class="numbers flex-one flex flex-column">
                 <div class="flex-one">
-                    <h5>TEAM STATS</h5>
+                    <h5 class="text-center stat-title">TEAM STATS</h5>
                 </div>
                 <div class="flex">
                     <div class="flex flex-center flex-column flex-one">
@@ -179,7 +178,7 @@
 
                 <!-- TODO: Replace this with actual content -->
                 <div class="formation-field">
-                    <img src="./img/sample/formation-field.png"  style="width: 100%; height: 100%"/>
+                    <img src="./img/half-field.svg" />
                 </div>
                 <div class="game-notes">
                     <h5 class="title">GAME NOTES</h5>
