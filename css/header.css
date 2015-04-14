@@ -88,3 +88,8 @@ header .dropdown > div {
 header .dropdown > div:active {
     background-color: #444444;
 }
+
+header .team-current {
+    max-width: 225px;
+    min-width: 225px;
+}
