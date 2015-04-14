@@ -26,10 +26,12 @@ soccerStats.directive('header', function ($timeout, $route, viewService, configS
 
             // create a new team
             $scope.showCreateTeam = function() {
+                $scope.toggleTeams();
                 viewService.openModal('teamModal');
             }
             // edit coach account
             $scope.showEditAccount = function() {
+                $scope.toggleAccount();
                 viewService.openModal('accountModal');
             }
 
@@ -44,11 +46,15 @@ soccerStats.directive('header', function ($timeout, $route, viewService, configS
             }
 
             $scope.changeTeam = function(team) {
+                $scope.toggleTeams();
                 $scope.currentTeam = team;
                 // console.log($scope.currentTeam);
                 dataService.setCurrentTeam($scope.currentTeam);
-                $scope.showTeams = !$scope.showTeams;
                 //$route.reload();
+            }
+
+            $scope.createGame = function() {
+                viewService.openModal('createGameModal');
             }
 
             $scope.$on(configService.messages.addNewTeam, function(event, team) {

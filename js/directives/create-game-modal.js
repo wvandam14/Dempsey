@@ -1,7 +1,7 @@
-soccerStats.directive('inviteEmailModal', function (viewService, toastService, configService, dataService, emailService) {
+soccerStats.directive('createGameModal', function (viewService, toastService, registerService, configService, dataService, emailService) {
     return {
         restrict: 'E',
-        templateUrl: "./templates/directives/invite-email-modal.html",
+        templateUrl: "./templates/directives/create-game-modal.html",
         controller: function($scope) {
             var self = 'inviteEmailModal';
             $scope.currentTeam = {};

@@ -118,3 +118,6 @@ team create round 2
 	// team disappeared altogether, created a new team that worked fine, 
 		but team "Hextech Anivia" exists on Parse but does not exist on coach page
 
+testing parent
+	// functionality of homepage is now there for parent
+	//

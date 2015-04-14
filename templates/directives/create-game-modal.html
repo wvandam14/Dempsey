@@ -1,0 +1,45 @@
+<div class="modal">
+    <div class="head flex flex-column">
+        <div class="flex">
+            <h1 class="flex-one">Add A Game</h1>
+            <div>
+                <x ng-click="closeModal()"/>
+            </div>
+        </div>
+        <p>Add your upcoming games to the schedule so you can prepare for gametime and submit your game stats.</p>
+    </div>
+
+    <!-- Invite Email Form -->
+    <div class="body flex flex-column">
+        <form name="inviteForm" class="flex flex-one body">
+            <div class="flex-one">
+                <h2>Opponent Name</h2>
+                <input type="text" class="flex-one" ng-model="game.opponent.name" placeholder="Opponent Name" required/>
+                <h2>Opponent Symbol</h2>
+                <input type="text" class="flex-one" ng-model="game.opponent.symbol" placeholder="ex: SEA" required/>
+            </div>
+            <div class="flex-one">
+                <h2>Game Date</h2>
+                <input type="text" class="flex-one" ng-model="game.date" placeholder="Game Date" required/>
+                <h2>Game Time</h2>
+                <input type="text" class="flex-one" ng-model="game.time" placeholder="Game Time" required/>
+            </div>
+        </form>
+        <div class="button green" ng-click="addGame(game)"><h1>Add Game</h1></div>            
+    <!-- TODO: change the close button into not an 'X' (make it pretty) -->
+        <div class="box">
+            <div class="email-box flex" ng-repeat="game in games track by $index">
+                <p class="ellipse">{{game.opponent.name}} - {{game.date}}</p><div class="close-button" ng-click="removeGame($index)"><p>x</p></div>
+            </div>
+        </div>
+    </div>
+    <div class="foot flex">
+        <div class="button green flex-one" ng-click="sendEmailInvite();">
+            <h1>Save</h1>
+        </div>
+        <div class="button navy flex-one" ng-click="closeModal()">
+            <h1>Cancel</h1>
+        </div>
+    </div>
+</div>
+

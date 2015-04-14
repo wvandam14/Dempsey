@@ -1,4 +1,4 @@
-soccerStats.directive('teamModal', function ($location, $route, $rootScope, $timeout, viewService, toastService, registerService, configService, dataService) {
+soccerStats.directive('teamModal', function ($location, $route, $rootScope, $timeout, viewService, toastService, configService, dataService) {
     return {
         restrict: 'E',
         templateUrl: "./templates/directives/team-modal.html",
@@ -22,7 +22,7 @@ soccerStats.directive('teamModal', function ($location, $route, $rootScope, $tim
 
             $scope.addNewTeam = function(newTeam) {
                 console.log(newTeam);
-                var _team = registerService.registerTeam(newTeam);
+                var _team = dataService.registerTeam(newTeam);
 
                 _team.save(null, {
                     success: function(_team) {
