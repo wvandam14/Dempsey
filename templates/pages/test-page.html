@@ -1,24 +1,25 @@
-<div class="container">
-    <h1>A place to test stuff.</h1>
-    <br/>
-    <br/>
-
-    <game-timeline></game-timeline>
-
-    <br/>
-
-    <doughnut-chart data="teamForm.data" num="14" label="'GAMES PLAYED'"></doughnut-chart>
-
-    <br/>
-
-    <doughnut-chart data="teamPossession.data" num="'52%'" label="'POSSESSION'"></doughnut-chart>
-
-    <br/>
-
-    <bar-chart data="shotCountData"></bar-chart>
-
-    <br/>
-
-    <shot-accuracy-chart data="shotLinesData"></shot-accuracy-chart>
-
+<div  style="margin-top: 150px;">
+    <form name="gameForm" class="body flex two-column">
+        <h3 class="ellipse">Opponent</h3>
+        <input type="text" ng-model="game.opponent" placeholder="Dallas FC"/><br/>
+        <h3 class="ellipse">Opponent Symbol</h3>
+        <input type="text" ng-model="game.opponentSymbol" placeholder="DAL"/>
+        <h3 class="ellipse">Start Time</h3>
+        <input type="text" ng-model="game.startTime" />
+        <h3 class="ellipse">Half Time Start</h3>
+        <input type="text" ng-model="game.halfTimeStart" />
+        <h3 class="ellipse">Half Time End</h3>
+        <input type="text" ng-model="game.halfTimeEnd" />
+        <h3 class="ellipse">End Time</h3>
+        <input type="text" ng-model="game.endTime" />
+        <h3 class="ellipse">Date</h3>
+        <input type="date" ng-model="game.date" placeholder="mm/dd/yyyy"/>
+        <h3 class="ellipse">Location</h3>
+        <input type="text" ng-model="game.location" placeholder="Seattle"/>
+        <h3 class="ellipse">Status</h3>
+        <input type="text" ng-model="game.status" placeholder="Recap"/>      
+    </form>
+     <div class="button green flex-one" ng-click="addGame(game)">
+        <h1>Save</h1>
+    </div>
 </div>
