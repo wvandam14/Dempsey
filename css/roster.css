@@ -1,6 +1,9 @@
 .roster-page {
-	padding-top: 150px;
 	width: 100%;
+}
+
+.roster-page .content {
+    min-height: 900px;
 }
 
 .roster-page .player-info h5 {

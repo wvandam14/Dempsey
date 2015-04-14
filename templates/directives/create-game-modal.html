@@ -1,4 +1,4 @@
-<div class="modal invite registration">
+<div class="modal create-game registration">
     <div class="head flex flex-column">
         <div class="flex">
             <h1 class="flex-one">Add A Game</h1>
@@ -10,31 +10,35 @@
     </div>
 
     <!-- Invite Email Form -->
-    <div class="body flex flex-column">
-        <form name="inviteForm" class="flex flex-one body">
+    <div class="body flex flex-column body">
+        <form name="gameForm" class="flex flex-one body">
             <div class="flex-one">
-                <h2>Opponent Name</h2>
-                <input type="text" class="flex-one" ng-model="game.opponent.name" placeholder="Opponent Name" required/>
-                <h2>Opponent Symbol</h2>
-                <input type="text" class="flex-one" ng-model="game.opponent.symbol" placeholder="ex: SEA" required/>
+                <h3>Opponent Name</h3>
+                <input type="text" class="flex-one" ng-model="opponentName" placeholder="Opponent Name" required/>
+                <h3>Opponent Symbol</h3>
+                <input type="text" class="flex-one" ng-model="opponentSymbol" placeholder="ex: SEA" required/>
             </div>
             <div class="flex-one">
-                <h2>Game Date</h2>
-                <input type="text" class="flex-one" ng-model="game.date" placeholder="Game Date" required/>
-                <h2>Game Time</h2>
-                <input type="text" class="flex-one" ng-model="game.time" placeholder="Game Time" required/>
+                <h3>Game Date</h3>
+                <input type="date" class="date" ng-model="date" required />
+                <h3>Game Time</h3>
+                <input type="time" class="flex-one" ng-model="gameTime" placeholder="Game Time" required/>
             </div>
         </form>
-        <div class="button green" ng-click="addGame(game)"><h1>Add Game</h1></div>            
+        <div>
+            <div class="button green inline" ng-click="addGame()"><h1>Add Game</h1></div>
+        </div>            
     <!-- TODO: change the close button into not an 'X' (make it pretty) -->
-        <div class="box">
-            <div class="email-box flex" ng-repeat="game in games track by $index">
-                <p class="ellipse">{{game.opponent.name}} - {{game.date}}</p><div class="close-button" ng-click="removeGame($index)"><p>x</p></div>
+        <div>
+            <div class="box">
+                <div class="email-box flex" ng-repeat="game in games track by $index">
+                    <p class="ellipse">{{game.opponent.name}} - {{game.date.getMonth() + 1}}/{{game.date.getDate()}}</p><div class="close-button" ng-click="removeGame($index)"><p>x</p></div>
+                </div>
             </div>
         </div>
     </div>
     <div class="foot flex">
-        <div class="button green flex-one" ng-click="sendEmailInvite();">
+        <div class="button green flex-one" ng-click="sendGames()">
             <h1>Save</h1>
         </div>
         <div class="button navy flex-one" ng-click="closeModal()">

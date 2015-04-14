@@ -120,4 +120,11 @@ team create round 2
 
 testing parent
 	// functionality of homepage is now there for parent
-	//
+create player
+	// took several clicks on first attempt to open
+	// still has auto filled values
+	// does not fit on the screen
+	// does not close on save
+	// Emergency Contact should auto fill to current parent's information
+	// there is only add new player, no edit
+	// 

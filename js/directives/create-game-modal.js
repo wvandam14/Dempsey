@@ -13,26 +13,37 @@ soccerStats.directive('createGameModal', function (viewService, toastService, co
             }
 
                 // Array containing the emails who will receive the invitation to the team
-            $scope.inviteEmails = [];
-            $scope.addEmail = function () {
-                if(viewService.validateAreaByFormName("inviteForm")){
-                    $scope.inviteEmails.unshift($scope.invite.email);
+            $scope.games = [];
+            $scope.addGame = function (game) {
+                if(viewService.validateAreaByFormName("gameForm")){
+                    $scope.games.unshift({
+                        opponent: {
+                            name:$scope.opponentName,
+                            symbol:$scope.opponentSymbol
+                        },
+                        date:$scope.date,
+                        time:$scope.gameTime
+                    });
                 }
                 else {
                     toastService.error(configService.toasts.requiredFields);
                 }
             };
 
-            $scope.removeEmail = function (index){
-                $scope.inviteEmails.splice(index, 1);
+            $scope.removeGame = function (index){
+                $scope.games.splice(index, 1);
             }
 
-            // Sends email via the cloud code with parse
-            $scope.sendEmailInvite = function() {
-                _.each($scope.inviteEmails, function (email) {
-                    emailService.sendEmailInvite(currentUser.get("name"), $scope.currentTeam.value, $scope.currentTeam.label, email);
-                });
-            };
+            $scope.sendGames = function () {
+
+            }
+
+            // // Sends email via the cloud code with parse
+            // $scope.sendEmailInvite = function() {
+            //     _.each($scope.inviteEmails, function (email) {
+            //         emailService.sendEmailInvite(currentUser.get("name"), $scope.currentTeam.value, $scope.currentTeam.label, email);
+            //     });
+            // };
 
             if (currentUser) {
                 dataService.getTeams( function(_teams) {

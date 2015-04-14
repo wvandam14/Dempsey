@@ -12,7 +12,6 @@ soccerStats.directive('role', function ($rootScope) {
 	    			angular.element(element).attr('style','display : none !important');
 	    		}
 	    	}
-	    	console.log('SOMETHING');
     		$scope.checkRole();
     	}
     };
