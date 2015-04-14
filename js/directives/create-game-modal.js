@@ -1,9 +1,9 @@
-soccerStats.directive('createGameModal', function (viewService, toastService, registerService, configService, dataService, emailService) {
+soccerStats.directive('createGameModal', function (viewService, toastService, configService, dataService, emailService) {
     return {
         restrict: 'E',
         templateUrl: "./templates/directives/create-game-modal.html",
         controller: function($scope) {
-            var self = 'inviteEmailModal';
+            var self = 'createGameModal';
             $scope.currentTeam = {};
             $scope.teams = [];
             var currentUser = Parse.User.current();
