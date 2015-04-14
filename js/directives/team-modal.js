@@ -53,7 +53,7 @@ soccerStats.directive('teamModal', function ($location, $route, $rootScope, $tim
                                     color: primaryColor 
                                 };
                                 // console.log($scope.newTeam);
-                                $rootScope.$broadcast(configService.messages.addNewTeam, $scope.newTeam)7;
+                                $rootScope.$broadcast(configService.messages.addNewTeam, $scope.newTeam);
                             },
                             error: function(currentUser, error) {
                                 toastService.error("There was a an error (" + error.code +"). Please try again.");
