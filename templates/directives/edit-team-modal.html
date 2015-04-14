@@ -1,6 +1,6 @@
 <div class="modal editTeam registration">
     <div class="head flex">
-        <h1 class="flex-one">Edit {{team.label ? team.label : editTeam.name}}</h1>
+        <h1 class="flex-one">Edit {{editTeam.name}}</h1>
         <div>
             <x ng-click="closeModal()"/>
         </div>
@@ -39,6 +39,9 @@
             <select ng-model="editTeam.state" ng-options="v for (k, v) in states" required>
                 <option value=""></option>
             </select>
+<!--             <div class="button navy flex-one" ng-click="deleteTeam(editTeam)">
+                <h1>Delete Team</h1>
+            </div> -->
         </div>
     </form>
     <div class="foot flex">

@@ -34,7 +34,7 @@ soccerStats.directive('editTeamModal', function ($location, $timeout, $route, vi
                                 success: function (editTeam) {
                                     toastService.success(configService.toasts.teamUpdateSuccess);
                                     $scope.closeModal();
-                                    $route.reload();
+                                    // $route.reload();
                                 },
                                 error: function(editTeam, error) {
                                     toastService.error("There was a an error (" + error.code +"). Please try again.");
@@ -51,6 +51,10 @@ soccerStats.directive('editTeamModal', function ($location, $timeout, $route, vi
                     toastService.error(configService.toasts.requiredFields);
                 }
             }
+
+            $scope.deleteTeam = function(team) {
+
+            };
 
             $scope.goToPage = function(page) {
                 viewService.goToPage(page);

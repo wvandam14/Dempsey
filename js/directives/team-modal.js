@@ -1,4 +1,4 @@
-soccerStats.directive('teamModal', function ($location, $route, $timeout, viewService, toastService, registerService, configService, dataService) {
+soccerStats.directive('teamModal', function ($location, $route, $rootScope, $timeout, viewService, toastService, registerService, configService, dataService) {
     return {
         restrict: 'E',
         templateUrl: "./templates/directives/team-modal.html",
@@ -32,8 +32,28 @@ soccerStats.directive('teamModal', function ($location, $route, $timeout, viewSe
                             success: function(currenUser) {
                                 toastService.success(configService.toasts.teamAddSuccess);
                                 $scope.closeModal();
-                                //currentUser.fetch();
-                                $route.reload();
+                                var leagueName = _team.get("leagueName"),
+                                    logo = _team.get("logo"),
+                                    teamName = _team.get("name"),
+                                    ageGroup = _team.get("ageGroup"),
+                                    city = _team.get("city"),
+                                    teamNumber = _team.get("number"),
+                                    state = _team.get("state"),
+                                    primaryColor = _team.get("primaryColor")
+                                ;
+                                $scope.newTeam = {
+                                    league: leagueName,
+                                    value: _team.id, 
+                                    label: teamName, 
+                                    logo: logo._url,
+                                    age: ageGroup,
+                                    city: city,
+                                    number: teamNumber,
+                                    state: state,
+                                    color: primaryColor 
+                                };
+                                // console.log($scope.newTeam);
+                                $rootScope.$broadcast(configService.messages.addNewTeam, $scope.newTeam)7;
                             },
                             error: function(currentUser, error) {
                                 toastService.error("There was a an error (" + error.code +"). Please try again.");
@@ -44,7 +64,7 @@ soccerStats.directive('teamModal', function ($location, $route, $timeout, viewSe
                     error: function(_team, error) {
                         toastService.error("There was a an error (" + error.code +"). Please try again.");
                     }
-                });
+                }); 
             }
 
             $scope.goToPage = function(page) {
