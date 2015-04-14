@@ -13,7 +13,7 @@ soccerStats.directive('accountModal', function ($location, $timeout, $route, vie
             $scope.states = dataService.states;
 
             $scope.checkPassword = function() {
-                if (!$scope.editUser.newPassword) 
+                if (!$scope.editUser.newPassword && !$scope.editUser.confirmPassword) 
                     return true;
                 if ($scope.confirmPassword()) 
                     return true;

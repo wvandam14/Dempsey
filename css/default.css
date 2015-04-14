@@ -68,6 +68,10 @@ input {
     margin-bottom: 15px;
 }
 
+textarea {
+    right: none;
+}
+
 select {
     border: 1px solid #DDD;
     padding: 12px;
