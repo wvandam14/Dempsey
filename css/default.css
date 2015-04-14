@@ -211,6 +211,10 @@ input.ng-invalid-required.ng-touched {
     padding-bottom: 2px;
 }
 
+.relative {
+    position: relative;
+}
+
 /* Circle Control */
 .circle {
     border-radius: 50%;

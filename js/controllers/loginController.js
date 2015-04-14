@@ -23,7 +23,7 @@ soccerStats.controller('loginController', function loginController($scope, $root
                         toastService.success(configService.toasts.loginSuccess(
                             name === undefined ? "parent. Please edit your profile" : name)
                         );
-                        $scope.goToPage('/home');
+                        $scope.goToPage('/game-review');
                         $rootScope.$broadcast(configService.messages.loginSuccess);
                     },
                     error: function(user, error) {

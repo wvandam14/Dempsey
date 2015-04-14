@@ -61,7 +61,7 @@ soccerStats.controller('gameReviewController',
             onGoal: 2,
             offGoal: 2,
             blocked: 1
-        }
+        };
 
         // Shot Types: off, on, goal, blocked
         $scope.shotLinesData = [
@@ -122,7 +122,23 @@ soccerStats.controller('gameReviewController',
                             label: "Attempted"
                         },
                         {
-                            value: 8,
+                            value: 20,
+                            color:"#5DA97B",
+                            highlight: "#5DA97B",
+                            label: "Completed"
+                        }
+                    ]
+                },
+                shots: {
+                    data: [
+                        {
+                            value: 4,
+                            color: "#B4B4B4",
+                            highlight: "#B4B4B4",
+                            label: "Attempted"
+                        },
+                        {
+                            value: 3,
                             color:"#5DA97B",
                             highlight: "#5DA97B",
                             label: "Completed"
@@ -149,7 +165,40 @@ soccerStats.controller('gameReviewController',
                         type: "Subbed out",
                         time: "88'"
                     }
-                ]
+                ],
+                passes: {
+                    data: [
+                        {
+                            value: 10,
+                            color: "#B4B4B4",
+                            highlight: "#B4B4B4",
+                            label: "Attempted"
+                        },
+                        {
+                            value: 20,
+                            color:"#5DA97B",
+                            highlight: "#5DA97B",
+                            label: "Completed"
+                        }
+                    ]
+                },
+                shots: {
+                    data: [
+                        {
+                            value: 4,
+                            color: "#B4B4B4",
+                            highlight: "#B4B4B4",
+                            label: "Attempted"
+                        },
+                        {
+                            value: 3,
+                            color:"#5DA97B",
+                            highlight: "#5DA97B",
+                            label: "Completed"
+                        }
+                    ]
+                }
+
             },
             {
                 fname: "Bill",
@@ -214,10 +263,25 @@ soccerStats.controller('gameReviewController',
 
         ];
 
+        $scope.currFormation = [
+            {
+                type: "Striker",
+                player: $scope.players[0],
+                x: 50,
+                y: 75
+            },
+            {
+                type: "Defender",
+                player: $scope.players[1],
+                x: 50,
+                y: 25
+            }
+        ];
+
         $scope.currPlayer = $scope.players[0];
 
-        $scope.isSelected = function (index) {
-            if ( $scope.players[index] === $scope.currPlayer ) {
+        $scope.isSelected = function (player) {
+            if ( player === $scope.currPlayer ) {
                 return true;
             }
             else {
@@ -225,8 +289,8 @@ soccerStats.controller('gameReviewController',
             }
         };
 
-        $scope.selectPlayer = function (index) {
-            $scope.currPlayer = $scope.players[index];
+        $scope.selectPlayer = function (player) {
+            $scope.currPlayer = player;
         };
 
         $scope.notableEvents = [

@@ -1,0 +1,39 @@
+<div class="relative">
+    <div class="back-layer">
+        <img src="./img/half-field.svg">
+    </div>
+
+    <div class="flex flex-column flex-center" ng-click="selectPlayer({player: position.player})" ng-repeat="position in formation"
+           style="position:absolute; left:{{position.x}}%; top:{{position.y}}%">
+        <div class="formation-circle flex flex-center" ng-class="{selected: isSelected({player: position.player})}">
+            <h5>{{position.player.number}}</h5>
+        </div>
+        <h5>{{position.player.lname}}</h5>
+    </div>
+</div>
+
+
+<!-- <div style="{position:'relative'}">
+    <img id="background" ng-src="{{page.backgroundImage}}" class="course-image" />
+    <input type="text" ng-repeat="field in page.fields" ng-model="field.value"
+           style="position:absolute"
+           ng-style="{left:field.left,
+                       top:field.top,
+                     width:field.width,
+                    height:field.height}" />       
+</div> -->
+<!-- 
+<div class="flex key">
+    <div class="flex">
+        <div class="circle goal"></div>
+        <h5>- Goal</h5>
+    </div>
+    <div class="flex">
+        <div class="circle on"></div>
+        <h5>- On Goal</h5>
+    </div>
+    <div class="blocked">
+        <h5>T - Blocked</h5>
+    </div>
+</div>
+-->

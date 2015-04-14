@@ -16,11 +16,9 @@
                 <!-- Game score -->
                 <div class="flex flex-center-horizontal">
                     <div class="score flex flex-center">
-                        <!-- TODO: replace these "scores" with actual game score variables -->
                         <h5 class="">{{currGame.team.score}}</h5>
                     </div>
                     <div class="score flex flex-center">
-                    <!--  -->
                     <h5 class="">{{currGame.opponent.score}}</h5>
                 </div>
                 </div>
@@ -118,7 +116,7 @@
                 <div>
                     <!-- TODO: Figure out how we want to store the roster vs lineup data and then display accodingly -->
                     <h5 class="title">LINEUP</h5>
-                    <div class="player-selector flex flex-center-vertical" ng-repeat="player in players track by $index" ng-class="{selected: isSelected($index)}" ng-click="selectPlayer($index)">
+                    <div class="player-selector flex flex-center-vertical" ng-repeat="player in players" ng-class="{selected: isSelected(player)}" ng-click="selectPlayer(player)">
                         <div class="circle flex flex-center">
                             <h5>{{player.number}}</h5>
                         </div>
@@ -129,7 +127,7 @@
                 </div>
                 <div>
                     <h5 class="title">BENCH</h5>
-                    <div class="player-selector flex flex-center-vertical" ng-repeat="player in players track by $index" ng-class="{selected: isSelected($index)}" ng-click="selectPlayer($index)">
+                    <div class="player-selector flex flex-center-vertical" ng-repeat="player in players" ng-class="{selected: isSelected(player)}" ng-click="selectPlayer(player)">
                         <div class="circle flex flex-center">
                             <h5>{{player.number}}</h5>
                         </div>
@@ -155,6 +153,7 @@
                         </div>
                         <div class="notable-events">
                             <div class="event-container flex flex-center-vertical" ng-repeat="event in currPlayer.notableEvents">
+                                <!-- TODO: make this image change based on event type -->
                                 <img src="./img/timeline-goal-dark.svg"/>
                                 <h5 class="minute">{{event.time}}</h5>
                                 <h5 class="event">{{event.type}}</h5>
@@ -162,7 +161,7 @@
                         </div>
                     </div>
 
-                    <!-- TODO: replace this with actual content... -->
+                    <!-- TODO: replace these numbers with actual content... -->
                     <div class="stats-display numbers flex flex-column flex-one">
                         <div class="flex">
                             <div class="flex flex-center flex-column flex-one">
@@ -178,17 +177,32 @@
                                 <h5>CORNERS</h5>
                             </div>
                         </div>
-                        <div class="flex-one flex flex-center">
-                            <doughnut-chart data="currPlayer.passes.data" num="'8/10'" label="'PASSES COMPLETED'" style="zoom: 0.5;"></doughnut-chart>
-                            <doughnut-chart data="currPlayer.passes.data" num="'8/10'" label="'PASSES COMPLETED'" style="zoom: 0.5;"></doughnut-chart>
+                        <div class="flex">
+                            <div class="flex flex-center flex-one">
+                                <doughnut-chart data="currPlayer.passes.data" num="'8/10'" label="'PASSES COMPLETED'" style="zoom: 0.5;"></doughnut-chart>
+                            </div>
+                            <div class="flex flex-center flex-one">  
+                                <doughnut-chart data="currPlayer.shots.data" num="'3/4'" label="'SHOTS ON GOAL'" style="zoom: 0.5;"></doughnut-chart>
+                            </div>
+                        </div>
+                        <div class="flex">
+                            <div class="flex flex-center flex-column flex-one">
+                                <h6>2</h6>
+                                <h5>FOULS</h5>
+                            </div>
+                            <div class="flex flex-center flex-column flex-one">
+                                <h6>0</h6>
+                                <h5>YELLOW</h5>
+                            </div>
+                            <div class="flex flex-center flex-column flex-one">
+                                <h6>0</h6>
+                                <h5>RED</h5>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- TODO: Replace this with actual content -->
-                <div class="formation-field">
-                    <img src="./img/half-field.svg" />
-                </div>
+                <formation-field formation="currFormation" select-player="selectPlayer(player)" is-selected="isSelected(player)"></formation-field>
                 <div class="game-notes">
                     <h5 class="title">GAME NOTES</h5>
                     <textarea class="notes" ng-model="game.notes"></textarea>
