@@ -4,6 +4,7 @@ header {
     top: 0;
     right: 0;
     left: 0;
+    box-shadow: 0 0 10px rgba(0,0,0,.25);
 }
 
 header > .flex {
@@ -86,4 +87,9 @@ header .dropdown > div {
 
 header .dropdown > div:active {
     background-color: #444444;
+}
+
+header .team-current {
+    max-width: 225px;
+    min-width: 225px;
 }

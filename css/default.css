@@ -69,7 +69,7 @@ input {
 }
 
 textarea {
-    right: none;
+    resize: none;
 }
 
 select {
