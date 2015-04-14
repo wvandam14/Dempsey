@@ -3,7 +3,7 @@
 	width: 100%;
 }
 
-.roster-page .player-info h5 {
+.player-card .player-info h5 {
 	padding-top: 2px;
 	font-family: 'RobotoBoldWeb'
 }
@@ -14,7 +14,7 @@
 	margin: 0px 5px;
 }
 
-.roster-page .player-info span {
+.player-card .player-info span {
 	font-family: 'RobotoBoldWeb';
 	text-transform: uppercase;
 	color: #B4B4B4;

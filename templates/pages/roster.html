@@ -26,7 +26,7 @@
                 <!-- Team against logo/name -->
                 <div class="team-container flex flex-one flex-center-vertical flex-column">
                     <div class="img-container">
-                        <!-- TODO: src should point to team against's logo -->
+                        <!-- TODO: src should point to opponent's logo -->
                         <img src="./img/sample/FC_Dallas.png">
                     </div>
                     <h5 class="text-center">{{currGame.opponent.name}}</h5>
@@ -70,8 +70,6 @@
                                 </div>
                             </div>
                         </div>
-
-
                         
                         <div class="flex personal-info">
                             <h5>PHONE</h5><span>{{currPlayer.phone}}</span>
@@ -88,8 +86,6 @@
                                 <h5>RELATION</h5><span>{{currPlayer.emergencyContact.relationship}}</span>
                             </div>
                         </div>
-
-
 
                     </div>
 
@@ -111,10 +107,10 @@
                         </div>
                         <div class="flex">
                             <div class="flex flex-center flex-one">
-                                <doughnut-chart data="currPlayer.passes.data" num="'8/10'" label="'PASSES COMPLETED'" style="zoom: 0.5;"></doughnut-chart>
+                                <doughnut-chart data="currPlayer.passes.data" num="'8/10'" label="'PASSES COMPLETED'" class="zoom"></doughnut-chart>
                             </div>
                             <div class="flex flex-center flex-one">  
-                                <doughnut-chart data="currPlayer.shots.data" num="'3/4'" label="'SHOTS ON GOAL'" style="zoom: 0.5;"></doughnut-chart>
+                                <doughnut-chart data="currPlayer.shots.data" num="'3/4'" label="'SHOTS ON GOAL'" class="zoom"></doughnut-chart>
                             </div>
                         </div>
                         <div class="flex">

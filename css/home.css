@@ -33,3 +33,12 @@
 .home-page .list .item .circle.top {
     background-color: #5DA97B;
 }
+
+.home-page .info > div {
+    padding-right: 10px;
+    padding-bottom: 10px;
+}
+
+.home-page .list .player-card {
+    border-bottom: 1px solid #DDD;
+}

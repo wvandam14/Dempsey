@@ -39,7 +39,7 @@
         <schedule></schedule>
     </div>
 
-    <div class="content">
+    <div class="content" ng-if="user is a coach">
 
         <div class="section flex">
             <div class="flex-one flex flex-center">
@@ -133,6 +133,82 @@
 
             </div>
         </div>
+    </div>
+
+<!-- Parent stuff -->
+    <div class="content list">
+        <h5 class="title">MY PLAYERS</h5>
+        <!-- <div class="item player-card flex"> -->
+        <div class="item player-card flex flex-center" ng-repeat="player in myPlayers">
+            <div class="player-info">
+                <div class="info flex">
+                    <div ng-click="editPlayerInfo(player)">
+                        <img src="./img/player-icon.svg" />
+                    </div>
+                    <div  class="flex flex-column">
+                        <h3>{{player.fname}}<br>{{player.lname}}</h3>
+                        <div class="flex">
+                            <h5>{{player.position}}</h5><span>{{player.number}}</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex personal-info">
+                    <h5>PHONE</h5><span>{{player.phone}}</span>
+                </div>
+                <div class="contact-info">
+                    <h5 class="">EMERGENCY CONTACT</h5>
+                    <div class="flex">
+                        <h5>NAME</h5><span>{{player.emergencyContact.name}}</span>
+                    </div>
+                    <div class="flex">
+                        <h5>PHONE</h5><span>{{player.emergencyContact.phone}}</span>
+                    </div>
+                    <div class="flex">
+                        <h5>RELATION</h5><span>{{player.emergencyContact.relationship}}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TODO: replace these numbers with actual content... -->
+            <div class="stats-display numbers flex flex-column flex-one">
+                <div class="flex">
+                    <div class="flex flex-center flex-column flex-one">
+                        <h6>{{player.total.goals}}</h6>
+                        <h5>GOALS</h5>
+                    </div>
+                    <div class="flex flex-center flex-column flex-one">
+                        <h6>{{player.total.passes}}</h6>
+                        <h5>PASSES</h5>
+                    </div>
+                    <div class="flex flex-center flex-column flex-one">
+                        <h6>{{player.total.corners}}</h6>
+                        <h5>CORNERS</h5>
+                    </div>
+                    <div class="flex flex-center flex-column flex-one">
+                        <h6>{{player.total.fouls}}</h6>
+                        <h5>FOULS</h5>
+                    </div>
+                    <div class="flex flex-center flex-column flex-one">
+                        <h6>{{player.total.yellows}}</h6>
+                        <h5>YELLOW</h5>
+                    </div>
+                    <div class="flex flex-center flex-column flex-one">
+                        <h6>{{player.total.reds}}</h6>
+                        <h5>RED</h5>
+                    </div>
+                </div>
+                <div class="flex">
+                    <div class="flex flex-center flex-one">
+                        <doughnut-chart data="player.passes.data" num="'8/10'" label="'PASSES COMPLETED'" class="zoom"></doughnut-chart>
+                    </div>
+                    <div class="flex flex-center flex-one">  
+                        <doughnut-chart data="player.shots.data" num="'3/4'" label="'SHOTS ON GOAL'" class="zoom"></doughnut-chart>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
 </div>
