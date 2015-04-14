@@ -109,8 +109,8 @@ soccerStats.controller('registrationController',
                     registerUser.set("phone", newUser.phone);
                     registerUser.set("city", newUser.city);
                     registerUser.set("state", (_.invert($scope.states))[newUser.state]);
-                    if (newUser.photo)
-                        registerUser.set("photo", newUser.photo);
+                    registerUser.set("photo", newUser.photo);
+
                     // Adds a pointer to the team to an array of pointers
                     registerUser.addUnique("teams", _team);
                     registerUser.set("accountType", 1);
