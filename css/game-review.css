@@ -1,6 +1,5 @@
 .game-review {
     width:100%;
-    padding-top: 150px;
 }
 
 .gameReview {
@@ -8,6 +7,8 @@
     width: 500px;
     color:#FFF;
     padding: 20px 0;
+    margin-top: 150px;
+
 }
 
 .gameReview h5 {

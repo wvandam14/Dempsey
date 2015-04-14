@@ -85,7 +85,7 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
                             ;
                             teamDict.push({
                                 league: leagueName,
-                                value: team.id, 
+                                id: team.id,
                                 label: teamName, 
                                 logo: logo._url,
                                 age: ageGroup,
@@ -104,6 +104,36 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
                 }
             });
             return teamDict;
+        },
+        getTeamById = function(id, callback) {
+            var teamTable = Parse.Object.extend("Team");
+            var query = new Parse.Query(teamTable);
+            query.equalTo('objectId', id);
+            query.first({
+                success: function(team) {
+                    $timeout(function(){
+                        callback(team);
+                    });
+
+                }, error: function(user, error) {
+                    toastService.error("There was an error (" + error.code + "). Please try again.");
+                }
+            });
+        },
+        getPlayersByTeamId = function(id, callback) {
+            var playersTable = Parse.Object.extend("Players");
+            var query = new Parse.Query(playersTable);
+            query.equalTo('team', id);
+            query.find({
+                success: function(players) {
+                    $timeout(function(){
+                        callback(players);
+                    });
+
+                }, error: function(user, error) {
+                    toastService.error("There was an error (" + error.code + "). Please try again.");
+                }
+            });
         },
         currentTeam = {},
         setCurrentTeam = function(team) {
@@ -136,6 +166,8 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
         ageGroups: ageGroups,
         states : states,
         getTeams : getTeams,
+        getTeamById : getTeamById,
+        getPlayersByTeamId : getPlayersByTeamId,
         currentTeam: currentTeam,
         setCurrentTeam : setCurrentTeam,
         getCurrentTeam : getCurrentTeam,
