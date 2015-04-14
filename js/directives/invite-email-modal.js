@@ -1,4 +1,4 @@
-soccerStats.directive('inviteEmailModal', function (viewService, toastService, registerService, configService, dataService, emailService) {
+soccerStats.directive('inviteEmailModal', function (viewService, toastService, configService, dataService, emailService) {
     return {
         restrict: 'E',
         templateUrl: "./templates/directives/invite-email-modal.html",
