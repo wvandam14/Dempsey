@@ -11,8 +11,10 @@ soccerStats.directive('header', function ($timeout, $route, viewService, configS
             var self = 'headerModal';
 
             var parseUser = Parse.User.current();
-            if (parseUser)
+            if (parseUser && parseUser.get('firstName')) {
                 $scope.currentUser = {initials: (parseUser.get('firstName')[0] + parseUser.get('lastName')[0]) };
+            }
+
 
             $scope.toggleTeams = function() {
                 $scope.showTeams = !$scope.showTeams;

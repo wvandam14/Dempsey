@@ -67,13 +67,13 @@ soccerStats.controller('registrationController',
 
 		// User information
         $scope.newUser = {
-            firstName: '',
-            lastName: '',
-            email: '',
-            password: '',
-            confirmPassword: '',
-            phone: '',
-            city: '',
+            firstName: 'Alec',
+            lastName: 'Moore',
+            email: 'abc@mailinator.com',
+            password: '123',
+            confirmPassword: '123',
+            phone: '(123) 123-1234',
+            city: 'Gig Harbor',
             state: '',
             photo: ''
         };
@@ -82,11 +82,11 @@ soccerStats.controller('registrationController',
         $scope.team = {
             logo: '',
             primaryColor: '',
-            name: '',
-            number: '',
-            leagueName: '',
+            name: 'Team Number 1',
+            number: '1',
+            leagueName: 'MLS',
             ageGroup: '',
-            city: '',
+            city: 'Gig Harbor',
             state: ''
         };
 
@@ -111,8 +111,6 @@ soccerStats.controller('registrationController',
                     registerUser.set("state", (_.invert($scope.states))[newUser.state]);
                     registerUser.set("photo", newUser.photo);
                     // Adds a pointer to the team to an array of pointers
-                    //var relateTeam = registerUser.relation("teams");
-                    //relateTeam.addUnique(_team);
                     registerUser.addUnique("teams", _team);
                     registerUser.set("accountType", 1);
 
