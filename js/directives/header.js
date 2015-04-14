@@ -42,6 +42,16 @@ soccerStats.directive('header', function ($timeout, $rootScope, $route, viewServ
                 viewService.openModal('inviteEmailModal');
             }
 
+            $scope.addNewPlayer = function() {
+                console.log('add player');
+                viewService.openModal('playerModal');
+            }
+
+            // coach can invite more parents
+            $scope.viewPlayer = function() {
+                viewService.openModal('inviteEmailModal');
+            }
+
             $scope.changeTeam = function(team) {
                 $scope.toggleTeams();
                 $scope.currentTeam = team;
@@ -63,7 +73,13 @@ soccerStats.directive('header', function ($timeout, $rootScope, $route, viewServ
                 });
             });
 
-
+            $scope.$on(configService.messages.updateTeam, function(event, team) {
+                $timeout(function() {
+                    // console.log($scope.teams);
+                    $scope.currentTeam = team;
+                    dataService.setCurrentTeam($scope.currentTeam);
+                });
+            });
             $scope.goToPage = function(page) {
                 viewService.goToPage(page);
             }
@@ -72,11 +88,11 @@ soccerStats.directive('header', function ($timeout, $rootScope, $route, viewServ
             if (Parse.User.current()) {
                 $scope.teams = dataService.getTeams( function(_teams) {
                     $scope.currentTeam = _teams[0];
-                    console.log('step 1')
                     dataService.setCurrentTeam(_teams[0]);
                     $timeout(function() {
                        $rootScope.$broadcast(configService.messages.teamChanged, {team: _teams[0]});
                     });
+                    dataService.setCurrentTeam($scope.currentTeam);
                 });
             }
             

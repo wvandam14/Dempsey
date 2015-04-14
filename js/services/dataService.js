@@ -152,10 +152,8 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
             _team.set("name", newTeam.name);
             _team.set("number", newTeam.number);
             _team.set("state", (_.invert(states))[newTeam.state]);
-            if (newTeam.logo) {
-                _team.set("logo", newTeam.logo);
-                _team.set("primaryColor", newTeam.primaryColor);
-            }
+            _team.set("logo", newTeam.logo);
+            _team.set("primaryColor", newTeam.primaryColor);
 
             return _team;
         };

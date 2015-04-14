@@ -97,12 +97,10 @@
     <div ng-if="currentModal != ''" class="modal-container flex flex-center-horizontal">
         <div ng-if="checkModal('teamModal')"><team-modal></team-modal></div>
         <div ng-if="checkModal('accountModal')"><account-modal></account-modal></div>
-        <div ng-if="checkModal('editTeamModal')">
-            <edit-team-modal></edit-team-modal>
-        </div>
+        <div ng-if="checkModal('editTeamModal')"><edit-team-modal></edit-team-modal></div>
         <div ng-if="checkModal('inviteEmailModal')"><invite-email-modal></invite-email-modal></div>
+        <div ng-if="checkModal('playerModal')"><player-modal></player-modal></div>
         <div ng-if="checkModal('createGameModal')"><create-game-modal></create-game-modal></div>
-        
     </div>
 
     <!-- Libraries -->
@@ -135,7 +133,6 @@
     <script src="./js/controllers/loginController.js"></script>
     <script src="./js/controllers/registrationController.js"></script>
     <script src="./js/controllers/homeController.js"></script>
-    <script src="./js/controllers/playerController.js"></script>
     <script src="./js/controllers/gameReviewController.js"></script>
     <script src="./js/controllers/testController.js"></script>
     <script src="./js/controllers/emailController.js"></script>
@@ -157,8 +154,8 @@
     <script src="./js/directives/invite-email-modal.js"></script>
     <script src="./js/directives/role.js"></script>
     <script src="./js/directives/formation-field.js"></script>
+    <script src="./js/directives/player-modal.js"></script>
     <script src="./js/directives/create-game-modal.js"></script>
-
 
     <!-- Services -->
     <script src="./js/services/viewService.js"></script>

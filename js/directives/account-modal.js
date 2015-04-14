@@ -54,7 +54,7 @@ soccerStats.directive('accountModal', function ($location, $timeout, $route, vie
                         currentUser.set("city", $scope.editUser.city);
                         currentUser.set("state", (_.invert($scope.states))[$scope.editUser.state]);
                         //console.log((_.invert($scope.states))[$scope.editUser.state]);
-                        if ($scope.editUser.newPhoto) 
+                        if ($scope.editUser.newPhoto)
                             currentUser.set("photo", $scope.editUser.newPhoto);
                         if($scope.editUser.newPassword !== '')
                             currentUser.set("password", $scope.editUser.newPassword);
@@ -76,6 +76,8 @@ soccerStats.directive('accountModal', function ($location, $timeout, $route, vie
                     toastService.error(configService.toasts.requiredFields);
                 }
             }
+
+            console.log($scope.editUser);
 
             //TODO: not working
             $scope.goToPage = function(page) {
