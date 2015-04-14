@@ -105,6 +105,52 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
             });
             return teamDict;
         },
+        getPlayers = function(callback) {
+            var dictionary = [];
+            var currentUser = Parse.User.current();
+            var userTable = Parse.Object.extend("_User");
+            var query = new Parse.Query(userTable);
+            query.include('players');
+            query.get(currentUser.id, {
+                success: function (user) {
+                    $timeout(function() {
+                        var players = user.get("players");
+                        _.each(players, function (player) {
+                            var photo = player.get("photo"),
+                                name = player.get("name"),
+                                birthday = player.get("birthday"),
+                                team = player.get("team"),
+                                jerseyNumber = player.get("jerseyNumber"),
+                                city = player.get("city"),
+                                state = player.get("state"),
+                                contact = {
+                                    emergencyContact : player.get("emergencyContact"),
+                                    phone : player.get("phone"),
+                                    relationship : player.get("relationship")
+                                }
+                            ;
+                            dictionary.push({
+                                photo : photo,
+                                name : name,
+                                birthday : birthday,
+                                team : team,
+                                jerseyNumber : jerseyNumber,
+                                city : city,
+                                state : state,
+                                contact : contact
+                            });
+                        });
+                        
+                        callback(dictionary);
+                    });
+                    
+                },
+                error: function (user, error) {
+
+                }
+            });
+            return dictionary;
+        },
         currentTeam = {},
         setCurrentTeam = function(team) {
             currentTeam = team;
@@ -137,7 +183,8 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
         currentTeam: currentTeam,
         setCurrentTeam : setCurrentTeam,
         getCurrentTeam : getCurrentTeam,
-        registerTeam : registerTeam
+        registerTeam : registerTeam,
+        getPlayers: getPlayers
     }
 
 });

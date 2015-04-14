@@ -1,9 +1,9 @@
 <div class="container">
-    <h1>A place to test stuff.</h1>
+    <!-- <h1>A place to test stuff.</h1>
     <br/>
-    <br/>
+    <br/> -->
 
-    <game-timeline></game-timeline>
+    <!-- <game-timeline></game-timeline>
 
     <br/>
 
@@ -19,6 +19,9 @@
 
     <br/>
 
-    <shot-accuracy-chart data="shotLinesData"></shot-accuracy-chart>
+    <shot-accuracy-chart data="shotLinesData"></shot-accuracy-chart> -->
+    <div ng-repeat="player in players" ng-click="alert()">
+        {{player.name}}
+    </div>
 
 </div>

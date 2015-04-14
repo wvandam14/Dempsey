@@ -1,8 +1,8 @@
-soccerStats.directive('header', function ($timeout, $route, viewService, configService, dataService) {
+soccerStats.directive('header', function ($timeout, $rootScope, $route, viewService, configService, dataService) {
     return {
         restrict: 'E',
         templateUrl: "./templates/directives/header.html",
-        controller: function($scope, dataService){
+        controller: function($scope){
             $scope.showTeams = false;
             $scope.showAccount = false;
             $scope.currentTeam = {};
@@ -46,13 +46,15 @@ soccerStats.directive('header', function ($timeout, $route, viewService, configS
             }
 
             $scope.addNewPlayer = function() {
-                console.log('add player');
                 viewService.openModal('playerModal');
             }
 
-            // coach can invite more parents
-            $scope.viewPlayer = function() {
-                viewService.openModal('inviteEmailModal');
+            $scope.updatePlayer = function() {
+                viewService.openModal('playerModal');
+                $timeout(function() {
+                    $rootScope.$broadcast(configService.messages.updatePlayer, {state: true});
+                });
+                
             }
 
             $scope.changeTeam = function(team) {
