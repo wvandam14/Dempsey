@@ -111,34 +111,34 @@
         </div>
 
         <!-- Roster shtuff (will be converted to a directive -->
-        <div class="player-stats-container flex">
-            <div class="roster-container">
-                <div>
+        <div class="player-stats-container flex section">
+            <div class="roster-container flex-one">
+                <div class="list">
                     <!-- TODO: Figure out how we want to store the roster vs lineup data and then display accodingly -->
                     <h5 class="title">LINEUP</h5>
-                    <div class="player-selector flex flex-center-vertical" ng-repeat="player in players" ng-class="{selected: isSelected(player)}" ng-click="selectPlayer(player)">
+                    <div ng-if="!player.bench" class="player-selector flex flex-center-vertical" ng-repeat="player in players" ng-class="{selected: isSelected(player)}" ng-click="selectPlayer(player)">
                         <div class="circle flex flex-center">
                             <h5>{{player.number}}</h5>
                         </div>
                         <div class="flex flex-one">
-                            <h5 class="ellipse flex-one">{{player.fname}} {{player.lname}}</h5><h5><span class="flex flex-center">{{player.position}}</span></h5>
+                            <h5 class="ellipse">{{player.fname}} {{player.lname}}</h5><h5><span class="flex flex-center">{{player.position}}</span></h5>
                         </div>
                     </div>
                 </div>
-                <div>
+                <div class="list">
                     <h5 class="title">BENCH</h5>
-                    <div class="player-selector flex flex-center-vertical" ng-repeat="player in players" ng-class="{selected: isSelected(player)}" ng-click="selectPlayer(player)">
+                    <div ng-if="player.bench" class="player-selector flex flex-center-vertical" ng-repeat="player in players" ng-class="{selected: isSelected(player)}" ng-click="selectPlayer(player)">
                         <div class="circle flex flex-center">
                             <h5>{{player.number}}</h5>
                         </div>
                         <div class="flex flex-one">
-                            <h5 class="ellipse flex-one">{{player.fname}} {{player.lname}}</h5><h5><span class="flex flex-center">{{player.position}}</span></h5>
+                            <h5 class="ellipse">{{player.fname}} {{player.lname}}</h5><h5><span class="flex flex-center">{{player.position}}</span></h5>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="stats-display-container flex flex-column">
-                <div class="player-card flex">
+            <div class="stats-display-container flex-one flex flex-column">
+                <div class="player-card flex flex-space-between">
                     <div class="player-info">
                         <div class="info flex">
                             <div class="img-container">
@@ -147,7 +147,7 @@
                             <div  class="flex flex-column">
                                 <h3>{{currPlayer.fname}}<br>{{currPlayer.lname}}</h3>
                                 <div class="flex">
-                                    <h5>{{currPlayer.position}}</h5><span>{{currPlayer.number}}</span>
+                                    <h5>{{currPlayer.position}} <span>{{currPlayer.number}}</span></h5>
                                 </div>
                             </div>
                         </div>
@@ -203,7 +203,7 @@
                 </div>
 
                 <formation-field formation="currFormation" select-player="selectPlayer(player)" is-selected="isSelected(player)"></formation-field>
-                <div class="game-notes">
+                <div class="game-notes list ">
                     <h5 class="title">GAME NOTES</h5>
                     <textarea class="notes" ng-model="game.notes"></textarea>
                 </div>

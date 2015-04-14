@@ -26,10 +26,12 @@ soccerStats.directive('header', function ($timeout, $route, viewService, configS
 
             // create a new team
             $scope.showCreateTeam = function() {
+                $scope.toggleTeams();
                 viewService.openModal('teamModal');
             }
             // edit coach account
             $scope.showEditAccount = function() {
+                $scope.toggleAccount();
                 viewService.openModal('accountModal');
             }
 
@@ -53,12 +55,15 @@ soccerStats.directive('header', function ($timeout, $route, viewService, configS
             }
 
             $scope.changeTeam = function(team) {
-                console.log(team);
+                $scope.toggleTeams();
                 $scope.currentTeam = team;
                 // console.log($scope.currentTeam);
                 dataService.setCurrentTeam($scope.currentTeam);
-                $scope.showTeams = !$scope.showTeams;
                 //$route.reload();
+            }
+
+            $scope.createGame = function() {
+                viewService.openModal('createGameModal');
             }
 
             $scope.$on(configService.messages.addNewTeam, function(event, team) {
@@ -77,6 +82,9 @@ soccerStats.directive('header', function ($timeout, $route, viewService, configS
                     dataService.setCurrentTeam($scope.currentTeam);
                 });
             });
+            $scope.goToPage = function(page) {
+                viewService.goToPage(page);
+            }
 
             // TODO: verify if user is logged in
             if (Parse.User.current()) {

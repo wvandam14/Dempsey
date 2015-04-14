@@ -17,8 +17,8 @@ var soccerStats = angular.module('soccerStats', ['ngRoute','ngSanitize','ngResou
         });
 
         $routeProvider.when('/home', {
-            templateUrl: 'templates/pages/game-review.html',
-            controller: 'gameReviewController',
+            templateUrl: './templates/pages/home-page.html',
+            controller: 'homeController',
             scope: {}
         });
 
@@ -43,6 +43,12 @@ var soccerStats = angular.module('soccerStats', ['ngRoute','ngSanitize','ngResou
         $routeProvider.when('/verifyEmail', {
             templateUrl: 'templates/pages/email-verification.html',
             controller: 'emailController',
+            scope:{}
+        });
+
+        $routeProvider.when('/roster', {
+            templateUrl: 'templates/pages/roster.html',
+            controller: 'rosterController',
             scope:{}
         });
     }

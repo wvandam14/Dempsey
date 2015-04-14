@@ -5,12 +5,15 @@ soccerStats.directive('doughnutChart', function () {
         scope: {
             data: '=',
             num: '=?',
-            label: '=?'
+            label: '=?',
+            large: '=?'
         },
         link: function(scope, elem, attrs) {
             scope.init(elem);
         },
         controller: function($scope){
+
+            if (!$scope.large) $scope.large = false;
 
             var options = {
                 segmentShowStroke : false,
@@ -23,6 +26,11 @@ soccerStats.directive('doughnutChart', function () {
             $scope.init = function(elem) {
                var element = angular.element(elem);
                var chart = element.find('canvas')[0].getContext("2d");
+
+                if ($scope.large) {
+                    chart.canvas.width = 275;
+                    chart.canvas.height = 275;
+                }
                 // And for a doughnut chart
                var myDoughnutChart = new Chart(chart).Doughnut($scope.data,options);
             }

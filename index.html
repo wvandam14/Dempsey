@@ -12,6 +12,7 @@
     <link rel="stylesheet" type="text/css" href="./css/reset.css">
     <link rel="stylesheet" type="text/css" href="./css/fonts.css">
     <link rel="stylesheet" type="text/css" href="./css/default.css">
+    <link rel="stylesheet" type="text/css" href="./css/home.css">
     <link rel="stylesheet" type="text/css" href="./css/animation.css">
     <link rel="stylesheet" type="text/css" href="./css/login-page.css">
     <link rel="stylesheet" type="text/css" href="./css/modal.css">
@@ -19,7 +20,9 @@
     <link rel="stylesheet" type="text/css" href="./css/registration-page.css">
     <link rel="stylesheet" type="text/css" href="./css/tablet.css">
     <link rel="stylesheet" type="text/css" href="./css/mobile.css">
+    <link rel="stylesheet" type="text/css" href="./css/list.css">
     <link rel="stylesheet" type="text/css" href="./css/toast.css">
+    <link rel="stylesheet" type="text/css" href="./css/stats.css">
     <link rel="stylesheet" type="text/css" href="./css/player-modal.css">
     <link rel="stylesheet" type="text/css" href="./css/account-page.css">
     <link rel="stylesheet" type="text/css" href="./css/game-review.css">
@@ -30,6 +33,7 @@
     <link rel="stylesheet" type="text/css" href="./css/shot-accuracy-chart.css">
     <link rel="stylesheet" type="text/css" href="./css/bar-chart.css">
     <link rel="stylesheet" type="text/css" href="./css/formation-field.css">
+    <link rel="stylesheet" type="text/css" href="./css/roster.css">
     <!-- <link rel="stylesheet" type="text/css" href="./css/ngDialog.css"> -->
 
 </head>
@@ -58,6 +62,7 @@
         <div ng-if="checkModal('editTeamModal')"><edit-team-modal></edit-team-modal></div>
         <div ng-if="checkModal('inviteEmailModal')"><invite-email-modal></invite-email-modal></div>
         <div ng-if="checkModal('playerModal')"><player-modal></player-modal></div>
+        <div ng-if="checkModal('createGameModal')"><create-game-modal></create-game-modal></div>
     </div>
 
     <!-- Libraries -->
@@ -94,6 +99,7 @@
     <script src="./js/controllers/gameReviewController.js"></script>
     <script src="./js/controllers/testController.js"></script>
     <script src="./js/controllers/emailController.js"></script>
+    <script src="./js/controllers/rosterController.js"></script>
 
     <!-- Directives -->
     <script src="./js/directives/header.js"></script>
@@ -112,7 +118,7 @@
     <script src="./js/directives/role.js"></script>
     <script src="./js/directives/formation-field.js"></script>
     <script src="./js/directives/player-modal.js"></script>
-
+    <script src="./js/directives/create-game-modal.js"></script>
 
     <!-- Services -->
     <script src="./js/services/viewService.js"></script>
@@ -120,7 +126,6 @@
     <script src="./js/services/configService.js"></script>
     <script src="./js/services/toastService.js"></script>
     <script src="./js/services/dropdownService.js"></script>
-    <script src="./js/services/registerService.js"></script>
     <script src="./js/services/dataService.js"></script>
 
 </body>

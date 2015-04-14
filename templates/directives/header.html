@@ -21,20 +21,29 @@
     </div>
 
     <div class="buttons flex flex-one">
-        <div class="flex flex-center">
+        <div ng-click="goToPage('/roster')" class="flex link flex-center">
             <img src="./img/roster-icon.svg"/>
+            <h5>Roster</h5>
         </div>
-        <div class="flex flex-center">
+
+        <div role="coach" class="flex link flex-center" ng-click="editTeam()">
+            <img src="./img/invite-icon.svg" />
+            <h5>Edit Team</h5>
+        </div>
+
+        <div role="coach" class="flex link flex-center" ng-click="inviteEmails()">
             <img src="./img/invite-icon.svg"/>
+            <h5>Invite Players</h5>
         </div>
-        <div class="flex flex-center" style="border-left:1px solid black">
-            <img src="./img/invite-icon.svg" ng-click="editTeam()" />
+
+        <div role="coach" class="flex link flex-center" ng-click="createGame()">
+            <img src="./img/invite-icon.svg"/>
+            <h5>Add To Schedule</h5>
         </div>
-        <div class="flex flex-center" >
-            <img src="./img/roster-icon.svg" ng-click="inviteEmails()" />
-        </div>
-        <div class="flex flex-center" style="border-left:1px solid black">
+
+        <div class="flex link flex-center">
             <img src="./img/invite-icon.svg" ng-click="addNewPlayer()" />
+            <h5>Add Player</h5>
         </div>
     </div>
 

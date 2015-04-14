@@ -1,0 +1,35 @@
+.home-page {
+    width: 100%;
+    height: 100%;
+    padding-top: 150px;
+}
+
+.home-page .numbers h6 {
+    font-size: 46px;
+}
+
+.home-page .numbers h5 {
+    font-size: 24px;
+}
+
+.home-page .lists > div:nth-child(2) {
+    margin: 0 50px;
+}
+
+.home-page .lists .hero-image {
+    padding: 30px 0;
+    min-height: 160px;
+}
+
+.home-page .list .item .circle {
+    background-color: #B4B4B4;
+}
+
+.home-page .list .item .circle h5 {
+    color:#FFF;
+    font-size: 24px;
+}
+
+.home-page .list .item .circle.top {
+    background-color: #5DA97B;
+}
