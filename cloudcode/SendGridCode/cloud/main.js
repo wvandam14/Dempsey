@@ -26,7 +26,7 @@ Parse.Cloud.define("sendEmailInvite", function(request, response) {
                 emailBody = "<p style='font-family:sans-serif;'>" +
                     "Hi There! " +
                     "<br/><br/>You have been invited to Soccer Stats by <i>" + coachName + "</i> with the team <b>" + teamName + "</b>! " +
-                    "<br/><br/>To login, go to http://alecmmoore.github.io#/login?teamid=" + teamId + " and use your email and temporary password to log in. You can change your password once you have already logged in." +
+                    "<br/><br/>To login, go to <a href='http://alecmmoore.github.io#/login?teamid=" + teamId + "'>http://alecmmoore.github.io#/login?teamid=" + teamId + "</a> and use your email and temporary password to log in. You can change your password once you have already logged in." +
                     "<br/><br/><br/><br/>" +
                     "Email: <b>" + userEmail + "</b> " +
                     "<br/><br/>" +
@@ -37,35 +37,46 @@ Parse.Cloud.define("sendEmailInvite", function(request, response) {
                     "<br/>" +
                     "Soccer Stats Development Team</p>";
 
-                var user = new Parse.User();
-                user.set("username", userEmail);
-                user.set("password", tempPassword);
-                user.set("email", userEmail);
-                user.set("teams", [teamId]);
-                user.set("accountType", 2);
 
-                user.signUp(null, {
-                    success: function(user) {
-                        // Send Email to new user
-                        email = sendgrid.Email({to: userEmail});
-                        email.setFrom('no-reply@soccerstats.com');
-                        email.setFromName('Soccer Stats');
-                        email.setSubject('Welcome to Soccer Stats!');
-                        email.setHTML(emailBody);
+                var Teams = Parse.Object.extend("Team");
+                var teams = new Parse.Query(Teams);
+                teams.equalTo("objectId", teamId);
+                teams.find({
+                    success: function(_team) {
+                        var user = new Parse.User();
+                        user.set("username", userEmail);
+                        user.set("password", tempPassword);
+                        user.set("email", userEmail);
+                        user.addUnique("teams", _team[0]);
+                        user.set("accountType", 2);
 
-                        sendgrid.sendEmail(email).then(
-                            function(httpResponse) {
-                                console.log(httpResponse);
-                                response.success("Email sent!");
+                        user.signUp(null, {
+                            success: function(user) {
+                                // Send Email to new user
+                                email = sendgrid.Email({to: userEmail});
+                                email.setFrom('no-reply@soccerstats.com');
+                                email.setFromName('Soccer Stats');
+                                email.setSubject('Welcome to Soccer Stats!');
+                                email.setHTML(emailBody);
+
+                                sendgrid.sendEmail(email).then(
+                                    function(httpResponse) {
+                                        console.log(httpResponse);
+                                        response.success("Email sent!");
+                                    },
+                                    function(httpResponse) {
+                                        console.error(httpResponse);
+                                        response.error(httpResponse);
+                                    });
                             },
-                            function(httpResponse) {
-                                console.error(httpResponse);
-                                response.error(httpResponse);
-                            });
+                            error: function(user, error) {
+                                // Error
+                                console.log("Error: " + error.code + " " + error.message);
+                            }
+                        });
                     },
-                    error: function(user, error) {
-                        // Error
-                        console.log("Error: " + error.code + " " + error.message);
+                    error: function(error) {
+                        alert("Error: " + error.code + " " + error.message);
                     }
                 });
 

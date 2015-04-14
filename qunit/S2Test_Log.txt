@@ -100,5 +100,21 @@ testing edit team & team select bar
 	// team select bar is resizing when teams with longer names are selected
 3:03 
 	// multiple click problem might be resolved, can not reproduce at the present
-	//
+
+4/13/15 8:33
+team edit
+	// finished no bugs
+
+multi user problems retest next sprint <-----------------------------------------------------------------------------------------
+
+
+team create round 2
+	// changes operate as intended
+	// problem with page refresh resetting selected team back to first team
+	// adding parent emails, breaks account if an email is already used for an account on the team
+	// State field is blank on load
+	// created teams disappear after relogging in, however if logging a thrid time the reappear
+		might require another team to be created altogether
+	// team disappeared altogether, created a new team that worked fine, 
+		but team "Hextech Anivia" exists on Parse but does not exist on coach page
 

@@ -69,7 +69,7 @@ input {
 }
 
 textarea {
-    right: none;
+    resize: none;
 }
 
 select {
@@ -209,6 +209,10 @@ input.ng-invalid-required.ng-touched {
     text-overflow: ellipsis;
     overflow: hidden;
     padding-bottom: 2px;
+}
+
+.relative {
+    position: relative;
 }
 
 /* Circle Control */
