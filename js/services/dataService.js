@@ -150,6 +150,7 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
                 }
             });
             return dictionary;
+        },
         getTeamById = function(id, callback) {
             var teamTable = Parse.Object.extend("Team");
             var query = new Parse.Query(teamTable);

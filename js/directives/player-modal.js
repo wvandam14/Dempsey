@@ -14,7 +14,7 @@ soccerStats.directive('playerModal', function ($location, $rootScope, $timeout, 
 
             // Player object
             $scope.player = {
-                photo: '',
+                photo: './img/team-logo-icon.svg',
                 name: 'Zlatan',
                 birthday: '',
                 team: '',
@@ -36,7 +36,7 @@ soccerStats.directive('playerModal', function ($location, $rootScope, $timeout, 
                             var result = _.find($scope.teamDict, function(obj){return obj.value == dictionary[0].team.id});
                             console.log(result);
                             $scope.player = {
-                                photo: dictionary[0].photo._url,
+                                photo: dictionary[0].photo._url ? dictionary[0].photo._url : './img/team-logo-icon.svg',
                                 name: dictionary[0].name,
                                 birthday: dictionary[0].birthday,
                                 team: result,
@@ -91,6 +91,7 @@ soccerStats.directive('playerModal', function ($location, $rootScope, $timeout, 
                                             toastService.success("Player, " + player.name + ", successfully added.");
                                         },
                                         erorr: function (currentUser, error) {
+                                            console.log("Error: " + error.code + " " + error.message);
                                            toastService.error("There was a an error (" + error.code +"). Please try again."); 
                                         }
                                     });
@@ -102,6 +103,7 @@ soccerStats.directive('playerModal', function ($location, $rootScope, $timeout, 
                             });
                         },
                         error: function (teamTable, error) {
+                            console.log("Error: " + error.code + " " + error.message);
                             toastService.error("There was a an error (" + error.code +"). Please try again."); 
                         }
                     });

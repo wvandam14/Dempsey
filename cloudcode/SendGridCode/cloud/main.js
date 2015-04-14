@@ -43,6 +43,7 @@ Parse.Cloud.define("sendEmailInvite", function(request, response) {
                 teams.equalTo("objectId", teamId);
                 teams.find({
                     success: function(_team) {
+                        console.log(_team);
                         var user = new Parse.User();
                         user.set("username", userEmail);
                         user.set("password", tempPassword);
