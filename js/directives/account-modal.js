@@ -1,4 +1,4 @@
-soccerStats.directive('accountModal', function ($location, $timeout, $route, viewService, toastService, registerService, configService, dataService) {
+soccerStats.directive('accountModal', function ($location, $timeout, $route, viewService, toastService, configService, dataService) {
     return {
         restrict: 'E',
         templateUrl: "./templates/directives/account-modal.html",

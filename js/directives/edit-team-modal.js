@@ -1,4 +1,4 @@
-soccerStats.directive('editTeamModal', function ($location, $timeout, $route, viewService, toastService, registerService, configService, dataService) {
+soccerStats.directive('editTeamModal', function ($location, $timeout, $route, viewService, toastService, configService, dataService) {
     return {
         restrict: 'E',
         templateUrl: "./templates/directives/edit-team-modal.html",

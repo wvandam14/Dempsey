@@ -1,5 +1,5 @@
 soccerStats.controller('registrationController',
-    function registrationController($scope, emailService, viewService, $timeout, toastService, configService, registerService, dataService) {
+    function registrationController($scope, emailService, viewService, $timeout, toastService, configService, dataService) {
     	
         // Tab functionality
         $scope.tabNumber = 0;
@@ -94,7 +94,7 @@ soccerStats.controller('registrationController',
         
         // register coach
         $scope.register = function (newUser, newTeam) {
-            var _team = registerService.registerTeam(newTeam);
+            var _team = dataService.registerTeam(newTeam);
 
             _team.save(null, {
                 success: function (_team) {
@@ -109,7 +109,8 @@ soccerStats.controller('registrationController',
                     registerUser.set("phone", newUser.phone);
                     registerUser.set("city", newUser.city);
                     registerUser.set("state", (_.invert($scope.states))[newUser.state]);
-                    registerUser.set("photo", newUser.photo);
+                    if (newUser.photo)
+                        registerUser.set("photo", newUser.photo);
                     // Adds a pointer to the team to an array of pointers
                     //var relateTeam = registerUser.relation("teams");
                     //relateTeam.addUnique(_team);
