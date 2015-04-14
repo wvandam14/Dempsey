@@ -28,16 +28,16 @@ soccerStats.directive('accountModal', function ($location, $timeout, $route, vie
 
             var currentUser = Parse.User.current();
             $scope.editUser = {
-                firstName: currentUser.get('firstName'),
-                lastName: currentUser.get('lastName'),
-                name: currentUser.get("name"),
-                email: currentUser.get("email"),
+                firstName: currentUser.get('firstName') ? currentUser.get('firstName') : '',
+                lastName: currentUser.get('lastName') ? currentUser.get('lastName') : '',
+                name: currentUser.get('name') ? currentUser.get('name') : '',
+                email: currentUser.get('email') ? currentUser.get('email') : '',
                 newPassword: '',
-                confirmPassword: currentUser.get("password"),
-                phone: currentUser.get("phone"),
-                city: currentUser.get("city"),
-                state: $scope.states[currentUser.get("state")],
-                photo: currentUser.get("photo")._url,  
+                confirmPassword: currentUser.get('password') ? currentUser.get('password') : '',
+                phone: currentUser.get('phone') ? currentUser.get('phone') : '',
+                city: currentUser.get('city') ? currentUser.get('city') : '',
+                state: $scope.states[currentUser.get('state') ? currentUser.get('state') : ''],
+                photo: currentUser.get('photo') ? currentUser.get('photo')._url : './img/manager-icon.svg',  
                 newPhoto: ''      
             };
             
