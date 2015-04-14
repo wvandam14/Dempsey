@@ -45,5 +45,11 @@ var soccerStats = angular.module('soccerStats', ['ngRoute','ngSanitize','ngResou
             controller: 'emailController',
             scope:{}
         });
+
+        $routeProvider.when('/roster', {
+            templateUrl: 'templates/pages/roster.html',
+            controller: 'rosterController',
+            scope:{}
+        });
     }
 );

@@ -30,6 +30,7 @@
     <link rel="stylesheet" type="text/css" href="./css/shot-accuracy-chart.css">
     <link rel="stylesheet" type="text/css" href="./css/bar-chart.css">
     <link rel="stylesheet" type="text/css" href="./css/formation-field.css">
+    <link rel="stylesheet" type="text/css" href="./css/roster.css">
     <!-- <link rel="stylesheet" type="text/css" href="./css/ngDialog.css"> -->
 
 </head>
@@ -59,6 +60,8 @@
             <edit-team-modal></edit-team-modal>
         </div>
         <div ng-if="checkModal('inviteEmailModal')"><invite-email-modal></invite-email-modal></div>
+        <div ng-if="checkModal('createGameModal')"><create-game-modal></create-game-modal></div>
+        
     </div>
 
     <!-- Libraries -->
@@ -95,6 +98,7 @@
     <script src="./js/controllers/gameReviewController.js"></script>
     <script src="./js/controllers/testController.js"></script>
     <script src="./js/controllers/emailController.js"></script>
+    <script src="./js/controllers/rosterController.js"></script>
 
     <!-- Directives -->
     <script src="./js/directives/header.js"></script>
@@ -112,6 +116,7 @@
     <script src="./js/directives/invite-email-modal.js"></script>
     <script src="./js/directives/role.js"></script>
     <script src="./js/directives/formation-field.js"></script>
+    <script src="./js/directives/create-game-modal.js"></script>
 
 
     <!-- Services -->

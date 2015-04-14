@@ -1,0 +1,31 @@
+.roster-page {
+	padding-top: 150px;
+	width: 100%;
+}
+
+.roster-page .player-info h5 {
+	padding-top: 2px;
+	font-family: 'RobotoBoldWeb'
+}
+
+.player-info span {
+	text-transform: uppercase;
+	color: #B4B4B4;
+	margin: 0px 5px;
+}
+
+.roster-page .player-info span {
+	font-family: 'RobotoBoldWeb';
+	text-transform: uppercase;
+	color: #B4B4B4;
+	margin: 0px 5px;
+	padding-top: 2px;
+}
+
+.roster-page .personal-info {
+	padding: 5px 0px;
+}
+
+.roster-page .contact-info {
+
+}
