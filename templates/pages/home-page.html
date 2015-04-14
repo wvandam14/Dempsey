@@ -1,4 +1,4 @@
-﻿<div class="home-page flex flex-column">
+﻿<div class="home-page">
     <div class="flex flex-column flex-center">
         <div class="gameReview">
             <h5 class="header text-center">{{currGame.date}}</h5>
@@ -43,59 +43,93 @@
 
         <div class="section flex">
             <div class="flex-one flex flex-center">
-                <doughnut-chart data="teamPossession.data" num="'82%'" label="'PASSES COMPLETED'"></doughnut-chart>
+                <doughnut-chart data="teamGames.data" num="14" label="'GAMES PLAYED'" large="true"></doughnut-chart>
             </div>
 
             <div class="numbers flex-one flex flex-column">
                 <div class="flex-one"></div>
                 <div class="flex">
                     <div class="flex flex-center flex-column flex-one">
-                        <h6>2</h6>
-                        <h5>GOALS CONCEDED</h5>
+                        <h6>8</h6>
+                        <h5>GOALS<br/>CONCEDED</h5>
                     </div>
                     <div class="flex flex-center flex-column flex-one">
-                        <h6>97</h6>
-                        <h5>GOALS SCORED</h5>
+                        <h6>11</h6>
+                        <h5>GOALS<br/>SCORED</h5>
                     </div>
                     <div class="flex flex-center flex-column flex-one">
                         <h6>+3</h6>
-                        <h5>GOAL DIFFERENCE</h5>
+                        <h5>GOAL<br/>DIFFERENCE</h5>
                     </div>
                 </div>
                 <div class="flex-one"></div>
                 <div class="flex">
                     <div class="flex flex-center flex-column flex-one">
-                        <h6>16</h6>
-                        <h5>AVG GOALS PER GAME</h5>
+                        <h6>1.6</h6>
+                        <h5>AVG GOALS<br/>PER GAME</h5>
                     </div>
                     <div class="flex flex-center flex-column flex-one">
-                        <h6>1</h6>
-                        <h5>BALL POSSESSION</h5>
+                        <h6>48%</h6>
+                        <h5>AVG BALL<br/>POSSESSION</h5>
                     </div>
                     <div class="flex flex-center flex-column flex-one">
-                        <h6>0</h6>
-                        <h5>FOULS COMMITTED</h5>
+                        <h6>10</h6>
+                        <h5>FOULS<br/>COMMITTED</h5>
                     </div>
                 </div>
                 <div class="flex-one"></div>
             </div>
         </div>
 
-        <div class="section flex">
-            <div class="flex-one">
-                <img src="./img/goal-icon.svg"/>
-                <h5>TOP GOALS</h5>
+        <div class="section lists flex">
+            <div class="flex-one flex flex-center-horizontal flex-column">
+                <img class="hero-image" src="./img/goal-icon.svg"/>
+                <div class="list">
+                    <h5 class="title">TOP GOALS</h5>
+                    <div class="item flex flex-center-vertical" ng-repeat="player in topGoals track by $index">
+                        <div class="img-container">
+                            <img src="./img/sample/profile-small.jpg"/>
+                        </div>
+                        <h5 class="flex-one">{{player.name}}</h5>
+                        <div class="circle flex flex-center" ng-class="{'top': $first}">
+                            <h5>{{player.num}}</h5>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
-            <div class="flex-one">
-                <img src="./img/ball-large-grey.svg"/>
-                <h5>TOP ASSISTS</h5>
+            <div class="flex-one flex flex-center-horizontal flex-column">
+                <img class="hero-image" src="./img/ball-large-grey.svg"/>
+                <div class="list">
+                    <h5 class="title">TOP ASSISTS</h5>
+                    <div class="item flex flex-center-vertical" ng-repeat="player in topAssists track by $index">
+                        <div class="img-container">
+                            <img src="./img/sample/profile-small.jpg"/>
+                        </div>
+                        <h5 class="flex-one">{{player.name}}</h5>
+                        <div class="circle flex flex-center" ng-class="{'top': $first}">
+                            <h5>{{player.num}}</h5>
+                        </div>
+                    </div>
+                </div>
 
             </div>
 
-            <div class="flex-one">
-                <img src="./img/ball-large-grey.svg"/>
-                <h5>TOP SHOTS</h5>
+            <div class="flex-one flex flex-center-horizontal flex-column">
+                <img class="hero-image" src="./img/ball-large-grey.svg"/>
+                <div class="list">
+                    <h5 class="title">TOP SHOTS</h5>
+                    <div class="item flex flex-center-vertical" ng-repeat="player in topShots track by $index">
+                        <div class="img-container">
+                            <img src="./img/sample/profile-small.jpg"/>
+                        </div>
+                        <h5 class="flex-one">{{player.name}}</h5>
+                        <div class="circle flex flex-center" ng-class="{'top': $first}">
+                            <h5>{{player.num}}</h5>
+                        </div>
+                    </div>
+                </div>
 
             </div>
         </div>

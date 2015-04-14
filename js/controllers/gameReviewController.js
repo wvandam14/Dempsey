@@ -61,7 +61,7 @@ soccerStats.controller('gameReviewController',
             onGoal: 2,
             offGoal: 2,
             blocked: 1
-        }
+        };
 
         // Shot Types: off, on, goal, blocked
         $scope.shotLinesData = [
@@ -122,7 +122,23 @@ soccerStats.controller('gameReviewController',
                             label: "Attempted"
                         },
                         {
-                            value: 8,
+                            value: 20,
+                            color:"#5DA97B",
+                            highlight: "#5DA97B",
+                            label: "Completed"
+                        }
+                    ]
+                },
+                shots: {
+                    data: [
+                        {
+                            value: 4,
+                            color: "#B4B4B4",
+                            highlight: "#B4B4B4",
+                            label: "Attempted"
+                        },
+                        {
+                            value: 3,
                             color:"#5DA97B",
                             highlight: "#5DA97B",
                             label: "Completed"
@@ -149,7 +165,40 @@ soccerStats.controller('gameReviewController',
                         type: "Subbed out",
                         time: "88'"
                     }
-                ]
+                ],
+                passes: {
+                    data: [
+                        {
+                            value: 10,
+                            color: "#B4B4B4",
+                            highlight: "#B4B4B4",
+                            label: "Attempted"
+                        },
+                        {
+                            value: 20,
+                            color:"#5DA97B",
+                            highlight: "#5DA97B",
+                            label: "Completed"
+                        }
+                    ]
+                },
+                shots: {
+                    data: [
+                        {
+                            value: 4,
+                            color: "#B4B4B4",
+                            highlight: "#B4B4B4",
+                            label: "Attempted"
+                        },
+                        {
+                            value: 3,
+                            color:"#5DA97B",
+                            highlight: "#5DA97B",
+                            label: "Completed"
+                        }
+                    ]
+                }
+
             },
             {
                 fname: "Bill",
@@ -210,14 +259,426 @@ soccerStats.controller('gameReviewController',
                         time: "88'"
                     }
                 ]
+            },
+            {
+                fname: "William",
+                lname: "Van Dam",
+                number: 22,
+                position: "ST",
+                notableEvents: [
+                    {
+                        type: "Subbed out",
+                        time: "88'"
+                    },
+                    {
+                        type: "Subbed out",
+                        time: "88'"
+                    },
+                    {
+                        type: "Subbed out",
+                        time: "88'"
+                    }
+                ],
+                passes: {
+                    data: [
+                        {
+                            value: 10,
+                            color: "#B4B4B4",
+                            highlight: "#B4B4B4",
+                            label: "Attempted"
+                        },
+                        {
+                            value: 20,
+                            color:"#5DA97B",
+                            highlight: "#5DA97B",
+                            label: "Completed"
+                        }
+                    ]
+                },
+                shots: {
+                    data: [
+                        {
+                            value: 4,
+                            color: "#B4B4B4",
+                            highlight: "#B4B4B4",
+                            label: "Attempted"
+                        },
+                        {
+                            value: 3,
+                            color:"#5DA97B",
+                            highlight: "#5DA97B",
+                            label: "Completed"
+                        }
+                    ]
+                }
+
+            },
+            {
+                fname: "Will",
+                lname: "Van Dam",
+                number: 3,
+                position: "LM",
+                notableEvents: [
+                    {
+                        type: "Subbed out",
+                        time: "88'"
+                    },
+                    {
+                        type: "Subbed out",
+                        time: "88'"
+                    },
+                    {
+                        type: "Subbed out",
+                        time: "88'"
+                    }
+                ],
+                passes: {
+                    data: [
+                        {
+                            value: 10,
+                            color: "#B4B4B4",
+                            highlight: "#B4B4B4",
+                            label: "Attempted"
+                        },
+                        {
+                            value: 20,
+                            color:"#5DA97B",
+                            highlight: "#5DA97B",
+                            label: "Completed"
+                        }
+                    ]
+                },
+                shots: {
+                    data: [
+                        {
+                            value: 4,
+                            color: "#B4B4B4",
+                            highlight: "#B4B4B4",
+                            label: "Attempted"
+                        },
+                        {
+                            value: 3,
+                            color:"#5DA97B",
+                            highlight: "#5DA97B",
+                            label: "Completed"
+                        }
+                    ]
+                }
+
+            },
+            {
+                fname: "Bill",
+                lname: "Van Dam",
+                number: 6,
+                position: "CAM",
+                notableEvents: [
+                    {
+                        type: "Subbed out",
+                        time: "88'"
+                    },
+                    {
+                        type: "Subbed out",
+                        time: "88'"
+                    },
+                    {
+                        type: "Subbed out",
+                        time: "88'"
+                    }
+                ]
+            },
+            {
+                fname: "Willy",
+                lname: "Van Dam",
+                number: 9,
+                position: "CDM",
+                notableEvents: [
+                    {
+                        type: "Subbed out",
+                        time: "88'"
+                    },
+                    {
+                        type: "Subbed out",
+                        time: "88'"
+                    },
+                    {
+                        type: "Subbed out",
+                        time: "88'"
+                    }
+                ]
+            },
+            {
+                fname: "Billy",
+                lname: "Van Dam",
+                number: 10,
+                position: "RM",
+                notableEvents: [
+                    {
+                        type: "Subbed out",
+                        time: "88'"
+                    },
+                    {
+                        type: "Subbed out",
+                        time: "88'"
+                    },
+                    {
+                        type: "Subbed out",
+                        time: "88'"
+                    }
+                ]
+            },
+
+            {
+                fname: "Will",
+                lname: "Van Dam",
+                number: 3,
+                position: "LM",
+                notableEvents: [
+                    {
+                        type: "Subbed out",
+                        time: "88'"
+                    },
+                    {
+                        type: "Subbed out",
+                        time: "88'"
+                    },
+                    {
+                        type: "Subbed out",
+                        time: "88'"
+                    }
+                ],
+                passes: {
+                    data: [
+                        {
+                            value: 10,
+                            color: "#B4B4B4",
+                            highlight: "#B4B4B4",
+                            label: "Attempted"
+                        },
+                        {
+                            value: 20,
+                            color:"#5DA97B",
+                            highlight: "#5DA97B",
+                            label: "Completed"
+                        }
+                    ]
+                },
+                shots: {
+                    data: [
+                        {
+                            value: 4,
+                            color: "#B4B4B4",
+                            highlight: "#B4B4B4",
+                            label: "Attempted"
+                        },
+                        {
+                            value: 3,
+                            color:"#5DA97B",
+                            highlight: "#5DA97B",
+                            label: "Completed"
+                        }
+                    ]
+                }
+
+            },
+            {
+                fname: "William",
+                lname: "Van Dam",
+                bench: true,
+
+                number: 22,
+                position: "ST",
+                notableEvents: [
+                    {
+                        type: "Subbed out",
+                        time: "88'"
+                    },
+                    {
+                        type: "Subbed out",
+                        time: "88'"
+                    },
+                    {
+                        type: "Subbed out",
+                        time: "88'"
+                    }
+                ],
+                passes: {
+                    data: [
+                        {
+                            value: 10,
+                            color: "#B4B4B4",
+                            highlight: "#B4B4B4",
+                            label: "Attempted"
+                        },
+                        {
+                            value: 20,
+                            color:"#5DA97B",
+                            highlight: "#5DA97B",
+                            label: "Completed"
+                        }
+                    ]
+                },
+                shots: {
+                    data: [
+                        {
+                            value: 4,
+                            color: "#B4B4B4",
+                            highlight: "#B4B4B4",
+                            label: "Attempted"
+                        },
+                        {
+                            value: 3,
+                            color:"#5DA97B",
+                            highlight: "#5DA97B",
+                            label: "Completed"
+                        }
+                    ]
+                }
+
+            },
+
+            {
+                fname: "Bill",
+                lname: "Van Dam",
+                bench: true,
+
+                number: 6,
+                position: "CAM",
+                notableEvents: [
+                    {
+                        type: "Subbed out",
+                        time: "88'"
+                    },
+                    {
+                        type: "Subbed out",
+                        time: "88'"
+                    },
+                    {
+                        type: "Subbed out",
+                        time: "88'"
+                    }
+                ]
+            },
+            {
+                fname: "Willy",
+                lname: "Van Dam",
+                bench: true,
+
+                number: 9,
+                position: "CDM",
+                notableEvents: [
+                    {
+                        type: "Subbed out",
+                        time: "88'"
+                    },
+                    {
+                        type: "Subbed out",
+                        time: "88'"
+                    },
+                    {
+                        type: "Subbed out",
+                        time: "88'"
+                    }
+                ]
+            },
+            {
+                fname: "Billy",
+                lname: "Van Dam",
+                bench: true,
+                number: 10,
+                position: "RM",
+                notableEvents: [
+                    {
+                        type: "Subbed out",
+                        time: "88'"
+                    },
+                    {
+                        type: "Subbed out",
+                        time: "88'"
+                    },
+                    {
+                        type: "Subbed out",
+                        time: "88'"
+                    }
+                ]
             }
 
         ];
 
+        $scope.currFormation = [
+            {
+                type: "GK",
+                player: $scope.players[0],
+                x: 44,
+                y: 74
+            },
+            {
+                type: "CB",
+                player: $scope.players[1],
+                x: 56,
+                y: 55
+            },
+            {
+                type: "CB",
+                player: $scope.players[2],
+                x: 74,
+                y: 52
+            },
+            {
+                type: "CB",
+                player: $scope.players[3],
+                x: 15,
+                y: 52
+            },
+            {
+                type: "CB",
+                player: $scope.players[4],
+                x: 33,
+                y: 55
+            },
+
+            {
+                type: "CM",
+                player: $scope.players[5],
+                x: 56,
+                y: 31
+            },
+            {
+                type: "CM",
+                player: $scope.players[6],
+                x: 74,
+                y: 28
+            },
+            {
+                type: "CM",
+                player: $scope.players[7],
+                x: 15,
+                y: 28
+            },
+            {
+                type: "CM",
+                player: $scope.players[8],
+                x: 33,
+                y: 31
+            },
+
+            {
+                type: "ST",
+                player: $scope.players[9],
+                x: 56,
+                y: 10
+            },
+            {
+                type: "ST",
+                player: $scope.players[10],
+                x: 33,
+                y: 10
+            },
+        ];
+
         $scope.currPlayer = $scope.players[0];
 
-        $scope.isSelected = function (index) {
-            if ( $scope.players[index] === $scope.currPlayer ) {
+        $scope.isSelected = function (player) {
+            if ( player === $scope.currPlayer ) {
                 return true;
             }
             else {
@@ -225,8 +686,8 @@ soccerStats.controller('gameReviewController',
             }
         };
 
-        $scope.selectPlayer = function (index) {
-            $scope.currPlayer = $scope.players[index];
+        $scope.selectPlayer = function (player) {
+            $scope.currPlayer = player;
         };
 
         $scope.notableEvents = [

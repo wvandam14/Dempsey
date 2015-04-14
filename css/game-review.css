@@ -3,8 +3,6 @@
     padding-top: 150px;
 }
 
-
-
 .gameReview {
     background-color: #222;
     width: 500px;
@@ -41,9 +39,12 @@
     padding: 0px 10px;
 }
 
-.gameReview .title {
-    color: #5DA97B;
-    font-size: 20px;
-    padding: 5px;
-    border-bottom: solid 1px #DDD;
+.game-notes {
+    margin-top: 25px;
+}
+
+
+.game-notes .notes {
+    margin-top: 5px;
+    min-height: 200px;
 }

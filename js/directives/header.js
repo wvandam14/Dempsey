@@ -59,6 +59,12 @@ soccerStats.directive('header', function ($timeout, $route, viewService, configS
                     dataService.setCurrentTeam($scope.currentTeam);
                 });
             });
+
+
+            $scope.goToPage = function(page) {
+                viewService.goToPage(page);
+            }
+
             // TODO: verify if user is logged in
             if (Parse.User.current()) {
                 $scope.teams = dataService.getTeams( function(_teams) {

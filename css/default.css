@@ -41,6 +41,10 @@ h5 {
     font-family: 'RobotoCondensedWeb';
 }
 
+h5 span {
+    color: #B4B4B4;
+}
+
 p {
     font-size: 20px;
 }
@@ -209,6 +213,10 @@ input.ng-invalid-required.ng-touched {
     text-overflow: ellipsis;
     overflow: hidden;
     padding-bottom: 2px;
+}
+
+.relative {
+    position: relative;
 }
 
 /* Circle Control */
@@ -380,6 +388,6 @@ x div:nth-of-type(2) {
 
 .content .section {
     margin: 0 -100px;
-    padding: 50px 100px;
+    padding: 50px 15%;
     border-bottom: 1px solid #ddd;
 }

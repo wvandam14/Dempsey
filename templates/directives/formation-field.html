@@ -1,0 +1,15 @@
+<div class="relative">
+    <div class="back-layer">
+        <img src="./img/half-field.svg">
+    </div>
+
+    <div class="player-layer">
+        <div class="flex flex-column flex-center" ng-click="selectPlayer({player: position.player})" ng-repeat="position in formation"
+               style="position:absolute; left:{{position.x}}%; top:{{position.y}}%">
+            <div class="formation-circle flex flex-center" ng-class="{selected: isSelected({player: position.player})}">
+                <h5>{{position.player.number}}</h5>
+            </div>
+            <h5>{{position.player.lname}}</h5>
+        </div>
+    </div>
+</div>

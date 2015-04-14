@@ -19,7 +19,6 @@
 }
 
 .roster-container {
-    width: 30%;
 }
 
 .roster-container > div {
@@ -55,11 +54,18 @@
 .stats-display-container {
     padding-left: 50px;
     padding-top: 41px;
-    width: 70%;
 }
 
 .stats-display-container > div {
     padding-bottom: 40px;
+}
+
+.stats-display {
+    max-width: 50%;
+}
+
+.stats-display > div:nth-child(2) {
+    padding: 25px 0;
 }
 
 .player-stats-container .stats-display-container .player-card .player-info {
@@ -101,12 +107,6 @@
 
 .player-stats-container .formation-field img {
     width: 100%;
-}
-
-.game-notes .notes {
-    margin-top: 5px;
-    min-height: 200px;
-    padding: 0;
 }
 
 .numbers h6 {

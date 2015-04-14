@@ -1,0 +1,16 @@
+.list .title {
+    color: #5DA97B;
+    font-size: 20px;
+    padding: 5px;
+    border-bottom: solid 1px #DDD;
+}
+
+.list .item {
+    padding: 15px 0;
+}
+
+.list .item .img-container {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+}
