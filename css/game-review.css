@@ -163,6 +163,10 @@
     height: 100%;
 }
 
+.player-stats-container .formation-field img {
+    width: 100%;
+}
+
 .game-notes .notes {
     margin-top: 5px;
     min-height: 200px;
