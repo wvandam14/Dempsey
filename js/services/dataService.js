@@ -85,7 +85,7 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
                             ;
                             teamDict.push({
                                 league: leagueName,
-                                value: team.id, 
+                                id: team.id,
                                 label: teamName, 
                                 logo: logo._url,
                                 age: ageGroup,
@@ -104,6 +104,81 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
                 }
             });
             return teamDict;
+        },
+        getPlayers = function(callback) {
+            var dictionary = [];
+            var currentUser = Parse.User.current();
+            var userTable = Parse.Object.extend("_User");
+            var query = new Parse.Query(userTable);
+            query.include('players');
+            query.get(currentUser.id, {
+                success: function (user) {
+                    $timeout(function() {
+                        var players = user.get("players");
+                        _.each(players, function (player) {
+                            var photo = player.get("photo"),
+                                name = player.get("name"),
+                                birthday = player.get("birthday"),
+                                team = player.get("team"),
+                                jerseyNumber = player.get("jerseyNumber"),
+                                city = player.get("city"),
+                                state = player.get("state"),
+                                contact = {
+                                    emergencyContact : player.get("emergencyContact"),
+                                    phone : player.get("phone"),
+                                    relationship : player.get("relationship")
+                                }
+                            ;
+                            dictionary.push({
+                                photo : photo,
+                                name : name,
+                                birthday : birthday,
+                                team : team,
+                                jerseyNumber : jerseyNumber,
+                                city : city,
+                                state : state,
+                                contact : contact
+                            });
+                        });
+                        
+                        callback(dictionary);
+                    });
+                    
+                },
+                error: function (user, error) {
+
+                }
+            });
+            return dictionary;
+        getTeamById = function(id, callback) {
+            var teamTable = Parse.Object.extend("Team");
+            var query = new Parse.Query(teamTable);
+            query.equalTo('objectId', id);
+            query.first({
+                success: function(team) {
+                    $timeout(function(){
+                        callback(team);
+                    });
+
+                }, error: function(user, error) {
+                    toastService.error("There was an error (" + error.code + "). Please try again.");
+                }
+            });
+        },
+        getPlayersByTeamId = function(id, callback) {
+            var playersTable = Parse.Object.extend("Players");
+            var query = new Parse.Query(playersTable);
+            query.equalTo('team', id);
+            query.find({
+                success: function(players) {
+                    $timeout(function(){
+                        callback(players);
+                    });
+
+                }, error: function(user, error) {
+                    toastService.error("There was an error (" + error.code + "). Please try again.");
+                }
+            });
         },
         currentTeam = {},
         setCurrentTeam = function(team) {
@@ -134,10 +209,13 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
         ageGroups: ageGroups,
         states : states,
         getTeams : getTeams,
+        getTeamById : getTeamById,
+        getPlayersByTeamId : getPlayersByTeamId,
         currentTeam: currentTeam,
         setCurrentTeam : setCurrentTeam,
         getCurrentTeam : getCurrentTeam,
-        registerTeam : registerTeam
+        registerTeam : registerTeam,
+        getPlayers: getPlayers
     }
 
 });

@@ -1,46 +1,7 @@
 ﻿<div class="home-page">
-    <div class="flex flex-column flex-center">
-        <div class="gameReview">
-            <h5 class="header text-center">{{currGame.date}}</h5>
-            <div class="flex flex-center-horizontal">
-                <!-- User team logo/name -->
-                <div class="team-container flex flex-one flex-center-vertical flex-column">
-                    <div class="img-container">
-                        <!-- TODO: src should point to current team's logo -->
-                        <img src="./img/sample/Seattle_Sounders_FC.png">
-                    </div>
-                    <h5 class="text-center">{{currGame.team.name}}</h5>
-                </div>
 
-                <!-- Game score -->
-                <div class="flex flex-center-horizontal">
-                    <div class="score flex flex-center">
-                        <!-- TODO: replace these "scores" with actual game score variables -->
-                        <h5 class="">{{currGame.team.score}}</h5>
-                    </div>
-                    <div class="score flex flex-center">
-                        <!--  -->
-                        <h5 class="">{{currGame.opponent.score}}</h5>
-                    </div>
-                </div>
-
-                <!-- Team against logo/name -->
-                <div class="team-container flex flex-one flex-center-vertical flex-column">
-                    <div class="img-container">
-                        <!-- TODO: src should point to team against's logo -->
-                        <img src="./img/sample/FC_Dallas.png">
-                    </div>
-                    <h5 class="text-center">{{currGame.opponent.name}}</h5>
-                </div>
-            </div>
-        </div>
-
-        <!-- Schedule of games -->
-        <schedule></schedule>
-    </div>
-
-    <div class="content" ng-if="user is a coach">
-
+    <!-- <div class="content" ng-if="user is a coach"> -->
+    <div class="content">
         <div class="section flex">
             <div class="flex-one flex flex-center">
                 <doughnut-chart data="teamGames.data" num="14" label="'GAMES PLAYED'" large="true"></doughnut-chart>

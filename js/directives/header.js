@@ -1,20 +1,17 @@
-soccerStats.directive('header', function ($timeout, $route, viewService, configService, dataService) {
+soccerStats.directive('header', function ($timeout, $rootScope, $route, viewService, configService, dataService) {
     return {
         restrict: 'E',
         templateUrl: "./templates/directives/header.html",
-        controller: function($scope, dataService){
+        controller: function($scope){
             $scope.showTeams = false;
             $scope.showAccount = false;
             $scope.currentTeam = {};
             $scope.teams = [];
 
-            var self = 'headerModal';
-
             var parseUser = Parse.User.current();
             if (parseUser && parseUser.get('firstName')) {
                 $scope.currentUser = {initials: (parseUser.get('firstName')[0] + parseUser.get('lastName')[0]) };
             }
-
 
             $scope.toggleTeams = function() {
                 $scope.showTeams = !$scope.showTeams;
@@ -46,13 +43,15 @@ soccerStats.directive('header', function ($timeout, $route, viewService, configS
             }
 
             $scope.addNewPlayer = function() {
-                console.log('add player');
                 viewService.openModal('playerModal');
             }
 
-            // coach can invite more parents
-            $scope.viewPlayer = function() {
-                viewService.openModal('inviteEmailModal');
+            $scope.updatePlayer = function() {
+                viewService.openModal('playerModal');
+                $timeout(function() {
+                    $rootScope.$broadcast(configService.messages.updatePlayer, {state: true});
+                });
+                
             }
 
             $scope.changeTeam = function(team) {
@@ -91,6 +90,10 @@ soccerStats.directive('header', function ($timeout, $route, viewService, configS
             if (Parse.User.current()) {
                 $scope.teams = dataService.getTeams( function(_teams) {
                     $scope.currentTeam = _teams[0];
+                    dataService.setCurrentTeam(_teams[0]);
+                    $timeout(function() {
+                       $rootScope.$broadcast(configService.messages.teamChanged, {team: _teams[0]});
+                    });
                     dataService.setCurrentTeam($scope.currentTeam);
                 });
             }

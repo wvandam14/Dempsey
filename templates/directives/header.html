@@ -23,7 +23,7 @@
     <div class="buttons flex flex-one">
         <div ng-click="goToPage('/roster')" class="flex link flex-center">
             <img src="./img/roster-icon.svg"/>
-            <h5>Roster</h5>
+            <h5>View Roster</h5>
         </div>
 
         <div role="coach" class="flex link flex-center" ng-click="editTeam()">
@@ -41,9 +41,14 @@
             <h5>Add To Schedule</h5>
         </div>
 
-        <div class="flex link flex-center">
-            <img src="./img/invite-icon.svg" ng-click="addNewPlayer()" />
+        <div class="flex link flex-center" ng-click="addNewPlayer()" >
+            <img src="./img/invite-icon.svg" />
             <h5>Add Player</h5>
+        </div>
+
+        <div class="flex link flex-center" ng-click="updatePlayer()" >
+            <img src="./img/invite-icon.svg" />
+            <h5>Edit Player</h5>
         </div>
     </div>
 
