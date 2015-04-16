@@ -21,6 +21,11 @@
             //show login page
         }
 
+        // TODO: implement this
+        $scope.editPlayerInfo = function (player) {
+            console.log("This is where the edit player modal/function will go");
+        }
+
         $scope.teamGames = {
             data: [
                 {
@@ -112,5 +117,146 @@
                 num: 1
             },
         ];
+
+
+        // Ignore below here
+        $scope.isCoach = false;
+        $scope.myPlayers = [
+            {
+                fname: "William",
+                lname: "Van Dam",
+                number: 22,
+                position: "ST",
+                notableEvents: [
+                    {
+                        type: "Subbed out",
+                        time: "88'"
+                    },
+                    {
+                        type: "Subbed out",
+                        time: "88'"
+                    },
+                    {
+                        type: "Subbed out",
+                        time: "88'"
+                    }
+                ],
+                passes: {
+                    data: [
+                        {
+                            value: 10,
+                            color: "#B4B4B4",
+                            highlight: "#B4B4B4",
+                            label: "Attempted"
+                        },
+                        {
+                            value: 20,
+                            color:"#5DA97B",
+                            highlight: "#5DA97B",
+                            label: "Completed"
+                        }
+                    ]
+                },
+                shots: {
+                    data: [
+                        {
+                            value: 4,
+                            color: "#B4B4B4",
+                            highlight: "#B4B4B4",
+                            label: "Attempted"
+                        },
+                        {
+                            value: 3,
+                            color:"#5DA97B",
+                            highlight: "#5DA97B",
+                            label: "Completed"
+                        }
+                    ]
+                },
+                total: {
+                    goals:0,
+                    passes:1,
+                    corners:2,
+                    fouls:3,
+                    yellows:4,
+                    reds:5
+                },
+                phone: "(123) 456 7890",
+                emergencyContact: {
+                    name:"Jude Law",
+                    phone:"9856523952",
+                    relationship:"Employer"
+                }
+           
+            },
+            {
+                fname: "Will",
+                lname: "Van Dam",
+                number: 3,
+                position: "LM",
+                notableEvents: [
+                    {
+                        type: "Subbed out",
+                        time: "88'"
+                    },
+                    {
+                        type: "Subbed out",
+                        time: "88'"
+                    },
+                    {
+                        type: "Subbed out",
+                        time: "88'"
+                    }
+                ],
+                passes: {
+                    data: [
+                        {
+                            value: 10,
+                            color: "#B4B4B4",
+                            highlight: "#B4B4B4",
+                            label: "Attempted"
+                        },
+                        {
+                            value: 20,
+                            color:"#5DA97B",
+                            highlight: "#5DA97B",
+                            label: "Completed"
+                        }
+                    ]
+                },
+                shots: {
+                    data: [
+                        {
+                            value: 4,
+                            color: "#B4B4B4",
+                            highlight: "#B4B4B4",
+                            label: "Attempted"
+                        },
+                        {
+                            value: 3,
+                            color:"#5DA97B",
+                            highlight: "#5DA97B",
+                            label: "Completed"
+                        }
+                    ]
+                },
+                total: {
+                    goals:0,
+                    passes:1,
+                    corners:2,
+                    fouls:3,
+                    yellows:4,
+                    reds:5
+                },
+                phone: "(123) 456 7890",
+                emergencyContact: {
+                    name:"Jude Law",
+                    phone:"9856523952",
+                    relationship:"Employer"
+                }
+
+            }
+        ];
+
 
     });

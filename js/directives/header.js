@@ -43,13 +43,15 @@ soccerStats.directive('header', function ($timeout, $rootScope, $route, viewServ
             }
 
             $scope.addNewPlayer = function() {
-                console.log('add player');
                 viewService.openModal('playerModal');
             }
 
-            // coach can invite more parents
-            $scope.viewPlayer = function() {
-                viewService.openModal('inviteEmailModal');
+            $scope.updatePlayer = function() {
+                viewService.openModal('playerModal');
+                $timeout(function() {
+                    $rootScope.$broadcast(configService.messages.updatePlayer, {state: true});
+                });
+                
             }
 
             $scope.changeTeam = function(team) {

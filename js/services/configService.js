@@ -10,6 +10,7 @@ soccerStats.factory('configService', function () {
             , addNewTeam: 'addNewTeam'
             , teamChanged: 'teamChanged'
             , updateTeam: 'updateTeam'
+            , updatePlayer : 'updatePlayer'
 
         }, toasts: {
             general: function(action, type, success){

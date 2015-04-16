@@ -33,7 +33,7 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
                         _.each(teams, function (team) {
                             var leagueName = team.get("leagueName"),
                                 logo = team.get("logo"),
-                                teamName = team.get("name"),
+                                teamName = team.get("name"),                                                     r
                                 ageGroup = team.get("ageGroup"),
                                 city = team.get("city"),
                                 teamNumber = team.get("number"),
@@ -60,9 +60,54 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
                     toastService.error("There was an error (" + error.code + "). Please try again.");
                 }
             });
-        }
+            return teamDict;
+        },
+        getPlayers = function(callback) {
+            var dictionary = [];
+            var currentUser = Parse.User.current();
+            var query = new Parse.Query(userTable);
+            query.include('players');
+            query.get(currentUser.id, {
+                success: function (user) {
+                    $timeout(function() {
+                        var players = user.get("players");
+                        _.each(players, function (player) {
+                            var photo = player.get("photo"),
+                                name = player.get("name"),
+                                birthday = player.get("birthday"),
+                                team = player.get("team"),
+                                jerseyNumber = player.get("jerseyNumber"),
+                                city = player.get("city"),
+                                state = player.get("state"),
+                                contact = {
+                                    emergencyContact : player.get("emergencyContact"),
+                                    phone : player.get("phone"),
+                                    relationship : player.get("relationship")
+                                }
+                            ;
+                            dictionary.push({
+                                photo : photo,
+                                name : name,
+                                birthday : birthday,
+                                team : team,
+                                jerseyNumber : jerseyNumber,
+                                city : city,
+                                state : state,
+                                contact : contact
+                            });
+                        });
+                        
+                        callback(dictionary);
+                    });
+                    
+                },
+                error: function (user, error) {
 
-        , getTeamById = function(id, callback) {
+                }
+            });
+            return dictionary;
+        },
+        getTeamById = function(id, callback) {
             var query = new Parse.Query(teamTable);
             query.equalTo('objectId', id);
             query.first({
@@ -116,7 +161,8 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
         getPlayersByTeamId : getPlayersByTeamId,
         setCurrentTeam : setCurrentTeam,
         getCurrentTeam : getCurrentTeam,
-        registerTeam : registerTeam
+        registerTeam : registerTeam,
+        getPlayers: getPlayers
     }
 
 });

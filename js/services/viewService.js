@@ -11,8 +11,8 @@ soccerStats.factory('viewService', function ($location, $timeout, $rootScope, co
             $rootScope.$broadcast(configService.messages.closeModal, { modal : modal});
         }
 
-        , openModal = function (modal) {
-            $rootScope.$broadcast(configService.messages.openModal, { modal: modal});
+        , openModal = function (modal, state) {
+            $rootScope.$broadcast(configService.messages.openModal, { modal: modal, state: state});
         }
 
         , validateAreaByFormName = function (form) {

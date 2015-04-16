@@ -1,8 +1,8 @@
-soccerStats.directive('playerModal', function ($location, $timeout, $route, viewService, toastService, configService, dataService) {
+soccerStats.directive('playerModal', function ($location, $rootScope, $timeout, $route, viewService, toastService, configService, dataService) {
     return {
         restrict: 'E',
         templateUrl: "./templates/directives/player-modal.html",
-        controller: function($scope, viewService) {
+        controller: function($scope) {
             var self = 'playerModal';
 
             $scope.closeModal = function() {
@@ -12,9 +12,9 @@ soccerStats.directive('playerModal', function ($location, $timeout, $route, view
             //below are static arrays
             $scope.states = dataService.states;
 
-                   // Player object
+            // Player object
             $scope.player = {
-                photo: '',
+                photo: './img/team-logo-icon.svg',
                 name: 'Zlatan',
                 birthday: '',
                 team: '',
@@ -25,9 +25,35 @@ soccerStats.directive('playerModal', function ($location, $timeout, $route, view
                     name: 'Alec Moore',
                     phone: '5093336897',
                     relationship: 'Father'
-                }
-
+                },
+                newPhoto: ''
             };
+            $scope.$on(configService.messages.updatePlayer, function(event, obj) {  
+                $timeout(function() {
+                    if (obj.state)
+                        $scope.players = dataService.getPlayers(function(dictionary) {
+                            console.log(dictionary);
+                            var result = _.find($scope.teamDict, function(obj){return obj.value == dictionary[0].team.id});
+                            console.log(result);
+                            $scope.player = {
+                                photo: dictionary[0].photo._url ? dictionary[0].photo._url : './img/team-logo-icon.svg',
+                                name: dictionary[0].name,
+                                birthday: dictionary[0].birthday,
+                                team: result,
+                                jerseyNumber: dictionary[0].jerseyNumber,
+                                city: dictionary[0].city,
+                                state: $scope.states[dictionary[0].state],
+                                emergencyContact: {
+                                    name: dictionary[0].contact.emergencyContact,
+                                    phone: dictionary[0].contact.phone,
+                                    relationship: dictionary[0].contact.relationship
+                                }
+                            };
+                        });
+                });
+            });
+
+            
 
             $scope.goToPage = function(path) {
                 $timeout(function() {
@@ -65,6 +91,7 @@ soccerStats.directive('playerModal', function ($location, $timeout, $route, view
                                             toastService.success("Player, " + player.name + ", successfully added.");
                                         },
                                         erorr: function (currentUser, error) {
+                                            console.log("Error: " + error.code + " " + error.message);
                                            toastService.error("There was a an error (" + error.code +"). Please try again."); 
                                         }
                                     });
@@ -76,6 +103,7 @@ soccerStats.directive('playerModal', function ($location, $timeout, $route, view
                             });
                         },
                         error: function (teamTable, error) {
+                            console.log("Error: " + error.code + " " + error.message);
                             toastService.error("There was a an error (" + error.code +"). Please try again."); 
                         }
                     });

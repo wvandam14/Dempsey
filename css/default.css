@@ -219,6 +219,10 @@ input.ng-invalid-required.ng-touched {
     position: relative;
 }
 
+.zoom {
+    zoom: 0.6;
+}
+
 /* Circle Control */
 .circle {
     border-radius: 50%;
