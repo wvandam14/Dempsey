@@ -17,7 +17,7 @@ soccerStats.directive('editTeamModal', function ($location, $timeout, $route, $r
                 if (viewService.validateAreaByFormName('teamForm')) {
                     var teamTable = Parse.Object.extend("Team");
                     var query = new Parse.Query(teamTable);
-                    query.get($scope.currentTeam.value, {
+                    query.get($scope.currentTeam.id, {
                         success: function(team) {
                             team.set("leagueName", $scope.editTeam.leagueName);
                             team.set("ageGroup", $scope.editTeam.ageGroup);
@@ -33,6 +33,7 @@ soccerStats.directive('editTeamModal', function ($location, $timeout, $route, $r
                                 success: function (editTeam) {
                                     toastService.success(configService.toasts.teamUpdateSuccess);
                                     $scope.closeModal();
+                                    $route.reload();
                                 //     var leagueName = editTeam.get("leagueName"),
                                 //         logo = editTeam.get("logo"),
                                 //         teamName = editTeam.get("name"),
