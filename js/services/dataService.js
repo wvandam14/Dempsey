@@ -1,72 +1,29 @@
 soccerStats.factory('dataService', function ($location, $timeout, configService, toastService) {
 
     var
-        ageGroups = {
-                "U12" : "U12" ,
-                "U16" : "U16",
-                "U18" : "U18",
-                "U20" : "U20",
-                "U23" : "U23" 
-        },
-        states = {
-                "AL" : "Alabama",
-                "AK" : "Alaska",
-                "AZ" : "Arizona",
-                "AR" : "Arkansas",
-                "CA" : "California",
-                "CO" : "Colorado",
-                "CT" : "Connecticut",
-                "DE" : "Delaware",
-                "DC" : "District Of Columbia",
-                "FL" : "Florida",
-                "GA" : "Georgia",
-                "HI" : "Hawaii",
-                "ID" : "Idaho",
-                "IL" : "Illinois",
-                "IN" : "Indiana",
-                "IA" : "Iowa",
-                "KS" : "Kansas",
-                "KY" : "Kentucky",
-                "LA" : "Louisiana",
-                "ME" : "Maine",
-                "MD" : "Maryland",
-                "MA" : "Massachusetts",
-                "MI" : "Michigan",
-                "MN" : "Minnesota",
-                "MS" : "Mississippi",
-                "MO" : "Missouri",
-                "MT" : "Montana",
-                "NE" : "Nebraska",
-                "NV" : "Nevada",
-                "NH" : "New Hampshire",
-                "NJ" : "New Jersey",
-                "NM" : "New Mexico",
-                "NY" : "New York",
-                "NC" : "North Carolina",
-                "ND" : "North Dakota",
-                "OH" : "Ohio",
-                "OK" : "Oklahoma",
-                "OR" : "Oregon",
-                "PA" : "Pennsylvania",
-                "RI" : "Rhode Island",
-                "SC" : "South Carolina",
-                "SD" : "South Dakota",
-                "TN" : "Tennessee",
-                "TX" : "Texas",
-                "UT" : "Utah",
-                "VT" : "Vermont",
-                "VA" : "Virginia",
-                "WA" : "Washington",
-                "WV" : "West Virginia",
-                "WI" : "Wisconsin",
-                "WY" : "Wyoming"
-        },
-        getTeams = function(callback) {
+         ageGroups = { "U12" : "U12" , "U16" : "U16", "U18" : "U18", "U20" : "U20", "U23" : "U23" }
+        , states = {AL:"Alabama",AK:"Alaska",AZ:"Arizona",AR:"Arkansas",CA:"California",CO:"Colorado",CT:"Connecticut",DE:"Delaware",DC:"District Of Columbia",FL:"Florida",GA:"Georgia",HI:"Hawaii",ID:"Idaho",IL:"Illinois",IN:"Indiana",IA:"Iowa",KS:"Kansas",KY:"Kentucky",LA:"Louisiana",ME:"Maine",MD:"Maryland",MA:"Massachusetts",MI:"Michigan",MN:"Minnesota",MS:"Mississippi",MO:"Missouri",MT:"Montana",NE:"Nebraska",NV:"Nevada",NH:"New Hampshire",NJ:"New Jersey",NM:"New Mexico",NY:"New York",NC:"North Carolina",ND:"North Dakota",OH:"Ohio",OK:"Oklahoma",OR:"Oregon",PA:"Pennsylvania",RI:"Rhode Island",SC:"South Carolina",SD:"South Dakota",TN:"Tennessee",TX:"Texas",UT:"Utah",VT:"Vermont",VA:"Virginia",WA:"Washington",WV:"West Virginia",WI:"Wisconsin",WY:"Wyoming"}
+
+        // Parse Tables
+        , playersTable = Parse.Object.extend("Players")
+        , userTable = Parse.Object.extend("_User")
+        , teamTable = Parse.Object.extend("Team")
+
+        // Team Table
+        , currentTeam = {}
+        , setCurrentTeam = function(team) {
+            currentTeam = team;
+        }
+
+        , getCurrentTeam = function() {
+            return currentTeam;
+        }
+
+        , getTeams = function(callback) {
             var teamDict = [];
             var currentUser = Parse.User.current();
-            var userTable = Parse.Object.extend("_User");
-
             var query = new Parse.Query(userTable);
+
             query.include('teams');
             query.get(currentUser.id, {
                 success: function(user) {
@@ -76,7 +33,7 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
                         _.each(teams, function (team) {
                             var leagueName = team.get("leagueName"),
                                 logo = team.get("logo"),
-                                teamName = team.get("name"),
+                                teamName = team.get("name"),                                                     r
                                 ageGroup = team.get("ageGroup"),
                                 city = team.get("city"),
                                 teamNumber = team.get("number"),
@@ -108,7 +65,6 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
         getPlayers = function(callback) {
             var dictionary = [];
             var currentUser = Parse.User.current();
-            var userTable = Parse.Object.extend("_User");
             var query = new Parse.Query(userTable);
             query.include('players');
             query.get(currentUser.id, {
@@ -152,7 +108,6 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
             return dictionary;
         },
         getTeamById = function(id, callback) {
-            var teamTable = Parse.Object.extend("Team");
             var query = new Parse.Query(teamTable);
             query.equalTo('objectId', id);
             query.first({
@@ -165,9 +120,24 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
                     toastService.error("There was an error (" + error.code + "). Please try again.");
                 }
             });
-        },
-        getPlayersByTeamId = function(id, callback) {
-            var playersTable = Parse.Object.extend("Players");
+        }
+
+        , registerTeam = function(newTeam) {
+            var _team = new teamTable();
+            _team.set("ageGroup", newTeam.ageGroup);
+            _team.set("city", newTeam.city);
+            _team.set("leagueName", newTeam.leagueName);
+            _team.set("name", newTeam.name);
+            _team.set("number", newTeam.number);
+            _team.set("state", (_.invert(states))[newTeam.state]);
+            _team.set("logo", newTeam.logo);
+            _team.set("primaryColor", newTeam.primaryColor);
+
+            return _team;
+        }
+
+        // Player Table
+        , getPlayersByTeamId = function(id, callback) {
             var query = new Parse.Query(playersTable);
             query.equalTo('team', id);
             query.find({
@@ -180,30 +150,7 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
                     toastService.error("There was an error (" + error.code + "). Please try again.");
                 }
             });
-        },
-        currentTeam = {},
-        setCurrentTeam = function(team) {
-            currentTeam = team;
-        },
-        getCurrentTeam = function() {
-            return currentTeam;
-        },
-
-        registerTeam = function(newTeam) {
-            var Team = Parse.Object.extend("Team");
-            var _team = new Team();
-            _team.set("ageGroup", newTeam.ageGroup);
-            _team.set("city", newTeam.city);
-            _team.set("leagueName", newTeam.leagueName);
-            _team.set("name", newTeam.name);
-            _team.set("number", newTeam.number);
-            _team.set("state", (_.invert(states))[newTeam.state]);
-            _team.set("logo", newTeam.logo);
-            _team.set("primaryColor", newTeam.primaryColor);
-
-            return _team;
         };
-
 
 
     return {
@@ -212,7 +159,6 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
         getTeams : getTeams,
         getTeamById : getTeamById,
         getPlayersByTeamId : getPlayersByTeamId,
-        currentTeam: currentTeam,
         setCurrentTeam : setCurrentTeam,
         getCurrentTeam : getCurrentTeam,
         registerTeam : registerTeam,

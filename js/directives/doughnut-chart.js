@@ -1,4 +1,4 @@
-soccerStats.directive('doughnutChart', function () {
+soccerStats.directive('doughnutChart', function ($timeout) {
     return {
         restrict: 'E',
         templateUrl: './templates/directives/doughnut-chart.html',
@@ -12,6 +12,7 @@ soccerStats.directive('doughnutChart', function () {
             scope.init(elem);
         },
         controller: function($scope){
+            var thisElement;
 
             if (!$scope.large) $scope.large = false;
 
@@ -24,16 +25,26 @@ soccerStats.directive('doughnutChart', function () {
             };
 
             $scope.init = function(elem) {
-               var element = angular.element(elem);
-               var chart = element.find('canvas')[0].getContext("2d");
+                $timeout(function() {
 
-                if ($scope.large) {
-                    chart.canvas.width = 275;
-                    chart.canvas.height = 275;
-                }
-                // And for a doughnut chart
-               var myDoughnutChart = new Chart(chart).Doughnut($scope.data,options);
+                   thisElement = elem;
+                   var element = angular.element(elem);
+                   var chart = element.find('canvas')[0].getContext("2d");
+
+                    if ($scope.large) {
+                        chart.canvas.width = 275;
+                        chart.canvas.height = 275;
+                    }
+                    // And for a doughnut chart
+                   var myDoughnutChart = new Chart(chart).Doughnut($scope.data,options);
+                });
             }
+
+            $scope.$watch('data', function(val) {
+                $timeout(function() {
+                    $scope.init(thisElement);
+                });
+            })
 
 
         }
