@@ -4,7 +4,7 @@
         <div class="player-stats-container flex">
             <div class="roster-container flex-one">
                 <div class="list">
-                    <!-- TODO: Figure out how we want to store the roster vs lineup data and then display accodingly -->
+                    <!-- TODO: Figure out how we want to store the roster vs lineup data and then display accordingly -->
                     <h5 class="title">LINEUP</h5>
                     <div class="player-selector item flex flex-center-vertical" ng-repeat="player in players" ng-class="{selected: isSelected(player)}" ng-click="selectPlayer(player)">
                         <div class="circle flex flex-center">
@@ -21,7 +21,7 @@
                     <div class="player-info">
                         <div class="info flex">
                             <div class="img-container">
-                                <img src="./img/player-icon.svg" />
+                                <img src="{{currPlayer.photo._url}}" />
                             </div>
                             <div  class="flex flex-column">
                                 <h3>{{currPlayer.name}}</h3>
@@ -67,10 +67,10 @@
                         </div>
                         <div class="flex">
                             <div class="flex flex-center flex-one">
-                                <doughnut-chart data="currPlayer.passes.data" num="'8/10'" label="'PASSES COMPLETED'" style="zoom: 0.5;"></doughnut-chart>
+                                <doughnut-chart data="currPlayer.passData" num="'8/10'" label="'PASSES COMPLETED'" style="zoom: 0.5;"></doughnut-chart>
                             </div>
                             <div class="flex flex-center flex-one">  
-                                <doughnut-chart data="currPlayer.shots.data" num="'3/4'" label="'SHOTS ON GOAL'" style="zoom: 0.5;"></doughnut-chart>
+                                <doughnut-chart data="currPlayer.shotsData" num="'3/4'" label="'SHOTS ON GOAL'" style="zoom: 0.5;"></doughnut-chart>
                             </div>
                         </div>
                         <div class="flex">

@@ -2,9 +2,39 @@ soccerStats.directive('schedule', function () {
     return {
         restrict: 'E',
         templateUrl: "./templates/directives/schedule.html",
-        controller: function($scope, $rootScope, $window,$timeout, configService){
+        controller: function($scope, $rootScope, $window,$timeout, configService, viewService){
 
-                      
+
+
+
+            $scope.games = [
+                {
+                     status: 'win'
+                    , date: 'April 1, 2015'
+                    , team: { name: 'Seattle Sounders FC', symbol: 'SEA', score: '2'}
+                    , opponent: {name: 'FC Dallas', symbol: 'FCD', score: '1'}
+                },
+                {
+                    status: 'win'
+                    , date: 'April 10, 2015'
+                    , team: {name: 'Seattle Sounders FC',  symbol: 'SEA', score: '3'}
+                    , opponent: {name: 'LA Galaxy', symbol: 'LA', score: '1'}
+                },
+                {
+                    status: 'loss'
+                    , date: 'April 20, 2015'
+                    , team: {name: 'Seattle Sounders FC',  symbol: 'SEA', score: '0'}
+                    , opponent: {name: 'Houston Dynamo', symbol: 'HOU', score: '1'}
+                },
+                {
+                    status: 'review'
+                    , date: 'April 27, 2015'
+                    , team: {name: 'Seattle Sounders FC',  symbol: 'SEA', score: '3'}
+                    , opponent: {name: 'San Jose Earthquakes', symbol: 'SJ', score: '3'}
+                }
+            ];
+            $scope.currGame = $scope.games[0];
+
             $scope.getGames = function(callback) {             
 
                 var Teams = Parse.Object.extend("Team");
@@ -72,9 +102,6 @@ soccerStats.directive('schedule', function () {
             }
 
 
-           
-
-
              $scope.range = function(size){
                 var input = [];
                 for (var i = 0; i < size; i++) input.push(i);
@@ -83,6 +110,8 @@ soccerStats.directive('schedule', function () {
 
 	        $scope.setGame = function (game) {
 	            $rootScope.$broadcast(configService.messages.setGame, {game: $scope.currGame});
+                viewService.goToPage('/game-review');
+                $scope.selectGame(game);
 	        };
 
         	$scope.selectGame = function (game) {
@@ -109,7 +138,7 @@ soccerStats.directive('schedule', function () {
                                "transform: translate3d(" + $scope.slidePos + "px,0,0);"
             }
 
-           
+            /*
             $scope.getGames(function(games) {
                 $timeout(function(){
                     $scope.currGame = games.length > 0 ? games[0] : [] ;
@@ -118,9 +147,9 @@ soccerStats.directive('schedule', function () {
                 //console.log($scope.games);    
             });
             
-            /*$scope.currGame = $scope.games.length > 0 ? $scope.games[0] : [] ;
+            $scope.currGame = $scope.games.length > 0 ? $scope.games[0] : [] ;
             $scope.containerWidth = $scope.games.length * 105;*/
-            
+
             
             $scope.slidePos = 0;
             

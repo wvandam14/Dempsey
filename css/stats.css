@@ -77,8 +77,9 @@
     border-bottom: solid 1px #DDD;
 }
 
-.player-stats-container .stats-display-container .player-card .player-info .img-container {
+.player-card .player-info .img-container {
     padding-right: 10px;
+    margin-bottom: 10px;
 }
 
 .content .player-card {

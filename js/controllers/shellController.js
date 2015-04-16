@@ -32,6 +32,10 @@ soccerStats.controller('shellController',
            });
         });
 
+         $scope.goToPage = function(page) {
+             viewService.goToPage(page);
+         }
+
         $scope.logout = function () {
             Parse.User.logOut();
             toastService.success(configService.toasts.logoutSuccess);
