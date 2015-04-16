@@ -52,6 +52,7 @@ soccerStats.factory('configService', function () {
             , teamAddSuccess: 'You have successfully added a new team'
             , accountUpdateSuccess: 'You have updated your profile'
             , teamUpdateSuccess: 'Your team has been updated'
+            , missingPhoto: 'Please select a profile picture'
         }
     }
 });

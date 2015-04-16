@@ -27,8 +27,12 @@ soccerStats.controller('registrationController',
 
             if (viewService.validateAreaByFormName(currentForm)
                 && (tab === ($scope.tabNumber + 1))) {
-                $scope.tabNumber = tab;
+                if (($scope.newUser.photo && tab === 1) || ($scope.team.logo && tab === 2))
+                    $scope.tabNumber = tab;
+                else
+                    toastService.error(configService.toasts.missingPhoto);
             }
+
             else {
                 toastService.error(configService.toasts.requiredFields);
             }
