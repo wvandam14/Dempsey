@@ -44,6 +44,9 @@ soccerStats.directive('header', function ($timeout, $rootScope, $route, viewServ
 
             $scope.addNewPlayer = function() {
                 viewService.openModal('playerModal');
+                $timeout(function() {
+                    $rootScope.$broadcast(configService.messages.updatePlayer, {state: false});
+                });
             }
 
             $scope.updatePlayer = function() {

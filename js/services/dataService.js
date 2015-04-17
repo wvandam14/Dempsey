@@ -33,7 +33,7 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
                         _.each(teams, function (team) {
                             var leagueName = team.get("leagueName"),
                                 logo = team.get("logo"),
-                                teamName = team.get("name"),                                                     r
+                                teamName = team.get("name"),                                                     
                                 ageGroup = team.get("ageGroup"),
                                 city = team.get("city"),
                                 teamNumber = team.get("number"),
@@ -93,7 +93,8 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
                                 jerseyNumber : jerseyNumber,
                                 city : city,
                                 state : state,
-                                contact : contact
+                                contact : contact,
+                                id : player.id
                             });
                         });
                         

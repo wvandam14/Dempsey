@@ -30,12 +30,13 @@ soccerStats.directive('inviteEmailModal', function (viewService, toastService, c
             // Sends email via the cloud code with parse
             $scope.sendEmailInvite = function() {
                 _.each($scope.inviteEmails, function (email) {
-                    emailService.sendEmailInvite(currentUser.get("name"), $scope.currentTeam.value, $scope.currentTeam.label, email);
+                    emailService.sendEmailInvite(currentUser.get("name"), $scope.currentTeam.id, $scope.currentTeam.label, email);
                 });
             };
 
             if (currentUser) {
                 dataService.getTeams( function(_teams) {
+                    console.log(_teams);
                     if (jQuery.isEmptyObject(dataService.getCurrentTeam())) 
                         $scope.currentTeam = _teams[0];
                     else
