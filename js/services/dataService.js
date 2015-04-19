@@ -15,7 +15,7 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
             currentTeam = team;
         }
 
-        , getCurrentTeam = function() {
+        ,getCurrentTeam = function() {
             return currentTeam;
         }
 

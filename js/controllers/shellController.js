@@ -1,5 +1,5 @@
 soccerStats.controller('shellController',
-    function shellController($scope, $rootScope, $location, $route, $timeout, configService, deviceDetector, viewService, toastService) {
+    function shellController($scope, $rootScope, $location, $route, $timeout, configService, deviceDetector, viewService, toastService,dataService) {
 
         // Global device flags: Can be used in any html as an attribute like so: ng-show="$root.isMobile"
         $rootScope.isDesktop = deviceDetector.isDesktop();
@@ -15,6 +15,7 @@ soccerStats.controller('shellController',
            $timeout(function() {
                // check if user is logged in if accessing most pages
                var currentUser = Parse.User.current();
+               
                if ($scope.currentPage != 'login' && $scope.currentPage != 'registration'){
                    if (currentUser){
                        console.log("user logged in");
@@ -25,6 +26,14 @@ soccerStats.controller('shellController',
                    }
                }
 
+                /*dataService.getTeams( function(_teams) {
+                    dataService.setCurrentTeam(_teams[0]);
+                     $timeout(function() {
+                       $rootScope.$broadcast(configService.messages.teamChanged, {team: _teams[0]});
+                    });
+                    //console.log(dataService.getCurrentTeam());
+                });
+*/
                 history.push({url: current.split('#')[1], state: {}});
                 $scope.currentPage = current.split('#')[1] ? current.split('#')[1].split('/')[1] : '';
                 $rootScope.$broadcast(configService.messages.navigate, history[history.length - 1].url);
