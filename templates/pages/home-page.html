@@ -104,7 +104,7 @@
             <div class="player-info">
                 <div class="info flex">
                     <div ng-click="editPlayerInfo(player)">
-                        <img src="./img/player-icon.svg" />
+                        <img src="{{player.photo}}" />
                     </div>
                     <div  class="flex flex-column">
                         <h3>{{player.fname}}<br>{{player.lname}}</h3>
@@ -140,11 +140,11 @@
                     </div>
                     <div class="flex flex-center flex-column flex-one">
                         <h6>{{player.total.passes}}</h6>
-                        <h5>PASSES</h5>
+                        <h5>ASSISTS</h5>
                     </div>
                     <div class="flex flex-center flex-column flex-one">
                         <h6>{{player.total.corners}}</h6>
-                        <h5>CORNERS</h5>
+                        <h5>MINUTES</h5>
                     </div>
                     <div class="flex flex-center flex-column flex-one">
                         <h6>{{player.total.fouls}}</h6>
@@ -161,10 +161,10 @@
                 </div>
                 <div class="flex">
                     <div class="flex flex-center flex-one">
-                        <doughnut-chart data="player.passes.data" num="'8/10'" label="'PASSES COMPLETED'" class="zoom"></doughnut-chart>
+                        <doughnut-chart data="player.passes.data" num="'8/10'" label="'PASS COMPLETION'" class="zoom"></doughnut-chart>
                     </div>
                     <div class="flex flex-center flex-one">  
-                        <doughnut-chart data="player.shots.data" num="'3/4'" label="'SHOTS ON GOAL'" class="zoom"></doughnut-chart>
+                        <doughnut-chart data="player.shots.data" num="'3/4'" label="'SHOT ACCURACY'" class="zoom"></doughnut-chart>
                     </div>
                 </div>
             </div>
