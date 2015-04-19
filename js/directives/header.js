@@ -5,10 +5,11 @@ soccerStats.directive('header', function ($timeout, $rootScope, $route, viewServ
         controller: function($scope){
             $scope.showTeams = false;
             $scope.showAccount = false;
+            $scope.currentUser = {};
             $scope.currentTeam = {};
             $scope.teams = [];
 
-            var parseUser = Parse.User.current();
+            var parseUser = dataService.getCurrentUser();
             if (parseUser && parseUser.get('firstName')) {
                 $scope.currentUser = {initials: (parseUser.get('firstName')[0] + parseUser.get('lastName')[0]) };
             }
@@ -62,6 +63,7 @@ soccerStats.directive('header', function ($timeout, $rootScope, $route, viewServ
                 $scope.currentTeam = team;
                 // console.log($scope.currentTeam);
                 dataService.setCurrentTeam($scope.currentTeam);
+                $rootScope.$broadcast(configService.messages.teamChanged, {team: $scope.currentTeam});
                 //$route.reload();
             }
 

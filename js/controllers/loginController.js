@@ -1,9 +1,9 @@
-soccerStats.controller('loginController', function loginController($scope, $rootScope, $timeout, $location, viewService, toastService, configService) {
+soccerStats.controller('loginController', function loginController($scope, $rootScope, $timeout, $location, viewService, toastService, configService, dataService) {
         // User object
         $scope.user = {email: '', password: ''};
 
         $scope.init = function() {
-            if (Parse.User.current()) {
+            if (dataService.currentUser) {
                 $scope.goToPage('/home');
             }
         };

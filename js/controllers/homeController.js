@@ -1,5 +1,5 @@
 ﻿soccerStats.controller('homeController', 
-    function homeController($scope, $location, toastService, configService) {
+    function homeController($scope, $location, toastService, configService, dataService) {
 
     	$scope.verified = false;
         $scope.user = {
@@ -7,8 +7,9 @@
             accountType: ''
         };
 
-        var currentUser = Parse.User.current();
-        if (currentUser.fetch()) {
+        var currentUser = dataService.currentUser;
+
+        if (currentUser) {
             $scope.user.name = currentUser.get("name");
             //check for email verification 
             if (!currentUser.get("emailVerified")) {

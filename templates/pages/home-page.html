@@ -100,10 +100,10 @@
     <div class="content list">
         <h5 class="title">MY PLAYERS</h5>
         <!-- <div class="item player-card flex"> -->
-        <div class="item player-card flex flex-center" ng-repeat="player in myPlayers">
+        <div class="item player-card flex" ng-repeat="player in myPlayers">
             <div class="player-info">
                 <div class="info flex">
-                    <div ng-click="editPlayerInfo(player)">
+                    <div class="img-container" ng-click="editPlayerInfo(player)">
                         <img src="./img/player-icon.svg" />
                     </div>
                     <div  class="flex flex-column">
@@ -118,7 +118,7 @@
                     <h5>PHONE</h5><span>{{player.phone}}</span>
                 </div>
                 <div class="contact-info">
-                    <h5 class="">EMERGENCY CONTACT</h5>
+                    <h5 class="heading">EMERGENCY CONTACT</h5>
                     <div class="flex">
                         <h5>NAME</h5><span>{{player.emergencyContact.name}}</span>
                     </div>

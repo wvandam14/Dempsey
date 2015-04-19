@@ -3,14 +3,22 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
     var
          ageGroups = { "U12" : "U12" , "U16" : "U16", "U18" : "U18", "U20" : "U20", "U23" : "U23" }
         , states = {AL:"Alabama",AK:"Alaska",AZ:"Arizona",AR:"Arkansas",CA:"California",CO:"Colorado",CT:"Connecticut",DE:"Delaware",DC:"District Of Columbia",FL:"Florida",GA:"Georgia",HI:"Hawaii",ID:"Idaho",IL:"Illinois",IN:"Indiana",IA:"Iowa",KS:"Kansas",KY:"Kentucky",LA:"Louisiana",ME:"Maine",MD:"Maryland",MA:"Massachusetts",MI:"Michigan",MN:"Minnesota",MS:"Mississippi",MO:"Missouri",MT:"Montana",NE:"Nebraska",NV:"Nevada",NH:"New Hampshire",NJ:"New Jersey",NM:"New Mexico",NY:"New York",NC:"North Carolina",ND:"North Dakota",OH:"Ohio",OK:"Oklahoma",OR:"Oregon",PA:"Pennsylvania",RI:"Rhode Island",SC:"South Carolina",SD:"South Dakota",TN:"Tennessee",TX:"Texas",UT:"Utah",VT:"Vermont",VA:"Virginia",WA:"Washington",WV:"West Virginia",WI:"Wisconsin",WY:"Wyoming"}
+        
+        // Current focus variables
+        , getCurrentUser = function() {
+            return Parse.User.current();
+        }
+        , currentPlayer = {}
+        , currentTeam = {}
+        , currentGame = {}
+
 
         // Parse Tables
         , playersTable = Parse.Object.extend("Players")
         , userTable = Parse.Object.extend("_User")
         , teamTable = Parse.Object.extend("Team")
 
-        // Team Table
-        , currentTeam = {}
+        // Team Table        
         , setCurrentTeam = function(team) {
             currentTeam = team;
         }
@@ -21,9 +29,8 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
 
         , getTeams = function(callback) {
             var teamDict = [];
-            var currentUser = Parse.User.current();
             var query = new Parse.Query(userTable);
-
+            var currentUser = getCurrentUser();
             query.include('teams');
             query.get(currentUser.id, {
                 success: function(user) {
@@ -64,7 +71,7 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
         },
         getPlayers = function(callback) {
             var dictionary = [];
-            var currentUser = Parse.User.current();
+            var currentUser = getCurrentUser();
             var query = new Parse.Query(userTable);
             query.include('players');
             query.get(currentUser.id, {
@@ -153,6 +160,9 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
             });
         };
 
+    getTeams(function(teams){
+        currentTeam = teams[0];
+    });
 
     return {
         ageGroups: ageGroups,
@@ -163,7 +173,8 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
         setCurrentTeam : setCurrentTeam,
         getCurrentTeam : getCurrentTeam,
         registerTeam : registerTeam,
-        getPlayers: getPlayers
+        getPlayers: getPlayers,
+        getCurrentUser: getCurrentUser
     }
 
 });
