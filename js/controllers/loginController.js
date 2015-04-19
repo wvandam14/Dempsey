@@ -1,9 +1,9 @@
-soccerStats.controller('loginController', function loginController($scope, $rootScope, $timeout, $location, viewService, toastService, configService) {
+soccerStats.controller('loginController', function loginController($scope, $rootScope, $timeout, $location, viewService, toastService, configService, dataService) {
         // User object
         $scope.user = {email: '', password: ''};
 
         $scope.init = function() {
-            if (Parse.User.current()) {
+            if (dataService.currentUser) {
                 $scope.goToPage('/home');
             }
         };
@@ -25,6 +25,14 @@ soccerStats.controller('loginController', function loginController($scope, $root
                         );
                         $scope.goToPage('/home');
                         $rootScope.$broadcast(configService.messages.loginSuccess);
+
+                        dataService.getTeams( function(_teams) {
+                        dataService.setCurrentTeam(_teams[0]);
+                         $timeout(function() {
+                           $rootScope.$broadcast(configService.messages.teamChanged, {team: _teams[0]});
+                        });
+                   
+                });
                     },
                     error: function(user, error) {
                         toastService.error(configService.toasts.notAuthenticated);

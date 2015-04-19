@@ -2,10 +2,12 @@ soccerStats.controller('rosterController',
     function rosterController($scope, $rootScope, $location, $timeout, configService, dataService) {
 
         $scope.players = [];
-    	var currentUser = Parse.User.current();
+
+    	var currentUser = dataService.getCurrentUser();
         console.log(currentUser);
 
         $scope.$on(configService.messages.teamChanged, function(msg, data) {
+            $scope.players = [];
             $timeout(function(){
                 dataService.getTeamById(data.team.id, function(_team) {
                     dataService.getPlayersByTeamId(_team, function(players) {
@@ -71,7 +73,7 @@ soccerStats.controller('rosterController',
                                     emergencyContact: {
                                         name: player.get("emergencyContact"),
                                         phone: player.get("phone"),
-                                        relationship:player.get("relationship")
+                                        relationship: player.get("relationship")
                                     }
 
                                 });

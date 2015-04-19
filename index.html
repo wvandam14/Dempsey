@@ -43,7 +43,7 @@
 
     <div ng-if="currentPage != 'login' && currentPage != 'registration'" class="flex flex-column flex-center">
         <div class="gameReview">
-            <h5 class="header text-center">{{currGame.date}}</h5>
+            <h5 class="header text-center">{{currGame.date | date:'MM/dd/yyyy'}}</h5>
             <div class="flex flex-center-horizontal">
                 <!-- User team logo/name -->
                 <div class="team-container flex flex-one flex-center-vertical flex-column">

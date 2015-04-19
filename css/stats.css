@@ -68,24 +68,6 @@
     padding: 25px 0;
 }
 
-.player-stats-container .stats-display-container .player-card .player-info {
-    padding-right: 20px;
-    text-transform: uppercase;
-}
-
-.player-stats-container .stats-display-container .player-card .player-info .info {
-    border-bottom: solid 1px #DDD;
-}
-
-.player-card .player-info .img-container {
-    padding-right: 10px;
-    margin-bottom: 10px;
-}
-
-.content .player-card {
-
-}
-
 
 .notable-events .event-container {
     padding-top: 5px;

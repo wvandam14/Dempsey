@@ -187,5 +187,5 @@ UpgradeLog*.htm
 FakesAssemblies/
 
 # Prepros
-/min/
+.*min
 prepros.cfg

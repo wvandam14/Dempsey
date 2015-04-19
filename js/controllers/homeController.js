@@ -8,8 +8,9 @@
         };
         $scope.myPlayers = [];
 
-        var currentUser = Parse.User.current();
-        if (currentUser.fetch()) {
+        var currentUser = dataService.currentUser;
+
+        if (currentUser) {
             $scope.user.name = currentUser.get("name");
             //check for email verification 
             if (!currentUser.get("emailVerified")) {

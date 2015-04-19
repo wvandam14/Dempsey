@@ -1,5 +1,5 @@
 soccerStats.controller('gameReviewController', 
-    function gameReviewController($scope, $rootScope, $location, configService) {
+    function gameReviewController($scope, $rootScope, $location, configService, dataService) {
         $rootScope.$on(configService.messages.setGame, function(msg, data) {
             if(data.game) {
                 $scope.currGame = data.game;
@@ -9,7 +9,7 @@ soccerStats.controller('gameReviewController',
             }
         });
 
-    	var currentUser = Parse.User.current();
+    	var currentUser = dataService.currentUser;
         $scope.currGame = {};
 
 
@@ -675,7 +675,7 @@ soccerStats.controller('gameReviewController',
             },
         ];
 
-        $scope.currPlayer = $scope.players[0];
+        $scope.currPlayer = dataService.currPlayer;
 
         $scope.isSelected = function (player) {
             if ( player === $scope.currPlayer ) {

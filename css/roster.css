@@ -6,16 +6,15 @@
     min-height: 900px;
 }
 
-.roster-page .player-info h5 {
 
-	padding-top: 2px;
-	font-family: 'RobotoBoldWeb'
+
+.player-card .player-info h5 {
+	padding: 2px 0;
+	font-family: 'RobotoBoldWeb';
 }
 
-.player-info span {
-	text-transform: uppercase;
-	color: #B4B4B4;
-	margin: 0px 5px;
+.player-card .player-info .heading {
+	padding-top: 8px;
 }
 
 .player-card .player-info span {
@@ -23,7 +22,7 @@
 	text-transform: uppercase;
 	color: #B4B4B4;
 	margin: 0px 5px;
-	padding-top: 2px;
+	padding: 2px 0;
 }
 
 .roster-page .personal-info {
@@ -33,3 +32,22 @@
 .roster-page .contact-info {
 
 }
+
+.player-card .player-info {
+    padding-right: 20px;
+    /*padding-bottom: 10px;*/
+    text-transform: uppercase;
+}
+
+.player-card .player-info .info {
+    border-bottom: solid 1px #DDD;
+    margin-bottom: 10px;
+}
+
+.player-card .player-info .img-container {
+    height: 130px;
+    width: 130px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+}
+

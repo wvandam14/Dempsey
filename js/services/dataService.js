@@ -3,28 +3,39 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
     var
          ageGroups = { "U12" : "U12" , "U16" : "U16", "U18" : "U18", "U20" : "U20", "U23" : "U23" }
         , states = {AL:"Alabama",AK:"Alaska",AZ:"Arizona",AR:"Arkansas",CA:"California",CO:"Colorado",CT:"Connecticut",DE:"Delaware",DC:"District Of Columbia",FL:"Florida",GA:"Georgia",HI:"Hawaii",ID:"Idaho",IL:"Illinois",IN:"Indiana",IA:"Iowa",KS:"Kansas",KY:"Kentucky",LA:"Louisiana",ME:"Maine",MD:"Maryland",MA:"Massachusetts",MI:"Michigan",MN:"Minnesota",MS:"Mississippi",MO:"Missouri",MT:"Montana",NE:"Nebraska",NV:"Nevada",NH:"New Hampshire",NJ:"New Jersey",NM:"New Mexico",NY:"New York",NC:"North Carolina",ND:"North Dakota",OH:"Ohio",OK:"Oklahoma",OR:"Oregon",PA:"Pennsylvania",RI:"Rhode Island",SC:"South Carolina",SD:"South Dakota",TN:"Tennessee",TX:"Texas",UT:"Utah",VT:"Vermont",VA:"Virginia",WA:"Washington",WV:"West Virginia",WI:"Wisconsin",WY:"Wyoming"}
+        
+        // Current focus variables
+        , getCurrentUser = function() {
+            return Parse.User.current();
+        }
+        , currentPlayer = {}
+        , currentTeam = {}
+        , currentGame = {}
+
 
         // Parse Tables
         , playersTable = Parse.Object.extend("Players")
         , userTable = Parse.Object.extend("_User")
         , teamTable = Parse.Object.extend("Team")
+<<<<<<< HEAD
         , playerStatsTable = Parse.Object.extend("SeasonPlayerStats")
+=======
+        , gameTable = Parse.Object.extend("Game")
+>>>>>>> f8a32ff3a777762e8490b97fd42141d3be45e256
 
-        // Team Table
-        , currentTeam = {}
+        // Team Table        
         , setCurrentTeam = function(team) {
             currentTeam = team;
         }
 
-        , getCurrentTeam = function() {
+        ,getCurrentTeam = function() {
             return currentTeam;
         }
 
         , getTeams = function(callback) {
             var teamDict = [];
-            var currentUser = Parse.User.current();
             var query = new Parse.Query(userTable);
-
+            var currentUser = getCurrentUser();
             query.include('teams');
             query.get(currentUser.id, {
                 success: function(user) {
@@ -65,7 +76,7 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
         },
         getPlayers = function(callback) {
             var dictionary = [];
-            var currentUser = Parse.User.current();
+            var currentUser = getCurrentUser();
             var query = new Parse.Query(userTable);
             query.include('players');
             query.get(currentUser.id, {
@@ -156,6 +167,7 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
                     toastService.error("There was an error (" + error.code + "). Please try again.");
                 }
             });
+<<<<<<< HEAD
         }
 
         , getSeasonPlayerStatsByPlayerId = function(id, callback) {
@@ -175,6 +187,65 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
                 }
             });
         };
+=======
+        },
+
+        getGames = function(_team,callback){
+
+                var team = new teamTable();
+                var query = new Parse.Query(gameTable);
+
+
+                team.id = _team.id;
+                team.fetch().then(function(team){
+
+                    // /console.log(team.get('name'));
+
+                    query.equalTo('team',team);
+                    query.include('gameTeamStats');
+                    query.find().then(function(games_brute){
+                        var game;
+                        var games = [];
+                        
+                        for(var i = 0; i < games_brute.length; i++ ){
+
+                           game = {
+                                date: games_brute[i].get("date"),
+                                opponent: {
+                                    name: games_brute[i].get("opponent"),
+                                    symbol: games_brute[i].get("opponentSymbol"),
+                                    score: games_brute[i].get("gameTeamStats").get("goalsTaken")
+                                },
+                                team: {
+                                    name: team.get("name"),
+                                    symbol: team.get("symbol"),
+                                    score: games_brute[i].get("gameTeamStats").get("goalsMade")
+                                },
+                                status: games_brute[i].get("status")
+                            }
+                            games.push(game);
+                        }
+
+                    callback(games);
+                }, function(error){
+                    console.log("Error: " + error.code + " " + error.message);
+                    toastService.error("There was a an error (" + error.code +"). Please try again.");
+
+                });
+            });
+        }
+
+
+
+
+
+
+        ;
+
+    getTeams(function(teams){
+        currentTeam = teams[0];
+    });
+>>>>>>> f8a32ff3a777762e8490b97fd42141d3be45e256
 
     return {
         ageGroups: ageGroups,
@@ -186,7 +257,12 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
         getCurrentTeam : getCurrentTeam,
         registerTeam : registerTeam,
         getPlayers: getPlayers,
+<<<<<<< HEAD
         getSeasonPlayerStatsByPlayerId : getSeasonPlayerStatsByPlayerId
+=======
+        getCurrentUser: getCurrentUser
+        getGames : getGames
+>>>>>>> f8a32ff3a777762e8490b97fd42141d3be45e256
     }
 
 });
