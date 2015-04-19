@@ -31,7 +31,8 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
         , getTeams = function(callback) {
             var teamDict = [];
             var query = new Parse.Query(userTable);
-            var currentUser = getCurrentUser();
+            var currentUser = Parse.User.current();
+            console.log(currentUser);
             query.include('teams');
             query.get(currentUser.id, {
                 success: function(user) {
@@ -213,10 +214,6 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
 
         ;
 
-    getTeams(function(teams){
-        currentTeam = teams[0];
-    });
-
     return {
         ageGroups: ageGroups,
         states : states,
@@ -227,7 +224,7 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
         getCurrentTeam : getCurrentTeam,
         registerTeam : registerTeam,
         getPlayers: getPlayers,
-        getCurrentUser: getCurrentUser
+        getCurrentUser: getCurrentUser,
         getGames : getGames
     }
 
