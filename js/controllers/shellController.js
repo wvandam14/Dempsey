@@ -14,6 +14,7 @@ soccerStats.controller('shellController',
         $scope.$on('$locationChangeSuccess', function (next, current) {
            $timeout(function() {
                // check if user is logged in if accessing most pages
+
                var currentUser = dataService.getCurrentUser();
                if ($scope.currentPage != 'login' && $scope.currentPage != 'registration'){
                    if (currentUser.fetch()){
@@ -25,6 +26,14 @@ soccerStats.controller('shellController',
                    }
                }
 
+                /*dataService.getTeams( function(_teams) {
+                    dataService.setCurrentTeam(_teams[0]);
+                     $timeout(function() {
+                       $rootScope.$broadcast(configService.messages.teamChanged, {team: _teams[0]});
+                    });
+                    //console.log(dataService.getCurrentTeam());
+                });
+*/
                 history.push({url: current.split('#')[1], state: {}});
                 $scope.currentPage = current.split('#')[1] ? current.split('#')[1].split('/')[1] : '';
                 $rootScope.$broadcast(configService.messages.navigate, history[history.length - 1].url);
