@@ -128,7 +128,9 @@ soccerStats.controller('registrationController',
                         },
                         error: function (registerUser, error) {
                             console.log("Error: " + error.code + " " + error.message);
-                            toastService.error("There was a an error (" + error.code +"). Please try again.");
+                            if (error.code === 202)
+                                toastService.error(error.message);
+                            // toastService.error("There was a an error (" + error.code +"). Please try again.");
 
                         }
                     });

@@ -103,9 +103,11 @@ soccerStats.directive('header', function ($timeout, $rootScope, $route, viewServ
                        $rootScope.$broadcast(configService.messages.teamChanged, {team: _teams[0]});
                     });
                     dataService.setCurrentTeam($scope.currentTeam);
+                    $timeout(function() {
+                       $rootScope.$broadcast(configService.messages.teamSet, $scope.currentTeam);
+                    });
                 });
             }
-            
         }
     };
 });

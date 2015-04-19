@@ -17,6 +17,7 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
         , playersTable = Parse.Object.extend("Players")
         , userTable = Parse.Object.extend("_User")
         , teamTable = Parse.Object.extend("Team")
+        , playerStatsTable = Parse.Object.extend("SeasonPlayerStats")
         , gameTable = Parse.Object.extend("Game")
 
         // Team Table        
@@ -149,13 +150,35 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
         // Player Table
         , getPlayersByTeamId = function(id, callback) {
             var query = new Parse.Query(playersTable);
-            query.equalTo('team', id);
+            query.equalTo('team', {
+                __type: "Pointer",
+                className: "Team",
+                objectId: id
+            });
             query.find({
                 success: function(players) {
                     $timeout(function(){
                         callback(players);
                     });
 
+                }, error: function(user, error) {
+                    toastService.error("There was an error (" + error.code + "). Please try again.");
+                }
+            });
+        }
+
+        , getSeasonPlayerStatsByPlayerId = function(id, callback) {
+            var query = new Parse.Query(playerStatsTable);
+            query.equalTo('player', {
+                __type: "Pointer",
+                className: "Players",
+                objectId : id
+            });
+            query.first({
+                success: function(playerStats) {
+                    $timeout(function() {
+                        callback(playerStats);
+                    });
                 }, error: function(user, error) {
                     toastService.error("There was an error (" + error.code + "). Please try again.");
                 }
@@ -225,6 +248,7 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
         registerTeam : registerTeam,
         getPlayers: getPlayers,
         getCurrentUser: getCurrentUser,
+        getSeasonPlayerStatsByPlayerId : getSeasonPlayerStatsByPlayerId,
         getGames : getGames
     }
 
