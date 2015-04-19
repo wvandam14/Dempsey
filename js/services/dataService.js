@@ -17,6 +17,7 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
         , playersTable = Parse.Object.extend("Players")
         , userTable = Parse.Object.extend("_User")
         , teamTable = Parse.Object.extend("Team")
+        , gameTable = Parse.Object.extend("Game")
 
         // Team Table        
         , setCurrentTeam = function(team) {
@@ -158,7 +159,59 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
                     toastService.error("There was an error (" + error.code + "). Please try again.");
                 }
             });
-        };
+        },
+
+        getGames = function(_team,callback){
+
+                var team = new teamTable();
+                var query = new Parse.Query(gameTable);
+
+
+                team.id = _team.id;
+                team.fetch().then(function(team){
+
+                    // /console.log(team.get('name'));
+
+                    query.equalTo('team',team);
+                    query.include('gameTeamStats');
+                    query.find().then(function(games_brute){
+                        var game;
+                        var games = [];
+                        
+                        for(var i = 0; i < games_brute.length; i++ ){
+
+                           game = {
+                                date: games_brute[i].get("date"),
+                                opponent: {
+                                    name: games_brute[i].get("opponent"),
+                                    symbol: games_brute[i].get("opponentSymbol"),
+                                    score: games_brute[i].get("gameTeamStats").get("goalsTaken")
+                                },
+                                team: {
+                                    name: team.get("name"),
+                                    symbol: team.get("symbol"),
+                                    score: games_brute[i].get("gameTeamStats").get("goalsMade")
+                                },
+                                status: games_brute[i].get("status")
+                            }
+                            games.push(game);
+                        }
+
+                    callback(games);
+                }, function(error){
+                    console.log("Error: " + error.code + " " + error.message);
+                    toastService.error("There was a an error (" + error.code +"). Please try again.");
+
+                });
+            });
+        }
+
+
+
+
+
+
+        ;
 
     getTeams(function(teams){
         currentTeam = teams[0];
@@ -175,6 +228,7 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
         registerTeam : registerTeam,
         getPlayers: getPlayers,
         getCurrentUser: getCurrentUser
+        getGames : getGames
     }
 
 });
