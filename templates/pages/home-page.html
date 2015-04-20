@@ -103,13 +103,10 @@
         <div class="item player-card flex" ng-repeat="player in myPlayers">
             <div class="player-info">
                 <div class="info flex">
-<<<<<<< HEAD
                     <div ng-click="editPlayerInfo(player)">
-                        <img src="{{player.photo}}" />
-=======
-                    <div class="img-container" ng-click="editPlayerInfo(player)">
-                        <img src="./img/player-icon.svg" />
->>>>>>> f8a32ff3a777762e8490b97fd42141d3be45e256
+                        <div class="img-container">
+                            <img src="{{player.photo}}" />
+                        </div>
                     </div>
                     <div  class="flex flex-column">
                         <h3>{{player.fname}}<br>{{player.lname}}</h3>
