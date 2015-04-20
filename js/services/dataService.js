@@ -33,7 +33,7 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
             var teamDict = [];
             var query = new Parse.Query(userTable);
             var currentUser = Parse.User.current();
-            console.log(currentUser);
+            // console.log(currentUser);
             query.include('teams');
             query.get(currentUser.id, {
                 success: function(user) {

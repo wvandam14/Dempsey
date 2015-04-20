@@ -1,5 +1,5 @@
 ﻿soccerStats.controller('homeController', 
-    function homeController($scope, $location, toastService, configService, dataService) {
+    function homeController($scope, $location, $timeout, toastService, configService, dataService) {
 
     	$scope.verified = false;
         $scope.user = {
@@ -33,6 +33,10 @@
         //             onGoal: 5,
         //             offGoal: 7
         //         });
+        //         player.addUnique("passes", {
+        //             turnovers: 2,
+        //             total: 10
+        //         });
         //         player.set("fouls", 3);
         //         player.addUnique("cards", {
         //             type: "yellow",
@@ -41,6 +45,7 @@
         //         player.set("goals", 5);
         //         player.set("playingTime", 15.36);
         //         player.set("season", "2015-2016");
+        //         player.set("assists", 10);
         //         player.save(null, {
         //             success: function(player) {
         //                 console.log('save successful');
@@ -157,34 +162,110 @@
         $scope.isCoach = false;
         $scope.$on(configService.messages.teamSet, function(event, obj) {
             dataService.getPlayersByTeamId(obj.id, function(players) {
-                _.each(players, function(player) {
-                    dataService.getSeasonPlayerStatsByPlayerId(player.id, function(stats) {
-                        $scope.myPlayers.push({
-                            photo: player.attributes.photo ? player.attributes.photo._url : './img/player-icon.svg',
-                            fname: player.attributes.name,
-                            lname: '',
-                            number: player.attributes.jerseyNumber,
-                            position: '',
-                            total: {
-                                goals: stats.attributes.goals,
-                                passes:1,
-                                corners:2,
-                                fouls:3,
-                                yellows:4,
-                                reds:5
-                            },
-                            phone: "(123) 456 7890",
-                            emergencyContact: {
-                                name: player.attributes.emergencyContact,
-                                phone: player.attributes.phone,
-                                relationship: player.attributes.relationship
+                _.each(players, function(player, index) {
+                dataService.getSeasonPlayerStatsByPlayerId(player.id, function(stats) {
+                    console.log(index);
+                    $scope.myPlayers.push({
+                        photo: player.attributes.photo ? player.attributes.photo._url : './img/player-icon.svg',
+                        fname: player.attributes.name,
+                        lname: '',
+                        number: player.attributes.jerseyNumber,
+                        position: '',
+                        total: {
+                            goals: stats.attributes.goals,
+                            fouls: stats.attributes.fouls,
+                            playingTime : Math.round(stats.attributes.playingTime),
+                            assists: stats.attributes.assists,
+                            yellows: 0,
+                            reds: 0,
+                            cardInit : function(playerCard, stats) {
+                                //console.log(stats);
+                                _.each(stats.attributes.cards, function(card) {
+                                    if (card.type === "yellow")
+                                        playerCard.yellows++;
+                                    else if (card.type === "red")
+                                        playerCard.reds++;
+                                });
                             }
-                        }); 
-                    });
-                    // console.log(player);
-                    
+                        },
+                        // TODO: how are we calculating shot accuracy?
+                        shots : {
+                            data : [
+                                {
+                                    value: 0,
+                                    color: "#B4B4B4",
+                                    highlight: "#B4B4B4",
+                                    label: "Missed"
+                                },
+                                {
+                                    value: 0,
+                                    color:"#5DA97B",
+                                    highlight: "#5DA97B",
+                                    label: "Completed"
+                                }
+                            ],
+                            accuracy: 0,
+                            blocks: 0,
+                            onGoal: 0,
+                            offGoal: 0,
+                            goals: 0,
+                            shotInit: function(playerShot, stats) {
+                                _.each(stats.attributes.shots, function(shot) {
+                                    playerShot.blocks += shot.blocked;
+                                    playerShot.onGoal += shot.onGoal;
+                                    playerShot.offGoal += shot.offGoal;
+                                    playerShot.goals += shot.goals;
+                                });
+                                var total = playerShot.blocks + playerShot.onGoal + playerShot.offGoal + playerShot.goals;
+                                playerShot.accuracy = Math.round(((total - playerShot.offGoal) / total)*100);
+                                playerShot.data[0].value = playerShot.offGoal;
+                                playerShot.data[1].value = total;
+                            }
+                        },
+                        passes: {
+                            data : [
+                                {
+                                    value: 0,
+                                    color: "#B4B4B4",
+                                    highlight: "#B4B4B4",
+                                    label: "Turnovers"
+                                },
+                                {
+                                    value: 0,
+                                    color:"#5DA97B",
+                                    highlight: "#5DA97B",
+                                    label: "Total Passes"
+                                }
+                            ],
+                            completion: '',
+                            turnovers: 0,
+                            total: 0,
+                            passInit: function(playerPass, stats) {
+                                _.each(stats.attributes.passes, function(pass) {
+                                    playerPass.turnovers += pass.turnovers;
+                                    playerPass.total += pass.total;
+                                });
+                                playerPass.completion = (playerPass.total-playerPass.turnovers) + '/' + playerPass.total;
+                                playerPass.data[0].value = playerPass.turnovers;
+                                playerPass.data[1].value = playerPass.total;
+                            }
+                        },
+                        cards: stats.attributes.cards,
+                        phone: "(123) 456 7890",
+                        emergencyContact: {
+                            name: player.attributes.emergencyContact,
+                            phone: player.attributes.phone,
+                            relationship: player.attributes.relationship
+                        }
+                    }); 
+                    //console.log($scope.myPlayers[index]);
+                    $scope.myPlayers[index].total.cardInit($scope.myPlayers[index].total, stats);
+                    $scope.myPlayers[index].shots.shotInit($scope.myPlayers[index].shots, stats); 
+                    $scope.myPlayers[index].passes.passInit($scope.myPlayers[index].passes, stats); 
+                      
+                });
                 });
             });
-
         });
+        
     });
