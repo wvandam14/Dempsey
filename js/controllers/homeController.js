@@ -65,28 +65,47 @@
             console.log("This is where the edit player modal/function will go");
         }
 
-        $scope.teamGames = {
-            data: [
-                {
-                    value: 3,
-                    color: "#B4B4B4",
-                    highlight: "#B4B4B4",
-                    label: "Ties"
-                },
-                {
-                    value: 7,
-                    color:"#5DA97B",
-                    highlight: "#5DA97B",
-                    label: "Wins"
-                },
-                {
-                    value: 4,
-                    color:"#FF7373",
-                    highlight: "#FF7373",
-                    label: "Losses"
-                }
-            ]
-        };
+        $scope.$on(configService.messages.teamChanged,function(event,data){
+            dataService.getSeasonTeamStats(data.team.id,function(teamStats){
+                console.log(teamStats);
+                $scope.teamStats = {};
+
+                $scope.teamStats = {
+
+                    teamGames : {                        
+                        data: [
+                            {
+                                value: teamStats.get('gamesDraw'),
+                                color: "#B4B4B4",
+                                highlight: "#B4B4B4",
+                                label: "Draws"
+                            },
+                            {
+                                value:  teamStats.get('gamesWon'),
+                                color:"#5DA97B",
+                                highlight: "#5DA97B",
+                                label: "Wins"
+                            },
+                            {
+                                value:  teamStats.get('gamesDefeat'),
+                                color:"#FF7373",
+                                highlight: "#FF7373",
+                                label: "Losses"
+                            }
+                        ]
+                    },
+                    goalsConceded : teamStats.get("goalsConceded"),
+                    goalsScored : teamStats.get("goalsScored"),
+                    avgGoals : teamStats.get("avgGoals"),
+                    ballPossession : teamStats.get("ballPossession"),
+                    foulsCommitted :  teamStats.get("foulsCommitted"),
+                    gamesPlayed : teamStats.get("gamesPlayed"),
+                    goalsDifference : (teamStats.get("goalsScored") - teamStats.get("goalsConceded")) >= 0 ? '+'.concat(teamStats.get("goalsScored") - teamStats.get("goalsConceded")) : '-'.concat(teamStats.get("goalsScored") - teamStats.get("goalsConceded")) 
+                };
+                
+            });
+        });
+
 
         $scope.topGoals = [
             {
