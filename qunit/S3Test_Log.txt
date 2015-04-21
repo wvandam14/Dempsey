@@ -1,0 +1,33 @@
+sprint 3 testing log
+4/20 7:15
+	testing Bug edit player & team only work with more than one team
+		// testing with one team able to access edit and invite player
+		// issues parent home, log out, invited parent if already has a team can not see the second team
+		// parent able to edit player if only added to one team
+		// can not add or edit player of second team
+		// coach add player button not functional
+		// add email issue, only adds team id to parse, not a pointer
+
+
+cleaning out Parse
+remove these teams
+8:07
+	//edit parent on first attempt does not show select a state
+8:11
+	// create new team does not show select a state
+	// can open edit team with all fields blank (small chance have not seen more than once)
+	// the fields filling out can be sluggish (about a quarter of a second to a second delay of empty fields before the are 
+		filled out)
+	// pages can be sluggish to load, random frames appear between pages
+	// create player, edit player does not submit
+	// create player submitted after image, state, b-day and team added and default information used
+	// able to edit player with default info to new info
+	// create player working with no changes, need to try and replicate fail to submit
+	// edit player only selects the first player created by a parent
+random testing
+	// edit password does not have a toast if passwords do not match
+end testing 4/20
+added cards edit player needs a way to select which player is being edited
+edit parent on first edit does not show select a state on state drop down
+edit user - no toast if passwords do not match
+end 9:15
