@@ -190,4 +190,6 @@ FakesAssemblies/
 .*min
 js/min/
 js/controllers/min/
+js/directives/min
+js/services/min
 prepros.cfg
