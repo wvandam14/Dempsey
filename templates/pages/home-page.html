@@ -4,37 +4,37 @@
     <div class="content">
         <div class="section flex">
             <div class="flex-one flex flex-center">
-                <doughnut-chart data="teamGames.data" num="14" label="'GAMES PLAYED'" large="true"></doughnut-chart>
+                <doughnut-chart data="teamStats.teamGames.data" num="teamStats.gamesPlayed" label="'GAMES PLAYED'" large="true"></doughnut-chart>
             </div>
 
             <div class="numbers flex-one flex flex-column">
                 <div class="flex-one"></div>
                 <div class="flex">
                     <div class="flex flex-center flex-column flex-one">
-                        <h6>8</h6>
+                        <h6>{{teamStats.goalsConceded}}</h6>
                         <h5>GOALS<br/>CONCEDED</h5>
                     </div>
                     <div class="flex flex-center flex-column flex-one">
-                        <h6>11</h6>
+                        <h6>{{teamStats.goalsScored}}</h6>
                         <h5>GOALS<br/>SCORED</h5>
                     </div>
                     <div class="flex flex-center flex-column flex-one">
-                        <h6>+3</h6>
+                        <h6>{{teamStats.goalsDifference}}</h6>
                         <h5>GOAL<br/>DIFFERENCE</h5>
                     </div>
                 </div>
                 <div class="flex-one"></div>
                 <div class="flex">
                     <div class="flex flex-center flex-column flex-one">
-                        <h6>1.6</h6>
+                        <h6>{{teamStats.avgGoals}}</h6>
                         <h5>AVG GOALS<br/>PER GAME</h5>
                     </div>
                     <div class="flex flex-center flex-column flex-one">
-                        <h6>48%</h6>
+                        <h6>{{teamStats.ballPossession}}%</h6>
                         <h5>AVG BALL<br/>POSSESSION</h5>
                     </div>
                     <div class="flex flex-center flex-column flex-one">
-                        <h6>10</h6>
+                        <h6>{{teamStats.foulsCommitted}}</h6>
                         <h5>FOULS<br/>COMMITTED</h5>
                     </div>
                 </div>

@@ -19,6 +19,7 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
         , teamTable = Parse.Object.extend("Team")
         , playerStatsTable = Parse.Object.extend("SeasonPlayerStats")
         , gameTable = Parse.Object.extend("Game")
+        , SeasonTeamTable = Parse.Object.extend("SeasonTeamStats")
 
         // Team Table        
         , setCurrentTeam = function(team) {
@@ -230,6 +231,22 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
             });
         }
 
+        getSeasonTeamStats = function(team_id,callback){
+            
+            var query = new Parse.Query(teamTable);
+
+
+            query.include('teamStats');
+            query.equalTo('objectId',team_id)
+            query.first().then(function(team){
+                //console.log(team);
+                callback(team.get('teamStats'));
+            }, function(error){
+                 console.log("Error: " + error.code + " " + error.message);
+                 callback({error:"Someting happened"});
+            });
+        }
+
 
 
 
@@ -249,7 +266,8 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
         getPlayers: getPlayers,
         getCurrentUser: getCurrentUser,
         getSeasonPlayerStatsByPlayerId : getSeasonPlayerStatsByPlayerId,
-        getGames : getGames
+        getGames : getGames,
+        getSeasonTeamStats : getSeasonTeamStats
     }
 
 });
