@@ -188,4 +188,6 @@ FakesAssemblies/
 
 # Prepros
 .*min
+js/min/
+js/controllers/min/
 prepros.cfg
