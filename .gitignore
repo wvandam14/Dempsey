@@ -187,5 +187,9 @@ UpgradeLog*.htm
 FakesAssemblies/
 
 # Prepros
-.*min
+.*min.js
+js/min/
+js/controllers/min/
+js/directives/min
+js/services/min
 prepros.cfg
