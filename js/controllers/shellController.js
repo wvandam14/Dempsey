@@ -15,9 +15,8 @@ soccerStats.controller('shellController',
            $timeout(function() {
                // check if user is logged in if accessing most pages
 
-               var currentUser = dataService.getCurrentUser();
                if ($scope.currentPage != 'login' && $scope.currentPage != 'registration'){
-                   if (currentUser.fetch()){
+                   if (Parse.User.current()){
                        console.log("user logged in");
                    }
                    else {
