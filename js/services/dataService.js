@@ -25,7 +25,7 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
             currentTeam = team;
         }
 
-        ,getCurrentTeam = function() {
+        , getCurrentTeam = function() {
             return currentTeam;
         }
 
@@ -74,7 +74,7 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
         },
         getPlayers = function(callback) {
             var dictionary = [];
-            var currentUser = getCurrentUser();
+            var currentUser = Parse.User.current();
             var query = new Parse.Query(userTable);
             query.include('players');
             query.get(currentUser.id, {
