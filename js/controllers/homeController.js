@@ -1,5 +1,5 @@
 ﻿soccerStats.controller('homeController', 
-    function homeController($scope, $location, $timeout, toastService, configService, dataService) {
+    function homeController($scope, $location, $timeout, toastService, configService, dataService, viewService) {
 
     	$scope.verified = false;
         $scope.user = {
@@ -172,10 +172,10 @@
                             number: player.attributes.jerseyNumber,
                             position: '',
                             total: {
-                                goals: stats.attributes.goals,
-                                fouls: stats.attributes.fouls,
-                                playingTime : Math.round(stats.attributes.playingTime),
-                                assists: stats.attributes.assists,
+                                goals: stats.attributes.goals ? stats.attributes.goals : 0,
+                                fouls: stats.attributes.fouls ? stats.attributes.fouls : 0,
+                                playingTime : stats.attributes.playingTime ? Math.round(stats.attributes.playingTime) : 0,
+                                assists: stats.attributes.assists ? stats.attributes.assists : 0,
                                 yellows: 0,
                                 reds: 0,
                                 cardInit : function(playerCard, stats) {
@@ -237,7 +237,7 @@
                                         label: "Total Passes"
                                     }
                                 ],
-                                completion: '',
+                                completion: '0/0',
                                 turnovers: 0,
                                 total: 0,
                                 passInit: function(playerPass, stats) {
@@ -250,7 +250,6 @@
                                     playerPass.data[1].value = playerPass.total;
                                 }
                             },
-                            cards: stats.attributes.cards,
                             phone: "(123) 456 7890",
                             emergencyContact: {
                                 name: player.attributes.emergencyContact,
@@ -258,10 +257,13 @@
                                 relationship: player.attributes.relationship
                             }
                         }) - 1; 
-                        console.log(index);
-                        $scope.myPlayers[index].total.cardInit($scope.myPlayers[index].total, stats);
-                        $scope.myPlayers[index].shots.shotInit($scope.myPlayers[index].shots, stats); 
-                        $scope.myPlayers[index].passes.passInit($scope.myPlayers[index].passes, stats); 
+                        // console.log(index);
+                        if (stats.attributes.cards)
+                            $scope.myPlayers[index].total.cardInit($scope.myPlayers[index].total, stats);
+                        if (stats.attributes.shots)
+                            $scope.myPlayers[index].shots.shotInit($scope.myPlayers[index].shots, stats); 
+                        if (stats.attributes.passes)
+                            $scope.myPlayers[index].passes.passInit($scope.myPlayers[index].passes, stats); 
                     });
                 });
             });
