@@ -9,8 +9,8 @@ soccerStats.directive('header', function ($timeout, $rootScope, $route, viewServ
             $scope.currentTeam = {};
             $scope.teams = [];
 
-            var parseUser = dataService.getCurrentUser();
-            if (parseUser && parseUser.get('firstName')) {
+            var parseUser = Parse.User.current();
+            if (parseUser.fetch() && parseUser.get('firstName')) {
                 $scope.currentUser = {initials: (parseUser.get('firstName')[0] + parseUser.get('lastName')[0]) };
             }
 

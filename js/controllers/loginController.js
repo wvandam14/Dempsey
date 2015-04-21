@@ -2,8 +2,9 @@ soccerStats.controller('loginController', function loginController($scope, $root
         // User object
         $scope.user = {email: '', password: ''};
 
+        var currentUser = Parse.User.current()
         $scope.init = function() {
-            if (dataService.currentUser) {
+            if (currentUser.fetch()) {
                 $scope.goToPage('/home');
             }
         };

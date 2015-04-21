@@ -103,10 +103,8 @@
         <div class="item player-card flex" ng-repeat="player in myPlayers">
             <div class="player-info">
                 <div class="info flex">
-                    <div ng-click="editPlayerInfo(player)">
-                        <div class="img-container">
-                            <img src="{{player.photo}}" />
-                        </div>
+                    <div class="img-container" ng-click="editPlayerInfo(player)">
+                        <img src="{{player.photo}}" />
                     </div>
                     <div  class="flex flex-column">
                         <h3>{{player.fname}}<br>{{player.lname}}</h3>

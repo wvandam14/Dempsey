@@ -9,7 +9,7 @@ soccerStats.controller('gameReviewController',
             }
         });
 
-    	var currentUser = dataService.currentUser;
+    	var currentUser = Parse.User.current();
         $scope.currGame = {};
 
 
@@ -675,7 +675,7 @@ soccerStats.controller('gameReviewController',
             },
         ];
 
-        $scope.currPlayer = dataService.currPlayer;
+        $scope.currPlayer = dataService.currentPlayer;
 
         $scope.isSelected = function (player) {
             if ( player === $scope.currPlayer ) {
