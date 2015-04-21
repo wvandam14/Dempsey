@@ -104,6 +104,37 @@ soccerStats.directive('playerModal', function ($location, $rootScope, $timeout, 
                                         currentUser.save(null, {
                                             success: function (currentUser) {
                                                 toastService.success("Player, " + player.name + ", successfully added.");
+                                                var seasonPlayerStats = Parse.Object.extend("SeasonPlayerStats");
+                                                var playerStats = new seasonPlayerStats();
+                                                playerStats.set("player", newPlayer);
+                                                // playerStats.addUnique("shots", {
+                                                //     blocked: 0,
+                                                //     goals: 0,
+                                                //     onGoal: 0,
+                                                //     offGoal: 0
+                                                // });
+                                                // playerStats.addUnique("passes", {
+                                                //     total: 0,
+                                                //     turnovers: 0
+                                                // });
+                                                // playerStats.set("fouls", 0);
+                                                // playerStats.addUnique("cards", {
+
+                                                // });
+                                                // playerStats.set("goals", 0);
+                                                // playerStats.set("playingTime", 0);
+                                                // playerStats.set("season", '');
+                                                playerStats.save(null, {
+                                                    success: function(player) {
+                                                        $scope.closeModal();
+                                                        $route.reload();
+                                                        console.log('player stats saved');
+                                                    },
+                                                    error: function(player, error) {
+                                                        console.log("Error: " + error.code + " " + error.message);
+                                                        toastService.error("There was a an error (" + error.code +"). Please try again."); 
+                                                    }
+                                                });
                                             },
                                             erorr: function (currentUser, error) {
                                                 console.log("Error: " + error.code + " " + error.message);
