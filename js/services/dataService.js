@@ -183,9 +183,9 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
                     toastService.error("There was an error (" + error.code + "). Please try again.");
                 }
             });
-        },
+        }
 
-        getGames = function(_team,callback){
+        , getGames = function(_team,callback){
 
                 var team = new teamTable();
                 var query = new Parse.Query(gameTable);
@@ -230,10 +230,127 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
             });
         }
 
+        , playerConstructor = function(player, stats) {
+            var retPlayer = {
+                                id : player.id,
+                                photo: player.attributes.photo ? player.attributes.photo._url : './img/player-icon.svg',
+                                fname: player.attributes.name,
+                                lname: '',
+                                number: player.attributes.jerseyNumber,
+                                position: '',
+                                total: {
+                                    goals: stats.attributes.goals ? stats.attributes.goals : 0,
+                                    fouls: stats.attributes.fouls ? stats.attributes.fouls : 0,
+                                    playingTime : stats.attributes.playingTime ? Math.round(stats.attributes.playingTime) : 0,
+                                    assists: stats.attributes.assists ? stats.attributes.assists : 0,
+                                    yellows: 0,
+                                    reds: 0,
+                                    cardInit : function(playerCard, stats) {
+                                        //console.log(stats);
+                                        _.each(stats.attributes.cards, function(card) {
+                                            if (card.type === "yellow")
+                                                playerCard.yellows++;
+                                            else if (card.type === "red")
+                                                playerCard.reds++;
+                                        });
+                                    }
+                                },
+                                // TODO: how are we calculating shot accuracy?
+                                shots : {
+                                    data : [
+                                        {
+                                            value: 0,
+                                            color: "#B4B4B4",
+                                            highlight: "#B4B4B4",
+                                            label: "Missed"
+                                        },
+                                        {
+                                            value: 0,
+                                            color:"#5DA97B",
+                                            highlight: "#5DA97B",
+                                            label: "Completed"
+                                        }
+                                    ],
+                                    accuracy: 0,
+                                    blocks: 0,
+                                    onGoal: 0,
+                                    offGoal: 0,
+                                    goals: 0,
+                                    shotInit: function(playerShot, stats) {
+                                        _.each(stats.attributes.shots, function(shot) {
+                                            playerShot.blocks += shot.blocked;
+                                            playerShot.onGoal += shot.onGoal;
+                                            playerShot.offGoal += shot.offGoal;
+                                            playerShot.goals += shot.goals;
+                                        });
+                                        var total = playerShot.blocks + playerShot.onGoal + playerShot.offGoal + playerShot.goals;
+                                        playerShot.accuracy = Math.round(((total - playerShot.offGoal) / total)*100);
+                                        playerShot.data[0].value = playerShot.offGoal;
+                                        playerShot.data[1].value = total;
+                                    }
+                                },
+                                passes: {
+                                    data : [
+                                        {
+                                            value: 0,
+                                            color: "#B4B4B4",
+                                            highlight: "#B4B4B4",
+                                            label: "Turnovers"
+                                        },
+                                        {
+                                            value: 0,
+                                            color:"#5DA97B",
+                                            highlight: "#5DA97B",
+                                            label: "Total Passes"
+                                        }
+                                    ],
+                                    completion: '0/0',
+                                    turnovers: 0,
+                                    total: 0,
+                                    passInit: function(playerPass, stats) {
+                                        _.each(stats.attributes.passes, function(pass) {
+                                            playerPass.turnovers += pass.turnovers;
+                                            playerPass.total += pass.total;
+                                        });
+                                        playerPass.completion = (playerPass.total-playerPass.turnovers) + '/' + playerPass.total;
+                                        playerPass.data[0].value = playerPass.turnovers;
+                                        playerPass.data[1].value = playerPass.total;
+                                    }
+                                },
+                                phone: "(123) 456 7890",
+                                emergencyContact: {
+                                    name: player.attributes.emergencyContact,
+                                    phone: player.attributes.phone,
+                                    relationship: player.attributes.relationship
+                                }
+                            }; 
+            // console.log(index);
+            if (stats.attributes.cards)
+                retPlayer.total.cardInit(retPlayer.total, stats);
+            if (stats.attributes.shots)
+                retPlayer.shots.shotInit(retPlayer.shots, stats); 
+            if (stats.attributes.passes)
+                retPlayer.passes.passInit(retPlayer.passes, stats); 
 
+            return retPlayer;
+                        
+        }
 
-
-
+        , getPlayerByPlayerId = function (playerID, callback) {
+            var query = new Parse.Query(playersTable);
+            query.equalTo("objectId", playerID);
+            query.first({
+                success: function(player) {
+                    $timeout(function() {
+                        callback(player);
+                    });
+                },
+                error: function(player, error) {
+                    console.log("Error: " + error.code + " " + error.message);
+                    toastService.error("There was a an error (" + error.code +"). Please try again.");
+                }
+            });
+        }
 
         ;
 
@@ -249,7 +366,9 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
         getPlayers: getPlayers,
         getCurrentUser: getCurrentUser,
         getSeasonPlayerStatsByPlayerId : getSeasonPlayerStatsByPlayerId,
-        getGames : getGames
+        getGames : getGames,
+        playerConstructor : playerConstructor,
+        getPlayerByPlayerId : getPlayerByPlayerId
     }
 
 });

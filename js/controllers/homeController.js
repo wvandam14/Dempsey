@@ -6,7 +6,7 @@
             name: '',
             accountType: ''
         };
-        $scope.myPlayers = [];
+
 
         var currentUser = Parse.User.current();
 
@@ -160,113 +160,29 @@
 
         // Ignore below here
         $scope.isCoach = false;
-        $scope.$on(configService.messages.teamSet, function(event, obj) {
-            dataService.getPlayersByTeamId(obj.id, function(players) {
-                _.each(players, function(player) {
-                    dataService.getSeasonPlayerStatsByPlayerId(player.id, function(stats) {
-                        //console.log(index);
-                        var index = $scope.myPlayers.push({
-                            photo: player.attributes.photo ? player.attributes.photo._url : './img/player-icon.svg',
-                            fname: player.attributes.name,
-                            lname: '',
-                            number: player.attributes.jerseyNumber,
-                            position: '',
-                            total: {
-                                goals: stats.attributes.goals ? stats.attributes.goals : 0,
-                                fouls: stats.attributes.fouls ? stats.attributes.fouls : 0,
-                                playingTime : stats.attributes.playingTime ? Math.round(stats.attributes.playingTime) : 0,
-                                assists: stats.attributes.assists ? stats.attributes.assists : 0,
-                                yellows: 0,
-                                reds: 0,
-                                cardInit : function(playerCard, stats) {
-                                    //console.log(stats);
-                                    _.each(stats.attributes.cards, function(card) {
-                                        if (card.type === "yellow")
-                                            playerCard.yellows++;
-                                        else if (card.type === "red")
-                                            playerCard.reds++;
-                                    });
-                                }
-                            },
-                            // TODO: how are we calculating shot accuracy?
-                            shots : {
-                                data : [
-                                    {
-                                        value: 0,
-                                        color: "#B4B4B4",
-                                        highlight: "#B4B4B4",
-                                        label: "Missed"
-                                    },
-                                    {
-                                        value: 0,
-                                        color:"#5DA97B",
-                                        highlight: "#5DA97B",
-                                        label: "Completed"
-                                    }
-                                ],
-                                accuracy: 0,
-                                blocks: 0,
-                                onGoal: 0,
-                                offGoal: 0,
-                                goals: 0,
-                                shotInit: function(playerShot, stats) {
-                                    _.each(stats.attributes.shots, function(shot) {
-                                        playerShot.blocks += shot.blocked;
-                                        playerShot.onGoal += shot.onGoal;
-                                        playerShot.offGoal += shot.offGoal;
-                                        playerShot.goals += shot.goals;
-                                    });
-                                    var total = playerShot.blocks + playerShot.onGoal + playerShot.offGoal + playerShot.goals;
-                                    playerShot.accuracy = Math.round(((total - playerShot.offGoal) / total)*100);
-                                    playerShot.data[0].value = playerShot.offGoal;
-                                    playerShot.data[1].value = total;
-                                }
-                            },
-                            passes: {
-                                data : [
-                                    {
-                                        value: 0,
-                                        color: "#B4B4B4",
-                                        highlight: "#B4B4B4",
-                                        label: "Turnovers"
-                                    },
-                                    {
-                                        value: 0,
-                                        color:"#5DA97B",
-                                        highlight: "#5DA97B",
-                                        label: "Total Passes"
-                                    }
-                                ],
-                                completion: '0/0',
-                                turnovers: 0,
-                                total: 0,
-                                passInit: function(playerPass, stats) {
-                                    _.each(stats.attributes.passes, function(pass) {
-                                        playerPass.turnovers += pass.turnovers;
-                                        playerPass.total += pass.total;
-                                    });
-                                    playerPass.completion = (playerPass.total-playerPass.turnovers) + '/' + playerPass.total;
-                                    playerPass.data[0].value = playerPass.turnovers;
-                                    playerPass.data[1].value = playerPass.total;
-                                }
-                            },
-                            phone: "(123) 456 7890",
-                            emergencyContact: {
-                                name: player.attributes.emergencyContact,
-                                phone: player.attributes.phone,
-                                relationship: player.attributes.relationship
-                            }
-                        }) - 1; 
-                        // console.log(index);
-                        if (stats.attributes.cards)
-                            $scope.myPlayers[index].total.cardInit($scope.myPlayers[index].total, stats);
-                        if (stats.attributes.shots)
-                            $scope.myPlayers[index].shots.shotInit($scope.myPlayers[index].shots, stats); 
-                        if (stats.attributes.passes)
-                            $scope.myPlayers[index].passes.passInit($scope.myPlayers[index].passes, stats); 
+        $scope.$on(configService.messages.teamSet, function(event, team) {
+            $scope.myPlayers = [];
+            if (currentUser.get("accountType") === 1) {
+                dataService.getPlayersByTeamId(team.id, function(players) {
+                    _.each(players, function(player) {
+                        dataService.getSeasonPlayerStatsByPlayerId(player.id, function(stats) {
+                            $scope.myPlayers.push(dataService.playerConstructor(player, stats));
+                        });
                     });
                 });
-            });
+            } else {
+                // console.log(currentUser.get("players"));
+                _.each(currentUser.get("players"), function(player) {
+                    dataService.getPlayerByPlayerId(player.id, function(player) {
+                        // console.log(player);
+                        if (player.get("team").id === team.id) {
+                            dataService.getSeasonPlayerStatsByPlayerId(player.id, function(stats) {
+                                $scope.myPlayers.push(dataService.playerConstructor(player, stats));
+                            });
+                        }
+                    });
+                }); 
+            }
         });
-        
+    
     });
