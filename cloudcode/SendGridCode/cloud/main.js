@@ -77,7 +77,7 @@ Parse.Cloud.define("sendEmailInvite", function(request, response) {
                         });
                     },
                     error: function(error) {
-                        alert("Error: " + error.code + " " + error.message);
+                        console.log("Error: " + error.code + " " + error.message);
                     }
                 });
 
@@ -95,30 +95,43 @@ Parse.Cloud.define("sendEmailInvite", function(request, response) {
                     "<br/>" +
                     "Soccer Stats Development Team</p>";
 
-                Parse.Cloud.useMasterKey();
 
-                results[0].addUnique("teams", teamId);
-                results[0].save(null, {
-                    success: function (data) {
-                        email = sendgrid.Email({to: userEmail});
-                        email.setFrom('no-reply@soccerstats.com');
-                        email.setFromName('Soccer Stats');
-                        email.setSubject('Welcome to Soccer Stats!');
-                        email.setHTML(emailBody);
+                var Teams = Parse.Object.extend("Team");
+                var teams = new Parse.Query(Teams);
+                teams.equalTo("objectId", teamId);
+                teams.find({
+                    success: function(_teams){
+                        Parse.Cloud.useMasterKey();
 
-                        sendgrid.sendEmail(email).then(
-                            function (httpResponse) {
-                                console.log(httpResponse);
-                                response.success("Email sent!");
-                            },
-                            function (httpResponse) {
-                                console.error(httpResponse);
-                                response.error(httpResponse);
-                            });
-                    }, error: function (obj, error) {
-                       response.error(error);
+                        results[0].addUnique("teams", _teams[0]);
+                        results[0].save(null, {
+                            success: function (data) {
+                                email = sendgrid.Email({to: userEmail});
+                                email.setFrom('no-reply@soccerstats.com');
+                                email.setFromName('Soccer Stats');
+                                email.setSubject('Welcome to Soccer Stats!');
+                                email.setHTML(emailBody);
+
+                                sendgrid.sendEmail(email).then(
+                                    function (httpResponse) {
+                                        console.log(httpResponse);
+                                        response.success("Email sent!");
+                                    },
+                                    function (httpResponse) {
+                                        console.error(httpResponse);
+                                        response.error(httpResponse);
+                                    });
+                            }, error: function (obj, error) {
+                                response.error(error);
+                            }
+                        });
+                    },
+                    error: function(user, error){
+                        console.log("Error: " + error.code + " " + error.message);
                     }
-                });
+                })
+
+
 
             }
         },
