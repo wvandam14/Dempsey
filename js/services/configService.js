@@ -11,7 +11,7 @@ soccerStats.factory('configService', function () {
             , teamChanged: 'teamChanged'
             , updateTeam: 'updateTeam'
             , updatePlayer : 'updatePlayer'
-            , teamSet : 'teamSet'
+            , playerAdded : 'playerAdded'
 
         }, toasts: {
             general: function(action, type, success){

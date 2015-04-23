@@ -7,6 +7,9 @@
             accountType: ''
         };
 
+        $scope.myPlayers = [];
+        $scope.currentTeam = {};
+
 
         var currentUser = Parse.User.current();
 
@@ -214,12 +217,15 @@
 
         // Ignore below here
         $scope.isCoach = false;
-        $scope.$on(configService.messages.teamSet, function(event, team) {
+        $scope.$on(configService.messages.teamChanged, function(event, data) {
+            if (!data.refresh)
+                $scope.currentTeam = data.team;
+            console.log($scope.currentTeam);
             $scope.myPlayers = [];
             if (currentUser.get("accountType") === 1) {
-                dataService.getPlayersByTeamId(team.id, function(players) {
+                dataService.getPlayersByTeamId($scope.currentTeam.id, function(players) {
                     _.each(players, function(player) {
-                        console.log(player);
+                        //console.log(player);
                         dataService.getSeasonPlayerStatsByPlayerId(player.get("playerStats").id, function(stats) {
                             $scope.myPlayers.push(dataService.playerConstructor(player, stats));
                         });
@@ -229,16 +235,23 @@
                 // console.log(currentUser.get("players"));
                 _.each(currentUser.get("players"), function(player) {
                     dataService.getPlayerByPlayerId(player.id, function(player) {
-                        // console.log(player);
-                        if (player.get("team").id === team.id) {
-                            console.log(player);
+                        //console.log(player);
+                        if (player.get("team").id === $scope.currentTeam.id) {
+                            //console.log(player);
                             dataService.getSeasonPlayerStatsByPlayerId(player.get("playerStats").id, function(stats) {
+                                //console.log(stats);
                                 $scope.myPlayers.push(dataService.playerConstructor(player, stats));
                             });
                         }
                     });
                 }); 
             }
+        });
+
+        $scope.$on(configService.messages.playerAdded, function(event, player) {
+            dataService.getSeasonPlayerStatsByPlayerId(player.get("playerStats").id, function(stats) {
+                $scope.myPlayers.push(dataService.playerConstructor(player, stats));
+            })
         });
     
     });

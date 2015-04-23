@@ -103,6 +103,7 @@ soccerStats.directive('playerModal', function ($location, $rootScope, $timeout, 
                                         currentUser.save(null, {
                                             success: function (currentUser) {
                                                 toastService.success("Player, " + player.name + ", successfully added.");
+                                                $rootScope.$broadcast(configService.messages.playerAdded, newPlayer);
                                                 $scope.closeModal();
                                             },
                                             erorr: function (currentUser, error) {
@@ -152,6 +153,7 @@ soccerStats.directive('playerModal', function ($location, $rootScope, $timeout, 
                                 editPlayer.save(null, {
                                     success: function(editPlayer) {
                                         toastService.success("Player " + player.name + "'s profile updated.");
+                                        $rootScope.$broadcast(configService.messages.teamChanged, {refresh: true});
                                         $scope.closeModal();
                                         // $route.reload();
                                     },
