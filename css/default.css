@@ -387,7 +387,7 @@ x div:nth-of-type(2) {
 /* Default Page Styles */
 .content {
     background-color: #F2F2F2;
-    padding: 0px 100px;
+    padding: 20px 100px;
 }
 
 .content .section {
