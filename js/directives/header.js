@@ -50,13 +50,13 @@ soccerStats.directive('header', function ($timeout, $rootScope, $route, viewServ
                 });
             }
 
-            $scope.updatePlayer = function() {
-                viewService.openModal('playerModal');
-                $timeout(function() {
-                    $rootScope.$broadcast(configService.messages.updatePlayer, {state: true});
-                });
+            // $scope.updatePlayer = function() {
+            //     viewService.openModal('playerModal');
+            //     $timeout(function() {
+            //         $rootScope.$broadcast(configService.messages.updatePlayer, {state: true});
+            //     });
                 
-            }
+            // }
 
             $scope.changeTeam = function(team) {
                 $scope.toggleTeams();

@@ -1,5 +1,5 @@
 ﻿soccerStats.controller('homeController', 
-    function homeController($scope, $location, $timeout, toastService, configService, dataService, viewService) {
+    function homeController($scope, $location, $timeout, $rootScope, toastService, configService, dataService, viewService) {
 
     	$scope.verified = false;
         $scope.user = {
@@ -61,8 +61,12 @@
         // });
         
         // TODO: implement this
-        $scope.editPlayerInfo = function (player) {
-            console.log("This is where the edit player modal/function will go");
+        $scope.updatePlayer = function(player) {
+            viewService.openModal('playerModal');
+            $timeout(function() {
+                $rootScope.$broadcast(configService.messages.updatePlayer, {state: true, id : player.id});
+            });
+            
         }
 
         $scope.$on(configService.messages.teamChanged,function(event,data){
