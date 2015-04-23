@@ -137,6 +137,7 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
 
         , registerTeam = function(newTeam) {
             var _team = new teamTable();
+
             _team.set("ageGroup", newTeam.ageGroup);
             _team.set("city", newTeam.city);
             _team.set("leagueName", newTeam.leagueName);
@@ -145,6 +146,7 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
             _team.set("state", (_.invert(states))[newTeam.state]);
             _team.set("logo", newTeam.logo);
             _team.set("primaryColor", newTeam.primaryColor);
+            _team.set("teamStats", new teamStats());
 
             return _team;
         }
