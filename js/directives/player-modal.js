@@ -151,7 +151,7 @@ soccerStats.directive('playerModal', function ($location, $rootScope, $timeout, 
                                 editPlayer.set("relationship", player.emergencyContact.relationship);
                                 editPlayer.save(null, {
                                     success: function(editPlayer) {
-                                        toastService.success("Player, " + player.name + "'s profile updated.");
+                                        toastService.success("Player " + player.name + "'s profile updated.");
                                         $scope.closeModal();
                                         // $route.reload();
                                     },

@@ -32,11 +32,30 @@ soccerStats.directive('createGameModal', function (viewService, toastService, co
 
             $scope.removeGame = function (index){
                 $scope.games.splice(index, 1);
-            }
+            };
 
-            $scope.sendGames = function () {
+            $scope.currentTeam = {};
+            $scope.$on(configService.messages.teamChanged, function(event, data) {
+                $scope.currentTeam = data.team;
+            });
 
-            }
+            // Register a player
+            $scope.sendGames = function() {
+                var teamID = $scope.currentTeam.id;
+                if (viewService.validateAreaByFormName('gameForm')) {
+
+                    //console.log("Form validated");
+                    _.each($scope.games, function(game) {
+                        dataService.saveGame(game, teamID);                            
+                    });
+                }
+                else {
+                    //console.log("Form not validated");
+                    toastService.error(configService.toasts.requiredFields);
+                }
+
+                $scope.closeModal();
+            };
 
             // // Sends email via the cloud code with parse
             // $scope.sendEmailInvite = function() {
