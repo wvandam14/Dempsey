@@ -61,7 +61,7 @@
 }
 
 .stats-display {
-    max-width: 50%;
+    /*max-width: 50%;*/
 }
 
 .stats-display > div:nth-child(2) {

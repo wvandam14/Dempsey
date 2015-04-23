@@ -14,7 +14,7 @@
                 </div>
                 <h4 class="ellipse">{{team.label}}</h4>
             </div>
-            <div role="coach" class="team flex flex-center-vertical" ng-click="showCreateTeam()">
+            <div role="coach" class="team flex flex-center-vertical" ng-click="createTeam()">
                 <h4>Create A Team</h4>
             </div>
         </div>
@@ -46,10 +46,6 @@
             <h5>Add Player</h5>
         </div>
 
-        <!-- <div class="flex link flex-center" ng-click="updatePlayer()" >
-            <img src="./img/invite-icon.svg" />
-            <h5>Edit Player</h5>
-        </div> -->
     </div>
 
     <div class="user flex flex-center">
@@ -58,7 +54,7 @@
         </div>
 
         <div ng-show="showAccount" class="user-dropdown dropdown">
-            <div ng-click="showEditAccount()">
+            <div ng-click="editAccount()">
                 <h4>Edit Account</h4>
             </div>
             <div ng-click="logout()">

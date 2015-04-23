@@ -23,19 +23,26 @@ soccerStats.directive('header', function ($timeout, $rootScope, $route, viewServ
             }
 
             // create a new team
-            $scope.showCreateTeam = function() {
+            $scope.createTeam = function() {
                 $scope.toggleTeams();
                 viewService.openModal('teamModal');
-            }
-            // edit coach account
-            $scope.showEditAccount = function() {
-                $scope.toggleAccount();
-                viewService.openModal('accountModal');
+                // $timeout(function() {
+                //     $rootScope.$broadcast(configService.messages.updateTeam, {state: false});
+                // });
             }
 
             // edit team 
             $scope.editTeam = function() {
                 viewService.openModal('editTeamModal');
+                // $timeout(function() {
+                //     $rootScope.$broadcast(configService.messages.updateTeam, {team: $scope.currentTeam, state: true});
+                // });
+            }
+
+            // edit coach or parent account
+            $scope.editAccount = function() {
+                $scope.toggleAccount();
+                viewService.openModal('accountModal');
             }
 
             // coach can invite more parents
@@ -49,14 +56,6 @@ soccerStats.directive('header', function ($timeout, $rootScope, $route, viewServ
                     $rootScope.$broadcast(configService.messages.updatePlayer, {state: false});
                 });
             }
-
-            // $scope.updatePlayer = function() {
-            //     viewService.openModal('playerModal');
-            //     $timeout(function() {
-            //         $rootScope.$broadcast(configService.messages.updatePlayer, {state: true});
-            //     });
-                
-            // }
 
             $scope.changeTeam = function(team) {
                 $scope.toggleTeams();
@@ -105,10 +104,6 @@ soccerStats.directive('header', function ($timeout, $rootScope, $route, viewServ
                     $timeout(function() {
                        $rootScope.$broadcast(configService.messages.teamChanged, {team: _teams[0]});
                     });
-                    // dataService.setCurrentTeam($scope.currentTeam);
-                    // $timeout(function() {
-                    //    $rootScope.$broadcast(configService.messages.teamSet, $scope.currentTeam);
-                    // });
                 });
                 $rootScope.$broadcast(configService.messages.teamChanged, {team: $scope.teams[0]});
                 

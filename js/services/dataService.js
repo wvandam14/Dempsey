@@ -443,6 +443,18 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
             });
         }
 
+        ,getGameStatsById = function(game_id,callback){
+
+            var query = new Parse.Query(gameTable);
+            query.include('gameTeamStats');
+            query.first(game_id).then(function(game){
+                callback(game);
+            }, function(error){
+                console.log("Error: " + error.code + " " + error.message);
+                callback({});
+            });
+        }
+
         ;
 
     return {
@@ -462,7 +474,11 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
         getPlayerByPlayerId : getPlayerByPlayerId,
         getSeasonTeamStats : getSeasonTeamStats,
         saveGame : saveGame,
+<<<<<<< HEAD
         saveGameAttributes : saveGameAttributes
+=======
+        getGameStatsById : getGameStatsById
+>>>>>>> 2dd6ac2f8ba74f4c6e8b83f124ffa9c3ca90d2c9
     }
 
 });

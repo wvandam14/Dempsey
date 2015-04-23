@@ -33,29 +33,7 @@ soccerStats.directive('editTeamModal', function ($location, $timeout, $route, $r
                                 success: function (editTeam) {
                                     toastService.success(configService.toasts.teamUpdateSuccess);
                                     $scope.closeModal();
-                                    $route.reload();
-                                //     var leagueName = editTeam.get("leagueName"),
-                                //         logo = editTeam.get("logo"),
-                                //         teamName = editTeam.get("name"),
-                                //         ageGroup = editTeam.get("ageGroup"),
-                                //         city = editTeam.get("city"),
-                                //         teamNumber = editTeam.get("number"),
-                                //         state = editTeam.get("state"),
-                                //         primaryColor = editTeam.get("primaryColor")
-                                //     ;
-                                //     $scope.newTeam = {
-                                //         league: leagueName,
-                                //         value: editTeam.id, 
-                                //         label: teamName, 
-                                //         logo: logo._url,
-                                //         age: ageGroup,
-                                //         city: city,
-                                //         number: teamNumber,
-                                //         state: state,
-                                //         color: primaryColor 
-                                //     };
-                                // // console.log($scope.newTeam);
-                                // $rootScope.$broadcast(configService.messages.updateTeam, $scope.newTeam);
+                                    //$route.reload();
                                 },
                                 error: function(editTeam, error) {
                                     toastService.error("There was a an error (" + error.code +"). Please try again.");

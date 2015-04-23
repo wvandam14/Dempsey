@@ -159,30 +159,6 @@
         });
 
 
-        $scope.topShots = [
-            {
-                name: 'OBAFEMI MARTINS',
-                num: 4
-            },
-            {
-                name: 'CLINT DEMPSEY',
-                num: 3
-            },
-            {
-                name: 'MARCO PAPPA',
-                num: 2
-            },
-            {
-                name: 'LAMAR NEAGLE',
-                num: 1
-            },
-            {
-                name: 'ANDY ROSE',
-                num: 1
-            },
-        ];
-
-
         // Ignore below here
         $scope.isCoach = false;
         $scope.$on(configService.messages.teamChanged, function(event, data) {
