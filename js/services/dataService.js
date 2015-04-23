@@ -373,6 +373,8 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
             query.include('teamStats');
             query.include("teamStats.topAssists");
             query.include("teamStats.topAssists.playerStats");
+            query.include("teamStats.topGoals");
+            query.include("teamStats.topGoals.playerStats");
 
             query.equalTo('objectId',team_id)
             query.first().then(function(team){

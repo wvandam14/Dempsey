@@ -137,6 +137,13 @@
                         $scope.teamStats.topAssists.push({ name : player.get("name"), num : player.get("playerStats").get("assists"), photo : photo});
                     });
 
+                    console.log(teamStats.get('topGoals'))
+
+                    _.each(teamStats.get('topGoals'),function(player){
+                        var photo = player.get("photo") ? player.get("photo")._url : "./img/sample/profile-small.jpg"; 
+                        $scope.teamStats.topGoals.push({ name : player.get("name"), num : player.get("playerStats").get("goals"), photo : photo});
+                    });
+
 
 
 
@@ -145,52 +152,6 @@
             });
         });
 
-
-        $scope.topGoals = [
-            {
-                name: 'CLINT DEMPSEY',
-                num: 4
-            },
-            {
-                name: 'OBAFEMI MARTINS',
-                num: 3
-            },
-            {
-                name: 'MARCO PAPPA',
-                num: 2
-            },
-            {
-                name: 'LAMAR NEAGLE',
-                num: 1
-            },
-            {
-                name: 'ANDY ROSE',
-                num: 1
-            },
-        ];
-
-       /* $scope.topAssists = [
-            {
-                name: 'OBAFEMI MARTINS',
-                num: 4
-            },
-            {
-                name: 'CLINT DEMPSEY',
-                num: 3
-            },
-            {
-                name: 'MARCO PAPPA',
-                num: 2
-            },
-            {
-                name: 'LAMAR NEAGLE',
-                num: 1
-            },
-            {
-                name: 'ANDY ROSE',
-                num: 1
-            },
-        ];*/
 
         $scope.topShots = [
             {
