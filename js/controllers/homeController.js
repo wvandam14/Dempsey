@@ -76,7 +76,7 @@
         $scope.$on(configService.messages.teamChanged,function(event,data){
             dataService.getSeasonTeamStats(data.team.id,function(teamStats){
 
-                //console.log(teamStats);
+                console.log(teamStats);
 
 
                 if(!teamStats){
