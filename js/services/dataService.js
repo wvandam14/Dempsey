@@ -371,9 +371,13 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
             var query = new Parse.Query(teamTable);
 
             query.include('teamStats');
+            query.include("teamStats.topAssists");
+            query.include("teamStats.topAssists.playerStats");
+
             query.equalTo('objectId',team_id)
             query.first().then(function(team){
                 console.log(team);
+                console.log(team.get('teamStats').get('topAssists'));
                 callback(team.get('teamStats'));
             }, function(error){
                  console.log("Error: " + error.code + " " + error.message);
