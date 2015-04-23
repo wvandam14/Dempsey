@@ -130,7 +130,8 @@
 
 
                     _.each(teamStats.get('topAssists'),function(player){
-                        $scope.teamStats.topAssists.push({ name : player.get("name"), num : player.get("playerStats").get("assists") });
+                        var photo = player.get("photo") ? player.get("photo")._url : "./img/sample/profile-small.jpg"; 
+                        $scope.teamStats.topAssists.push({ name : player.get("name"), num : player.get("playerStats").get("assists"), photo : photo});
                     });
 
 
@@ -219,7 +220,7 @@
             if (currentUser.get("accountType") === 1) {
                 dataService.getPlayersByTeamId(team.id, function(players) {
                     _.each(players, function(player) {
-                        console.log(player);
+                        //console.log(player);
                         dataService.getSeasonPlayerStatsByPlayerId(player.get("playerStats").id, function(stats) {
                             $scope.myPlayers.push(dataService.playerConstructor(player, stats));
                         });

@@ -345,7 +345,7 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
 
             query.equalTo('objectId',team_id)
             query.first().then(function(team){
-                console.log(team.get('teamStats').get('topAssists'));
+                //console.log(team);
                 callback(team.get('teamStats'));
             }, function(error){
                  console.log("Error: " + error.code + " " + error.message);
