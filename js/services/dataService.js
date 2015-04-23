@@ -30,6 +30,10 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
             return currentTeam;
         }
 
+        , setCurrentGame = function (game) {
+            currentGame = game;
+        }
+
         , getTeams = function(callback) {
             var teamDict = [];
             var query = new Parse.Query(userTable);
@@ -146,7 +150,7 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
             _team.set("state", (_.invert(states))[newTeam.state]);
             _team.set("logo", newTeam.logo);
             _team.set("primaryColor", newTeam.primaryColor);
-            _team.set("teamStats", new teamStats());
+            _team.set("teamStats", new SeasonTeamTable());
 
             return _team;
         }
@@ -206,6 +210,7 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
                         for(var i = 0; i < games_brute.length; i++ ){
 
                            game = {
+                                id: games_brute[i].id,
                                 date: games_brute[i].get("date"),
                                 opponent: {
                                     name: games_brute[i].get("opponent"),
@@ -217,12 +222,13 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
                                     symbol: team.get("symbol"),
                                     score: games_brute[i].get("gameTeamStats").get("goalsMade")
                                 },
-                                status: games_brute[i].get("status")
+                                status: games_brute[i].get("status"),
+                                notes: games_brute[i].get("gameNotes")
                             }
                             // console.log(game);
                             games.push(game);
                         }
-                        //console.log(games)
+                        console.log(games);
 
                     callback(games);
                 }, function(error){
@@ -234,9 +240,6 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
         }
 
         , saveGame = function(game, teamID) {
-            var Game = Parse.Object.extend("Game");
-            var GameStats = Parse.Object.extend("GameTeamStats");
-
             var newGame = new Game();
   
             // Things the user entered
@@ -245,7 +248,7 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
             newGame.set("opponentSymbol", game.opponent.symbol);
             newGame.set("startTime", game.time.toTimeString());
             newGame.set("team", {__type: "Pointer", className: "Team", objectId: teamID});
-            newGame.set("gameTeamStats", new GameStats());
+            newGame.set("gameTeamStats", new SeasonTeamTable());
             
             // Default values
             newGame.set("status", "not_started");
@@ -260,6 +263,37 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
                     toastService.error("There was an error (" + error.code + "). Please try again.");
                 }
             });
+        }
+
+        , saveGameAttributes = function (game, attributes, data) {
+            var query = new Parse.Query(gameTable);
+            query.equalTo("objectId", game.id);
+            query.first({
+                success: function(editGame) {
+                    console.log(editGame);
+
+                    for(var i = 0; i < attributes.length; i++) {
+                        editGame.set(attributes[i], data[i]);
+                    }
+
+                    editGame.save(null, {
+                        success: function() {
+                            toastService.success("Successfully saved game notes.");
+                        },
+                        error: function (error) {
+                            toastService.error("There was an error.");
+                        }
+                    })
+                },
+                error: function(editGame, error) {
+                    console.log("Error: " + error.code + " " + error.message);
+                    toastService.error("There was a an error (" + error.code +"). Please try again.");
+                }
+            });
+
+            
+
+            
         }
 
         , playerConstructor = function(player, stats) {
@@ -421,7 +455,8 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
         playerConstructor : playerConstructor,
         getPlayerByPlayerId : getPlayerByPlayerId,
         getSeasonTeamStats : getSeasonTeamStats,
-        saveGame : saveGame
+        saveGame : saveGame,
+        saveGameAttributes : saveGameAttributes
     }
 
 });

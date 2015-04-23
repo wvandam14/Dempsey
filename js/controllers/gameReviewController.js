@@ -1,5 +1,7 @@
 soccerStats.controller('gameReviewController', 
     function gameReviewController($scope, $rootScope, $location, configService, dataService) {
+        $scope.currGame = {};
+
         $rootScope.$on(configService.messages.setGame, function(msg, data) {
             if(data.game) {
                 $scope.currGame = data.game;
@@ -10,7 +12,7 @@ soccerStats.controller('gameReviewController',
         });
 
     	var currentUser = Parse.User.current();
-        $scope.currGame = {};
+        
 
 
         // DUMMY DATA
@@ -689,6 +691,11 @@ soccerStats.controller('gameReviewController',
         $scope.selectPlayer = function (player) {
             $scope.currPlayer = player;
         };
+
+        $scope.saveGameNotes = function () {
+            console.log($scope.currGame)
+            dataService.saveGameAttributes($scope.currGame, ["gameNotes"], [$scope.game.notes]);
+        }        
 
         $scope.notableEvents = [
             {

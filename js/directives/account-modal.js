@@ -17,8 +17,10 @@ soccerStats.directive('accountModal', function ($location, $timeout, $route, vie
                     return true;
                 if ($scope.confirmPassword()) 
                     return true;
-                else 
+                else {
+                    toastService.error("Please check the password fields.");
                     return false;
+                }
             };
 
             //compare new password with confirmation password
