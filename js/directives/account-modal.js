@@ -63,7 +63,7 @@ soccerStats.directive('accountModal', function ($location, $timeout, $route, vie
                             success: function (currentUser) {
                                 toastService.success(configService.toasts.accountUpdateSuccess);
                                 $scope.closeModal();
-                                $route.reload();
+                                //$route.reload();
                                 //currentUser.fetch();
                             },
                             error: function (currentUser, error) {

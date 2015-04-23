@@ -221,7 +221,7 @@
         $scope.$on(configService.messages.teamChanged, function(event, data) {
             if (!data.refresh)
                 $scope.currentTeam = data.team;
-            console.log($scope.currentTeam);
+            //console.log($scope.currentTeam);
             $scope.myPlayers = [];
             if (currentUser.get("accountType") === 1) {
                 dataService.getPlayersByTeamId($scope.currentTeam.id, function(players) {
@@ -247,6 +247,7 @@
                     });
                 }); 
             }
+            //console.log($scope.myPlayers);
         });
 
         $scope.$on(configService.messages.playerAdded, function(event, player) {
