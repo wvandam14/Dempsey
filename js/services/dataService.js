@@ -375,11 +375,15 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
             query.include("teamStats.topAssists.playerStats");
             query.include("teamStats.topGoals");
             query.include("teamStats.topGoals.playerStats");
+            query.include("teamStats.topShots");
+            query.include("teamStats.topShots.playerStats");
 
             query.equalTo('objectId',team_id)
             query.first().then(function(team){
-                //console.log(team);
-                //console.log(team.get('teamStats').get('topAssists'));
+
+                if (team.get('teamStats').get('topAssists'))  team.get('teamStats').get('topAssists').slice(0,4);
+                if (team.get('teamStats').get('topGoals'))  team.get('teamStats').get('topGoals').slice(0,4);
+                if(team.get('teamStats').get('topShots'))  team.get('teamStats').get('topShots').slice(0,4);
                 callback(team.get('teamStats'));
             }, function(error){
                  console.log("Error: " + error.code + " " + error.message);

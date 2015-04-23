@@ -26,42 +26,43 @@
             //show login page
         }
 
-        // var seasonPlayersTable = Parse.Object.extend("SeasonPlayerStats");
-        // var query = new Parse.Query(seasonPlayersTable);
-        // query.get("Reh5Ac0Rvn", {
-        //     success: function (player) {
-        //         player.addUnique("shots", {
-        //             goals: 3,
-        //             blocked: 2,
-        //             onGoal: 5,
-        //             offGoal: 7
-        //         });
-        //         player.addUnique("passes", {
-        //             turnovers: 2,
-        //             total: 10
-        //         });
-        //         player.set("fouls", 3);
-        //         player.addUnique("cards", {
-        //             type: "yellow",
-        //             time: "05:42"
-        //         });
-        //         player.set("goals", 5);
-        //         player.set("playingTime", 15.36);
-        //         player.set("season", "2015-2016");
-        //         player.set("assists", 10);
-        //         player.save(null, {
-        //             success: function(player) {
-        //                 console.log('save successful');
-        //             },
-        //             error : function(player, error) {
-        //                 console.log(error.message)
-        //             }
-        //         });
-        //     },
-        //     error: function (player, error) {
-        //         console.log(error.message);
-        //     }
-        // });
+       /* var seasonPlayersTable = Parse.Object.extend("SeasonPlayerStats");
+        var query = new Parse.Query(seasonPlayersTable);
+        query.get("BVzkQmN2MY", {
+            success: function (player) {
+                player.set("shots", {
+                    total: 10,
+                    goals: 3,
+                    blocked: 2,
+                    onGoal: 5,
+                    offGoal: 7
+                });
+                player.set("passes", {
+                    turnovers: 2,
+                    total: 10
+                });
+                //player.set("fouls", 3);
+                player.set("cards", {
+                    type: "yellow",
+                    time: "05:42"
+                });
+                //player.set("goals", 5);
+                //player.set("playingTime", 15.36);
+                //player.set("season", "2015-2016");
+                //player.set("assists", 10);
+                player.save(null, {
+                    success: function(player) {
+                        console.log('save successful');
+                    },
+                    error : function(player, error) {
+                        console.log(error.message)
+                    }
+                });
+            },
+            error: function (player, error) {
+                console.log(error.message);
+            }
+        });*/
         
         // TODO: implement this
         $scope.updatePlayer = function(player) {
@@ -137,11 +138,16 @@
                         $scope.teamStats.topAssists.push({ name : player.get("name"), num : player.get("playerStats").get("assists"), photo : photo});
                     });
 
-                    console.log(teamStats.get('topGoals'))
+                    
 
                     _.each(teamStats.get('topGoals'),function(player){
                         var photo = player.get("photo") ? player.get("photo")._url : "./img/sample/profile-small.jpg"; 
                         $scope.teamStats.topGoals.push({ name : player.get("name"), num : player.get("playerStats").get("goals"), photo : photo});
+                    });
+
+                    _.each(teamStats.get('topShots'),function(player){
+                        var photo = player.get("photo") ? player.get("photo")._url : "./img/sample/profile-small.jpg"; 
+                        $scope.teamStats.topShots.push({ name : player.get("name"), num : player.get("playerStats").get("shots").total, photo : photo});
                     });
 
 
