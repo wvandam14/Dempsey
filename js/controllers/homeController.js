@@ -133,7 +133,8 @@
 
 
                     _.each(teamStats.get('topAssists'),function(player){
-                        $scope.teamStats.topAssists.push({ name : player.get("name"), num : player.get("playerStats").get("assists") });
+                        var photo = player.get("photo") ? player.get("photo")._url : "./img/sample/profile-small.jpg"; 
+                        $scope.teamStats.topAssists.push({ name : player.get("name"), num : player.get("playerStats").get("assists"), photo : photo});
                     });
 
 

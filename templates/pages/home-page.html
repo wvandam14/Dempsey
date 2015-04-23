@@ -64,9 +64,9 @@
                 <img class="hero-image" src="./img/ball-large-grey.svg"/>
                 <div class="list">
                     <h5 class="title">TOP ASSISTS</h5>
-                    <div class="item flex flex-center-vertical" ng-repeat="player in topAssists track by $index">
+                    <div class="item flex flex-center-vertical" ng-repeat="player in teamStats.topAssists track by $index">
                         <div class="img-container">
-                            <img src="./img/sample/profile-small.jpg"/>
+                            <img src="{{player.photo}}"/>
                         </div>
                         <h5 class="flex-one">{{player.name}}</h5>
                         <div class="circle flex flex-center" ng-class="{'top': $first}">
