@@ -79,6 +79,8 @@ soccerStats.directive('playerModal', function ($location, $rootScope, $timeout, 
                         var Player = Parse.Object.extend("Players");
                         var newPlayer = new Player();
                         var team = Parse.Object.extend("Team");
+                        var seasonPlayerStats = Parse.Object.extend("SeasonPlayerStats");
+                        var playerStats = new seasonPlayerStats();
                         var query = new Parse.Query(team);
                         query.get(player.team.id, {
                             success: function (team) {
@@ -93,7 +95,7 @@ soccerStats.directive('playerModal', function ($location, $rootScope, $timeout, 
                                 newPlayer.set("emergencyContact", player.emergencyContact.name);
                                 newPlayer.set("phone", player.emergencyContact.phone);
                                 newPlayer.set("relationship", player.emergencyContact.relationship);
-
+                                newPlayer.set("playerStats", playerStats);
                                 //update parse
                                 newPlayer.save(null, {
                                     success: function (newPlayer) {
@@ -101,20 +103,7 @@ soccerStats.directive('playerModal', function ($location, $rootScope, $timeout, 
                                         currentUser.save(null, {
                                             success: function (currentUser) {
                                                 toastService.success("Player, " + player.name + ", successfully added.");
-                                                var seasonPlayerStats = Parse.Object.extend("SeasonPlayerStats");
-                                                var playerStats = new seasonPlayerStats();
-                                                playerStats.set("player", newPlayer);
-                                                playerStats.save(null, {
-                                                    success: function(player) {
-                                                        $scope.closeModal();
-                                                        $route.reload();
-                                                        console.log('player stats saved');
-                                                    },
-                                                    error: function(player, error) {
-                                                        console.log("Error: " + error.code + " " + error.message);
-                                                        toastService.error("There was a an error (" + error.code +"). Please try again."); 
-                                                    }
-                                                });
+                                                $scope.closeModal();
                                             },
                                             erorr: function (currentUser, error) {
                                                 console.log("Error: " + error.code + " " + error.message);

@@ -199,7 +199,8 @@
                     dataService.getPlayerByPlayerId(player.id, function(player) {
                         // console.log(player);
                         if (player.get("team").id === team.id) {
-                            dataService.getSeasonPlayerStatsByPlayerId(player.id, function(stats) {
+                            console.log(player);
+                            dataService.getSeasonPlayerStatsByPlayerId(player.get("playerStats").id, function(stats) {
                                 $scope.myPlayers.push(dataService.playerConstructor(player, stats));
                             });
                         }
