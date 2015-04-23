@@ -31,3 +31,42 @@ added cards edit player needs a way to select which player is being edited
 edit parent on first edit does not show select a state on state drop down
 edit user - no toast if passwords do not match
 end 9:15
+
+4/22 6:55
+testing player creation & roster update (on home page)
+	// roster changed order, new additions are shown at the top, 
+		then on later log ins moved to alphabetical rather than when added
+	// no return to home button, need a way to refresh the page info without refresh button 
+		(refresh button resets team, need to reload with different team)
+	// homepage info can only show top team (can not change selected team)
+	// does not load player for other teams when bypass if found to refresh home page info for new team
+	// possibly parse did not save the new player yet
+	// loaded again completely different order, seems to have little consistency
+
+testing view schedule
+	// hard added to db game data
+	// orders games correctly according to date
+	// proper coloring of games based on wins/loss currently 
+		will color without regard for score just the win/loss/draw value (fine)
+	// all information below the black game select bar is hard coded data and has nothing to do with selected games
+	// logos are hard coded as Seattle Sounders logo vs FC Dallas logo
+	// possibly add place holder image for opponent or ask for team number to search for team and use their image 
+		(place holder for default if no team exists)
+	// use team image for users team
+9:05
+	// player disappearing
+11:10
+testing top assist update
+	// player game information updates
+// welcome after log in toast can appear multiple times if login button is spammed when log in is slow
+11:53
+	// players are duplicated (fix in progress)
+testing create a game
+	// refresh required to update information
+	// refreshing page can cause no team to be selected as current, causing no schedule, team info or roster to appear
+	// game in the wrong order
+12:22
+	// top assists does not order when loading from data base (does it need to be ordered before saving to db or should it order after?)
+	// same with top goals
+	// game schedule no longer has the correct color for games (compleated/not won/lost/draw)
+	// 
