@@ -220,7 +220,7 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
                                 },
                                 status: games_brute[i].get("status")
                             }
-                            //console.log(game);
+                            // console.log(game);
                             games.push(game);
                         }
                         //console.log(games)
@@ -231,6 +231,35 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
                     toastService.error("There was a an error (" + error.code +"). Please try again.");
 
                 });
+            });
+        }
+
+        , saveGame = function(game, teamID) {
+            var Game = Parse.Object.extend("Game");
+            var GameStats = Parse.Object.extend("GameTeamStats");
+
+            var newGame = new Game();
+  
+            // Things the user entered
+            newGame.set("date", game.date);
+            newGame.set("opponent", game.opponent.name);
+            newGame.set("opponentSymbol", game.opponent.symbol);
+            newGame.set("startTime", game.time.toTimeString());
+            newGame.set("team", {__type: "Pointer", className: "Team", objectId: teamID});
+            newGame.set("gameTeamStats", new GameStats());
+            
+            // Default values
+            newGame.set("status", "not_started");
+
+            // Save the game object
+            newGame.save(null, {
+                success: function(newGame) {
+                    toastService.success("Game on " + (game.date.getMonth() + 1) + "/" + game.date.getDate() + " added.");
+                },
+                error: function(newGame, error) {
+                    console.log("Error saving game: " + error.code + " " + error.message);
+                    toastService.error("There was an error (" + error.code + "). Please try again.");
+                }
             });
         }
 
@@ -388,7 +417,8 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
         getGames : getGames,
         playerConstructor : playerConstructor,
         getPlayerByPlayerId : getPlayerByPlayerId,
-        getSeasonTeamStats : getSeasonTeamStats
+        getSeasonTeamStats : getSeasonTeamStats,
+        saveGame : saveGame
     }
 
 });
