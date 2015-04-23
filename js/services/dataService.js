@@ -204,6 +204,7 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
                         for(var i = 0; i < games_brute.length; i++ ){
 
                            game = {
+                                id: games_brute[i].id,
                                 date: games_brute[i].get("date"),
                                 opponent: {
                                     name: games_brute[i].get("opponent"),
@@ -407,6 +408,18 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
             });
         }
 
+        ,getGameStatsById = function(game_id,callback){
+
+            var query = new Parse.Query(gameTable);
+            query.include('gameTeamStats');
+            query.first(game_id).then(function(game){
+                callback(game);
+            }, function(error){
+                console.log("Error: " + error.code + " " + error.message);
+                callback({});
+            });
+        }
+
         ;
 
     return {
@@ -425,7 +438,8 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
         playerConstructor : playerConstructor,
         getPlayerByPlayerId : getPlayerByPlayerId,
         getSeasonTeamStats : getSeasonTeamStats,
-        saveGame : saveGame
+        saveGame : saveGame,
+        getGameStatsById : getGameStatsById
     }
 
 });

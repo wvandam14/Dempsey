@@ -1,21 +1,42 @@
 soccerStats.controller('gameReviewController', 
     function gameReviewController($scope, $rootScope, $location, configService, dataService) {
-        $rootScope.$on(configService.messages.setGame, function(msg, data) {
-            if(data.game) {
-                $scope.currGame = data.game;
-            }
-            else {
-                throw new Error('No game data received');
-            }
+        
+       /* $scope.gameStats = {
+            corners : 0,
+            offsides : 0,
+            goalsMade : 0,
+            goalsTaken : 0,
+            passes : 0,
+            possession : 0,
+            tackles : 0,
+            fouls : 0
+        };*/
+
+
+        $scope.$on(configService.messages.setGame, function(msg, data) {
+            dataService.getGameStatsById(data.game.id, function(game) {
+                $scope.gameStats = {
+                    corners : game.get('gameTeamStats').get('corners'),
+                    offsides : game.get('gameTeamStats').get('offsides'),
+                    goalsMade : game.get('gameTeamStats').get('goalsMade'),
+                    goalsTaken : game.get('gameTeamStats').get('goalsTaken'),
+                    passes : game.get('gameTeamStats').get('passes'),
+                    possession : game.get('gameTeamStats').get('possession'),
+                    tackles : game.get('gameTeamStats').get('tackles')
+                };
+                console.log($scope.gameStats);
+            });
         });
 
     	var currentUser = Parse.User.current();
         $scope.currGame = {};
 
+        $scope.
+
 
         // DUMMY DATA
 
-        $scope.teamForm = {
+/*        $scope.teamForm = {
             data: [
                 {
                     value: 3,
@@ -37,7 +58,7 @@ soccerStats.controller('gameReviewController',
                 }
             ]
         };
-
+*/
         $scope.teamPossession = {
             data: [
                 {
