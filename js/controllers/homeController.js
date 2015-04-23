@@ -219,7 +219,8 @@
             if (currentUser.get("accountType") === 1) {
                 dataService.getPlayersByTeamId(team.id, function(players) {
                     _.each(players, function(player) {
-                        dataService.getSeasonPlayerStatsByPlayerId(player.id, function(stats) {
+                        console.log(player);
+                        dataService.getSeasonPlayerStatsByPlayerId(player.get("playerStats").id, function(stats) {
                             $scope.myPlayers.push(dataService.playerConstructor(player, stats));
                         });
                     });
