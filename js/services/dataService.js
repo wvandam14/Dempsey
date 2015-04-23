@@ -474,11 +474,8 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
         getPlayerByPlayerId : getPlayerByPlayerId,
         getSeasonTeamStats : getSeasonTeamStats,
         saveGame : saveGame,
-<<<<<<< HEAD
-        saveGameAttributes : saveGameAttributes
-=======
+        saveGameAttributes : saveGameAttributes,
         getGameStatsById : getGameStatsById
->>>>>>> 2dd6ac2f8ba74f4c6e8b83f124ffa9c3ca90d2c9
     }
 
 });
