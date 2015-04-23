@@ -200,6 +200,7 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
                     query.equalTo('team',team);
                     query.include('gameTeamStats');
                     query.find().then(function(games_brute){
+                        //console.log(games_brute);
                         var game;
                         var games = [];
                         
@@ -219,8 +220,10 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
                                 },
                                 status: games_brute[i].get("status")
                             }
+                            //console.log(game);
                             games.push(game);
                         }
+                        //console.log(games)
 
                     callback(games);
                 }, function(error){
@@ -341,11 +344,10 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
             
             var query = new Parse.Query(teamTable);
 
-
             query.include('teamStats');
             query.equalTo('objectId',team_id)
             query.first().then(function(team){
-                //console.log(team);
+                console.log(team);
                 callback(team.get('teamStats'));
             }, function(error){
                  console.log("Error: " + error.code + " " + error.message);
