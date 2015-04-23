@@ -18,7 +18,7 @@ soccerStats.controller('loginController', function loginController($scope, $root
             if (viewService.validateAreaByFormName('loginForm')) {
                 Parse.User.logIn(user.email, user.password, {
                     success: function (user) {
-                        console.log(user);
+                        ///console.log(user);
                         var name = user.get('name');
                         toastService.success(configService.toasts.loginSuccess(
                             name === undefined ? "parent. Please edit your profile" : name)
@@ -26,13 +26,13 @@ soccerStats.controller('loginController', function loginController($scope, $root
                         $scope.goToPage('/home');
                         $rootScope.$broadcast(configService.messages.loginSuccess);
 
-                        dataService.getTeams( function(_teams) {
-                        dataService.setCurrentTeam(_teams[0]);
-                         $timeout(function() {
-                           $rootScope.$broadcast(configService.messages.teamChanged, {team: _teams[0]});
-                        });
+                        // dataService.getTeams( function(_teams) {
+                        //     dataService.setCurrentTeam(_teams[0]);
+                        //      $timeout(function() {
+                        //        $rootScope.$broadcast(configService.messages.teamChanged, {team: _teams[0]});
+                        //     });
                    
-                });
+                        // });
                     },
                     error: function(user, error) {
                         toastService.error(configService.toasts.notAuthenticated);

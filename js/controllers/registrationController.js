@@ -65,7 +65,7 @@ soccerStats.controller('registrationController',
         // Sends email via the cloud code with parse
         $scope.sendEmailInvite = function(newUser, team) {
             _.each($scope.inviteEmails, function (email) {
-                emailService.sendEmailInvite(newUser.name, team.id, team.get("name"), email);
+                emailService.sendEmailInvite(newUser.get("firstName") + newUser.get("lastName"), team.id, team.get("name"), email);
             });
         };
 

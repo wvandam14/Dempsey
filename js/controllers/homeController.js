@@ -7,6 +7,9 @@
             accountType: ''
         };
 
+        $scope.myPlayers = [];
+        $scope.currentTeam = {};
+
 
         var currentUser = Parse.User.current();
 
@@ -23,42 +26,43 @@
             //show login page
         }
 
-        // var seasonPlayersTable = Parse.Object.extend("SeasonPlayerStats");
-        // var query = new Parse.Query(seasonPlayersTable);
-        // query.get("Reh5Ac0Rvn", {
-        //     success: function (player) {
-        //         player.addUnique("shots", {
-        //             goals: 3,
-        //             blocked: 2,
-        //             onGoal: 5,
-        //             offGoal: 7
-        //         });
-        //         player.addUnique("passes", {
-        //             turnovers: 2,
-        //             total: 10
-        //         });
-        //         player.set("fouls", 3);
-        //         player.addUnique("cards", {
-        //             type: "yellow",
-        //             time: "05:42"
-        //         });
-        //         player.set("goals", 5);
-        //         player.set("playingTime", 15.36);
-        //         player.set("season", "2015-2016");
-        //         player.set("assists", 10);
-        //         player.save(null, {
-        //             success: function(player) {
-        //                 console.log('save successful');
-        //             },
-        //             error : function(player, error) {
-        //                 console.log(error.message)
-        //             }
-        //         });
-        //     },
-        //     error: function (player, error) {
-        //         console.log(error.message);
-        //     }
-        // });
+       /* var seasonPlayersTable = Parse.Object.extend("SeasonPlayerStats");
+        var query = new Parse.Query(seasonPlayersTable);
+        query.get("BVzkQmN2MY", {
+            success: function (player) {
+                player.set("shots", {
+                    total: 10,
+                    goals: 3,
+                    blocked: 2,
+                    onGoal: 5,
+                    offGoal: 7
+                });
+                player.set("passes", {
+                    turnovers: 2,
+                    total: 10
+                });
+                //player.set("fouls", 3);
+                player.set("cards", {
+                    type: "yellow",
+                    time: "05:42"
+                });
+                //player.set("goals", 5);
+                //player.set("playingTime", 15.36);
+                //player.set("season", "2015-2016");
+                //player.set("assists", 10);
+                player.save(null, {
+                    success: function(player) {
+                        console.log('save successful');
+                    },
+                    error : function(player, error) {
+                        console.log(error.message)
+                    }
+                });
+            },
+            error: function (player, error) {
+                console.log(error.message);
+            }
+        });*/
         
         // TODO: implement this
         $scope.updatePlayer = function(player) {
@@ -130,7 +134,20 @@
 
 
                     _.each(teamStats.get('topAssists'),function(player){
-                        $scope.teamStats.topAssists.push({ name : player.get("name"), num : player.get("playerStats").get("assists") });
+                        var photo = player.get("photo") ? player.get("photo")._url : "./img/sample/profile-small.jpg"; 
+                        $scope.teamStats.topAssists.push({ name : player.get("name"), num : player.get("playerStats").get("assists"), photo : photo});
+                    });
+
+                    
+
+                    _.each(teamStats.get('topGoals'),function(player){
+                        var photo = player.get("photo") ? player.get("photo")._url : "./img/sample/profile-small.jpg"; 
+                        $scope.teamStats.topGoals.push({ name : player.get("name"), num : player.get("playerStats").get("goals"), photo : photo});
+                    });
+
+                    _.each(teamStats.get('topShots'),function(player){
+                        var photo = player.get("photo") ? player.get("photo")._url : "./img/sample/profile-small.jpg"; 
+                        $scope.teamStats.topShots.push({ name : player.get("name"), num : player.get("playerStats").get("shots").total, photo : photo});
                     });
 
 
@@ -141,52 +158,6 @@
             });
         });
 
-
-        $scope.topGoals = [
-            {
-                name: 'CLINT DEMPSEY',
-                num: 4
-            },
-            {
-                name: 'OBAFEMI MARTINS',
-                num: 3
-            },
-            {
-                name: 'MARCO PAPPA',
-                num: 2
-            },
-            {
-                name: 'LAMAR NEAGLE',
-                num: 1
-            },
-            {
-                name: 'ANDY ROSE',
-                num: 1
-            },
-        ];
-
-       /* $scope.topAssists = [
-            {
-                name: 'OBAFEMI MARTINS',
-                num: 4
-            },
-            {
-                name: 'CLINT DEMPSEY',
-                num: 3
-            },
-            {
-                name: 'MARCO PAPPA',
-                num: 2
-            },
-            {
-                name: 'LAMAR NEAGLE',
-                num: 1
-            },
-            {
-                name: 'ANDY ROSE',
-                num: 1
-            },
-        ];*/
 
         $scope.topShots = [
             {
@@ -214,12 +185,15 @@
 
         // Ignore below here
         $scope.isCoach = false;
-        $scope.$on(configService.messages.teamSet, function(event, team) {
+        $scope.$on(configService.messages.teamChanged, function(event, data) {
+            if (!data.refresh)
+                $scope.currentTeam = data.team;
+            //console.log($scope.currentTeam);
             $scope.myPlayers = [];
             if (currentUser.get("accountType") === 1) {
-                dataService.getPlayersByTeamId(team.id, function(players) {
+                dataService.getPlayersByTeamId($scope.currentTeam.id, function(players) {
                     _.each(players, function(player) {
-                        console.log(player);
+                        //console.log(player);
                         dataService.getSeasonPlayerStatsByPlayerId(player.get("playerStats").id, function(stats) {
                             $scope.myPlayers.push(dataService.playerConstructor(player, stats));
                         });
@@ -229,16 +203,24 @@
                 // console.log(currentUser.get("players"));
                 _.each(currentUser.get("players"), function(player) {
                     dataService.getPlayerByPlayerId(player.id, function(player) {
-                        // console.log(player);
-                        if (player.get("team").id === team.id) {
-                            console.log(player);
+                        //console.log(player);
+                        if (player.get("team").id === $scope.currentTeam.id) {
+                            //console.log(player);
                             dataService.getSeasonPlayerStatsByPlayerId(player.get("playerStats").id, function(stats) {
+                                //console.log(stats);
                                 $scope.myPlayers.push(dataService.playerConstructor(player, stats));
                             });
                         }
                     });
                 }); 
             }
+            //console.log($scope.myPlayers);
+        });
+
+        $scope.$on(configService.messages.playerAdded, function(event, player) {
+            dataService.getSeasonPlayerStatsByPlayerId(player.get("playerStats").id, function(stats) {
+                $scope.myPlayers.push(dataService.playerConstructor(player, stats));
+            })
         });
     
     });

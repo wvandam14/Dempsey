@@ -190,6 +190,7 @@ FakesAssemblies/
 .*min.js
 js/min/
 js/controllers/min/
-js/directives/min
-js/services/min
+js/directives/min/
+js/services/min/
+cloudcode/SendGridCode/cloud/min/
 prepros.cfg
