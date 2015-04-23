@@ -15,29 +15,26 @@ soccerStats.directive('playerModal', function ($location, $rootScope, $timeout, 
             $scope.states = dataService.states;
             
             $scope.$on(configService.messages.updatePlayer, function(event, data) {  
-                console.log(data);
                 $timeout(function() {
                     if (data.state) {
                         $scope.update = true;
-                        $scope.players = dataService.getPlayers(function(dictionary) {
-                            console.log(dictionary);
-                            var result = _.find($scope.teamDict, function(obj){return obj.id == dictionary[0].team.id});
-                            console.log(result);
+                        $scope.players = dataService.getPlayerByPlayerId(data.id, function(player) {
+                            var _team = _.find($scope.teamDict, function(obj){return obj.id == player.get("team").id});
                             $scope.player = {
-                                photo: dictionary[0].photo ? dictionary[0].photo._url : './img/team-logo-icon.svg',
-                                name: dictionary[0].name,
-                                birthday: dictionary[0].birthday,
-                                team: result,
-                                jerseyNumber: dictionary[0].jerseyNumber,
-                                city: dictionary[0].city,
-                                state: $scope.states[dictionary[0].state],
+                                photo: player.get("photo") ? player.get("photo")._url : './img/team-logo-icon.svg',
+                                name: player.get("name"),
+                                birthday: player.get("birthday"),
+                                team: _team,
+                                jerseyNumber: player.get("jerseyNumber"),
+                                city: player.get("city"),
+                                state: $scope.states[player.get("state")],
                                 emergencyContact: {
-                                    name: dictionary[0].contact.emergencyContact,
-                                    phone: dictionary[0].contact.phone,
-                                    relationship: dictionary[0].contact.relationship
+                                    name: player.get("emergencyContact"),
+                                    phone: player.get("phone"),
+                                    relationship: player.get("relationship")
                                 },
                                 newPhoto: '',
-                                id : dictionary[0].id
+                                id : player.id
                             };
                         });
                     } else {
@@ -82,6 +79,8 @@ soccerStats.directive('playerModal', function ($location, $rootScope, $timeout, 
                         var Player = Parse.Object.extend("Players");
                         var newPlayer = new Player();
                         var team = Parse.Object.extend("Team");
+                        var seasonPlayerStats = Parse.Object.extend("SeasonPlayerStats");
+                        var playerStats = new seasonPlayerStats();
                         var query = new Parse.Query(team);
                         query.get(player.team.id, {
                             success: function (team) {
@@ -96,7 +95,7 @@ soccerStats.directive('playerModal', function ($location, $rootScope, $timeout, 
                                 newPlayer.set("emergencyContact", player.emergencyContact.name);
                                 newPlayer.set("phone", player.emergencyContact.phone);
                                 newPlayer.set("relationship", player.emergencyContact.relationship);
-
+                                newPlayer.set("playerStats", playerStats);
                                 //update parse
                                 newPlayer.save(null, {
                                     success: function (newPlayer) {
@@ -104,37 +103,7 @@ soccerStats.directive('playerModal', function ($location, $rootScope, $timeout, 
                                         currentUser.save(null, {
                                             success: function (currentUser) {
                                                 toastService.success("Player, " + player.name + ", successfully added.");
-                                                var seasonPlayerStats = Parse.Object.extend("SeasonPlayerStats");
-                                                var playerStats = new seasonPlayerStats();
-                                                playerStats.set("player", newPlayer);
-                                                // playerStats.addUnique("shots", {
-                                                //     blocked: 0,
-                                                //     goals: 0,
-                                                //     onGoal: 0,
-                                                //     offGoal: 0
-                                                // });
-                                                // playerStats.addUnique("passes", {
-                                                //     total: 0,
-                                                //     turnovers: 0
-                                                // });
-                                                // playerStats.set("fouls", 0);
-                                                // playerStats.addUnique("cards", {
-
-                                                // });
-                                                // playerStats.set("goals", 0);
-                                                // playerStats.set("playingTime", 0);
-                                                // playerStats.set("season", '');
-                                                playerStats.save(null, {
-                                                    success: function(player) {
-                                                        $scope.closeModal();
-                                                        $route.reload();
-                                                        console.log('player stats saved');
-                                                    },
-                                                    error: function(player, error) {
-                                                        console.log("Error: " + error.code + " " + error.message);
-                                                        toastService.error("There was a an error (" + error.code +"). Please try again."); 
-                                                    }
-                                                });
+                                                $scope.closeModal();
                                             },
                                             erorr: function (currentUser, error) {
                                                 console.log("Error: " + error.code + " " + error.message);
@@ -184,7 +153,7 @@ soccerStats.directive('playerModal', function ($location, $rootScope, $timeout, 
                                     success: function(editPlayer) {
                                         toastService.success("Player " + player.name + "'s profile updated.");
                                         $scope.closeModal();
-                                        $route.reload();
+                                        // $route.reload();
                                     },
                                     error: function(editPlayer, error) {
                                         console.log("Error: " + error.code + " " + error.message);

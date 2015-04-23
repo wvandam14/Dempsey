@@ -40,6 +40,7 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
                 success: function(user) {
                     $timeout(function(){
                         var teams = user.get("teams");
+                        // console.log(teams);
                         // Add each team associated with the current user to the team dropdown list
                         _.each(teams, function (team) {
                             var leagueName = team.get("leagueName"),
@@ -170,11 +171,7 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
 
         , getSeasonPlayerStatsByPlayerId = function(id, callback) {
             var query = new Parse.Query(playerStatsTable);
-            query.equalTo('player', {
-                __type: "Pointer",
-                className: "Players",
-                objectId : id
-            });
+            query.equalTo('objectId', id);
             query.first({
                 success: function(playerStats) {
                     $timeout(function() {
