@@ -67,42 +67,73 @@
 
         $scope.$on(configService.messages.teamChanged,function(event,data){
             dataService.getSeasonTeamStats(data.team.id,function(teamStats){
-                console.log(teamStats);
-                $scope.teamStats = {};
 
-                $scope.teamStats = {
+                //console.log(teamStats);
 
-                    teamGames : {                        
-                        data: [
-                            {
-                                value: teamStats.get('gamesDraw'),
-                                color: "#B4B4B4",
-                                highlight: "#B4B4B4",
-                                label: "Draws"
-                            },
-                            {
-                                value:  teamStats.get('gamesWon'),
-                                color:"#5DA97B",
-                                highlight: "#5DA97B",
-                                label: "Wins"
-                            },
-                            {
-                                value:  teamStats.get('gamesDefeat'),
-                                color:"#FF7373",
-                                highlight: "#FF7373",
-                                label: "Losses"
-                            }
-                        ]
-                    },
-                    goalsConceded : teamStats.get("goalsConceded"),
-                    goalsScored : teamStats.get("goalsScored"),
-                    avgGoals : teamStats.get("avgGoals"),
-                    ballPossession : teamStats.get("ballPossession"),
-                    foulsCommitted :  teamStats.get("foulsCommitted"),
-                    gamesPlayed : teamStats.get("gamesPlayed"),
-                    goalsDifference : (teamStats.get("goalsScored") - teamStats.get("goalsConceded")) >= 0 ? '+'.concat(teamStats.get("goalsScored") - teamStats.get("goalsConceded")) : '-'.concat(teamStats.get("goalsScored") - teamStats.get("goalsConceded")) 
-                };
-                
+
+                if(!teamStats){
+                     $scope.teamStats = {
+
+                        teamGames : { data: []},
+                        goalsConceded : 0,
+                        goalsScored : 0,
+                        avgGoals : 0,
+                        ballPossession : 0,
+                        foulsCommitted :  0,
+                        gamesPlayed : 0,
+                        goalsDifference : 0,
+                        topAssists : [],
+                        topGoals : [],
+                        topShots : []
+                    };
+                }
+                else{
+                    $scope.teamStats = {
+
+                        teamGames : {                        
+                            data: [
+                                {
+                                    value: teamStats.get('gamesDraw'),
+                                    color: "#B4B4B4",
+                                    highlight: "#B4B4B4",
+                                    label: "Draws"
+                                },
+                                {
+                                    value:  teamStats.get('gamesWon'),
+                                    color:"#5DA97B",
+                                    highlight: "#5DA97B",
+                                    label: "Wins"
+                                },
+                                {
+                                    value:  teamStats.get('gamesDefeat'),
+                                    color:"#FF7373",
+                                    highlight: "#FF7373",
+                                    label: "Losses"
+                                }
+                            ]
+                        },
+                        goalsConceded : teamStats.get("goalsConceded"),
+                        goalsScored : teamStats.get("goalsScored"),
+                        avgGoals : teamStats.get("avgGoals"),
+                        ballPossession : teamStats.get("ballPossession"),
+                        foulsCommitted :  teamStats.get("foulsCommitted"),
+                        gamesPlayed : teamStats.get("gamesPlayed"),
+                        goalsDifference : (teamStats.get("goalsScored") - teamStats.get("goalsConceded")) >= 0 ? '+'.concat(teamStats.get("goalsScored") - teamStats.get("goalsConceded")) : '-'.concat(teamStats.get("goalsScored") - teamStats.get("goalsConceded")), 
+                        topAssists : [],
+                        topGoals : [],
+                        topShots : []
+                    };
+
+
+                    _.each(teamStats.get('topAssists'),function(player){
+                        $scope.teamStats.topAssists.push({ name : player.get("name"), num : player.get("playerStats").get("assists") });
+                    });
+
+
+
+
+
+                }
             });
         });
 
@@ -130,7 +161,7 @@
             },
         ];
 
-        $scope.topAssists = [
+       /* $scope.topAssists = [
             {
                 name: 'OBAFEMI MARTINS',
                 num: 4
@@ -151,7 +182,7 @@
                 name: 'ANDY ROSE',
                 num: 1
             },
-        ];
+        ];*/
 
         $scope.topShots = [
             {
