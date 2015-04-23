@@ -11,7 +11,10 @@ soccerStats.directive('schedule', function () {
               };
 
 	        $scope.setGame = function (game) {
-	            $rootScope.$broadcast(configService.messages.setGame, {game: $scope.currGame});
+                //console.log($scope.currGame);
+                $timeout(function() {
+	               $rootScope.$broadcast(configService.messages.setGame, {game: $scope.currGame});
+                });
                 viewService.goToPage('/game-review');
                 $scope.selectGame(game);
 	        };
