@@ -19,36 +19,41 @@ soccerStats.controller('registrationController',
                 return;
             }
 
-            // If you are going back in the registration process
+            // If you are going back in the registration process, you may
             if ($scope.tabNumber > tab) {
                 $scope.tabNumber = tab;
                 return;
             }
 
+            // If the form is valid and you are not skipping a tab, continue, otherwise throw an error
             if (viewService.validateAreaByFormName(currentForm)
                 && (tab === ($scope.tabNumber + 1))) {
+                // If the photos are populated, continue, otherwise throw an error
                 if (($scope.newUser.photo && tab === 1) || ($scope.team.logo && tab === 2))
                     $scope.tabNumber = tab;
                 else
                     toastService.error(configService.toasts.missingPhoto);
             }
-
             else {
                 toastService.error(configService.toasts.requiredFields);
             }
 
         };
 
+        // Checks if the passed tab number is the current tab
         $scope.isTab = function (tab) {
         	return $scope.tabNumber === tab;
         };
 
+        // Goes to the next tab
         $scope.incrementTab = function () {
         	$scope.setTab($scope.tabNumber + 1);
         };
 
         // Array containing the emails who will receive the invitation to the team
         $scope.inviteEmails = [];
+
+        // Function to add emails to the inviteEmails array (with validation)
         $scope.addEmail = function () {
             if(viewService.validateAreaByFormName("inviteForm")){
                 $scope.inviteEmails.unshift($scope.invite.email);
@@ -58,6 +63,7 @@ soccerStats.controller('registrationController',
             }
         };
 
+        // Removes the email at the passed index from the inviteEmails array
         $scope.removeEmail = function (index){
             $scope.inviteEmails.splice(index, 1);
         }
@@ -69,7 +75,7 @@ soccerStats.controller('registrationController',
             });
         };
 
-		// User information
+		// User information (default data for now)
         $scope.newUser = {
             firstName: 'Alec',
             lastName: 'Moore',
@@ -82,7 +88,7 @@ soccerStats.controller('registrationController',
             photo: ''
         };
 
-        // Team information
+        // Team information (default data for now)
         $scope.team = {
             logo: '',
             primaryColor: '',
@@ -100,6 +106,7 @@ soccerStats.controller('registrationController',
         $scope.register = function (newUser, newTeam) {
             var _team = dataService.registerTeam(newTeam);
 
+            // Save the new team to the database, if successful, save the coach account
             _team.save(null, {
                 success: function (_team) {
                     var registerUser = new Parse.User();
@@ -123,13 +130,12 @@ soccerStats.controller('registrationController',
                     registerUser.signUp(null, {
                         success: function (registerUser) {
                             toastService.success(configService.toasts.registrationSuccess);
-                            $scope.sendEmailInvite(newUser, _team);
+                            $scope.sendEmailInvite(registerUser, _team);
                             viewService.goToPage('/home');
                         },
                         error: function (registerUser, error) {
                             console.log("Error: " + error.code + " " + error.message);
-                            if (error.code === 202)
-                                toastService.error(error.message);
+                            toastService.error(error.message);
                             // toastService.error("There was a an error (" + error.code +"). Please try again.");
 
                         }
@@ -160,6 +166,5 @@ soccerStats.controller('registrationController',
 
         //below are static arrays
         $scope.ageGroups = dataService.ageGroups;
-
         $scope.states = dataService.states;
     });
