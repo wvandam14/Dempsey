@@ -26,9 +26,6 @@ soccerStats.directive('header', function ($timeout, $rootScope, $route, viewServ
             $scope.createTeam = function() {
                 $scope.toggleTeams();
                 viewService.openModal('teamModal');
-                // $timeout(function() {
-                //     $rootScope.$broadcast(configService.messages.updateTeam, {state: false});
-                // });
             }
 
             // edit team 

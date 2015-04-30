@@ -23,7 +23,7 @@ soccerStats.directive('teamModal', function ($location, $route, $rootScope, $tim
             $scope.addNewTeam = function(newTeam) {
                 console.log(newTeam);
                 var _team = dataService.registerTeam(newTeam);
-                dataService.createNewTeam(_team, self); 
+                dataService.registerNewTeam(_team, self); 
             }
 
             $scope.goToPage = function(page) {
