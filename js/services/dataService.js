@@ -270,11 +270,13 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                     newPlayer.save(null, {
                         success: function (newPlayer) {
                             if (player.parentId) {
+                                //parseRegisterPlayer(newPlayer, player, self);
                                 Parse.Cloud.run('registerPlayer', {newPlayerId: newPlayer.id, parentId: player.parentId}, {
                                     success: function (result) {
                                         console.log(result);
-                                        toastService.success("Player, " + player.name + ", successfully added.");
+                                        toastService.success("Player " + player.name + ", successfully added.");
                                         $rootScope.$broadcast(configService.messages.playerAdded, newPlayer);
+                                        //$rootScope.$broadcast(configService.messages.teamChanged, {refresh: true});
                                         viewService.closeModal(self);
                                     },
                                     error: function (error) {
@@ -286,8 +288,9 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                                 currentUser.addUnique("players", newPlayer);
                                 currentUser.save(null, {
                                     success: function (currentUser) {
-                                        toastService.success("Player, " + player.name + ", successfully added.");
+                                        toastService.success("Player " + player.name + ", successfully added.");
                                         $rootScope.$broadcast(configService.messages.playerAdded, newPlayer);
+                                        //$rootScope.$broadcast(configService.messages.teamChanged, {refresh: true});
                                         viewService.closeModal(self);
                                     },
                                     erorr: function (currentUser, error) {
@@ -419,9 +422,26 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                             editPlayer.set("relationship", player.emergencyContact.relationship);
                             editPlayer.save(null, {
                                 success: function(editPlayer) {
-                                    toastService.success("Player " + player.name + "'s profile updated.");
-                                    $rootScope.$broadcast(configService.messages.teamChanged, {refresh: true});
-                                    viewService.closeModal(self);
+                                    if (player.parentId) {
+                                        Parse.Cloud.run('registerPlayer', {newPlayerId: editPlayer.id, parentId: player.parentId}, {
+                                            success: function (result) {
+                                                console.log(result);
+                                                toastService.success("Player " + player.name + ", successfully added.");
+                                                //$rootScope.$broadcast(configService.messages.playerAdded, newPlayer);
+                                                $rootScope.$broadcast(configService.messages.teamChanged, {refresh: true});
+                                                viewService.closeModal(self);
+                                            },
+                                            error: function (error) {
+                                                console.log("Error: " + error.code + " " + error.message);
+                                                toastService.error("There was an error (" + error.code +"). Please try again.");
+                                            }
+                                        });
+                                    }
+                                    else {
+                                        toastService.success("Player " + player.name + "'s profile updated.");
+                                        $rootScope.$broadcast(configService.messages.teamChanged, {refresh: true});
+                                        viewService.closeModal(self);
+                                    }
                                     // $route.reload();
                                 },
                                 error: function(editPlayer, error) {
@@ -534,6 +554,24 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                     callback(parentEmails);
                 },
                 error: function(parentEmails, error) {
+                    console.log("Error: " + error.code + " " + error.message);
+                    toastService.error("There was a an error (" + error.code +"). Please try again.");
+                }
+            });
+        }
+
+        , getParentByPlayerId = function(playerId, callback) {
+            var query = new Parse.Query(userTable);
+            query.equalTo("players", {
+                __type: "Pointer",
+                className: "Players",
+                objectId : playerId
+            });
+            query.first({
+                success: function(parent) {
+                    callback(parent);
+                },
+                error : function(parent, error) {
                     console.log("Error: " + error.code + " " + error.message);
                     toastService.error("There was a an error (" + error.code +"). Please try again.");
                 }
@@ -705,6 +743,22 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
             viewService.closeModal(self);
         }
 
+        // , parseRegisterPlayer = function(newPlayer, player, self) {
+        //     Parse.Cloud.run('registerPlayer', {newPlayerId: newPlayer.id, parentId: player.parentId}, {
+        //         success: function (result) {
+        //             console.log(result);
+        //             toastService.success("Player " + player.name + ", successfully added.");
+        //             $rootScope.$broadcast(configService.messages.playerAdded, newPlayer);
+        //             //$rootScope.$broadcast(configService.messages.teamChanged, {refresh: true});
+        //             viewService.closeModal(self);
+        //         },
+        //         error: function (error) {
+        //             console.log("Error: " + error.code + " " + error.message);
+        //             toastService.error("There was an error (" + error.code +"). Please try again.");
+        //         }
+        //     });
+        // }
+
     ; return {
         ageGroups: ageGroups,
         states : states,
@@ -731,7 +785,8 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
         registerPlayer : registerPlayer,
         updatePlayer : updatePlayer,
         registerNewTeam : registerNewTeam,
-        getParentEmailsByTeamId : getParentEmailsByTeamId
+        getParentEmailsByTeamId : getParentEmailsByTeamId,
+        getParentByPlayerId : getParentByPlayerId
     }
 
 });

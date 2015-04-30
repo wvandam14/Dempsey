@@ -23,23 +23,30 @@ soccerStats.directive('playerModal', function ($location, $rootScope, $timeout, 
                     if (data.state) {
                         $scope.update = true;
                         $scope.players = dataService.getPlayerByPlayerId(data.id, function(player) {
-                            var _team = _.find($scope.teamDict, function(obj){return obj.id == player.get("team").id});
-                            $scope.player = {
-                                photo: player.get("photo") ? player.get("photo")._url : './img/team-logo-icon.svg',
-                                name: player.get("name"),
-                                birthday: player.get("birthday"),
-                                team: _team,
-                                jerseyNumber: player.get("jerseyNumber"),
-                                city: player.get("city"),
-                                state: $scope.states[player.get("state")],
-                                emergencyContact: {
-                                    name: player.get("emergencyContact"),
-                                    phone: player.get("phone"),
-                                    relationship: player.get("relationship")
-                                },
-                                newPhoto: '',
-                                id : player.id
-                            };
+                            $scope.getParentEmails(player.get("team"));
+                            dataService.getParentByPlayerId(player.id, function(parent) {
+                                //parent.id = $scope.parents[parent.get("email")];
+                                console.log(parent.id);
+                                var _team = _.find($scope.teamDict, function(obj){return obj.id == player.get("team").id});
+                                $scope.player = {
+                                    photo: player.get("photo") ? player.get("photo")._url : './img/team-logo-icon.svg',
+                                    name: player.get("name"),
+                                    birthday: player.get("birthday"),
+                                    team: _team,
+                                    jerseyNumber: player.get("jerseyNumber"),
+                                    city: player.get("city"),
+                                    state: $scope.states[player.get("state")],
+                                    emergencyContact: {
+                                        name: player.get("emergencyContact"),
+                                        phone: player.get("phone"),
+                                        relationship: player.get("relationship")
+                                    },
+                                    newPhoto: '',
+                                    id : player.id,
+                                    parentId: parent.id
+                                };
+                                console.log($scope.player.parentId);
+                            });
                         });
                     } else {
                         $scope.update = false;
@@ -87,19 +94,26 @@ soccerStats.directive('playerModal', function ($location, $rootScope, $timeout, 
             };
 
             $scope.getParentEmails = function(team) {
+                //console.log(team.id);
                 $scope.parents = {};
                 dataService.getParentEmailsByTeamId(team.id, function(parents) {
-                    _.each(parents, function(parent) {
-                        $scope.parents[parent.get("email")] = parent.id;
+                    $timeout(function() {
+                        _.each(parents, function(parent) {
+                            $scope.parents[parent.get("email")] = parent.id;
+                        });
                     });
                 });
             }
 
             $scope.registerTempPlayer = function(player) {
-                if (viewService.validateAreaByFormName('tempPlayerForm')) {
+                if ($scope.update)
+                    dataService.updatePlayer(player, self);
+                else {
+                    if (viewService.validateAreaByFormName('tempPlayerForm')) {
                         dataService.registerPlayer(player, self, true)
-                } else {
-                    toastService.error(configService.toasts.requiredFields);
+                    } else {
+                        toastService.error(configService.toasts.requiredFields);
+                    }
                 }
             }
 
