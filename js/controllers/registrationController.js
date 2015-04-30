@@ -20,36 +20,41 @@ soccerStats.controller('registrationController',
                 return;
             }
 
-            // If you are going back in the registration process
+            // If you are going back in the registration process, you may
             if ($scope.tabNumber > tab) {
                 $scope.tabNumber = tab;
                 return;
             }
 
+            // If the form is valid and you are not skipping a tab, continue, otherwise throw an error
             if (viewService.validateAreaByFormName(currentForm)
                 && (tab === ($scope.tabNumber + 1))) {
+                // If the photos are populated, continue, otherwise throw an error
                 if (($scope.newUser.photo && tab === 1) || ($scope.team.logo && tab === 2))
                     $scope.tabNumber = tab;
                 else
                     toastService.error(configService.toasts.missingPhoto);
             }
-
             else {
                 toastService.error(configService.toasts.requiredFields);
             }
 
         };
 
+        // Checks if the passed tab number is the current tab
         $scope.isTab = function (tab) {
         	return $scope.tabNumber === tab;
         };
 
+        // Goes to the next tab
         $scope.incrementTab = function () {
         	$scope.setTab($scope.tabNumber + 1);
         };
 
         // Array containing the emails who will receive the invitation to the team
         $scope.inviteEmails = [];
+
+        // Function to add emails to the inviteEmails array (with validation)
         $scope.addEmail = function () {
             if(viewService.validateAreaByFormName("inviteForm")){
                 $scope.inviteEmails.unshift($scope.invite.email);
@@ -59,11 +64,12 @@ soccerStats.controller('registrationController',
             }
         };
 
+        // Removes the email at the passed index from the inviteEmails array
         $scope.removeEmail = function (index){
             $scope.inviteEmails.splice(index, 1);
         }
 
-		// User information
+		// User information (default data for now)
         $scope.newUser = {
             firstName: 'Alec',
             lastName: 'Moore',
@@ -76,7 +82,7 @@ soccerStats.controller('registrationController',
             photo: ''
         };
 
-        // Team information
+        // Team information (default data for now)
         $scope.team = {
             logo: '',
             primaryColor: '',
@@ -112,6 +118,5 @@ soccerStats.controller('registrationController',
 
         //below are static arrays
         $scope.ageGroups = dataService.ageGroups;
-
         $scope.states = dataService.states;
     });
