@@ -79,29 +79,34 @@
                 console.log(teamStats);
 
 
-                if(!teamStats){
-                     $scope.teamStats = {
+                
+                 $scope.teamStats = {
 
-                        teamGames : { data: []},
-                        goalsConceded : 0,
-                        goalsScored : 0,
-                        avgGoals : 0,
-                        ballPossession : 0,
-                        foulsCommitted :  0,
-                        gamesPlayed : 0,
-                        goalsDifference : 0,
-                        topAssists : [],
-                        topGoals : [],
-                        topShots : []
-                    };
-                }
-                else{
+                    teamGames : { data: []},
+                    goalsConceded : 0,
+                    goalsScored : 0,
+                    avgGoals : 0,
+                    ballPossession : 0,
+                    foulsCommitted :  0,
+                    gamesPlayed : 0,
+                    goalsDifference : 0,
+                    topAssists : [],
+                    topGoals : [],
+                    topShots : []
+                };
+                
+                if(teamStats){
+                     var goalsDifference = (teamStats.get("goalsScored") && teamStats.get("goalsConceded")) ? 
+                                           teamStats.get("goalsScored") -  teamStats.get("goalsConceded") :
+                                            0; 
                     $scope.teamStats = {
+
+                       
 
                         teamGames : {                        
                             data: [
                                 {
-                                    value: teamStats.get('gamesDraw'),
+                                    value: teamStats.get('gamesDraw') ? teamStats.get('gamesDraw'): '',
                                     color: "#B4B4B4",
                                     highlight: "#B4B4B4",
                                     label: "Draws"
@@ -120,13 +125,13 @@
                                 }
                             ]
                         },
-                        goalsConceded : teamStats.get("goalsConceded"),
-                        goalsScored : teamStats.get("goalsScored"),
-                        avgGoals : teamStats.get("avgGoals"),
-                        ballPossession : teamStats.get("ballPossession"),
-                        foulsCommitted :  teamStats.get("foulsCommitted"),
-                        gamesPlayed : teamStats.get("gamesPlayed"),
-                        goalsDifference : (teamStats.get("goalsScored") - teamStats.get("goalsConceded")) >= 0 ? '+'.concat(teamStats.get("goalsScored") - teamStats.get("goalsConceded")) : '-'.concat(teamStats.get("goalsScored") - teamStats.get("goalsConceded")), 
+                        goalsConceded : teamStats.get("goalsConceded") ? teamStats.get("goalsConceded") : '0',
+                        goalsScored : teamStats.get("goalsScored") ? teamStats.get("goalsScored") : '0',
+                        avgGoals : teamStats.get("avgGoals") ? teamStats.get("avgGoals") : '0',
+                        ballPossession : teamStats.get("ballPossession") ? teamStats.get("ballPossession") : '0',
+                        foulsCommitted : teamStats.get("foulsCommitted") ? teamStats.get("foulsCommitted") : '0',
+                        gamesPlayed : teamStats.get("gamesPlayed") ? teamStats.get("gamesPlayed") : '0',
+                        goalsDifference : goalsDifference >= 0 ? '+'.concat(goalsDifference) : goalsDifference,
                         topAssists : [],
                         topGoals : [],
                         topShots : []
