@@ -240,39 +240,73 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
             });
         }
 
-        , registerPlayer = function(player, self) {
+        , registerPlayer = function(player, self, coach) {
             var currentUser = getCurrentUser();
             var newPlayer = new playersTable();
             var playerStats = new playerStatsTable();
             var query = new Parse.Query(teamTable);
             query.get(player.team.id, {
                 success: function (team) {
-                    if (player.newPhoto) newPlayer.set("photo", player.newPhoto);
-                    newPlayer.set("name", player.name);
-                    newPlayer.set("birthday", player.birthday);
-                    newPlayer.set("team", team);
-                    newPlayer.set("jerseyNumber", player.jerseyNumber);
-                    newPlayer.set("city", player.city);
-                    newPlayer.set("state", (_.invert(states))[player.state]);
-                    newPlayer.set("emergencyContact", player.emergencyContact.name);
-                    newPlayer.set("phone", player.emergencyContact.phone);
-                    newPlayer.set("relationship", player.emergencyContact.relationship);
-                    newPlayer.set("playerStats", playerStats);
+                    if (coach) {
+                        newPlayer.set("name", player.name);
+                        newPlayer.set("jerseyNumber", player.jerseyNumber);
+                        newPlayer.set("team", team);
+                        newPlayer.set("playerStats", playerStats);
+
+                    } else {
+                        if (player.newPhoto) newPlayer.set("photo", player.newPhoto);
+                        newPlayer.set("name", player.name);
+                        newPlayer.set("birthday", player.birthday);
+                        newPlayer.set("team", team);
+                        newPlayer.set("jerseyNumber", player.jerseyNumber);
+                        newPlayer.set("city", player.city);
+                        newPlayer.set("state", (_.invert(states))[player.state]);
+                        newPlayer.set("emergencyContact", player.emergencyContact.name);
+                        newPlayer.set("phone", player.emergencyContact.phone);
+                        newPlayer.set("relationship", player.emergencyContact.relationship);
+                        newPlayer.set("playerStats", playerStats);
+                    }
                     //update parse
                     newPlayer.save(null, {
                         success: function (newPlayer) {
-                            currentUser.addUnique("players", newPlayer);
-                            currentUser.save(null, {
-                                success: function (currentUser) {
-                                    toastService.success("Player, " + player.name + ", successfully added.");
-                                    $rootScope.$broadcast(configService.messages.playerAdded, newPlayer);
-                                    viewService.closeModal(self);
-                                },
-                                erorr: function (currentUser, error) {
-                                    console.log("Error: " + error.code + " " + error.message);
-                                   toastService.error("There was a an error (" + error.code +"). Please try again."); 
-                                }
-                            });
+                            if (player.parentId) {
+                                var parentQuery = new Parse.Query(userTable);
+                                parentQuery.equalTo("objectId", player.parentId);
+                                parentQuery.first({
+                                    success: function(user) {
+                                        user.addUnique("players", newPlayer);
+                                        console.log(user);
+                                        user.save(null, {
+                                            success: function (user) {
+                                                toastService.success("Player, " + player.name + ", successfully added.");
+                                                $rootScope.$broadcast(configService.messages.playerAdded, newPlayer);
+                                                viewService.closeModal(self);
+                                            },
+                                            erorr: function (user, error) {
+                                                console.log("Error: " + error.code + " " + error.message);
+                                               toastService.error("There was a an error (" + error.code +"). Please try again."); 
+                                            }
+                                        });
+                                    },
+                                    error: function(user, error) {
+                                        console.log("Error: " + error.code + " " + error.message);
+                                        toastService.error("There was a an error (" + error.code +"). Please try again."); 
+                                    }
+                                });
+                            } else {
+                                currentUser.addUnique("players", newPlayer);
+                                currentUser.save(null, {
+                                    success: function (currentUser) {
+                                        toastService.success("Player, " + player.name + ", successfully added.");
+                                        $rootScope.$broadcast(configService.messages.playerAdded, newPlayer);
+                                        viewService.closeModal(self);
+                                    },
+                                    erorr: function (currentUser, error) {
+                                        console.log("Error: " + error.code + " " + error.message);
+                                       toastService.error("There was a an error (" + error.code +"). Please try again."); 
+                                    }
+                                });
+                            }
                         },
                         error: function (newPlayer, error) {
                             console.log("Error: " + error.code + " " + error.message);
@@ -498,6 +532,25 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
             });
         }
 
+        , getParentEmailsByTeamId = function(teamId, callback) {
+            var query = new Parse.Query(userTable);
+            query.equalTo("teams", {
+                __type : "Pointer",
+                className : "Team",
+                objectId : teamId
+            });
+            query.equalTo("accountType", 2);
+            query.find({
+                success: function(parentEmails) {
+                    callback(parentEmails);
+                },
+                error: function(parentEmails, error) {
+                    console.log("Error: " + error.code + " " + error.message);
+                    toastService.error("There was a an error (" + error.code +"). Please try again.");
+                }
+            });
+        }
+
         , saveGame = function(game, teamID) {
             var newGame = new Game();
   
@@ -688,7 +741,8 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
         updateTeam : updateTeam,
         registerPlayer : registerPlayer,
         updatePlayer : updatePlayer,
-        registerNewTeam : registerNewTeam
+        registerNewTeam : registerNewTeam,
+        getParentEmailsByTeamId : getParentEmailsByTeamId
     }
 
 });

@@ -9,6 +9,10 @@ soccerStats.directive('playerModal', function ($location, $rootScope, $timeout, 
                 viewService.closeModal(self);
             }
 
+            var currentUser = dataService.getCurrentUser();
+
+            $scope.parents = {};
+
             $scope.update = false;
 
             //below are static arrays
@@ -39,11 +43,11 @@ soccerStats.directive('playerModal', function ($location, $rootScope, $timeout, 
                         });
                     } else {
                         $scope.update = false;
-                        console.log("add player");
+                        //console.log("add player");
                         // Player object
                         $scope.player = {
                             photo: './img/team-logo-icon.svg',
-                            name: 'Zlatan',
+                            name: 'Player',
                             birthday: '',
                             team: '',
                             jerseyNumber: '12',
@@ -75,17 +79,34 @@ soccerStats.directive('playerModal', function ($location, $rootScope, $timeout, 
                     dataService.updatePlayer(player, self);
                 else {
                     if (viewService.validateAreaByFormName('playerForm')) {
-                        dataService.registerPlayer(player, self)
+                        dataService.registerPlayer(player, self, false)
                     } else {
                         toastService.error(configService.toasts.requiredFields);
                     }
                 }
             };
 
+            $scope.getParentEmails = function(team) {
+                $scope.parents = {};
+                dataService.getParentEmailsByTeamId(team.id, function(parents) {
+                    _.each(parents, function(parent) {
+                        $scope.parents[parent.get("email")] = parent.id;
+                    });
+                });
+            }
+
+            $scope.registerTempPlayer = function(player) {
+                if (viewService.validateAreaByFormName('tempPlayerForm')) {
+                        dataService.registerPlayer(player, self, true)
+                } else {
+                    toastService.error(configService.toasts.requiredFields);
+                }
+            }
+
             $scope.states = dataService.states;  
             // TODO: verify if user is logged in
             // moved to dataService
-            if (Parse.User.current()) {
+            if (currentUser) {
                 $scope.teamDict = dataService.getTeams( function(dictionary) {
                    //console.log(dictionary);
                 });  
