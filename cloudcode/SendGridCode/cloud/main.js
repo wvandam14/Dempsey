@@ -140,3 +140,44 @@ Parse.Cloud.define("sendEmailInvite", function(request, response) {
     });
 
 });
+
+Parse.Cloud.define("registerPlayer", function(request, response) {
+
+    var newPlayerId = request.params.newPlayerId;
+    var parentId = request.params.parentId;
+
+    
+    var playerTable = Parse.Object.extend("Players");
+    var query = new Parse.Query(playerTable);
+
+    query.equalTo("objectId", newPlayerId);
+    query.first({
+        success: function(player) {
+            var userTable = Parse.Object.extend("_User");
+            var parentQuery = new Parse.Query(userTable);
+            parentQuery.equalTo("objectId", parentId);
+            parentQuery.first({
+                success: function(user) {
+                    Parse.Cloud.useMasterKey();
+                    user.addUnique("players", player);
+                    user.save(null, {
+                        success: function (user) {
+                            response.success('player added');
+                        },
+                        erorr: function (user, error) {
+                             response.error(error);
+                        }
+                    });
+                },
+                error: function(user, error) {
+                    response.error(error);
+                }
+            });
+        },
+        error: function(player, error) {
+            response.error(error);
+        }
+    });
+
+    
+});

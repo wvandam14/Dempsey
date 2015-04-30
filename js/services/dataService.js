@@ -270,27 +270,16 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                     newPlayer.save(null, {
                         success: function (newPlayer) {
                             if (player.parentId) {
-                                var parentQuery = new Parse.Query(userTable);
-                                parentQuery.equalTo("objectId", player.parentId);
-                                parentQuery.first({
-                                    success: function(user) {
-                                        user.addUnique("players", newPlayer);
-                                        console.log(user);
-                                        user.save(null, {
-                                            success: function (user) {
-                                                toastService.success("Player, " + player.name + ", successfully added.");
-                                                $rootScope.$broadcast(configService.messages.playerAdded, newPlayer);
-                                                viewService.closeModal(self);
-                                            },
-                                            erorr: function (user, error) {
-                                                console.log("Error: " + error.code + " " + error.message);
-                                               toastService.error("There was a an error (" + error.code +"). Please try again."); 
-                                            }
-                                        });
+                                Parse.Cloud.run('registerPlayer', {newPlayerId: newPlayer.id, parentId: player.parentId}, {
+                                    success: function (result) {
+                                        console.log(result);
+                                        toastService.success("Player, " + player.name + ", successfully added.");
+                                        $rootScope.$broadcast(configService.messages.playerAdded, newPlayer);
+                                        viewService.closeModal(self);
                                     },
-                                    error: function(user, error) {
+                                    error: function (error) {
                                         console.log("Error: " + error.code + " " + error.message);
-                                        toastService.error("There was a an error (" + error.code +"). Please try again."); 
+                                        toastService.error("There was an error (" + error.code +"). Please try again.");
                                     }
                                 });
                             } else {
