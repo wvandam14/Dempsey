@@ -2,7 +2,7 @@
 Parse.Cloud.define("sendEmailInvite", function(request, response) {
     // Require sendgrid node api
     var sendgrid = require("sendgrid");
-    sendgrid.initialize("alecm00re", "$occer$tats");
+    sendgrid.initialize("alecm00re", "$occerStats123");
 
     var email;
     var emailBody;
@@ -36,7 +36,6 @@ Parse.Cloud.define("sendEmailInvite", function(request, response) {
                     "Thanks!" +
                     "<br/>" +
                     "Soccer Stats Development Team</p>";
-
 
                 var Teams = Parse.Object.extend("Team");
                 var teams = new Parse.Query(Teams);

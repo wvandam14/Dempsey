@@ -1,4 +1,4 @@
-soccerStats.factory('dataService', function ($location, $timeout, configService, toastService) {
+soccerStats.factory('dataService', function ($location, $timeout, configService, toastService, emailService, viewService) {
 
     var
          ageGroups = { "U12" : "U12" , "U16" : "U16", "U18" : "U18", "U20" : "U20", "U23" : "U23" }
@@ -443,7 +443,7 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
             });
         }
 
-        ,getGameStatsById = function(game_id,callback){
+        , getGameStatsById = function(game_id,callback){
 
             var query = new Parse.Query(gameTable);
             query.include('gameTeamStats');
@@ -452,6 +452,56 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
             }, function(error){
                 console.log("Error: " + error.code + " " + error.message);
                 callback({});
+            });
+        }
+
+        , sendEmailInvite = function(user, teamID, teamName, inviteEmails) {
+            _.each(inviteEmails, function (email) {
+                emailService.sendEmailInvite(user.get("name"), teamID, teamName, email);
+            });
+        }
+
+        , registerCoach = function (newUser, _team, inviteEmails) {
+            _team.save(null, {
+                success: function (_team) {
+                    var registerUser = new Parse.User();
+
+                    registerUser.set("username", newUser.email);
+                    registerUser.set("firstName", newUser.firstName);
+                    registerUser.set("lastName", newUser.lastName);
+                    registerUser.set("name", newUser.firstName + ' ' + newUser.lastName);
+                    registerUser.set("email", newUser.email);
+                    registerUser.set("password", newUser.password);
+                    registerUser.set("phone", newUser.phone);
+                    registerUser.set("city", newUser.city);
+                    registerUser.set("state", (_.invert(states))[newUser.state]);
+                    registerUser.set("photo", newUser.photo);
+
+                    // Adds a pointer to the team to an array of pointers
+                    registerUser.addUnique("teams", _team);
+                    registerUser.set("accountType", 1);
+
+                    //register team
+                    registerUser.signUp(null, {
+                        success: function (registerUser) {
+                            toastService.success(configService.toasts.registrationSuccess);
+                            sendEmailInvite(registerUser, _team.id, _team.get("name"), inviteEmails);
+                            viewService.goToPage('/home');
+                        },
+                        error: function (registerUser, error) {
+                            console.log("Error: " + error.code + " " + error.message);
+                            if (error.code === 202)
+                                toastService.error(error.message);
+                            // toastService.error("There was a an error (" + error.code +"). Please try again.");
+
+                        }
+                    });
+
+                },
+                error: function (_team, error) {
+                    console.log("Error: " + error.code + " " + error.message);
+                    toastService.error("There was a an error (" + error.code +"). Please try again.");
+                }
             });
         }
 
@@ -475,7 +525,9 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
         getSeasonTeamStats : getSeasonTeamStats,
         saveGame : saveGame,
         saveGameAttributes : saveGameAttributes,
-        getGameStatsById : getGameStatsById
+        getGameStatsById : getGameStatsById,
+        registerCoach : registerCoach,
+        sendEmailInvite : sendEmailInvite
     }
 
 });

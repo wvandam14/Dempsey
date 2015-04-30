@@ -7,6 +7,7 @@ soccerStats.controller('registrationController',
         $scope.team = {}; //TODO: duplicate
 
         $scope.goToPage = function(page) {
+            console.log(page);
             viewService.goToPage(page);
         };
 
@@ -63,11 +64,11 @@ soccerStats.controller('registrationController',
         }
 
         // Sends email via the cloud code with parse
-        $scope.sendEmailInvite = function(newUser, team) {
-            _.each($scope.inviteEmails, function (email) {
-                emailService.sendEmailInvite(newUser.get("firstName") + newUser.get("lastName"), team.id, team.get("name"), email);
-            });
-        };
+        // $scope.sendEmailInvite = function(newUser, team) {
+        //     _.each($scope.inviteEmails, function (email) {
+        //         emailService.sendEmailInvite(newUser.get("name"), team.id, team.get("name"), email);
+        //     });
+        // };
 
 		// User information
         $scope.newUser = {
@@ -99,49 +100,7 @@ soccerStats.controller('registrationController',
         // register coach
         $scope.register = function (newUser, newTeam) {
             var _team = dataService.registerTeam(newTeam);
-
-            _team.save(null, {
-                success: function (_team) {
-                    var registerUser = new Parse.User();
-
-                    registerUser.set("username", newUser.email);
-                    registerUser.set("firstName", newUser.firstName);
-                    registerUser.set("lastName", newUser.lastName);
-                    registerUser.set("name", newUser.firstName + ' ' + newUser.lastName);
-                    registerUser.set("email", newUser.email);
-                    registerUser.set("password", newUser.password);
-                    registerUser.set("phone", newUser.phone);
-                    registerUser.set("city", newUser.city);
-                    registerUser.set("state", (_.invert($scope.states))[newUser.state]);
-                    registerUser.set("photo", newUser.photo);
-
-                    // Adds a pointer to the team to an array of pointers
-                    registerUser.addUnique("teams", _team);
-                    registerUser.set("accountType", 1);
-
-                    //register team
-                    registerUser.signUp(null, {
-                        success: function (registerUser) {
-                            toastService.success(configService.toasts.registrationSuccess);
-                            $scope.sendEmailInvite(newUser, _team);
-                            viewService.goToPage('/home');
-                        },
-                        error: function (registerUser, error) {
-                            console.log("Error: " + error.code + " " + error.message);
-                            if (error.code === 202)
-                                toastService.error(error.message);
-                            // toastService.error("There was a an error (" + error.code +"). Please try again.");
-
-                        }
-                    });
-
-                },
-                error: function (_team, error) {
-                    console.log("Error: " + error.code + " " + error.message);
-                    toastService.error("There was a an error (" + error.code +"). Please try again.");
-                }
-            });
-
+            dataService.registerCoach(newUser, _team, $scope.inviteEmails);
         };
 
         //compare new password with confirmation password
