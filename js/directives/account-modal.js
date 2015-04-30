@@ -47,32 +47,7 @@ soccerStats.directive('accountModal', function ($location, $timeout, $route, vie
             $scope.updateAccount = function(editUser) {
                 if (viewService.validateAreaByFormName('accountForm')) {
                     if ($scope.checkPassword()) {
-                        currentUser.set("username", $scope.editUser.email);
-                        currentUser.set("firstName", $scope.editUser.firstName);
-                        currentUser.set("lastName", $scope.editUser.lastName);
-                        currentUser.set("name", $scope.editUser.firstName + " " + $scope.editUser.lastName);
-                        currentUser.set("email", $scope.editUser.email);
-                        currentUser.set("phone", $scope.editUser.phone);
-                        currentUser.set("city", $scope.editUser.city);
-                        currentUser.set("state", (_.invert($scope.states))[$scope.editUser.state]);
-                        //console.log((_.invert($scope.states))[$scope.editUser.state]);
-                        if ($scope.editUser.newPhoto)
-                            currentUser.set("photo", $scope.editUser.newPhoto);
-                        if($scope.editUser.newPassword !== '')
-                            currentUser.set("password", $scope.editUser.newPassword);
-                        
-                        currentUser.save(null, {
-                            success: function (currentUser) {
-                                toastService.success(configService.toasts.accountUpdateSuccess);
-                                $scope.closeModal();
-                                //$route.reload();
-                                //currentUser.fetch();
-                            },
-                            error: function (currentUser, error) {
-                                console.log("Error: " + error.code + " " + error.message);
-                                toastService.error("There was a an error (" + error.code +"). Please try again.");
-                            }
-                        });
+                        dataService.updateAccount(editUser, self);
                     }
                 } else {
                     toastService.error(configService.toasts.requiredFields);

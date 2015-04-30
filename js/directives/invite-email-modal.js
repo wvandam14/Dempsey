@@ -29,7 +29,7 @@ soccerStats.directive('inviteEmailModal', function (viewService, toastService, c
 
             // Sends email via the cloud code with parse
             $scope.sendEmailInvite = function() {
-                dataService.sendEmailInvite(currentUser, $scope.currentTeam.id, $scope.currentTeam.label, $scope.inviteEmails);
+                dataService.sendEmailInvite(currentUser, $scope.currentTeam.id, $scope.currentTeam.get("name"), $scope.inviteEmails);
                 // _.each($scope.inviteEmails, function (email) {
                 //     emailService.sendEmailInvite(currentUser.get("name"), $scope.currentTeam.id, $scope.currentTeam.label, email);
                 // });

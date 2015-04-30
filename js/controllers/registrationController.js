@@ -63,13 +63,6 @@ soccerStats.controller('registrationController',
             $scope.inviteEmails.splice(index, 1);
         }
 
-        // Sends email via the cloud code with parse
-        // $scope.sendEmailInvite = function(newUser, team) {
-        //     _.each($scope.inviteEmails, function (email) {
-        //         emailService.sendEmailInvite(newUser.get("name"), team.id, team.get("name"), email);
-        //     });
-        // };
-
 		// User information
         $scope.newUser = {
             firstName: 'Alec',

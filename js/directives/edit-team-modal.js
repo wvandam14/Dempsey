@@ -15,37 +15,7 @@ soccerStats.directive('editTeamModal', function ($location, $timeout, $route, $r
             // Team information
             $scope.updateTeam = function(editTeam) {
                 if (viewService.validateAreaByFormName('teamForm')) {
-                    var teamTable = Parse.Object.extend("Team");
-                    var query = new Parse.Query(teamTable);
-                    query.get($scope.currentTeam.id, {
-                        success: function(team) {
-                            team.set("leagueName", $scope.editTeam.leagueName);
-                            team.set("ageGroup", $scope.editTeam.ageGroup);
-                            team.set("primaryColor", $scope.editTeam.primaryColor);
-                            team.set("city", $scope.editTeam.city);
-                            team.set("name", $scope.editTeam.name);
-                            team.set("number", $scope.editTeam.number);
-                            team.set("state", (_.invert($scope.states))[$scope.editTeam.state]);
-                            if ($scope.editTeam.newLogo) 
-                                team.set("logo", $scope.editTeam.newLogo);
-                            console.log($scope.editTeam);
-                            team.save(null, {
-                                success: function (editTeam) {
-                                    toastService.success(configService.toasts.teamUpdateSuccess);
-                                    $scope.closeModal();
-                                    //$route.reload();
-                                },
-                                error: function(editTeam, error) {
-                                    toastService.error("There was a an error (" + error.code +"). Please try again.");
-                                }
-                            });
-                            
-                        },
-                        error: function(team, error) {
-                            toastService.error("There was a an error (" + error.code +"). Please try again.");
-                        }
-                    });
-                    
+                    dataService.updateTeam($scope.currentTeam.id, editTeam, self);
                 } else {
                     toastService.error(configService.toasts.requiredFields);
                 }
@@ -74,14 +44,14 @@ soccerStats.directive('editTeamModal', function ($location, $timeout, $route, $r
                         $scope.currentTeam = dataService.getCurrentTeam();
                     console.log($scope.currentTeam)
                     $scope.editTeam = {
-                        logo: $scope.currentTeam.logo ? $scope.currentTeam.logo : './img/team-logo-icon.svg',
-                        primaryColor: $scope.currentTeam.color ? $scope.currentTeam.color : '',
-                        name: $scope.currentTeam.label,
-                        number: $scope.currentTeam.number,
-                        leagueName: $scope.currentTeam.league,
-                        ageGroup: $scope.ageGroups[$scope.currentTeam.age],
-                        city: $scope.currentTeam.city,
-                        state: $scope.states[$scope.currentTeam.state],
+                        logo: $scope.currentTeam.get("logo") ? $scope.currentTeam.get("logo")._url : './img/team-logo-icon.svg',
+                        primaryColor: $scope.currentTeam.get("primaryColor") ? $scope.currentTeam.get("primaryColor") : '',
+                        name: $scope.currentTeam.get("name"),
+                        number: $scope.currentTeam.get("number"),
+                        leagueName: $scope.currentTeam.get("leagueName"),
+                        ageGroup: $scope.ageGroups[$scope.currentTeam.get("ageGroup")],
+                        city: $scope.currentTeam.get("city"),
+                        state: $scope.states[$scope.currentTeam.get("state")],
                         newLogo: ''
                     };
                     //console.log($scope.editTeam);

@@ -11,7 +11,7 @@
         <div class="flex-one">
             <h3 class="ellipse">Team Logo</h3>
             <div class="flex flex-center logo-container">
-                <image-upload image="team.newLogo" placeholder="team.logo" get-color="getImageColor(color)"></image-upload>
+                <image-upload image="team.logo" placeholder="'./img/team-logo-icon.svg'" get-color="getImageColor(color)"></image-upload>
                 <p class="flex-one text-center logo-text">Click the logo to add a new one</p>
             </div>
             <h3>Team Color</h3>
@@ -34,7 +34,7 @@
             <input type="text" ng-model="team.city" placeholder="City" required />
             <h3 class="ellipse">State</h3>
             <select ng-model="team.state" ng-options="v for (k, v) in states" required>
-                <option value=""></option>
+                <option value="">Select a State</option>
             </select>
         </div>
     </form>

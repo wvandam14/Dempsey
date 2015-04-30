@@ -18,7 +18,7 @@
             <h3 class="ellipse">Birthday</h3>
             <input type="date" class="date" ng-model="player.birthday" required />
             <h3 class="ellipse">Team</h3>
-            <select ng-model="player.team" ng-options="team as team.label for team in teamDict" required>
+            <select ng-model="player.team" ng-options="team as team.attributes.name for team in teamDict" required>
                 <option value="">Select a Team</option>
             </select>
             <h3 class="ellipse">Jersey Number</h3>

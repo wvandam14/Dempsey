@@ -96,11 +96,10 @@ soccerStats.directive('header', function ($timeout, $rootScope, $route, viewServ
             // TODO: verify if user is logged in
             if (Parse.User.current()) {
                 $scope.teams = dataService.getTeams( function(_teams) {
-                    // console.log(_teams);
+                    console.log(_teams);
                     $scope.currentTeam = _teams[0];
                     dataService.setCurrentTeam(_teams[0]);
      
-
                     $timeout(function() {
                        $rootScope.$broadcast(configService.messages.teamChanged, {team: _teams[0]});
                     });

@@ -72,109 +72,14 @@ soccerStats.directive('playerModal', function ($location, $rootScope, $timeout, 
             // Register a player
             $scope.registerPlayer = function(player) {
                 if ($scope.update)
-                    $scope.updatePlayer(player);
+                    dataService.updatePlayer(player, self);
                 else {
                     if (viewService.validateAreaByFormName('playerForm')) {
-                        var currentUser = Parse.User.current();
-                        var Player = Parse.Object.extend("Players");
-                        var newPlayer = new Player();
-                        var team = Parse.Object.extend("Team");
-                        var seasonPlayerStats = Parse.Object.extend("SeasonPlayerStats");
-                        var playerStats = new seasonPlayerStats();
-                        var query = new Parse.Query(team);
-                        query.get(player.team.id, {
-                            success: function (team) {
-                                if (player.newPhoto)
-                                    newPlayer.set("photo", player.newPhoto);
-                                newPlayer.set("name", player.name);
-                                newPlayer.set("birthday", player.birthday);
-                                newPlayer.set("team", team);
-                                newPlayer.set("jerseyNumber", player.jerseyNumber);
-                                newPlayer.set("city", player.city);
-                                newPlayer.set("state", (_.invert($scope.states))[player.state]);
-                                newPlayer.set("emergencyContact", player.emergencyContact.name);
-                                newPlayer.set("phone", player.emergencyContact.phone);
-                                newPlayer.set("relationship", player.emergencyContact.relationship);
-                                newPlayer.set("playerStats", playerStats);
-                                //update parse
-                                newPlayer.save(null, {
-                                    success: function (newPlayer) {
-                                        currentUser.addUnique("players", newPlayer);
-                                        currentUser.save(null, {
-                                            success: function (currentUser) {
-                                                toastService.success("Player, " + player.name + ", successfully added.");
-                                                $rootScope.$broadcast(configService.messages.playerAdded, newPlayer);
-                                                $scope.closeModal();
-                                            },
-                                            erorr: function (currentUser, error) {
-                                                console.log("Error: " + error.code + " " + error.message);
-                                               toastService.error("There was a an error (" + error.code +"). Please try again."); 
-                                            }
-                                        });
-                                    },
-                                    error: function (newPlayer, error) {
-                                        console.log("Error: " + error.code + " " + error.message);
-                                        toastService.error("There was a an error (" + error.code +"). Please try again.");
-                                    }
-                                });
-                            },
-                            error: function (teamTable, error) {
-                                console.log("Error: " + error.code + " " + error.message);
-                                toastService.error("There was a an error (" + error.code +"). Please try again."); 
-                            }
-                        });
+                        dataService.registerPlayer(player, self)
                     } else {
                         toastService.error(configService.toasts.requiredFields);
                     }
                 }
-            };
-
-            $scope.updatePlayer = function(player) {
-                var Player = Parse.Object.extend("Players");
-                var query = new Parse.Query(Player);
-                query.get(player.id, {
-                    success: function(editPlayer) {
-                        var teamTable = Parse.Object.extend("Team");
-                        query = new Parse.Query(teamTable);
-                        query.get(player.team.id, {
-                            success: function(team) {
-                                //console.log(team);
-                                if (player.newPhoto)
-                                    editPlayer.set("photo", player.newPhoto);
-                                editPlayer.set("name", player.name);
-                                editPlayer.set("birthday", player.birthday);
-                                editPlayer.set("team", team);
-                                editPlayer.set("jerseyNumber", player.jerseyNumber);
-                                editPlayer.set("city", player.city);
-                                editPlayer.set("state", (_.invert($scope.states))[player.state]);
-                                editPlayer.set("emergencyContact", player.emergencyContact.name);
-                                editPlayer.set("phone", player.emergencyContact.phone);
-                                editPlayer.set("relationship", player.emergencyContact.relationship);
-                                editPlayer.save(null, {
-                                    success: function(editPlayer) {
-                                        toastService.success("Player " + player.name + "'s profile updated.");
-                                        $rootScope.$broadcast(configService.messages.teamChanged, {refresh: true});
-                                        $scope.closeModal();
-                                        // $route.reload();
-                                    },
-                                    error: function(editPlayer, error) {
-                                        console.log("Error: " + error.code + " " + error.message);
-                                        toastService.error("There was a an error (" + error.code +"). Please try again."); 
-                                    }
-                                });
-                            },
-                            error : function(team, error) {
-                                console.log("Error: " + error.code + " " + error.message);
-                                toastService.error("There was a an error (" + error.code +"). Please try again."); 
-                            }
-                        });
-                        
-                    },
-                    error: function(player, error) {
-                        console.log("Error: " + error.code + " " + error.message);
-                        toastService.error("There was a an error (" + error.code +"). Please try again."); 
-                    }
-                });
             };
 
             $scope.states = dataService.states;  
