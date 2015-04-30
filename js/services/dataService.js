@@ -1,4 +1,4 @@
-soccerStats.factory('dataService', function ($location, $timeout, configService, toastService) {
+soccerStats.factory('dataService', function ($location, $timeout, $rootScope, configService, toastService, emailService, viewService) {
 
     var
          ageGroups = { "U12" : "U12" , "U16" : "U16", "U18" : "U18", "U20" : "U20", "U23" : "U23" }
@@ -47,26 +47,28 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
                         // console.log(teams);
                         // Add each team associated with the current user to the team dropdown list
                         _.each(teams, function (team) {
-                            var leagueName = team.get("leagueName"),
-                                logo = team.get("logo"),
-                                teamName = team.get("name"),                                                     
-                                ageGroup = team.get("ageGroup"),
-                                city = team.get("city"),
-                                teamNumber = team.get("number"),
-                                state = team.get("state"),
-                                primaryColor = team.get("primaryColor")
-                            ;
-                            teamDict.push({
-                                league: leagueName,
-                                id: team.id,
-                                label: teamName, 
-                                logo: logo._url,
-                                age: ageGroup,
-                                city: city,
-                                number: teamNumber,
-                                state: state,
-                                color: primaryColor 
-                            });
+                            // var leagueName = team.get("leagueName"),
+                            //     logo = team.get("logo"),
+                            //     teamName = team.get("name"),                                                     
+                            //     ageGroup = team.get("ageGroup"),
+                            //     city = team.get("city"),
+                            //     teamNumber = team.get("number"),
+                            //     state = team.get("state"),
+                            //     primaryColor = team.get("primaryColor")
+                            // ;
+                            teamDict.push(team
+                            // {
+                            //     league: leagueName,
+                            //     id: team.id,
+                            //     label: teamName, 
+                            //     logo: logo._url,
+                            //     age: ageGroup,
+                            //     city: city,
+                            //     number: teamNumber,
+                            //     state: state,
+                            //     color: primaryColor 
+                            // }
+                            );
                         });
 
                         callback(teamDict);
@@ -77,8 +79,9 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
                 }
             });
             return teamDict;
-        },
-        getPlayers = function(callback) {
+        }
+
+        , getPlayers = function(callback) {
             var dictionary = [];
             var currentUser = Parse.User.current();
             var query = new Parse.Query(userTable);
@@ -123,8 +126,9 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
                 }
             });
             return dictionary;
-        },
-        getTeamById = function(id, callback) {
+        }
+
+        , getTeamById = function(id, callback) {
             var query = new Parse.Query(teamTable);
             query.equalTo('objectId', id);
             query.first({
@@ -290,10 +294,6 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
                     toastService.error("There was a an error (" + error.code +"). Please try again.");
                 }
             });
-
-            
-
-            
         }
 
         , playerConstructor = function(player, stats) {
@@ -398,8 +398,7 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
             if (stats.attributes.passes)
                 retPlayer.passes.passInit(retPlayer.passes, stats); 
 
-            return retPlayer;
-                        
+            return retPlayer;            
         }
 
         , getSeasonTeamStats = function(team_id,callback){
@@ -443,7 +442,7 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
             });
         }
 
-        ,getGameStatsById = function(game_id,callback){
+        , getGameStatsById = function(game_id,callback){
 
             var query = new Parse.Query(gameTable);
             query.include('gameTeamStats');
@@ -455,9 +454,238 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
             });
         }
 
-        ;
+        , sendEmailInvite = function(user, teamID, teamName, inviteEmails) {
+            _.each(inviteEmails, function (email) {
+                emailService.sendEmailInvite(user.get("name"), teamID, teamName, email);
+            });
+        }
 
-    return {
+        , registerCoach = function (newUser, _team, inviteEmails) {
+            _team.save(null, {
+                success: function (_team) {
+                    var registerUser = new Parse.User();
+
+                    registerUser.set("username", newUser.email);
+                    registerUser.set("firstName", newUser.firstName);
+                    registerUser.set("lastName", newUser.lastName);
+                    registerUser.set("name", newUser.firstName + ' ' + newUser.lastName);
+                    registerUser.set("email", newUser.email);
+                    registerUser.set("password", newUser.password);
+                    registerUser.set("phone", newUser.phone);
+                    registerUser.set("city", newUser.city);
+                    registerUser.set("state", (_.invert(states))[newUser.state]);
+                    registerUser.set("photo", newUser.photo);
+
+                    // Adds a pointer to the team to an array of pointers
+                    registerUser.addUnique("teams", _team);
+                    registerUser.set("accountType", 1);
+
+                    //register team
+                    registerUser.signUp(null, {
+                        success: function (registerUser) {
+                            toastService.success(configService.toasts.registrationSuccess);
+                            sendEmailInvite(registerUser, _team.id, _team.get("name"), inviteEmails);
+                            viewService.goToPage('/home');
+                        },
+                        error: function (registerUser, error) {
+                            console.log("Error: " + error.code + " " + error.message);
+                            if (error.code === 202)
+                                toastService.error(error.message);
+                            // toastService.error("There was a an error (" + error.code +"). Please try again.");
+
+                        }
+                    });
+
+                },
+                error: function (_team, error) {
+                    console.log("Error: " + error.code + " " + error.message);
+                    toastService.error("There was a an error (" + error.code +"). Please try again.");
+                }
+            });
+        }
+
+        , updateAccount = function (editUser, self) {
+            var currentUser = getCurrentUser();
+            currentUser.set("username", editUser.email);
+            currentUser.set("firstName", editUser.firstName);
+            currentUser.set("lastName", editUser.lastName);
+            currentUser.set("name", editUser.firstName + " " + editUser.lastName);
+            currentUser.set("email", editUser.email);
+            currentUser.set("phone", editUser.phone);
+            currentUser.set("city", editUser.city);
+            currentUser.set("state", (_.invert(states))[editUser.state]);
+            //console.log((_.invert($scope.states))[$scope.editUser.state]);
+            if (editUser.newPhoto)
+                currentUser.set("photo", editUser.newPhoto);
+            if(editUser.newPassword !== '')
+                currentUser.set("password", editUser.newPassword);
+            
+            currentUser.save(null, {
+                success: function (currentUser) {
+                    toastService.success(configService.toasts.accountUpdateSuccess);
+                    viewService.closeModal(self);
+                    //$route.reload();
+                    //currentUser.fetch();
+                },
+                error: function (currentUser, error) {
+                    console.log("Error: " + error.code + " " + error.message);
+                    toastService.error("There was a an error (" + error.code +"). Please try again.");
+                }
+            });
+        }
+
+        , updateTeam = function(currentTeamID, editTeam, self) {
+            var query = new Parse.Query(teamTable);
+            query.get(currentTeamID, {
+                success: function(team) {
+                    team.set("leagueName", editTeam.leagueName);
+                    team.set("ageGroup", editTeam.ageGroup);
+                    team.set("primaryColor", editTeam.primaryColor);
+                    team.set("city", editTeam.city);
+                    team.set("name", editTeam.name);
+                    team.set("number", editTeam.number);
+                    team.set("state", (_.invert(states))[editTeam.state]);
+                    if (editTeam.newLogo) 
+                        team.set("logo", editTeam.newLogo);
+                    team.save(null, {
+                        success: function (editTeam) {
+                            setCurrentTeam(editTeam);
+                            toastService.success(configService.toasts.teamUpdateSuccess);
+                            viewService.closeModal(self);
+                            //$route.reload();
+                        },
+                        error: function(editTeam, error) {
+                            toastService.error("There was a an error (" + error.code +"). Please try again.");
+                        }
+                    });
+                    
+                },
+                error: function(team, error) {
+                    toastService.error("There was a an error (" + error.code +"). Please try again.");
+                }
+            });
+        }
+
+        , registerPlayer = function(player, self) {
+            var currentUser = getCurrentUser();
+            var newPlayer = new playersTable();
+            var playerStats = new playerStatsTable();
+            var query = new Parse.Query(teamTable);
+            query.get(player.team.id, {
+                success: function (team) {
+                    if (player.newPhoto) newPlayer.set("photo", player.newPhoto);
+                    newPlayer.set("name", player.name);
+                    newPlayer.set("birthday", player.birthday);
+                    newPlayer.set("team", team);
+                    newPlayer.set("jerseyNumber", player.jerseyNumber);
+                    newPlayer.set("city", player.city);
+                    newPlayer.set("state", (_.invert(states))[player.state]);
+                    newPlayer.set("emergencyContact", player.emergencyContact.name);
+                    newPlayer.set("phone", player.emergencyContact.phone);
+                    newPlayer.set("relationship", player.emergencyContact.relationship);
+                    newPlayer.set("playerStats", playerStats);
+                    //update parse
+                    newPlayer.save(null, {
+                        success: function (newPlayer) {
+                            currentUser.addUnique("players", newPlayer);
+                            currentUser.save(null, {
+                                success: function (currentUser) {
+                                    toastService.success("Player, " + player.name + ", successfully added.");
+                                    $rootScope.$broadcast(configService.messages.playerAdded, newPlayer);
+                                    viewService.closeModal(self);
+                                },
+                                erorr: function (currentUser, error) {
+                                    console.log("Error: " + error.code + " " + error.message);
+                                   toastService.error("There was a an error (" + error.code +"). Please try again."); 
+                                }
+                            });
+                        },
+                        error: function (newPlayer, error) {
+                            console.log("Error: " + error.code + " " + error.message);
+                            toastService.error("There was a an error (" + error.code +"). Please try again.");
+                        }
+                    });
+                },
+                error: function (teamTable, error) {
+                    console.log("Error: " + error.code + " " + error.message);
+                    toastService.error("There was a an error (" + error.code +"). Please try again."); 
+                }
+            });
+        } 
+
+        , updatePlayer = function(player, self) {
+            var query = new Parse.Query(playersTable);
+            query.get(player.id, {
+                success: function(editPlayer) {
+                    query = new Parse.Query(teamTable);
+                    query.get(player.team.id, {
+                        success: function(team) {
+                            //console.log(team);
+                            if (player.newPhoto)
+                                editPlayer.set("photo", player.newPhoto);
+                            editPlayer.set("name", player.name);
+                            editPlayer.set("birthday", player.birthday);
+                            editPlayer.set("team", team);
+                            editPlayer.set("jerseyNumber", player.jerseyNumber);
+                            editPlayer.set("city", player.city);
+                            editPlayer.set("state", (_.invert(states))[player.state]);
+                            editPlayer.set("emergencyContact", player.emergencyContact.name);
+                            editPlayer.set("phone", player.emergencyContact.phone);
+                            editPlayer.set("relationship", player.emergencyContact.relationship);
+                            editPlayer.save(null, {
+                                success: function(editPlayer) {
+                                    toastService.success("Player " + player.name + "'s profile updated.");
+                                    $rootScope.$broadcast(configService.messages.teamChanged, {refresh: true});
+                                    viewService.closeModal(self);
+                                    // $route.reload();
+                                },
+                                error: function(editPlayer, error) {
+                                    console.log("Error: " + error.code + " " + error.message);
+                                    toastService.error("There was a an error (" + error.code +"). Please try again."); 
+                                }
+                            });
+                        },
+                        error : function(team, error) {
+                            console.log("Error: " + error.code + " " + error.message);
+                            toastService.error("There was a an error (" + error.code +"). Please try again."); 
+                        }
+                    });
+                    
+                },
+                error: function(player, error) {
+                    console.log("Error: " + error.code + " " + error.message);
+                    toastService.error("There was a an error (" + error.code +"). Please try again."); 
+                }
+            });
+        }
+
+        , createNewTeam = function(_team, self) {
+            var currentUser = getCurrentUser();
+            _team.save(null, {
+                success: function(_team) {
+                    currentUser.addUnique("teams", _team);
+                    currentUser.save(null, {
+                        success: function(currenUser) {
+                            toastService.success(configService.toasts.teamAddSuccess);
+                            viewService.closeModal(self);
+                            $rootScope.$broadcast(configService.messages.addNewTeam, _team);
+                            $rootScope.$broadcast(configService.messages.teamChanged, {team: _team, refresh: false});
+                        },
+                        error: function(currentUser, error) {
+                            toastService.error("There was a an error (" + error.code +"). Please try again.");
+                            console.log(error.message);
+                        }
+                    });
+                    
+                },
+                error: function(_team, error) {
+                    toastService.error("There was a an error (" + error.code +"). Please try again.");
+                    console.log(error.message);
+                }
+            }); 
+        }
+
+    ; return {
         ageGroups: ageGroups,
         states : states,
         getTeams : getTeams,
@@ -475,7 +703,14 @@ soccerStats.factory('dataService', function ($location, $timeout, configService,
         getSeasonTeamStats : getSeasonTeamStats,
         saveGame : saveGame,
         saveGameAttributes : saveGameAttributes,
-        getGameStatsById : getGameStatsById
+        getGameStatsById : getGameStatsById,
+        registerCoach : registerCoach,
+        sendEmailInvite : sendEmailInvite,
+        updateAccount : updateAccount,
+        updateTeam : updateTeam,
+        registerPlayer : registerPlayer,
+        updatePlayer : updatePlayer,
+        createNewTeam : createNewTeam
     }
 
 });

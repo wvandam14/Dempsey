@@ -37,7 +37,6 @@ Parse.Cloud.define("sendEmailInvite", function(request, response) {
                     "<br/>" +
                     "Soccer Stats Development Team</p>";
 
-
                 var Teams = Parse.Object.extend("Team");
                 var teams = new Parse.Query(Teams);
                 teams.equalTo("objectId", teamId);
