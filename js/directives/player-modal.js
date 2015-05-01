@@ -25,8 +25,9 @@ soccerStats.directive('playerModal', function ($location, $rootScope, $timeout, 
                         $scope.players = dataService.getPlayerByPlayerId(data.id, function(player) {
                             $scope.getParentEmails(player.get("team"));
                             dataService.getParentByPlayerId(player.id, function(parent) {
+                                console.log(parent.get("email"));
                                 //parent.id = $scope.parents[parent.get("email")];
-                                console.log(parent.id);
+                                //console.log(parent.id);
                                 var _team = _.find($scope.teamDict, function(obj){return obj.id == player.get("team").id});
                                 $scope.player = {
                                     photo: player.get("photo") ? player.get("photo")._url : './img/team-logo-icon.svg',
@@ -45,7 +46,7 @@ soccerStats.directive('playerModal', function ($location, $rootScope, $timeout, 
                                     id : player.id,
                                     parentId: parent.id
                                 };
-                                console.log($scope.player.parentId);
+                                //console.log($scope.player.parentId);
                             });
                         });
                     } else {

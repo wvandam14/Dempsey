@@ -402,6 +402,7 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
         }
         
         , updatePlayer = function(player, self) {
+            console.log(player);
             var query = new Parse.Query(playersTable);
             query.get(player.id, {
                 success: function(editPlayer) {
@@ -423,7 +424,8 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                             editPlayer.save(null, {
                                 success: function(editPlayer) {
                                     if (player.parentId) {
-                                        Parse.Cloud.run('registerPlayer', {newPlayerId: editPlayer.id, parentId: player.parentId}, {
+                                        dataService.removeParentsByPlayerId(player.id);
+                                        Parse.Cloud.run('addPlayer', {newPlayerId: editPlayer.id, parentId: player.parentId}, {
                                             success: function (result) {
                                                 console.log(result);
                                                 toastService.success("Player " + player.name + ", successfully added.");
@@ -458,6 +460,35 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                     
                 },
                 error: function(player, error) {
+                    console.log("Error: " + error.code + " " + error.message);
+                    toastService.error("There was a an error (" + error.code +"). Please try again."); 
+                }
+            });
+        }
+
+        , removeParentsByPlayerId = function(playerId) {
+            var query = new Parse.Query(userTable);
+            query.equalTo('players', {
+                __type: "Pointer",
+                className: "Players",
+                objectId: playerId
+            });
+            query.find({
+                success: function(parents) {
+                    _.each(parents, function(parent) {
+                        var player = _.find(parent.get("players"), function(obj){return obj.id == playerId});
+                        player.destroy({
+                            success: function(player) {
+                                console.log("player has been removed from parent: " + parent.attributes.email);
+                            },
+                            error: function(player, error) {
+                                console.log("Error: " + error.code + " " + error.message);
+                                toastService.error("There was a an error (" + error.code +"). Please try again."); 
+                            }
+                        });
+                    });
+                },
+                error: function(parent, error) {
                     console.log("Error: " + error.code + " " + error.message);
                     toastService.error("There was a an error (" + error.code +"). Please try again."); 
                 }
@@ -567,6 +598,7 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                 className: "Players",
                 objectId : playerId
             });
+            query.equalTo("accountType", 2);
             query.first({
                 success: function(parent) {
                     callback(parent);
