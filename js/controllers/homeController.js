@@ -167,10 +167,11 @@
         // Ignore below here
         $scope.isCoach = false;
         $scope.$on(configService.messages.teamChanged, function(event, data) {
+            console.log(data);
+            $scope.myPlayers = [];
             if (!data.refresh)
                 $scope.currentTeam = data.team;
             //console.log($scope.currentTeam);
-            $scope.myPlayers = [];
             if (currentUser.get("accountType") === 1) {
                 dataService.getPlayersByTeamId($scope.currentTeam.id, function(players) {
                     _.each(players, function(player) {
