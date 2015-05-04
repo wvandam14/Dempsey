@@ -141,7 +141,7 @@ Parse.Cloud.define("sendEmailInvite", function(request, response) {
 
 });
 
-Parse.Cloud.define("registerPlayer", function(request, response) {
+Parse.Cloud.define("addPlayer", function(request, response) {
 
     var newPlayerId = request.params.newPlayerId;
     var parentId = request.params.parentId;
@@ -180,4 +180,33 @@ Parse.Cloud.define("registerPlayer", function(request, response) {
     });
 
     
+});
+
+Parse.Cloud.define("removePlayer", function(request, response) {
+
+    var playerId = request.params.playerId;
+    var userTable = Parse.Object.extend("_User");
+    var _ = require('underscore.js');
+
+    var query = new Parse.Query(userTable);
+    query.equalTo('players', {
+        __type: "Pointer",
+        className: "Players",
+        objectId: playerId
+    });
+    query.equalTo("accountType", 2);
+    query.find({
+        success: function(parents) {
+            Parse.Cloud.useMasterKey();
+            _.each(parents, function(parent) {
+                var player = _.find(parent.get("players"), function(obj){return obj.id == playerId});
+                parent.remove("players", player);
+                parent.save();
+            });
+            response.success('players removed from parents');
+        },
+        error: function(parents, error) {
+            response.error(parents);
+        }
+    });
 });
