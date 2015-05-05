@@ -12,11 +12,12 @@ soccerStats.directive('schedule', function () {
 
 	        $scope.setGame = function (game) {
                 //console.log($scope.currGame);
+                viewService.goToPage('/game-review');
+                $scope.selectGame(game);
                 $timeout(function() {
 	               $rootScope.$broadcast(configService.messages.setGame, {game: $scope.currGame});
                 });
-                viewService.goToPage('/game-review');
-                $scope.selectGame(game);
+                
 	        };
 
         	$scope.selectGame = function (game) {

@@ -50,12 +50,9 @@ soccerStats.controller('gameReviewController',
         });
 
 
-        $scope.$on(configService.messages.teamChanged,function(event,data){
-            viewService.goToPage('/home');
-        });
-
-
-
+        // $scope.$on(configService.messages.teamChanged,function(event,data){
+        //     viewService.goToPage('/home');
+        // });
 
     	var currentUser = Parse.User.current();
         
