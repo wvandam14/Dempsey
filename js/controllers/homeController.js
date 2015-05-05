@@ -77,31 +77,11 @@
             dataService.getSeasonTeamStats(data.team.id,function(teamStats){
 
                 console.log(teamStats);
-
-
-                
-                 $scope.teamStats = {
-
-                    teamGames : { data: []},
-                    goalsConceded : 0,
-                    goalsScored : 0,
-                    avgGoals : 0,
-                    ballPossession : 0,
-                    foulsCommitted :  0,
-                    gamesPlayed : 0,
-                    goalsDifference : 0,
-                    topAssists : [],
-                    topGoals : [],
-                    topShots : []
-                };
-                
                 if(teamStats){
                      var goalsDifference = (teamStats.get("goalsScored") && teamStats.get("goalsConceded")) ? 
                                            teamStats.get("goalsScored") -  teamStats.get("goalsConceded") :
                                             0; 
                     $scope.teamStats = {
-
-                       
 
                         teamGames : {                        
                             data: [
@@ -154,6 +134,22 @@
                         var photo = player.get("photo") ? player.get("photo")._url : "./img/sample/profile-small.jpg"; 
                         $scope.teamStats.topShots.push({ name : player.get("name"), num : player.get("playerStats").get("shots").total, photo : photo});
                     });
+                }
+                else{
+                    $scope.teamStats = {
+
+                        teamGames : { data: []},
+                        goalsConceded : 0,
+                        goalsScored : 0,
+                        avgGoals : 0,
+                        ballPossession : 0,
+                        foulsCommitted :  0,
+                        gamesPlayed : 0,
+                        goalsDifference : 0,
+                        topAssists : [],
+                        topGoals : [],
+                        topShots : []
+                    };
                 }
             });
         });
