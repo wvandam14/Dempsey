@@ -17,16 +17,18 @@ soccerStats.controller('gameReviewController',
         $scope.$on(configService.messages.setGame, function(event, data) {
             dataService.getGameStatsById(data.game.id, function(game) {
                 $timeout(function() {
-                     $scope.gameStats = {
+                    $scope.gameStats = {
                         corners : 0,
                         offsides : 0,
                         goalsMade : 0,
                         goalsTaken : 0,
                         passes : 0,
-                        possession : 0,
                         tackles : 0,
-                        fouls : 0
+                        fouls : 0,
+                        possession : 0,
+                        teamPossession : { data: []},
                     }
+
 
                     if(game){
                          $scope.gameStats = {
@@ -35,9 +37,25 @@ soccerStats.controller('gameReviewController',
                             goalsMade : game.get('gameTeamStats').get('goalsMade'),
                             goalsTaken : game.get('gameTeamStats').get('goalsTaken'),
                             passes : game.get('gameTeamStats').get('passes'),
-                            possession : game.get('gameTeamStats').get('possession'),
                             tackles : game.get('gameTeamStats').get('tackles'),
-                            fouls :  game.get('gameTeamStats').get('fouls')
+                            fouls :  game.get('gameTeamStats').get('fouls'),
+                            possession : game.get('gameTeamStats').get('possession'),
+                            teamPossession : {
+                                data : [
+                                    {
+                                        value: 100 - game.get('gameTeamStats').get('possession'),
+                                        color: "#B4B4B4",
+                                        highlight: "#B4B4B4",
+                                        label: "Theirs"
+                                    },
+                                    {
+                                        value: game.get('gameTeamStats').get('possession'),
+                                        color:"#5DA97B",
+                                        highlight: "#5DA97B",
+                                        label: "Ours"
+                                    }
+                                ]
+                            }
                         };
                     }
 
@@ -82,7 +100,7 @@ soccerStats.controller('gameReviewController',
             ]
         };
 */
-        $scope.teamPossession = {
+        /*$scope.teamPossession = {
             data: [
                 {
                     value: 48,
@@ -97,7 +115,7 @@ soccerStats.controller('gameReviewController',
                     label: "Wins"
                 }
             ]
-        };
+        };*/
 
 
         $scope.shotCountData = {
