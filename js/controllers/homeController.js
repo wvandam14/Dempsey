@@ -167,7 +167,6 @@
         // Ignore below here
         $scope.isCoach = false;
         $scope.$on(configService.messages.teamChanged, function(event, data) {
-            console.log(data);
             $scope.myPlayers = [];
             if (!data.refresh)
                 $scope.currentTeam = data.team;
@@ -182,10 +181,10 @@
                     });
                 });
             } else {
-                // console.log(currentUser.get("players"));
                 _.each(currentUser.get("players"), function(player) {
+                    //console.log(player);
                     dataService.getPlayerByPlayerId(player.id, function(player) {
-                        //console.log(player);
+                        console.log(player.get("team"));;
                         if (player.get("team").id === $scope.currentTeam.id) {
                             //console.log(player);
                             dataService.getSeasonPlayerStatsByPlayerId(player.get("playerStats").id, function(stats) {
