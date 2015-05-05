@@ -154,11 +154,6 @@
                         var photo = player.get("photo") ? player.get("photo")._url : "./img/sample/profile-small.jpg"; 
                         $scope.teamStats.topShots.push({ name : player.get("name"), num : player.get("playerStats").get("shots").total, photo : photo});
                     });
-
-
-
-
-
                 }
             });
         });
@@ -181,15 +176,16 @@
                     });
                 });
             } else {
-                _.each(currentUser.get("players"), function(player) {
-                    //console.log(player);
-                    dataService.getPlayerByPlayerId(player.id, function(player) {
-                        console.log(player.get("team"));;
+                //console.log(currentUser.get("players"));
+                _.each(currentUser.get("players"), function(playerPointer) {
+                    dataService.getPlayerByPlayerId(playerPointer.id, function(player) {
+                        //console.log(player);
                         if (player.get("team").id === $scope.currentTeam.id) {
                             //console.log(player);
                             dataService.getSeasonPlayerStatsByPlayerId(player.get("playerStats").id, function(stats) {
                                 //console.log(stats);
                                 $scope.myPlayers.push(dataService.playerConstructor(player, stats));
+                                //console.log($scope.myPlayers);
                             });
                         }
                     });

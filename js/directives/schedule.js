@@ -46,9 +46,9 @@ soccerStats.directive('schedule', function () {
             $scope.$on(configService.messages.teamChanged,function(event,data){
                 dataService.getGames(data.team,function(games){
                     $scope.games = games;
-                    console.log($scope.games);
+                    //console.log($scope.games);
                     $scope.currGame = $scope.games.length ? $scope.games[0] : {};
-                    console.log($scope.games);
+                    //console.log($scope.games);
                 });
                 
             });

@@ -32,9 +32,6 @@ soccerStats.controller('gameReviewController',
     	var currentUser = Parse.User.current();
         
 
-        $scope.
-
-
         // DUMMY DATA
 
 /*        $scope.teamForm = {

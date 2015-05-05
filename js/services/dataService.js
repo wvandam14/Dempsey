@@ -144,7 +144,7 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                         // console.log(game);
                         games.push(game);
                     }
-                    console.log(games);
+                    //console.log(games);
 
                     callback(games);
                 }, function(error){

@@ -4,20 +4,21 @@ soccerStats.controller('rosterController',
         $scope.players = [];
 
     	var currentUser = dataService.getCurrentUser();
-        console.log(currentUser);
+        //console.log(currentUser);
 
         $scope.$on(configService.messages.teamChanged, function(msg, data) {
+            console.log(data);
             $scope.players = [];
             $timeout(function(){
-                dataService.getTeamById(data.team.id, function(_team) {
-                    dataService.getPlayersByTeamId(_team, function(players) {
+                //dataService.getTeamById(data.team.id, function(_team) {
+                    dataService.getPlayersByTeamId(data.team.id, function(players) {
                         $timeout(function() {
-                            console.log(players);
+                            //console.log(players);
                             _.each(players, function (player) {
                                 $scope.players.push({
                                     name: player.get("name"),
                                     number: player.get("jerseyNumber"),
-                                    photo: player.get("photo"),
+                                    photo: player.get("photo") ? player.get("photo")._url : './img/player-icon.svg',
                                     position: "ST",
                                     notableEvents: [
                                         {
@@ -82,7 +83,7 @@ soccerStats.controller('rosterController',
                             $scope.currPlayer = $scope.players[0];
                         });
                     });
-                });
+                //});
             });
         });
 
