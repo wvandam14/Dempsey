@@ -6,8 +6,9 @@ soccerStats.controller('rosterController',
     	var currentUser = dataService.getCurrentUser();
         //console.log(currentUser);
 
+
         $scope.$on(configService.messages.teamChanged, function(msg, data) {
-            console.log(data);
+            //console.log(data);
             $scope.players = [];
             $timeout(function(){
                 //dataService.getTeamById(data.team.id, function(_team) {

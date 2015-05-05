@@ -18,6 +18,7 @@ soccerStats.controller('shellController',
                if ($scope.currentPage != 'login' && $scope.currentPage != 'registration'){
                    if (Parse.User.current()){
                        console.log("user logged in");
+                       $rootScope.$broadcast(configService.messages.teamChanged, {team: dataService.getCurrentTeam()});
                    }
                    else {
                        viewService.goToPage('/login');
@@ -42,6 +43,13 @@ soccerStats.controller('shellController',
 
          $scope.goToPage = function(page) {
              viewService.goToPage(page);
+         }
+
+         $scope.viewHomePage = function(page) {
+            $scope.goToPage(page);
+            $timeout(function() {
+                $rootScope.$broadcast(configService.messages.teamChanged, {team: dataService.getCurrentTeam()});
+            });
          }
 
         $scope.logout = function () {
