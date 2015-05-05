@@ -8,7 +8,7 @@ soccerStats.controller('rosterController',
 
 
         $scope.$on(configService.messages.teamChanged, function(msg, data) {
-            //console.log(data);
+            //git aconsole.log(data);
             $scope.players = [];
             $timeout(function(){
                 //dataService.getTeamById(data.team.id, function(_team) {
