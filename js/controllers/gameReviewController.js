@@ -1,5 +1,5 @@
 soccerStats.controller('gameReviewController', 
-    function gameReviewController($scope, $rootScope, $location, configService, dataService) {
+    function gameReviewController($scope, $rootScope, $location, $timeout, configService, dataService, viewService) {
 
         
        /* $scope.gameStats = {
@@ -14,20 +14,48 @@ soccerStats.controller('gameReviewController',
         };*/
 
 
-        $scope.$on(configService.messages.setGame, function(msg, data) {
+        $scope.$on(configService.messages.setGame, function(event, data) {
             dataService.getGameStatsById(data.game.id, function(game) {
-                $scope.gameStats = {
-                    corners : game.get('gameTeamStats').get('corners'),
-                    offsides : game.get('gameTeamStats').get('offsides'),
-                    goalsMade : game.get('gameTeamStats').get('goalsMade'),
-                    goalsTaken : game.get('gameTeamStats').get('goalsTaken'),
-                    passes : game.get('gameTeamStats').get('passes'),
-                    possession : game.get('gameTeamStats').get('possession'),
-                    tackles : game.get('gameTeamStats').get('tackles')
-                };
+                $timeout(function() {
+                     $scope.gameStats = {
+                        corners : 0,
+                        offsides : 0,
+                        goalsMade : 0,
+                        goalsTaken : 0,
+                        passes : 0,
+                        possession : 0,
+                        tackles : 0,
+                        fouls : 0
+                    }
+
+                    if(game){
+                         $scope.gameStats = {
+                            corners : game.get('gameTeamStats').get('corners'),
+                            offsides : game.get('gameTeamStats').get('offsides'),
+                            goalsMade : game.get('gameTeamStats').get('goalsMade'),
+                            goalsTaken : game.get('gameTeamStats').get('goalsTaken'),
+                            passes : game.get('gameTeamStats').get('passes'),
+                            possession : game.get('gameTeamStats').get('possession'),
+                            tackles : game.get('gameTeamStats').get('tackles'),
+                            fouls :  game.get('gameTeamStats').get('fouls')
+                        };
+                    }
+
+
+                });
+               
+
                 console.log($scope.gameStats);
             });
         });
+
+
+        $scope.$on(configService.messages.teamChanged,function(event,data){
+            viewService.goToPage('/home');
+        });
+
+
+
 
     	var currentUser = Parse.User.current();
         
