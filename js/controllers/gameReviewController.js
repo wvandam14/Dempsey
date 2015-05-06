@@ -53,7 +53,7 @@ soccerStats.controller('gameReviewController',
         //    }
         //});
 
-        var populatePlayers = function(teamStatsId, callback) {
+        var populatePlayers = function(teamStatsId) {
             dataService.getGamePlayerStatsById(teamStatsId, function(gamePlayers) {
                 _.each(gamePlayers, function(gamePlayer) {
                     dataService.getPlayerByPlayerId(gamePlayer.get("player").id, function(player) {
@@ -61,7 +61,6 @@ soccerStats.controller('gameReviewController',
                     });
                 });
             });
-            callback($scope.players);
         };
 
         var populateStats = function() {
@@ -184,10 +183,10 @@ soccerStats.controller('gameReviewController',
                             }
                         };
 
-                        populatePlayers(game.get('gameTeamStats').id, function(result) {
+                        // TODO: async populate players and populate stats
+                        populatePlayers(game.get('gameTeamStats').id).then(function(result) {
                             populateStats();
                         });
-
                     }
 
                 });
