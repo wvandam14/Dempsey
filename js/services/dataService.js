@@ -20,6 +20,7 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
         , playerStatsTable = Parse.Object.extend("SeasonPlayerStats")
         , gameTable = Parse.Object.extend("Game")
         , SeasonTeamTable = Parse.Object.extend("SeasonTeamStats")
+        , gameStatsTable = Parse.Object.extend("GameTeamStats")
 
         // Team Table        
         , setCurrentTeam = function(team) {
@@ -595,7 +596,7 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
         }
 
         , saveGame = function(game, teamID) {
-            var newGame = new Game();
+            var newGame = new gameTable();
   
             // Things the user entered
             newGame.set("date", game.date);
@@ -603,7 +604,7 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
             newGame.set("opponentSymbol", game.opponent.symbol);
             newGame.set("startTime", game.time.toTimeString());
             newGame.set("team", {__type: "Pointer", className: "Team", objectId: teamID});
-            newGame.set("gameTeamStats", new SeasonTeamTable());
+            newGame.set("gameTeamStats", new gameStatsTable());
             
             // Default values
             newGame.set("status", "not_started");
