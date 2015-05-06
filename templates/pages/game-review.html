@@ -104,7 +104,7 @@
                     <div class="player-info">
                         <div class="info flex">
                             <div class="img-container">
-                                <img src="./img/player-icon.svg" />
+                                <img src="{{currPlayer.photo}}" />
                             </div>
                             <div  class="flex flex-column">
                                 <h3>{{currPlayer.fname}}<br>{{currPlayer.lname}}</h3>
@@ -127,37 +127,37 @@
                     <div class="stats-display numbers flex flex-column flex-one">
                         <div class="flex">
                             <div class="flex flex-center flex-column flex-one">
-                                <h6>2</h6>
+                                <h6>{{currPlayer.shots.goals.total}}</h6>
                                 <h5>GOALS</h5>
                             </div>
                             <div class="flex flex-center flex-column flex-one">
-                                <h6>97</h6>
+                                <h6>{{currPlayer.passes.total}}</h6>
                                 <h5>PASSES</h5>
                             </div>
                             <div class="flex flex-center flex-column flex-one">
-                                <h6>3</h6>
+                                <h6>?</h6>
                                 <h5>CORNERS</h5>
                             </div>
                         </div>
                         <div class="flex">
                             <div class="flex flex-center flex-one">
-                                <doughnut-chart data="currPlayer.passes.data" num="'8/10'" label="'PASSES COMPLETED'" style="zoom: 0.5;"></doughnut-chart>
+                                <doughnut-chart data="currPlayer.passes.data" num="currPlayer.passes.completion" label="'PASSES COMPLETED'" style="zoom: 0.5;"></doughnut-chart>
                             </div>
                             <div class="flex flex-center flex-one">  
-                                <doughnut-chart data="currPlayer.shots.data" num="'3/4'" label="'SHOTS ON GOAL'" style="zoom: 0.5;"></doughnut-chart>
+                                <doughnut-chart data="currPlayer.shots.data" num="currPlayer.shots.accuracy" label="'SHOTS ACCURACY' + '%'" style="zoom: 0.5;"></doughnut-chart>
                             </div>
                         </div>
                         <div class="flex">
                             <div class="flex flex-center flex-column flex-one">
-                                <h6>2</h6>
+                                <h6>{{currPlayer.total.fouls}}</h6>
                                 <h5>FOULS</h5>
                             </div>
                             <div class="flex flex-center flex-column flex-one">
-                                <h6>0</h6>
+                                <h6>{{currPlayer.total.yellow.total}}</h6>
                                 <h5>YELLOW</h5>
                             </div>
                             <div class="flex flex-center flex-column flex-one">
-                                <h6>0</h6>
+                                <h6>{{currPlayer.total.red.total}}</h6>
                                 <h5>RED</h5>
                             </div>
                         </div>

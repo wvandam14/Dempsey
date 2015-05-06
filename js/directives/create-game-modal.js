@@ -57,13 +57,6 @@ soccerStats.directive('createGameModal', function (viewService, toastService, co
                 $scope.closeModal();
             };
 
-            // // Sends email via the cloud code with parse
-            // $scope.sendEmailInvite = function() {
-            //     _.each($scope.inviteEmails, function (email) {
-            //         emailService.sendEmailInvite(currentUser.get("name"), $scope.currentTeam.value, $scope.currentTeam.label, email);
-            //     });
-            // };
-
             if (currentUser) {
                 dataService.getTeams( function(_teams) {
                     if (jQuery.isEmptyObject(dataService.getCurrentTeam())) 

@@ -21,6 +21,7 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
         , gameTable = Parse.Object.extend("Game")
         , SeasonTeamTable = Parse.Object.extend("SeasonTeamStats")
         , gameStatsTable = Parse.Object.extend("GameTeamStats")
+        , gamePlayerStatsTable = Parse.Object.extend("GamePlayerStats")
 
         // Team Table        
         , setCurrentTeam = function(team) {
@@ -35,6 +36,10 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
 
         , setCurrentGame = function (game) {
             currentGame = game;
+        }
+
+        , getCurrentGame = function() {
+            return currentGame;
         }
 
         , getTeams = function(callback) {
@@ -116,8 +121,6 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
 
             team.id = _team.id;
             team.fetch().then(function(team){
-
-                // /console.log(team.get('name'));
 
                 query.equalTo('team',team);
                 query.include('gameTeamStats');
@@ -546,15 +549,44 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
         }
 
         , getGameStatsById = function(game_id,callback){
-
+            console.log(game_id);
             var query = new Parse.Query(gameTable);
             query.include('gameTeamStats');
-            query.first(game_id).then(function(game){
-                callback(game);
-            }, function(error){
-                console.log("Error: " + error.code + " " + error.message);
-                callback({});
+            query.equalTo("objectId", game_id);
+            query.first({
+                success: function(game) {
+                    callback(game);
+                },
+                error: function(game, error) {
+                    console.log("Error: " + error.code + " " + error.message);
+                    toastService.error("There was a an error (" + error.code +"). Please try again.");
+                }
             });
+        }
+
+        , getGamePlayerStatsById = function(gameTeamStatsId, callback) {
+            var query = new Parse.Query(gameStatsTable);
+            query.get(gameTeamStatsId, {
+                success: function(gameTeamStats) {
+                    var gamePlayerIds = _.pluck(gameTeamStats.get("roster"), 'id');
+                    query = new Parse.Query(gamePlayerStatsTable);
+                    query.containedIn('objectId', gamePlayerIds);
+                    query.find({
+                        success: function(result) {
+                            callback(result);
+                        },
+                        error: function(result, error) {
+                            console.log("Error: " + error.code + " " + error.message);
+                            toastService.error("There was a an error (" + error.code +"). Please try again.");
+                        }
+                    });
+                },
+                error : function(gameTeamStats, error) {
+                    console.log("Error: " + error.code + " " + error.message);
+                    toastService.error("There was a an error (" + error.code +"). Please try again.");
+                }
+            });
+
         }
 
         , getParentEmailsByTeamId = function(teamId, callback) {
@@ -596,6 +628,8 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
         }
 
         , saveGame = function(game, teamID) {
+            console.log(game);
+            console.log(teamID);
             var newGame = new gameTable();
   
             // Things the user entered
@@ -753,6 +787,171 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
             return retPlayer;            
         }
 
+        , gamePlayerConstructor = function(player, gamePlayer) {
+            var retPlayer =
+                {
+                    fname: player.get("firstName"),
+                    lname: player.get("lastName"),
+                    number: player.get("jerseyNumber"),
+                    photo: player.get("photo") ? player.get("photo")._url : './img/player-icon.svg',
+                    position: gamePlayer.get("position"),
+                    notableEvents: [],
+                    eventsInit : function(retPlayer, subbedOut, subbedIn) {
+                        if (subbedOut) {
+                            _.each(subbedOut, function (subOut) {
+                                retPlayer.notableEvents.push({
+                                    type: "Subbed out",
+                                    time: subOut
+                                });
+                            });
+                        }
+                        if (subbedIn) {
+                            _.each(subbedIn, function (subIn) {
+                                retPlayer.notableEvents.push({
+                                    type: "Subbed in",
+                                    time: subIn
+                                });
+                            });
+                        }
+                    },
+                    total: {
+                        fouls: gamePlayer.get("fouls"),
+                        red: {
+                            total: 0,
+                            time: []
+                        },
+                        yellow: {
+                            total: 0,
+                            time: []
+                        },
+                        cardInit: function(playerCards, cards) {
+                            _.each(cards, function(card) {
+                               if (card.type == "yellow") {
+                                   playerCards.red.total++;
+                                   playerCards.red.time.push(card.time);
+                               }
+                                else if (card.type == "red") {
+                                   playerCards.yellow.total++;
+                                   playerCards.yellow.time.push(card.time);
+                               }
+
+                            });
+                        }
+                    },
+                    passes: {
+                        data: [
+                            {
+                                value: 0,
+                                color: "#B4B4B4",
+                                highlight: "#B4B4B4",
+                                label: "Attempted"
+                            },
+                            {
+                                value: 0,
+                                color:"#5DA97B",
+                                highlight: "#5DA97B",
+                                label: "Completed"
+                            }
+                        ],
+                        completion: '0/0',
+                        turnovers: 0,
+                        total: 0,
+                        passInit: function(playerPasses, passes) {
+                            playerPasses.turnovers = passes.turnovers;
+                            playerPasses.total = passes.total;
+                            playerPasses.data[0].value = passes.turnovers;;
+                            playerPasses.data[1].value = passes.total;
+                            playerPasses.completion = (passes.total - passes.turnovers) + '/' + passes.total;
+                        }
+                    },
+                    shots: {
+                        data: [
+                            {
+                                value: 0,
+                                color: "#B4B4B4",
+                                highlight: "#B4B4B4",
+                                label: "Attempted"
+                            },
+                            {
+                                value: 0,
+                                color:"#5DA97B",
+                                highlight: "#5DA97B",
+                                label: "Completed"
+                            }
+                        ],
+                        accuracy: 0,
+                        total: 0,
+                        blocks: {
+                            total: 0,
+                            startPos: [],
+                            resultPos: []
+                        },
+                        onGoal: {
+                            total: 0,
+                            startPos: [],
+                            resultPos: []
+                        },
+                        offGoal: {
+                            total: 0,
+                            startPos: [],
+                            resultPos: []
+                        },
+                        goals: {
+                            total: 0,
+                            startPos: [],
+                            resultPos: [],
+                            time: []
+                        },
+                        shotInit: function(playerShots, shots, goals) {
+                            if (shots) {
+                                _.each(shots, function (shot) {
+                                    if (shot.blocked) {
+                                        playerShots.blocks.total++;
+                                        playerShots.blocks.startPos.push(shot.blocked.shotPos);
+                                        playerShots.blocks.resultPos.push(shot.blocked.resultPos);
+                                    }
+                                    if (shot.onGoal) {
+                                        playerShots.onGoal.total++;
+                                        playerShots.onGoal.startPos.push(shot.onGoal.shotPos);
+                                        playerShots.onGoal.resultPos.push(shot.onGoal.resultPos);
+                                    }
+                                    if (shot.offGoal) {
+                                        playerShots.offGoal.total++;
+                                        playerShots.offGoal.startPos.push(shot.offGoal.shotPos);
+                                        playerShots.offGoal.resultPos.push(shot.offGoal.resultPos);
+                                    }
+                                });
+                            }
+                            if (goals) {
+                                _.each(goals, function (goal) {
+                                    if (goal) {
+                                        playerShots.goals.total++;
+                                        playerShots.goals.startPos.push(goal.startPos);
+                                        playerShots.goals.resultPos.push(goal.resultPos);
+                                        playerShots.goals.time.push(goal.time);
+                                    }
+                                });
+                            }
+                            var total = playerShots.blocks.total + playerShots.onGoal.total + playerShots.offGoal.total + playerShots.goals.total;
+                            playerShots.total = total;
+                            playerShots.accuracy = Math.round(((total - playerShots.offGoal.total) / total)*100);
+                            playerShots.data[0].value = playerShots.offGoal.total;
+                            playerShots.data[1].value = total;
+                        }
+                    }
+                };
+            if (gamePlayer.get("cards"))
+                retPlayer.total.cardInit(retPlayer.total, gamePlayer.get("cards"));
+            if (gamePlayer.get("subbedOut") || gamePlayer.get("subbedIn"))
+                retPlayer.eventsInit(retPlayer, gamePlayer.get("subbedOut"), gamePlayer.get("subbedIn"));
+            if (gamePlayer.get("passes"))
+                retPlayer.passes.passInit(retPlayer.passes, gamePlayer.get("passes"));
+            if (gamePlayer.get("shots") || gamePlayer.get("goals"))
+                retPlayer.shots.shotInit(retPlayer.shots, gamePlayer.get("shots"), gamePlayer.get("goals"));
+
+            return retPlayer;
+        }
+
         , sendEmailInvite = function(user, teamID, teamName, inviteEmails, self) {
             _.each(inviteEmails, function (email) {
                 emailService.sendEmailInvite(user.get("name"), teamID, teamName, email);
@@ -768,6 +967,8 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
         getPlayersByTeamId : getPlayersByTeamId,
         setCurrentTeam : setCurrentTeam,
         getCurrentTeam : getCurrentTeam,
+        setCurrentGame : setCurrentGame,
+        getCurrentGame : getCurrentGame,
         registerTeam : registerTeam,
         getPlayers: getPlayers,
         getCurrentUser: getCurrentUser,
@@ -787,7 +988,9 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
         updatePlayer : updatePlayer,
         registerNewTeam : registerNewTeam,
         getParentEmailsByTeamId : getParentEmailsByTeamId,
-        getParentByPlayerId : getParentByPlayerId
+        getParentByPlayerId : getParentByPlayerId,
+        getGamePlayerStatsById : getGamePlayerStatsById,
+        gamePlayerConstructor : gamePlayerConstructor
     }
 
 });

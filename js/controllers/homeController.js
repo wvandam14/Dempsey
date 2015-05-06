@@ -63,8 +63,7 @@
                 console.log(error.message);
             }
         });*/
-        
-        // TODO: implement this
+
         $scope.updatePlayer = function(player) {
             viewService.openModal('playerModal');
             $timeout(function() {
@@ -72,11 +71,12 @@
             });
         }
 
-        $scope.$on(configService.messages.teamChanged, function(event,data){
-                dataService.getSeasonTeamStats(data.team.id,function(teamStats){
 
-                //console.log(teamStats);                
-                 $scope.teamStats = {
+        var populateTeamStats = function(team) {
+            dataService.getSeasonTeamStats(team.id,function(teamStats){
+
+                //console.log(teamStats);
+                $scope.teamStats = {
 
                     teamGames : { data: []},
                     goalsConceded : 0,
@@ -92,12 +92,12 @@
                 };
 
                 if(teamStats){
-                     var goalsDifference = (teamStats.get("goalsScored") && teamStats.get("goalsConceded")) ? 
-                                           teamStats.get("goalsScored") -  teamStats.get("goalsConceded") :
-                                            0; 
+                    var goalsDifference = (teamStats.get("goalsScored") && teamStats.get("goalsConceded")) ?
+                    teamStats.get("goalsScored") -  teamStats.get("goalsConceded") :
+                        0;
                     $scope.teamStats = {
 
-                        teamGames : {                        
+                        teamGames : {
                             data: [
                                 {
                                     value: teamStats.get('gamesDraw') ? teamStats.get('gamesDraw'): '',
@@ -133,19 +133,19 @@
 
 
                     _.each(teamStats.get('topAssists'),function(player){
-                        var photo = player.get("photo") ? player.get("photo")._url : "./img/sample/profile-small.jpg"; 
+                        var photo = player.get("photo") ? player.get("photo")._url : "./img/sample/profile-small.jpg";
                         $scope.teamStats.topAssists.push({ name : player.get("name"), num : player.get("playerStats").get("assists"), photo : photo});
                     });
 
-                    
+
 
                     _.each(teamStats.get('topGoals'),function(player){
-                        var photo = player.get("photo") ? player.get("photo")._url : "./img/sample/profile-small.jpg"; 
+                        var photo = player.get("photo") ? player.get("photo")._url : "./img/sample/profile-small.jpg";
                         $scope.teamStats.topGoals.push({ name : player.get("name"), num : player.get("playerStats").get("goals"), photo : photo});
                     });
 
                     _.each(teamStats.get('topShots'),function(player){
-                        var photo = player.get("photo") ? player.get("photo")._url : "./img/sample/profile-small.jpg"; 
+                        var photo = player.get("photo") ? player.get("photo")._url : "./img/sample/profile-small.jpg";
                         $scope.teamStats.topShots.push({ name : player.get("name"), num : player.get("playerStats").get("shots").total, photo : photo});
                     });
                 }
@@ -165,7 +165,11 @@
                         topShots : []
                     };
                 }
-                }); 
+            });
+        };
+
+        $scope.$on(configService.messages.teamChanged, function(event,data){
+             populateTeamStats(data.team);
         });
 
 

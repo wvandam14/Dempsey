@@ -4,6 +4,9 @@ soccerStats.directive('schedule', function () {
         templateUrl: "./templates/directives/schedule.html",
         controller: function($scope, $rootScope, $window, $timeout, configService, viewService,dataService){
 
+            $scope.games = [];
+            $scope.currGame = {};
+
             $scope.range = function(size){
                 var input = [];
                 for (var i = 0; i < size; i++) input.push(i);
@@ -44,13 +47,20 @@ soccerStats.directive('schedule', function () {
                                "transform: translate3d(" + $scope.slidePos + "px,0,0);"
             }
 
+
+
+            //populateGames(dataService.getCurrentTeam());
+
             $scope.$on(configService.messages.teamChanged,function(event,data){
-                $timeout(function() {
-                    dataService.getGames(data.team,function(games){
+                $scope.games = [];
+                $scope.currGame = {};
+                dataService.getGames(data.team, function(games){
+                    $timeout(function() {
                         $scope.games = games;
                         $scope.currGame = $scope.games.length ? $scope.games[0] : {};
-                        //console.log($scope.currGame);
+                        dataService.setCurrentGame($scope.currGame);
                     });
+
                 });
             });
             

@@ -60,7 +60,7 @@ soccerStats.directive('header', function ($timeout, $rootScope, $route, viewServ
             }
 
             $scope.changeTeam = function(team) {
-                console.log(team);
+                //console.log(team);
                 $scope.toggleTeams();
                 $scope.currentTeam = team;
                 // console.log($scope.currentTeam);
@@ -70,7 +70,6 @@ soccerStats.directive('header', function ($timeout, $rootScope, $route, viewServ
                 $timeout(function() {
                     $rootScope.$broadcast(configService.messages.teamChanged, {team: team});
                 });
-                
                 //$route.reload();
             }
 
