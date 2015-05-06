@@ -86,7 +86,7 @@ soccerStats.controller('rosterController',
             });
         };
 
-        //populatePlayers(dataService.getCurrentTeam());
+        populatePlayers(dataService.getCurrentTeam());
 
 
         $scope.$on(configService.messages.teamChanged, function(msg, data) {

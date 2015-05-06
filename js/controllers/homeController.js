@@ -172,10 +172,7 @@
         // Ignore below here
         $scope.isCoach = false;
 
-        $scope.$on(configService.messages.teamChanged, function(event, data) {
-            if (!data.refresh)
-                $scope.currentTeam = data.team;
-            //populatePlayers();
+        var populatePlayers = function() {
             $scope.myPlayers = [];
             //console.log($scope.currentTeam);
             if (currentUser.get("accountType") === 1) {
@@ -201,8 +198,17 @@
                             });
                         }
                     });
-                }); 
+                });
             }
+        };
+
+        populatePlayers();
+
+        $scope.$on(configService.messages.teamChanged, function(event, data) {
+            if (!data.refresh)
+                $scope.currentTeam = data.team;
+            populatePlayers();
+
         });
 
         $scope.$on(configService.messages.playerAdded, function(event, player) {
