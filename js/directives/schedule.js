@@ -45,18 +45,17 @@ soccerStats.directive('schedule', function () {
             }
 
             $scope.$on(configService.messages.teamChanged,function(event,data){
-                dataService.getGames(data.team,function(games){
-                    $scope.games = games;
-                    //console.log($scope.games);
-                    $scope.currGame = $scope.games.length ? $scope.games[0] : {};
-                    //console.log($scope.games);
+                $timeout(function() {
+                    dataService.getGames(data.team,function(games){
+                        $scope.games = games;
+                        $scope.currGame = $scope.games.length ? $scope.games[0] : {};
+                        //console.log($scope.currGame);
+                    });
                 });
-                
             });
             
             $scope.slidePos = 0;
             
-
         }
     };
 });

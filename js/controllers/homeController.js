@@ -68,13 +68,12 @@
         $scope.updatePlayer = function(player) {
             viewService.openModal('playerModal');
             $timeout(function() {
-                $rootScope.$broadcast(configService.messages.updatePlayer, {state: true, id : player.id});
+                $rootScope.$broadcast(configService.messages.updatePlayer, {state: true, id : player.id}); 
             });
-            
         }
 
         $scope.$on(configService.messages.teamChanged, function(event,data){
-            dataService.getSeasonTeamStats(data.team.id,function(teamStats){
+                dataService.getSeasonTeamStats(data.team.id,function(teamStats){
 
                 //console.log(teamStats);                
                  $scope.teamStats = {
@@ -166,16 +165,18 @@
                         topShots : []
                     };
                 }
-            });
+                }); 
         });
 
 
         // Ignore below here
         $scope.isCoach = false;
+
         $scope.$on(configService.messages.teamChanged, function(event, data) {
-            $scope.myPlayers = [];
             if (!data.refresh)
                 $scope.currentTeam = data.team;
+            //populatePlayers();
+            $scope.myPlayers = [];
             //console.log($scope.currentTeam);
             if (currentUser.get("accountType") === 1) {
                 dataService.getPlayersByTeamId($scope.currentTeam.id, function(players) {
@@ -202,13 +203,12 @@
                     });
                 }); 
             }
-            //console.log($scope.myPlayers);
         });
 
         $scope.$on(configService.messages.playerAdded, function(event, player) {
             dataService.getSeasonPlayerStatsByPlayerId(player.get("playerStats").id, function(stats) {
                 $scope.myPlayers.push(dataService.playerConstructor(player, stats));
-            })
+            });
         });
     
     });

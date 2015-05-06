@@ -24,10 +24,12 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
         // Team Table        
         , setCurrentTeam = function(team) {
             currentTeam = team;
+            //window.localStorage['currentTeam'] = JSON.stringify(team);
         }
 
         , getCurrentTeam = function() {
             return currentTeam;
+            //return JSON.parse( window.localStorage['currentTeam'] || '{}');
         }
 
         , setCurrentGame = function (game) {

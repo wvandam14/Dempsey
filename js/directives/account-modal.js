@@ -58,7 +58,7 @@ soccerStats.directive('accountModal', function ($location, $timeout, $route, vie
 
             //TODO: not working
             $scope.goToPage = function(page) {
-                console.log(page);
+                //console.log(page);
                 viewService.goToPage(page);
             };
 

@@ -6,13 +6,11 @@ soccerStats.controller('rosterController',
     	var currentUser = dataService.getCurrentUser();
         //console.log(currentUser);
 
-
-        $scope.$on(configService.messages.teamChanged, function(msg, data) {
-            //git aconsole.log(data);
+        var populatePlayers = function(team) {
             $scope.players = [];
             $timeout(function(){
                 //dataService.getTeamById(data.team.id, function(_team) {
-                    dataService.getPlayersByTeamId(data.team.id, function(players) {
+                    dataService.getPlayersByTeamId(team.id, function(players) {
                         $timeout(function() {
                             //console.log(players);
                             _.each(players, function (player) {
@@ -86,6 +84,13 @@ soccerStats.controller('rosterController',
                     });
                 //});
             });
+        };
+
+        //populatePlayers(dataService.getCurrentTeam());
+
+
+        $scope.$on(configService.messages.teamChanged, function(msg, data) {
+            populatePlayers(data.team);
         });
 
         $scope.currGame = {};
