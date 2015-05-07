@@ -1,4 +1,4 @@
-soccerStats.directive('header', function ($timeout, $rootScope, $route, viewService, configService, dataService) {
+soccerStats.directive('header', function ($timeout, $rootScope, $route, viewService, configService, dataService, $location) {
     return {
         restrict: 'E',
         templateUrl: "./templates/directives/header.html",
@@ -66,7 +66,8 @@ soccerStats.directive('header', function ($timeout, $rootScope, $route, viewServ
                 // console.log($scope.currentTeam);
                 dataService.setCurrentTeam($scope.currentTeam);
 
-                //$scope.goToPage('/home');
+                if ($location.path() === '/game-review')
+                    $scope.goToPage('/home');
                 $timeout(function() {
                     $rootScope.$broadcast(configService.messages.teamChanged, {team: team});
                 });
@@ -106,7 +107,7 @@ soccerStats.directive('header', function ($timeout, $rootScope, $route, viewServ
                 $scope.teams = dataService.getTeams( function(_teams) {
                     $scope.currentTeam = _teams[0];
                     dataService.setCurrentTeam(_teams[0]);
-                    
+                    //console.log(dataService.getCurrentTeam());
                     $timeout(function() {
                         $rootScope.$broadcast(configService.messages.teamChanged, {team: _teams[0]});
                     });

@@ -90,7 +90,7 @@ soccerStats.controller('rosterController',
 
 
         $scope.$on(configService.messages.teamChanged, function(msg, data) {
-            populatePlayers(data.team);
+            populatePlayers(dataService.getCurrentTeam());
         });
 
         $scope.currGame = {};

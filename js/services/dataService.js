@@ -30,7 +30,7 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
         }
 
         , getCurrentTeam = function() {
-            console.log(currentTeam);
+            //console.log(currentTeam);
             return currentTeam;
             //return JSON.parse( window.localStorage['currentTeam'] || '{}');
         }
@@ -122,7 +122,6 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
 
             team.id = _team.id;
             team.fetch().then(function(team){
-
                 query.equalTo('team',team);
                 query.include('gameTeamStats');
                 query.find().then(function(games_brute){

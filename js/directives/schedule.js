@@ -15,12 +15,14 @@ soccerStats.directive('schedule', function () {
 
 	        $scope.setGame = function (game) {
                 //console.log($scope.currGame);
+                //$scope.selectGame(game);
+                $scope.currGame = game;
+                dataService.setCurrentGame(game);
                 viewService.goToPage('/game-review');
-                $scope.selectGame(game);
+                
                 $timeout(function() {
 	               $rootScope.$broadcast(configService.messages.setGame, {game: $scope.currGame});
-                });
-                
+                }); 
 	        };
 
         	$scope.selectGame = function (game) {
@@ -49,20 +51,25 @@ soccerStats.directive('schedule', function () {
 
 
 
-            //populateGames(dataService.getCurrentTeam());
+            
 
-            $scope.$on(configService.messages.teamChanged,function(event,data){
+            $scope.populateGames = function(team) {
                 $scope.games = [];
                 $scope.currGame = {};
-                dataService.getGames(data.team, function(games){
+                dataService.getGames(team, function(games){
                     $timeout(function() {
                         $scope.games = games;
                         $scope.currGame = $scope.games.length ? $scope.games[0] : {};
-                        dataService.setCurrentGame($scope.currGame);
                     });
 
                 });
+            };
+
+            $scope.$on(configService.messages.teamChanged,function(event,data){
+                $scope.populateGames(dataService.getCurrentTeam());
             });
+
+            $scope.populateGames(dataService.getCurrentTeam());
             
             $scope.slidePos = 0;
             

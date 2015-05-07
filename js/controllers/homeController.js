@@ -72,7 +72,7 @@
         }
 
 
-        var populateTeamStats = function(team) {
+        $scope.populateTeamStats = function(team) {
             dataService.getSeasonTeamStats(team.id,function(teamStats){
 
                 //console.log(teamStats);
@@ -171,11 +171,12 @@
         // Ignore below here
         $scope.isCoach = false;
 
-        var populatePlayers = function() {
+        $scope.populatePlayers = function() {
+            //console.log($scope.currentTeam);
             $scope.myPlayers = [];
             //console.log($scope.currentTeam);
             if (currentUser.get("accountType") === 1) {
-                dataService.getPlayersByTeamId($scope.currentTeam.id, function(players) {
+                dataService.getPlayersByTeamId(dataService.getCurrentTeam().id, function(players) {
                     _.each(players, function(player) {
                         //console.log(player);
                         dataService.getSeasonPlayerStatsByPlayerId(player.get("playerStats").id, function(stats) {
@@ -188,7 +189,7 @@
                 _.each(currentUser.get("players"), function(playerPointer) {
                     dataService.getPlayerByPlayerId(playerPointer.id, function(player) {
                         //console.log(player);
-                        if (player.get("team").id === $scope.currentTeam.id) {
+                        if (player.get("team").id === dataService.getCurrentTeam().id) {
                             //console.log(player);
                             dataService.getSeasonPlayerStatsByPlayerId(player.get("playerStats").id, function(stats) {
                                 //console.log(stats);
@@ -201,13 +202,15 @@
             }
         };
 
-        populatePlayers();
+        $scope.populatePlayers();
+        $scope.populateTeamStats(dataService.getCurrentTeam());
 
         $scope.$on(configService.messages.teamChanged, function(event, data) {
+            //console.log(data);
             if (!data.refresh)
                 $scope.currentTeam = data.team;
-            populatePlayers();
-            populateTeamStats(data.team);
+            $scope.populatePlayers();
+            $scope.populateTeamStats(dataService.getCurrentTeam());
         });
 
         $scope.$on(configService.messages.playerAdded, function(event, player) {
