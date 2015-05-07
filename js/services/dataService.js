@@ -964,6 +964,7 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                             time: []
                         },
                         shotInit: function(playerShots, shots, goals) {
+                            //console.log(shots);
                             if (shots) {
                                 _.each(shots, function (shot) {
                                     if (shot.blocked) {
@@ -981,8 +982,15 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                                         playerShots.offGoal.startPos.push(shot.offGoal.shotPos);
                                         playerShots.offGoal.resultPos.push(shot.offGoal.resultPos);
                                     }
+                                     if (shot.goal) {
+                                        playerShots.offGoal.total++;
+                                        playerShots.offGoal.startPos.push(shot.offGoal.shotPos);
+                                        playerShots.offGoal.resultPos.push(shot.offGoal.resultPos);
+                                    }
                                 });
                             }
+  
+                           
                             if (goals) {
                                 _.each(goals, function (goal) {
                                     if (goal) {
@@ -993,6 +1001,40 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                                     }
                                 });
                             }
+
+                            /*
+                            // TODO -> This code should work for the model we will use on the final version of the database
+
+                            if(shots){
+                                _.each(shots,function(shot){
+                                    switch(shot.type){
+                                        case "ofGoal":
+                                            playerShots.offGoal.total++;
+                                            playerShots.offGoal.startPos.push(shot.offGoal.shotPos);
+                                            playerShots.offGoal.resultPos.push(shot.offGoal.resultPos);
+                                            break;
+                                        case "onGoal":
+                                            playerShots.onGoal.total++;
+                                            playerShots.onGoal.startPos.push(shot.onGoal.shotPos);
+                                            playerShots.onGoal.resultPos.push(shot.onGoal.resultPos);
+                                        case "Goal":
+                                            playerShots.goals.total++;
+                                            playerShots.goals.startPos.push(shot.onGoal.startPos);
+                                            playerShots.goals.resultPos.push(shot.onGoal.resultPos);
+                                            playerShots.goals.time.push(shot.onGoal.time);
+                                            break;
+                                        case "blocked":
+                                            playerShots.blocks.total++;
+                                            playerShots.blocks.startPos.push(shot.blocked.shotPos);
+                                            playerShots.blocks.resultPos.push(shot.blocked.resultPos);
+                                            break;
+                                    }
+                                });
+                            }*/
+
+
+
+
                             var total = playerShots.blocks.total + playerShots.onGoal.total + playerShots.offGoal.total + playerShots.goals.total;
                             playerShots.total = total;
                             playerShots.accuracy = Math.round(((total - playerShots.offGoal.total) / total)*100);

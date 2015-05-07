@@ -7,9 +7,10 @@ soccerStats.directive('gameTimeline', function ($rootScope, $location, $timeout,
             $scope.events = [];
 
             $scope.$on(configService.messages.notableEvents, function(msg, data) {
+                console.log(data);
                 $scope.events = [];
                 _.each(data.subs, function(sub) {
-                    if (sub.get("isSub") === "out") {
+                    if (sub.get("isSub") === "true") {
                         var notableEvent = {
                             name: sub.get("subbedOut").get("player").get("lastName"),
                             sub: sub.get("subbedIn").get("player").get("lastName"),
@@ -51,39 +52,6 @@ soccerStats.directive('gameTimeline', function ($rootScope, $location, $timeout,
                     });
                 });
             });
-        //     $scope.events = [
-        //         {
-        //               name: 'Dempsey'
-        //             , time: '13'
-        //             , type: 'goal'
-        //             , opponent: false
-        //         }
-        //         , {
-        //               name: 'Alonso'
-        //             , time: '33'
-        //             , type: 'yellow'
-        //             , opponent: false
-        //         }
-        //         , {
-        //               name: 'FC Dallas'
-        //             , time: '50'
-        //             , type: 'goal'
-        //             , opponent: true
-        //         }
-        //         , {
-        //               name: 'Dempsey'
-        //             , time: '71'
-        //             , type: 'goal'
-        //             , opponent: false
-        //         }
-        //         , {
-        //               name: 'Dempsey'
-        //             , sub: 'Barret'
-        //             , time: '79'
-        //             , type: 'sub'
-        //             , opponent: false
-        //         }
-        //     ]
         }
     };
 });
