@@ -26,10 +26,11 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
         // Team Table        
         , setCurrentTeam = function(team) {
             currentTeam = team;
-            //window.localStorage['currentTeam'] = JSON.stringify(team);
+            //window.localStorage['currentTeam'] = JSON.stringify(currentTeam);
         }
 
         , getCurrentTeam = function() {
+            console.log(currentTeam);
             return currentTeam;
             //return JSON.parse( window.localStorage['currentTeam'] || '{}');
         }
@@ -541,27 +542,19 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                         callback(player);
                     });
                 },
-                error: function(player, error) {
+                error: function(error) {
                     console.log("Error: " + error.code + " " + error.message);
                     toastService.error("There was a an error (" + error.code +"). Please try again.");
                 }
             });
         }
 
-        , getGameStatsById = function(game_id,callback){
-            console.log(game_id);
+        , getGameStatsById = function(game_id){
+            //console.log(game_id);
             var query = new Parse.Query(gameTable);
             query.include('gameTeamStats');
             query.equalTo("objectId", game_id);
-            query.first({
-                success: function(game) {
-                    callback(game);
-                },
-                error: function(game, error) {
-                    console.log("Error: " + error.code + " " + error.message);
-                    toastService.error("There was a an error (" + error.code +"). Please try again.");
-                }
-            });
+            return query.first();
         }
 
         , getGamePlayerStatsById = function(gameTeamStatsId) {

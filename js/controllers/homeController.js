@@ -168,11 +168,6 @@
             });
         };
 
-        $scope.$on(configService.messages.teamChanged, function(event,data){
-             populateTeamStats(data.team);
-        });
-
-
         // Ignore below here
         $scope.isCoach = false;
 
@@ -212,7 +207,7 @@
             if (!data.refresh)
                 $scope.currentTeam = data.team;
             populatePlayers();
-
+            populateTeamStats(data.team);
         });
 
         $scope.$on(configService.messages.playerAdded, function(event, player) {

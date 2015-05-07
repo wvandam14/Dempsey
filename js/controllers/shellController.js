@@ -19,7 +19,7 @@ soccerStats.controller('shellController',
                    if (Parse.User.current()){
                        console.log("user logged in");
                         //$timeout(function() {
-                             $rootScope.$broadcast(configService.messages.teamChanged, {team: dataService.getCurrentTeam()});
+                             //$rootScope.$broadcast(configService.messages.teamChanged, {team: dataService.getCurrentTeam()});
                         //});
                        
                    }
@@ -50,7 +50,9 @@ soccerStats.controller('shellController',
 
          $scope.viewHomePage = function(page) {
             $scope.goToPage(page);
-            //$rootScope.$broadcast(configService.messages.teamChanged, {team: dataService.getCurrentTeam()});
+            $timeout(function() {
+                $rootScope.$broadcast(configService.messages.teamChanged, {team: dataService.getCurrentTeam()});
+            });
             
          }
 

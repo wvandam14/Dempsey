@@ -1,18 +1,6 @@
 soccerStats.controller('gameReviewController', 
     function gameReviewController($scope, $rootScope, $location, $timeout, configService, dataService, viewService) {
 
-        $scope.players = [];
-        $scope.gameSubs = {};
-        $scope.shotCountData = {
-            shots: 0,
-            onGoal: 0,
-            offGoal: 0,
-            blocked: 0
-        };
-        $scope.shotLinesData = [];
-        $scope.passData = {};
-        $scope.currFormation = [];
-
         //var gamePlayersTable = Parse.Object.extend("GamePlayerStats");
         //var query = new Parse.Query(gamePlayersTable);
         //query.get("jceOI7KFM3", {
@@ -61,238 +49,10 @@ soccerStats.controller('gameReviewController',
         //    }
         //});
 
-        var populatePlayers = function(teamStatsId) {
-            dataService.getGamePlayerStatsById(teamStatsId).then(function(gameTeamStats) {
-                $scope.gameSubs = gameTeamStats.get("substitutions");
-                console.log($scope.gameSubs);
-                _.each(gameTeamStats.get("roster"), function(gamePlayer) {
-                    $scope.players.push(dataService.gamePlayerConstructor(gamePlayer.get("player"), gamePlayer));
-                });
-                populateStats();
-            });
-
-        };
-
-        var populateStats = function() {
-
-            var shots = 0,
-                onGoal = 0,
-                offGoal = 0,
-                blocked = 0,
-                passCompletion = 0,
-                passTotal = 0;
-
-
-            $scope.passData = {
-                data : [
-                    {
-                        value: 95,
-                        color: "#B4B4B4",
-                        highlight: "#B4B4B4",
-                        label: "Completed"
-                    },
-                    {
-                        value: 5,
-                        color:"#5DA97B",
-                        highlight: "#5DA97B",
-                        label: "Missed"
-                    }
-                ],
-                turnovers: 0,
-                total: 0,
-                successRate: 0
-            };
-
-
-
-            console.log($scope.players);
-            _.each($scope.players, function(player) {
-                $scope.shotCountData.shots += player.shots.total;
-                $scope.shotCountData.onGoal += player.shots.onGoal.total;
-                $scope.shotCountData.offGoal += player.shots.offGoal.total;
-                $scope.shotCountData.blocked += player.shots.blocks.total;
-                $scope.passData.turnovers += player.passes.turnovers;
-                $scope.passData.total += player.passes.total;
-            });
-
-
-            $scope.passData.successRate = Math.round((($scope.passData.total - $scope.passData.turnovers) / $scope.passData.total)*100);
-            $scope.passData.data[0].value = $scope.passData.successRate;
-            $scope.passData.data[1].value = 100 - $scope.passData.successRate;
-
-            $scope.initCurrFormation();
-
-            //console.log($scope.passData);
-
-            _.each($scope.players, function(player) {
-                var shotLineData = {};
-                if (player.shots.offGoal.total) {
-                    for (var i = 0; i < player.shots.offGoal.total; i++) {
-                        shotLineData =
-                        {
-                            type: 'off',
-                            shotPos: player.shots.offGoal.startPos[i],
-                            resultPos: player.shots.offGoal.resultPos[i]
-                        };
-                        $scope.shotLinesData.push(shotLineData);
-                    }
-                }
-                if (player.shots.onGoal.total) {
-                    for (var i = 0; i < player.shots.onGoal.total; i++) {
-                        shotLineData =
-                        {
-                            type: 'on',
-                            shotPos: player.shots.onGoal.startPos[i],
-                            resultPos: player.shots.onGoal.resultPos[i]
-                        };
-                        $scope.shotLinesData.push(shotLineData);
-                    }
-                }
-                if (player.shots.blocks.total) {
-                    for (var i = 0; i < player.shots.blocks.total; i++) {
-                        shotLineData =
-                        {
-                            type: 'on',
-                            shotPos: player.shots.blocks.startPos[i],
-                            resultPos: player.shots.blocks.resultPos[i]
-                        };
-                        $scope.shotLinesData.push(shotLineData);
-                    }
-                }
-                if (player.shots.goals.total) {
-                    for (var i = 0; i < player.shots.goals.total; i++) {
-                        shotLineData =
-                        {
-                            type: 'goal',
-                            shotPos: player.shots.goals.startPos[i],
-                            resultPos: player.shots.goals.resultPos[i]
-                        };
-                        $scope.shotLinesData.push(shotLineData);
-                    }
-                }
-            });
-            
-            $rootScope.$broadcast(configService.messages.notableEvents, {players: $scope.players, subs: $scope.gameSubs});
-
-        };
-
-        var populateGameData = function(game) {
-
-            //console.log(dataService.getCurrentGame());
-            dataService.getGameStatsById(game.id, function(game) {
-                //console.log(game);
-                $timeout(function() {
-                    $scope.gameStats = {
-                        corners : 0,
-                        offsides : 0,
-                        goalsMade : 0,
-                        goalsTaken : 0,
-                        passes : 0,
-                        tackles : 0,
-                        fouls : 0,
-                        possession : 0,
-                        teamPossession : { data: []}
-                    };
-
-
-                    if(game){
-                        // $scope.players = [];
-                        // $scope.shotCountData = {};
-                        // $scope.shotLinesData = [];
-                        $scope.gameStats = {
-                            corners : game.get('gameTeamStats').get('corners') ? game.get('gameTeamStats').get('corners') : 0,
-                            offsides : game.get('gameTeamStats').get('offsides') ? game.get('gameTeamStats').get('offsides') : 0,
-                            goalsMade : game.get('gameTeamStats').get('goalsMade') ? game.get('gameTeamStats').get('goalsMade') : 0,
-                            goalsTaken : game.get('gameTeamStats').get('goalsTaken') ? game.get('gameTeamStats').get('goalsTaken') : 0,
-                            passes : game.get('gameTeamStats').get('passes') ? game.get('gameTeamStats').get('passes') : 0,
-                            tackles : game.get('gameTeamStats').get('tackles') ? game.get('gameTeamStats').get('tackles') : 0,
-                            fouls :  game.get('gameTeamStats').get('fouls') ? game.get('gameTeamStats').get('fouls') : 0,
-                            possession : game.get('gameTeamStats').get('possession') ? game.get('gameTeamStats').get('possession') : 0,
-                            teamPossession : {
-                                data : [
-                                    {
-                                        value: game.get('gameTeamStats').get('possession') ? 100 - game.get('gameTeamStats').get('possession') : 0,
-                                        color: "#B4B4B4",
-                                        highlight: "#B4B4B4",
-                                        label: "Theirs"
-                                    },
-                                    {
-                                        value: game.get('gameTeamStats').get('possession') ? game.get('gameTeamStats').get('possession') : 0,
-                                        color:"#5DA97B",
-                                        highlight: "#5DA97B",
-                                        label: "Ours"
-                                    }
-                                ]
-                            }
-                        };
-
-                        // TODO: async populate players and populate stats
-                        populatePlayers(game.get('gameTeamStats').id);
-                        //.then(function(result) {
-                        //     console.log(result);
-                        //     populateStats();
-                        // });
-                    }
-
-                });
-            });
-        };
-
-        populateGameData(dataService.getCurrentGame());
-        $scope.$on(configService.messages.setGame, function(event, data) {
-            populateGameData(data.game);
+        $scope.$on('$viewContentLoaded', function(){
+            //Here your view content is fully loaded !!
+            $scope.setGame(dataService.getCurrentGame()); 
         });
-
-
-        // $scope.$on(configService.messages.teamChanged,function(event,data){
-        //     viewService.goToPage('/home');
-        // });
-
-    	var currentUser = Parse.User.current();
-        
-
-        // DUMMY DATA
-
-/*        $scope.teamForm = {
-            data: [
-                {
-                    value: 3,
-                    color: "#FF7272",
-                    highlight: "#FF7272",
-                    label: "Defeats"
-                },
-                {
-                    value: 3,
-                    color: "#B4B4B4",
-                    highlight: "#B4B4B4",
-                    label: "Ties"
-                },
-                {
-                    value: 8,
-                    color:"#5DA97B",
-                    highlight: "#5DA97B",
-                    label: "Wins"
-                }
-            ]
-        };
-*/
-        /*$scope.teamPossession = {
-            data: [
-                {
-                    value: 48,
-                    color: "#B4B4B4",
-                    highlight: "#B4B4B4",
-                    label: "Ties"
-                },
-                {
-                    value: 52,
-                    color:"#5DA97B",
-                    highlight: "#5DA97B",
-                    label: "Wins"
-                }
-            ]
-        };*/
-
 
         $scope.initCurrFormation = function() {
             $scope.currFormation = [
@@ -367,10 +127,6 @@ soccerStats.controller('gameReviewController',
             ];
         };
 
-        
-
-        $scope.currPlayer = dataService.currentPlayer;
-
         $scope.isSelected = function (player) {
             if ( player === $scope.currPlayer ) {
                 return true;
@@ -387,22 +143,218 @@ soccerStats.controller('gameReviewController',
         $scope.saveGameNotes = function () {
             console.log($scope.currGame)
             dataService.saveGameAttributes($scope.currGame, ["gameNotes"], [$scope.game.notes]);
-        }        
+        }    
 
-        $scope.notableEvents = [
-            {
-                type: "Subbed out",
-                time: "88'"
-            },
-            {
-                type: "Subbed out",
-                time: "88'"
-            },
-            {
-                type: "Subbed out",
-                time: "88'"
-            }
-        ];
+        var populatePlayers = function(teamStatsId) {
+            var promise = new Parse.Promise();
+            dataService.getGamePlayerStatsById(teamStatsId).then(function(gameTeamStats) {
+                $scope.gameSubs = gameTeamStats.get("substitutions");
+                $scope.players = [];
+                _.each(gameTeamStats.get("roster"), function(gamePlayer) {
+                    $scope.players.push(dataService.gamePlayerConstructor(gamePlayer.get("player"), gamePlayer));
+                });
+                promise.resolve('success');
+            });
 
+            return promise;
+        };
+
+        var populateStats = function() {
+
+            var shots = 0,
+                onGoal = 0,
+                offGoal = 0,
+                blocked = 0,
+                passCompletion = 0,
+                passTotal = 0;
+
+
+            $scope.passData = {
+                data : [
+                    {
+                        value: 95,
+                        color: "#B4B4B4",
+                        highlight: "#B4B4B4",
+                        label: "Completed"
+                    },
+                    {
+                        value: 5,
+                        color:"#5DA97B",
+                        highlight: "#5DA97B",
+                        label: "Missed"
+                    }
+                ],
+                turnovers: 0,
+                total: 0,
+                successRate: 0
+            };
+
+
+            $scope.shotCountData = {
+                shots: 0,
+                onGoal: 0,
+                offGoal: 0,
+                blocked: 0
+            };
+            //console.log($scope.players);
+            _.each($scope.players, function(player) {
+                $scope.shotCountData.shots += player.shots.total;
+                $scope.shotCountData.onGoal += player.shots.onGoal.total;
+                $scope.shotCountData.offGoal += player.shots.offGoal.total;
+                $scope.shotCountData.blocked += player.shots.blocks.total;
+                $scope.passData.turnovers += player.passes.turnovers;
+                $scope.passData.total += player.passes.total;
+            });
+
+            $scope.passData.successRate = $scope.passData.total && $scope.passData.turnovers ? Math.round((($scope.passData.total - $scope.passData.turnovers) / $scope.passData.total)*100) : 0;
+            $scope.passData.data[0].value = $scope.passData.successRate;
+            $scope.passData.data[1].value = 100 - $scope.passData.successRate;
+
+            $scope.initCurrFormation();
+
+            //console.log($scope.passData);
+            $scope.shotLinesData = [];
+            _.each($scope.players, function(player) {
+                var shotLineData = {};
+                if (player.shots.offGoal.total) {
+                    for (var i = 0; i < player.shots.offGoal.total; i++) {
+                        shotLineData =
+                        {
+                            type: 'off',
+                            shotPos: player.shots.offGoal.startPos[i],
+                            resultPos: player.shots.offGoal.resultPos[i]
+                        };
+                        $scope.shotLinesData.push(shotLineData);
+                    }
+                }
+                if (player.shots.onGoal.total) {
+                    for (var i = 0; i < player.shots.onGoal.total; i++) {
+                        shotLineData =
+                        {
+                            type: 'on',
+                            shotPos: player.shots.onGoal.startPos[i],
+                            resultPos: player.shots.onGoal.resultPos[i]
+                        };
+                        $scope.shotLinesData.push(shotLineData);
+                    }
+                }
+                if (player.shots.blocks.total) {
+                    for (var i = 0; i < player.shots.blocks.total; i++) {
+                        shotLineData =
+                        {
+                            type: 'on',
+                            shotPos: player.shots.blocks.startPos[i],
+                            resultPos: player.shots.blocks.resultPos[i]
+                        };
+                        $scope.shotLinesData.push(shotLineData);
+                    }
+                }
+                if (player.shots.goals.total) {
+                    for (var i = 0; i < player.shots.goals.total; i++) {
+                        shotLineData =
+                        {
+                            type: 'goal',
+                            shotPos: player.shots.goals.startPos[i],
+                            resultPos: player.shots.goals.resultPos[i]
+                        };
+                        $scope.shotLinesData.push(shotLineData);
+                    }
+                }
+            });
+            
+            $rootScope.$broadcast(configService.messages.notableEvents, {players: $scope.players, subs: $scope.gameSubs});
+
+        };
+
+        var populateGameData = function(game) {
+
+            var promise = new Parse.Promise();
+
+            dataService.getGameStatsById(game.id).then(function(game) {
+                
+              
+
+                $scope.gameStats = {
+                    corners : 0,
+                    offsides : 0,
+                    goalsMade : 0,
+                    goalsTaken : 0,
+                    passes : 0,
+                    tackles : 0,
+                    fouls : 0,
+                    possession : 0,
+                    teamPossession : { data: []}
+                };
+
+
+                if(game){
+                    $scope.gameStats = {
+                        corners : game.get('gameTeamStats').get('corners') ? game.get('gameTeamStats').get('corners') : 0,
+                        offsides : game.get('gameTeamStats').get('offsides') ? game.get('gameTeamStats').get('offsides') : 0,
+                        goalsMade : game.get('gameTeamStats').get('goalsMade') ? game.get('gameTeamStats').get('goalsMade') : 0,
+                        goalsTaken : game.get('gameTeamStats').get('goalsTaken') ? game.get('gameTeamStats').get('goalsTaken') : 0,
+                        passes : game.get('gameTeamStats').get('passes') ? game.get('gameTeamStats').get('passes') : 0,
+                        tackles : game.get('gameTeamStats').get('tackles') ? game.get('gameTeamStats').get('tackles') : 0,
+                        fouls :  game.get('gameTeamStats').get('fouls') ? game.get('gameTeamStats').get('fouls') : 0,
+                        possession : game.get('gameTeamStats').get('possession') ? game.get('gameTeamStats').get('possession') : 0,
+                        teamPossession : {
+                            data : [
+                                {
+                                    value: game.get('gameTeamStats').get('possession') ? 100 - game.get('gameTeamStats').get('possession') : 0,
+                                    color: "#B4B4B4",
+                                    highlight: "#B4B4B4",
+                                    label: "Theirs"
+                                },
+                                {
+                                    value: game.get('gameTeamStats').get('possession') ? game.get('gameTeamStats').get('possession') : 0,
+                                    color:"#5DA97B",
+                                    highlight: "#5DA97B",
+                                    label: "Ours"
+                                }
+                            ]
+                        }
+                    };
+                    // console.log(promise);
+                    promise.resolve(game.get('gameTeamStats').id);
+                }
+                else{
+                    promise.reject('Error in populateGameData');
+                }
+            });
+            return promise;
+        };
+
+        $scope.setGame = function(data) {
+              populateGameData(data.game).then(function(gameStats){
+                    populatePlayers(gameStats);
+                }).then(function(result){
+                    populateStats();
+                });
+        }
+            
+        $scope.$on(configService.messages.setGame, function(event, data) {
+            console.log('review');
+            $timeout(function(){
+                $scope.setGame(data); 
+            });
+        });
+
+        
+
+
+    	var currentUser = Parse.User.current();
+        $scope.currPlayer = dataService.currentPlayer;
+
+        $scope.players = [];
+        $scope.gameSubs = {};
+        $scope.shotLinesData = [];
+        $scope.passData = {};
+        $scope.currFormation = [];
+        $scope.shotCountData = {
+            shots: 0,
+            onGoal: 0,
+            offGoal: 0,
+            blocked: 0
+        };
 
     });

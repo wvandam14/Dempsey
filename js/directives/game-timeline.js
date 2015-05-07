@@ -7,9 +7,8 @@ soccerStats.directive('gameTimeline', function ($rootScope, $location, $timeout,
             $scope.events = [];
 
             $scope.$on(configService.messages.notableEvents, function(msg, data) {
-                console.log(data);
+                $scope.events = [];
                 _.each(data.subs, function(sub) {
-                    console.log(sub);
                     if (sub.get("isSub") === "out") {
                         var notableEvent = {
                             name: sub.get("subbedOut").get("player").get("lastName"),
