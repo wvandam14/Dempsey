@@ -273,53 +273,54 @@ soccerStats.controller('gameReviewController',
             dataService.getGameStatsById(game.id).then(function(game) {
                 
               
-
-                $scope.gameStats = {
-                    corners : 0,
-                    offsides : 0,
-                    goalsMade : 0,
-                    goalsTaken : 0,
-                    passes : 0,
-                    tackles : 0,
-                    fouls : 0,
-                    possession : 0,
-                    teamPossession : { data: []}
-                };
-
-
-                if(game){
+                $scope.$apply(function(){
                     $scope.gameStats = {
-                        corners : game.get('gameTeamStats').get('corners') ? game.get('gameTeamStats').get('corners') : 0,
-                        offsides : game.get('gameTeamStats').get('offsides') ? game.get('gameTeamStats').get('offsides') : 0,
-                        goalsMade : game.get('gameTeamStats').get('goalsMade') ? game.get('gameTeamStats').get('goalsMade') : 0,
-                        goalsTaken : game.get('gameTeamStats').get('goalsTaken') ? game.get('gameTeamStats').get('goalsTaken') : 0,
-                        passes : game.get('gameTeamStats').get('passes') ? game.get('gameTeamStats').get('passes') : 0,
-                        tackles : game.get('gameTeamStats').get('tackles') ? game.get('gameTeamStats').get('tackles') : 0,
-                        fouls :  game.get('gameTeamStats').get('fouls') ? game.get('gameTeamStats').get('fouls') : 0,
-                        possession : game.get('gameTeamStats').get('possession') ? game.get('gameTeamStats').get('possession') : 0,
-                        teamPossession : {
-                            data : [
-                                {
-                                    value: game.get('gameTeamStats').get('possession') ? 100 - game.get('gameTeamStats').get('possession') : 0,
-                                    color: "#B4B4B4",
-                                    highlight: "#B4B4B4",
-                                    label: "Theirs"
-                                },
-                                {
-                                    value: game.get('gameTeamStats').get('possession') ? game.get('gameTeamStats').get('possession') : 0,
-                                    color:"#5DA97B",
-                                    highlight: "#5DA97B",
-                                    label: "Ours"
-                                }
-                            ]
-                        }
+                        corners : 0,
+                        offsides : 0,
+                        goalsMade : 0,
+                        goalsTaken : 0,
+                        passes : 0,
+                        tackles : 0,
+                        fouls : 0,
+                        possession : 0,
+                        teamPossession : { data: []}
                     };
-                    // console.log(promise);
-                    promise.resolve(game.get('gameTeamStats').id);
-                }
-                else{
-                    promise.reject('Error in populateGameData');
-                }
+
+
+                    if(game){
+                        $scope.gameStats = {
+                            corners : game.get('gameTeamStats').get('corners') ? game.get('gameTeamStats').get('corners') : 0,
+                            offsides : game.get('gameTeamStats').get('offsides') ? game.get('gameTeamStats').get('offsides') : 0,
+                            goalsMade : game.get('gameTeamStats').get('goalsMade') ? game.get('gameTeamStats').get('goalsMade') : 0,
+                            goalsTaken : game.get('gameTeamStats').get('goalsTaken') ? game.get('gameTeamStats').get('goalsTaken') : 0,
+                            passes : game.get('gameTeamStats').get('passes') ? game.get('gameTeamStats').get('passes') : 0,
+                            tackles : game.get('gameTeamStats').get('tackles') ? game.get('gameTeamStats').get('tackles') : 0,
+                            fouls :  game.get('gameTeamStats').get('fouls') ? game.get('gameTeamStats').get('fouls') : 0,
+                            possession : game.get('gameTeamStats').get('possession') ? game.get('gameTeamStats').get('possession') : 0,
+                            teamPossession : {
+                                data : [
+                                    {
+                                        value: game.get('gameTeamStats').get('possession') ? 100 - game.get('gameTeamStats').get('possession') : 0,
+                                        color: "#B4B4B4",
+                                        highlight: "#B4B4B4",
+                                        label: "Theirs"
+                                    },
+                                    {
+                                        value: game.get('gameTeamStats').get('possession') ? game.get('gameTeamStats').get('possession') : 0,
+                                        color:"#5DA97B",
+                                        highlight: "#5DA97B",
+                                        label: "Ours"
+                                    }
+                                ]
+                            }
+                        };
+                        // console.log(promise);
+                        promise.resolve(game.get('gameTeamStats').id);
+                    }
+                    else{
+                        promise.reject('Error in populateGameData');
+                    }
+                });
             });
             return promise;
         };
