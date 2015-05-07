@@ -1,0 +1,24 @@
+<div class="game-setup-page">
+    <div class="content">
+        <!-- Roster shtuff (will be converted to a directive -->
+        <div class="player-stats-container flex">
+            <div class="roster-container flex-one">
+                <div class="list">
+                    <!-- TODO: Figure out how we want to store the roster vs lineup data and then display accordingly -->
+                    <h5 class="title">LINEUP</h5>
+                    <div class="item player-selector flex flex-center-vertical" ng-repeat="player in roster | orderBy:'name'" ng-class="{selected: isSelected(player)}" ng-click="selectPlayer(player)">
+                        <div class="circle flex flex-center">
+                            <h5>{{player.number}}</h5>
+                        </div>
+                        <div class="flex flex-one">
+                            <h5 class="ellipse">{{player.name}}</h5><h5><span class="flex flex-center">{{player.position}}</span></h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="field-container flex flex-one flex-center-horizontal">
+                <formation-field formation="currFormation" select-player="assignPosition(player)" is-selected="isSelected(player)"></formation-field>
+            </div>
+        </div>
+    </div>
+</div>

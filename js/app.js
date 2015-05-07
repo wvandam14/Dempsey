@@ -57,5 +57,11 @@ var soccerStats = angular.module('soccerStats', ['ngRoute','ngSanitize','ngResou
             controller: 'rosterController',
             scope:{}
         });
+
+        $routeProvider.when('/game-setup', {
+            templateUrl: 'templates/pages/game-setup.html',
+            controller: 'gameSetupController',
+            scope:{}
+        });
     }
 );
