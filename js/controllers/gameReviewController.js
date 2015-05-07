@@ -136,8 +136,8 @@ soccerStats.controller('gameReviewController',
         };
 
         $scope.saveGameNotes = function () {
-            console.log($scope.currGame)
-            dataService.saveGameAttributes($scope.currGame, ["gameNotes"], [$scope.game.notes]);
+            //console.log($scope.currGame)
+            dataService.saveGameAttributes(dataService.getCurrentGame(), ["gameNotes"], [$scope.notes]);
         }    
 
         $scope.populatePlayers = function(teamStatsId) {
@@ -174,13 +174,13 @@ soccerStats.controller('gameReviewController',
                         value: 95,
                         color: "#B4B4B4",
                         highlight: "#B4B4B4",
-                        label: "Completed"
+                        label: "Missed"
                     },
                     {
                         value: 5,
                         color:"#5DA97B",
                         highlight: "#5DA97B",
-                        label: "Missed"
+                        label: "Completed"
                     }
                 ],
                 turnovers: 0,
@@ -206,8 +206,8 @@ soccerStats.controller('gameReviewController',
             });
 
             $scope.passData.successRate = $scope.passData.total && $scope.passData.turnovers ? Math.round((($scope.passData.total - $scope.passData.turnovers) / $scope.passData.total)*100) : 0;
-            $scope.passData.data[0].value = $scope.passData.successRate;
-            $scope.passData.data[1].value = 100 - $scope.passData.successRate;
+            $scope.passData.data[1].value = $scope.passData.successRate;
+            $scope.passData.data[0].value = 100 - $scope.passData.successRate;
 
             $scope.initCurrFormation();
 
@@ -286,6 +286,7 @@ soccerStats.controller('gameReviewController',
                     };
 
                     if(game){
+                        $scope.notes = game.get("gameNotes");
                         $scope.gameStats = {
                             corners : game.get('gameTeamStats').get('corners') ? game.get('gameTeamStats').get('corners') : 0,
                             offsides : game.get('gameTeamStats').get('offsides') ? game.get('gameTeamStats').get('offsides') : 0,
@@ -346,6 +347,7 @@ soccerStats.controller('gameReviewController',
         $scope.shotLinesData = [];
         $scope.passData = {};
         $scope.currFormation = [];
+        $scope.notes = '';
         $scope.shotCountData = {
             shots: 0,
             onGoal: 0,
@@ -353,18 +355,12 @@ soccerStats.controller('gameReviewController',
             blocked: 0
         };
 
+
         $scope.$on(configService.messages.setGame, function(event, data) {
-            console.log(dataService.getCurrentGame());
             //$timeout(function() {
                 $scope.populateGameData(dataService.getCurrentGame()); 
             //});
             
         });
-
-        //$scope.populateGameData(dataService.getCurrentGame());
-        
-
-
-    	
 
     });
