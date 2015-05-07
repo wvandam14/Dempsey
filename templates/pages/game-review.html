@@ -78,7 +78,7 @@
                 <div class="list">
                     <!-- TODO: Figure out how we want to store the roster vs lineup data and then display accodingly -->
                     <h5 class="title">LINEUP</h5>
-                    <div ng-if="!player.bench" class="player-selector flex flex-center-vertical" ng-repeat="player in players" ng-class="{selected: isSelected(player)}" ng-click="selectPlayer(player)">
+                    <div ng-if="!player.bench" class="player-selector flex flex-center-vertical" ng-repeat="player in players | orderBy:'fname'" ng-class="{selected: isSelected(player)}" ng-click="selectPlayer(player)">
                         <div class="circle flex flex-center">
                             <h5>{{player.number}}</h5>
                         </div>
@@ -89,7 +89,7 @@
                 </div>
                 <div class="list">
                     <h5 class="title">BENCH</h5>
-                    <div ng-if="player.bench" class="player-selector flex flex-center-vertical" ng-repeat="player in players" ng-class="{selected: isSelected(player)}" ng-click="selectPlayer(player)">
+                    <div ng-if="player.bench" class="player-selector flex flex-center-vertical" ng-repeat="player in players | orderBy:'fname'" ng-class="{selected: isSelected(player)}" ng-click="selectPlayer(player)">
                         <div class="circle flex flex-center">
                             <h5>{{player.number}}</h5>
                         </div>

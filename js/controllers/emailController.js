@@ -33,6 +33,7 @@ soccerStats.controller('emailController',
 		    if ($scope.urlParams['error']) {
 		      document.getElementById('error').appendChild(document.createTextNode($scope.urlParams['error']));
 		    }
+		    $scope.$apply();
 		 //    if ($scope.urlParams['app']) {
 		 //      document.getElementById('app').appendChild(document.createTextNode(' for ' + $scope.urlParams['app']));
 			// }
