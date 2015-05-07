@@ -35,13 +35,13 @@
 
 .player-card .player-info {
     padding-right: 20px;
-    /*padding-bottom: 10px;*/
     text-transform: uppercase;
 }
 
 .player-card .player-info .info {
     border-bottom: solid 1px #DDD;
     margin-bottom: 10px;
+    padding-bottom: 10px;
 }
 
 .player-card .player-info .img-container {
