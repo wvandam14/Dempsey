@@ -13,74 +13,75 @@ soccerStats.controller('gameSetupController',
           $scope.currFormation = [
               {
                  type: "GK",
-                 player: 1,
+                 player: {},
                  x: 44,
                  y: 74
               },
               {
                  type: "CB",
-                 player: 2,
+                 player: {},
                  x: 56,
                  y: 55
               },
               {
                  type: "CB",
-                 player: 3,
+                 player: {},
                  x: 74,
                  y: 52
               },
               {
                  type: "CB",
-                 player: 4,
+                 player: {},
                  x: 15,
                  y: 52
               },
               {
                  type: "CB",
-                 player: 5,
+                 player: {},
                  x: 33,
                  y: 55
               },
               
               {
                  type: "CM",
-                 player: 6,
+                 player: {},
                  x: 56,
                  y: 31
               },
               {
                  type: "CM",
-                 player: 7,
+                 player: {},
                  x: 74,
                  y: 28
               },
               {
                  type: "CM",
-                 player: 8,
+                 player: {},
                  x: 15,
                  y: 28
               },
               {
                  type: "CM",
-                 player: 9,
+                 player: {},
                  x: 33,
                  y: 31
               },
               
               {
                  type: "ST",
-                 player: 10,
+                 player: {},
                  x: 56,
                  y: 10
               },
               {
                  type: "ST",
-                 player: 11,
+                 player: {},
                  x: 33,
                  y: 10
               },
           ];
-        }
+        };
+
         var populatePlayers = function(team) {
             $scope.roster = [];
             $timeout(function(){
@@ -90,11 +91,13 @@ soccerStats.controller('gameSetupController',
                             //console.log(players);
                             _.each(players, function (player) {
                                 $scope.roster.push({
+                                    id : player.id,
                                     name: player.get("name"),
                                     lname: player.get("lastName"),
                                     number: player.get("jerseyNumber"),
                                     photo: player.get("photo") ? player.get("photo")._url : './img/player-icon.svg',
                                     position: "ST",
+                                    selected: false,
                                     notableEvents: [
                                         {
                                             type: "Subbed out",
@@ -155,12 +158,11 @@ soccerStats.controller('gameSetupController',
                                 });
                                 // TODO: Get all time stats for player
                             });
-                            $scope.currPlayer = $scope.players[0];
                         });
                     });
                 //});
             });
-          $scope.players = new Array(11);
+          //$scope.players = new Array(11);
           $scope.initFormation();
         };
 
@@ -179,17 +181,51 @@ soccerStats.controller('gameSetupController',
         };
 
         $scope.selectPlayer = function (player) {
+            console.log(player);
             $scope.currPlayer = player;
         };
 
         $scope.assignPosition = function(player) {
-          if($scope.currPlayer) {
-            _.each($scope.currFormation, function(position){
-              if(player == position.player) {
-                position.player = $scope.currPlayer;
-              }
-            })
-          }
+            if(!jQuery.isEmptyObject($scope.currPlayer)) {
+                _.each($scope.currFormation, function(position){
+                    if (!jQuery.isEmptyObject(position.player)) {
+                        var index = $scope.roster.indexOf(position.player);
+                        $scope.roster[index].selected = false;
+                    }
+                    if(player == position.player) {
+                        position.player = $scope.currPlayer;
+                        var index = $scope.roster.indexOf($scope.currPlayer);
+                        $scope.roster[index].selected = true;
+                    }
+                });
+            } else {
+                _.each($scope.currFormation, function(position){
+                    if (position.player == player) {
+                        var index = $scope.roster.indexOf(player);
+                        $scope.roster[index].selected = false;
+                        position.player = {};
+                    }
+
+                });
+            }
+            $scope.currPlayer = {};
+        };
+        $scope.flag = false;
+
+        $scope.checkRoster = function() {
+            var counter = 0;
+            _.each($scope.currFormation, function(position) {
+               if (!jQuery.isEmptyObject(position.player)) {
+                   counter++;
+               }
+            });
+            console.log(counter);
+            if (counter === $scope.currFormation.length) return true;
+            else return false;
+        };
+
+        $scope.saveRoster = function() {
+            console.log('hello');
         };
 
 
