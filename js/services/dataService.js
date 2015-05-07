@@ -564,30 +564,39 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
             });
         }
 
-        , getGamePlayerStatsById = function(gameTeamStatsId, callback) {
+        , getGamePlayerStatsById = function(gameTeamStatsId) {
             var query = new Parse.Query(gameStatsTable);
-            query.get(gameTeamStatsId, {
-                success: function(gameTeamStats) {
-                    var gamePlayerIds = _.pluck(gameTeamStats.get("roster"), 'id');
-                    query = new Parse.Query(gamePlayerStatsTable);
-                    query.containedIn('objectId', gamePlayerIds);
-                    query.find({
-                        success: function(result) {
-                            callback(result);
-                        },
-                        error: function(result, error) {
-                            console.log("Error: " + error.code + " " + error.message);
-                            toastService.error("There was a an error (" + error.code +"). Please try again.");
-                        }
-                    });
-                },
-                error : function(gameTeamStats, error) {
-                    console.log("Error: " + error.code + " " + error.message);
-                    toastService.error("There was a an error (" + error.code +"). Please try again.");
-                }
-            });
-
+            query.equalTo('objectId', gameTeamStatsId);
+            query.include('roster');
+            query.include('roster.player');
+            //console.log(gameTeamStatsId);
+            return query.first();
         }
+
+        // , getGamePlayerStatsById = function(gameTeamStatsId, callback) {
+        //     var query = new Parse.Query(gameStatsTable);
+        //     query.get(gameTeamStatsId, {
+        //         success: function(gameTeamStats) {
+        //             var gamePlayerIds = _.pluck(gameTeamStats.get("roster"), 'id');
+        //             query = new Parse.Query(gamePlayerStatsTable);
+        //             query.containedIn('objectId', gamePlayerIds);
+        //             query.find({
+        //                 success: function(result) {
+        //                     callback(result);
+        //                 },
+        //                 error: function(result, error) {
+        //                     console.log("Error: " + error.code + " " + error.message);
+        //                     toastService.error("There was a an error (" + error.code +"). Please try again.");
+        //                 }
+        //             });
+        //         },
+        //         error : function(gameTeamStats, error) {
+        //             console.log("Error: " + error.code + " " + error.message);
+        //             toastService.error("There was a an error (" + error.code +"). Please try again.");
+        //         }
+        //     });
+
+        // }
 
         , getParentEmailsByTeamId = function(teamId, callback) {
             var query = new Parse.Query(userTable);

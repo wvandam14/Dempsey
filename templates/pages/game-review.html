@@ -8,7 +8,7 @@
 
         <div class="section flex">
             <div class="flex-one flex flex-center">
-                <doughnut-chart data="gameStats.teamPossession.data" num="gameStats.possession" label="'POSSESSION'"></doughnut-chart>
+                <doughnut-chart data="gameStats.teamPossession.data" num="gameStats.possession+ '%'" label="'POSSESSION'"></doughnut-chart>
             </div>
 
             <div class="flex-one flex flex-column flex-center">
@@ -24,7 +24,7 @@
             </div>
 
             <div class="flex-one flex flex-center">
-                <doughnut-chart data="teamPossession.data" num="'82%'" label="'PASSES COMPLETED'"></doughnut-chart>
+                <doughnut-chart data="passData.data" num="passData.successRate + '%'" label="'PASSES COMPLETED'"></doughnut-chart>
             </div>
 
             <div class="numbers flex-one flex flex-column">
