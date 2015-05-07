@@ -2,6 +2,7 @@ soccerStats.controller('gameReviewController',
     function gameReviewController($scope, $rootScope, $location, $timeout, configService, dataService, viewService) {
 
         $scope.players = [];
+        $scope.gameSubs = {};
         $scope.shotCountData = {
             shots: 0,
             onGoal: 0,
@@ -62,7 +63,8 @@ soccerStats.controller('gameReviewController',
 
         var populatePlayers = function(teamStatsId) {
             dataService.getGamePlayerStatsById(teamStatsId).then(function(gameTeamStats) {
-                //console.log(gameTeamStats);
+                $scope.gameSubs = gameTeamStats.get("substitutions");
+                console.log($scope.gameSubs);
                 _.each(gameTeamStats.get("roster"), function(gamePlayer) {
                     $scope.players.push(dataService.gamePlayerConstructor(gamePlayer.get("player"), gamePlayer));
                 });
@@ -120,7 +122,7 @@ soccerStats.controller('gameReviewController',
 
             $scope.initCurrFormation();
 
-            console.log($scope.passData);
+            //console.log($scope.passData);
 
             _.each($scope.players, function(player) {
                 var shotLineData = {};
@@ -170,7 +172,7 @@ soccerStats.controller('gameReviewController',
                 }
             });
             
-            //console.log($scope.shotLinesData);
+            $rootScope.$broadcast(configService.messages.notableEvents, {players: $scope.players, subs: $scope.gameSubs});
 
         };
 

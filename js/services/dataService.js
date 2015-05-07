@@ -569,34 +569,18 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
             query.equalTo('objectId', gameTeamStatsId);
             query.include('roster');
             query.include('roster.player');
+            query.include('substitutions');
+            query.include('substitutions.subbedIn');
+            query.include('substitutions.subbedOut');
+            query.include('substitutions.subbedIn.player');
+            query.include('substitutions.subbedOut.player');
             //console.log(gameTeamStatsId);
+            // query.first().then(function(gameTeamStats) {
+            //     query = new Parse.Query(playersTable);
+            //     var playerPointers = _.pluck(gameTeamStats.get("substitutions"),  )
+            // });
             return query.first();
         }
-
-        // , getGamePlayerStatsById = function(gameTeamStatsId, callback) {
-        //     var query = new Parse.Query(gameStatsTable);
-        //     query.get(gameTeamStatsId, {
-        //         success: function(gameTeamStats) {
-        //             var gamePlayerIds = _.pluck(gameTeamStats.get("roster"), 'id');
-        //             query = new Parse.Query(gamePlayerStatsTable);
-        //             query.containedIn('objectId', gamePlayerIds);
-        //             query.find({
-        //                 success: function(result) {
-        //                     callback(result);
-        //                 },
-        //                 error: function(result, error) {
-        //                     console.log("Error: " + error.code + " " + error.message);
-        //                     toastService.error("There was a an error (" + error.code +"). Please try again.");
-        //                 }
-        //             });
-        //         },
-        //         error : function(gameTeamStats, error) {
-        //             console.log("Error: " + error.code + " " + error.message);
-        //             toastService.error("There was a an error (" + error.code +"). Please try again.");
-        //         }
-        //     });
-
-        // }
 
         , getParentEmailsByTeamId = function(teamId, callback) {
             var query = new Parse.Query(userTable);
