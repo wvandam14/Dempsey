@@ -43,4 +43,17 @@ soccerStats.controller('loginController', function loginController($scope, $root
             }
         };
 
+        $scope.resetPassword = function() {
+            viewService.openModal('passwordResetModal');
+            // $scope.user.email
+            // Parse.User.requestPasswordReset($scope.user.email, {
+            //     success:function() {
+            //         alert("Reset instructions emailed to you.");
+            //     },
+            //     error:function(error) {
+            //         alert(error.message);
+            //     }
+            // });
+        }
+
     });

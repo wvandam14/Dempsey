@@ -15,7 +15,7 @@ soccerStats.controller('shellController',
           $timeout(function() {
                // check if user is logged in if accessing most pages
 
-               if ($scope.currentPage != 'login' && $scope.currentPage != 'registration'){
+               if ($scope.currentPage != 'login' && $scope.currentPage != 'registration' && $scope.currentPage != 'verify-email' && $scope.currentPage != 'password-reset-success' && $scope.currentPage != 'password-reset'){
                    if (Parse.User.current()){
                        console.log("user logged in");
                         //$timeout(function() {
@@ -39,6 +39,8 @@ soccerStats.controller('shellController',
 */
                 history.push({url: current.split('#')[1], state: {}});
                 $scope.currentPage = current.split('#')[1] ? current.split('#')[1].split('/')[1] : '';
+                //console.log($scope.currentPage);
+                $scope.currentPage = $scope.currentPage.split('?')[0] ? $scope.currentPage.split('?')[0] : '';
                 $rootScope.$broadcast(configService.messages.navigate, history[history.length - 1].url);
 
             });
