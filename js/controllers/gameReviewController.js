@@ -270,7 +270,9 @@ soccerStats.controller('gameReviewController',
             //var promise = new Parse.Promise();
 
             dataService.getGameStatsById(game.id).then(function(game) {
+
                 $timeout(function() {
+
                     $scope.gameStats = {
                         corners : 0,
                         offsides : 0,
@@ -282,7 +284,6 @@ soccerStats.controller('gameReviewController',
                         possession : 0,
                         teamPossession : { data: []}
                     };
-
 
                     if(game){
                         $scope.gameStats = {

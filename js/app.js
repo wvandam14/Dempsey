@@ -34,8 +34,20 @@ var soccerStats = angular.module('soccerStats', ['ngRoute','ngSanitize','ngResou
             scope:{}
         });
 
-        $routeProvider.when('/verifyEmail', {
+        $routeProvider.when('/verify-email', {
             templateUrl: 'templates/pages/email-verification.html',
+            controller: 'emailController',
+            scope:{}
+        });
+
+        $routeProvider.when('/password-reset-success', {
+            templateUrl: 'templates/pages/password-reset-success.html',
+            controller: 'emailController',
+            scope:{}
+        });
+
+        $routeProvider.when('/password-reset', {
+            templateUrl: 'templates/pages/password-reset.html',
             controller: 'emailController',
             scope:{}
         });

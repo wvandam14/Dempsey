@@ -65,6 +65,7 @@ schedule {
     background-color: #FF7373;
 }
 
+.schedule .summary-box.not_started .action,
 .schedule .summary-box.draw .action,
 .schedule .summary-box.draw .score {
     background-color: #DDD;
@@ -90,6 +91,7 @@ schedule {
     border-top: 2px solid #FF7373;
 }
 
+.schedule .summary-box.not_started.selected .summary,
 .schedule .summary-box.draw.selected .summary {
     border-left: 2px solid #DDD;
     border-right: 2px solid #DDD;

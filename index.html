@@ -39,9 +39,9 @@
 </head>
 <body ng-controller="shellController"  ng-class="{'tablet': $root.isTablet, 'mobile': $root.isMobile, 'isModal': currentModal != ''}">
 
-    <header ng-if="currentPage != 'login' && currentPage != 'registration'"></header>
+    <header ng-if="currentPage != 'login' && currentPage != 'registration' && currentPage != 'verify-email' && currentPage != 'password-reset-success' && currentPage != 'password-reset'"></header>
 
-    <div ng-if="currentPage != 'login' && currentPage != 'registration'" class="flex flex-column flex-center">
+    <div ng-if="currentPage != 'login' && currentPage != 'registration' && currentPage != 'verify-email' && currentPage != 'password-reset-success' && currentPage != 'password-reset'" class="flex flex-column flex-center">
         <div class="gameReview">
             <h5 class="header text-center">{{currGame.date | date:'MM/dd/yyyy'}}</h5>
             <div class="flex flex-center-horizontal">
@@ -100,6 +100,7 @@
         <div ng-if="checkModal('inviteEmailModal')"><invite-email-modal></invite-email-modal></div>
         <div ng-if="checkModal('playerModal')"><player-modal></player-modal></div>
         <div ng-if="checkModal('createGameModal')"><create-game-modal></create-game-modal></div>
+        <div ng-if="checkModal('passwordResetModal')"><password-reset-modal></password-reset-modal></div>
     </div>
 
     <!-- Libraries -->
@@ -149,8 +150,9 @@
     <script src="./js/directives/bar-chart.js"></script>
     <script src="./js/directives/shot-accuracy-chart.js"></script>
     <script src="./js/directives/account-modal.js"></script>
-    <<script src="./js/directives/edit-team-modal.js"></script>
+    <script src="./js/directives/edit-team-modal.js"></script>
     <script src="./js/directives/invite-email-modal.js"></script>
+    <script src="./js/directives/password-reset-modal.js"></script>
     <script src="./js/directives/role.js"></script>
     <script src="./js/directives/formation-field.js"></script>
     <script src="./js/directives/player-modal.js"></script>
