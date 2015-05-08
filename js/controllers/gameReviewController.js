@@ -154,7 +154,6 @@ soccerStats.controller('gameReviewController',
                     promise.resolve('success');
                 });
             });
-
             return promise;
         };
 

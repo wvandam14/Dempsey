@@ -612,6 +612,13 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
             });
         }
 
+        , getGameByGameId = function(gameId) {
+            console.log(gameId);
+            var query = new Parse.Query(gameTable);
+            query.equalTo('objectId', gameId);
+            return query.first();
+        }
+
         , saveGame = function(game, teamID) {
             console.log(game);
             console.log(teamID);
@@ -661,6 +668,60 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                     })
                 },
                 error: function(editGame, error) {
+                    console.log("Error: " + error.code + " " + error.message);
+                    toastService.error("There was a an error (" + error.code +"). Please try again.");
+                }
+            });
+        }
+
+        , saveRoster = function (roster) {
+            var gameTeamStats = new gameStatsTable();
+            var promise = new Parse.Promise();
+            _.each(roster, function(gamePlayer) {
+                getPlayerByPlayerId(gamePlayer.id, function(player) {
+                    var gamePlayerStats = new gamePlayerStatsTable();
+                    gamePlayerStats.set("player", player);
+                    if (gamePlayer.selected)
+                        gamePlayerStats.set("startingStatus", "On");
+                    else
+                        gamePlayerStats.set("startingStatus", "Off");
+                    gamePlayerStats.set("position", gamePlayer.position);
+                    gamePlayerStats.save(null, {
+                        success: function(gamePlayerStats) {
+                            gameTeamStats.addUnique("roster", gamePlayerStats);
+                        },
+                        error: function(error) {
+                            console.log("Error: " + error.code + " " + error.message);
+                            toastService.error("There was a an error (" + error.code +"). Please try again.");
+                        }
+                    });
+                });
+            });
+            promise.resolve(gameTeamStats);
+            return promise;
+        }
+
+        , saveGameTeamStats = function(gameTeamStats, gameId) {
+            gameTeamStats.save(null, {
+                success: function(gameTeamStats) {
+                    getGameByGameId(gameId).then(function(game) {
+                        console.log(game);
+                        game.set("status", "prepared");
+                        game.save(null, {
+                            success: function(game) {
+                                toastService.success("Game roster successfully created");
+                                viewService.goToPage('/game-review');
+                            },
+                            error: function(error) {
+                                console.log("Error: " + error.code + " " + error.message);
+                                toastService.error("There was a an error (" + error.code +"). Please try again.");
+                            }
+                        });
+
+                    });
+
+                } ,
+                error: function(error) {
                     console.log("Error: " + error.code + " " + error.message);
                     toastService.error("There was a an error (" + error.code +"). Please try again.");
                 }
@@ -975,7 +1036,10 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
         getParentEmailsByTeamId : getParentEmailsByTeamId,
         getParentByPlayerId : getParentByPlayerId,
         getGamePlayerStatsById : getGamePlayerStatsById,
-        gamePlayerConstructor : gamePlayerConstructor
+        gamePlayerConstructor : gamePlayerConstructor,
+        saveRoster : saveRoster,
+        getGameByGameId : getGameByGameId,
+        saveGameTeamStats : saveGameTeamStats
     }
 
 });

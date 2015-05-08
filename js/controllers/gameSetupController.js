@@ -1,5 +1,5 @@
 soccerStats.controller('gameSetupController', 
-    function gameReviewController($scope, $rootScope, $location, $timeout, configService, dataService, viewService) {
+    function gameReviewController($scope, $rootScope, $location, $timeout, configService, dataService, viewService, toastService) {
         //$scope.players = [];
         //$scope.currFormation= [];
 
@@ -96,7 +96,7 @@ soccerStats.controller('gameSetupController',
                                     lname: player.get("lastName"),
                                     number: player.get("jerseyNumber"),
                                     photo: player.get("photo") ? player.get("photo")._url : './img/player-icon.svg',
-                                    position: "ST",
+                                    position: '',
                                     selected: false,
                                     notableEvents: [
                                         {
@@ -173,6 +173,8 @@ soccerStats.controller('gameSetupController',
             populatePlayers(dataService.getCurrentTeam());
         });
 
+        $scope.playerSelected = false;
+
         $scope.isSelected = function (player) {
             if (player === $scope.currPlayer ) {
                 return true;
@@ -181,34 +183,37 @@ soccerStats.controller('gameSetupController',
         };
 
         $scope.selectPlayer = function (player) {
-            console.log(player);
+            //console.log(player);
             $scope.currPlayer = player;
+            $scope.playerSelected = true;
         };
 
         $scope.assignPosition = function(player) {
-            if(!jQuery.isEmptyObject($scope.currPlayer)) {
-                _.each($scope.currFormation, function(position){
-                    if (!jQuery.isEmptyObject(position.player)) {
-                        var index = $scope.roster.indexOf(position.player);
-                        $scope.roster[index].selected = false;
-                    }
-                    if(player == position.player) {
-                        position.player = $scope.currPlayer;
-                        var index = $scope.roster.indexOf($scope.currPlayer);
-                        $scope.roster[index].selected = true;
-                    }
-                });
-            } else {
-                _.each($scope.currFormation, function(position){
-                    if (position.player == player) {
-                        var index = $scope.roster.indexOf(player);
-                        $scope.roster[index].selected = false;
-                        position.player = {};
-                    }
+            //console.log($scope.currFormation);
+            var position = _.find($scope.currFormation, function(position) {return player == position.player});
 
-                });
+            if ($scope.playerSelected) {
+                if (!_.isEmpty(player)) {
+                    var index = $scope.roster.indexOf(player);
+                    $scope.roster[index].selected = false;
+                    $scope.roster[index].position = '';
+                }
+                var rosterIndex = $scope.roster.indexOf($scope.currPlayer);
+                position.player = $scope.currPlayer;
+                $scope.roster[rosterIndex].selected = true;
+                formationIndex = $scope.currFormation.indexOf(position);
+                $scope.roster[rosterIndex].position = $scope.currFormation[formationIndex].type;
+            } else {
+                if (!_.isEmpty(player)) {
+                    //console.log(player);
+                    var index = $scope.roster.indexOf(player);
+                    $scope.roster[index].selected = false;
+                    $scope.roster[index].position = '';
+                }
+                position.player = {};
             }
             $scope.currPlayer = {};
+            $scope.playerSelected = false;
         };
         $scope.flag = false;
 
@@ -219,15 +224,16 @@ soccerStats.controller('gameSetupController',
                    counter++;
                }
             });
-            console.log(counter);
+            //console.log(counter);
             if (counter === $scope.currFormation.length) return true;
             else return false;
         };
 
         $scope.saveRoster = function() {
-            console.log('hello');
-        };
-
+            dataService.saveRoster($scope.roster).then(function(result) {
+                dataService.saveGameTeamStats(result, dataService.getCurrentGame().id);
+            });
+        }
 
         
     });
