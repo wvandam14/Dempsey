@@ -299,7 +299,7 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                                         //$rootScope.$broadcast(configService.messages.teamChanged, {refresh: true});
                                         viewService.closeModal(self);
                                     },
-                                    erorr: function (currentUser, error) {
+                                    error: function (currentUser, error) {
                                         console.log("Error: " + error.code + " " + error.message);
                                        toastService.error("There was a an error (" + error.code +"). Please try again."); 
                                     }
@@ -674,38 +674,40 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
             });
         }
 
-        , saveRoster = function (roster) {
-            var gameTeamStats = new gameStatsTable();
+        , saveRoster = function (roster, gameId) {
             var promise = new Parse.Promise();
-            _.each(roster, function(gamePlayer) {
-                getPlayerByPlayerId(gamePlayer.id, function(player) {
-                    var gamePlayerStats = new gamePlayerStatsTable();
-                    gamePlayerStats.set("player", player);
-                    if (gamePlayer.selected)
-                        gamePlayerStats.set("startingStatus", "On");
-                    else
-                        gamePlayerStats.set("startingStatus", "Off");
-                    gamePlayerStats.set("position", gamePlayer.position);
-                    gamePlayerStats.save(null, {
-                        success: function(gamePlayerStats) {
-                            gameTeamStats.addUnique("roster", gamePlayerStats);
-                        },
-                        error: function(error) {
-                            console.log("Error: " + error.code + " " + error.message);
-                            toastService.error("There was a an error (" + error.code +"). Please try again.");
-                        }
+            var game;
+            getGameStatsById(gameId).then(function(gameTeamStats) {
+                _.each(roster, function(gamePlayer) {
+                    getPlayerByPlayerId(gamePlayer.id, function(player) {
+                        var gamePlayerStats = new gamePlayerStatsTable();
+                        gamePlayerStats.set("player", player);
+                        if (gamePlayer.selected)
+                            gamePlayerStats.set("startingStatus", "On");
+                        else
+                            gamePlayerStats.set("startingStatus", "Off");
+                        gamePlayerStats.set("position", gamePlayer.position);
+                        gamePlayerStats.save().then(function(gamePlayerStats) {
+                                gameTeamStats.addUnique("roster", gamePlayerStats);
+                            },
+                            function(obj, error) {
+                                console.log("Error: " + error.code + " " + error.message);
+                                toastService.error("There was a an error (" + error.code +"). Please try again.");
+                            });
                     });
                 });
+                promise.resolve(gameTeamStats);
             });
-            promise.resolve(gameTeamStats);
+
             return promise;
         }
 
         , saveGameTeamStats = function(gameTeamStats, gameId) {
+            console.log(gameTeamStats);
             gameTeamStats.save(null, {
                 success: function(gameTeamStats) {
                     getGameByGameId(gameId).then(function(game) {
-                        console.log(game);
+                        console.log(gameTeamStats);
                         game.set("status", "prepared");
                         game.save(null, {
                             success: function(game) {
