@@ -679,6 +679,7 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
             //console.log(gameId);
 
             var players = [];
+            var game = {};
             var promise = new Parse.Promise();
             _.each(roster,function(rosterPlayer){
                 var ptr = {
@@ -689,6 +690,7 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
 
                 var playerStats = new gamePlayerStatsTable();
                 playerStats.set("player",ptr);
+                rosterPlayer.selected ? playerStats.set("startingStatus","On") : playerStats.set("startingStatus","Off");
                 playerStats.save().then(function(gamePlayerStats){
                     players.push(gamePlayerStats);
                     
@@ -702,12 +704,19 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                 query = new Parse.Query(gameTable);
                 query.include("gameTeamStats");
                 query.equalTo("objectId",gameId);
-                query.first().then(function(game){
-                    var gameStats = game.get("gameTeamStats");
+                query.first().then(function(result){
+                    game = result;
+                    var gameStats = result.get("gameTeamStats");
                     gameStats.set("roster",players);
                     return gameStats.save();
                 }).then(function(gameStats){
-                    console.log(gameStats);
+                     game.set("status", "prepared");
+                     return game.save();
+                }).then(function(result){
+                    toastService.success("Game roster successfully created");
+                    viewService.goToPage('/game-review');
+                },function(error){
+                     console.log("Error: " + error.code + " " + error.message);
                 });
 
             });

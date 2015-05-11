@@ -194,3 +194,4 @@ js/directives/min/
 js/services/min/
 cloudcode/SendGridCode/cloud/min/
 prepros.cfg
+js/services/min/dataService.min.js
