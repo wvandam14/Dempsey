@@ -230,9 +230,7 @@ soccerStats.controller('gameSetupController',
         };
 
         $scope.saveRoster = function() {
-            dataService.saveRoster($scope.roster, dataService.getCurrentGame().id).then(function(result) {
-                dataService.saveGameTeamStats(result, dataService.getCurrentGame().id);
-            });
+            dataService.saveRoster($scope.roster, dataService.getCurrentGame().id);
         }
 
         

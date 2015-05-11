@@ -37,7 +37,7 @@ soccerStats.controller('gameReviewController',
         //        });
         //        stats.save(null, {
         //           success: function(stats) {
-        //               console.log(stats);
+        //               cnsole.log(stats);
         //           },
         //            error: function(stats, error) {
         //                console.log(error.message);
