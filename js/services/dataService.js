@@ -674,6 +674,45 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
             });
         }
 
+        , createRoster = function(roster, gameId){
+
+            //console.log(gameId);
+
+            var players = [];
+            var promise = new Parse.Promise();
+            _.each(roster,function(rosterPlayer){
+                var ptr = {
+                    "__type" : "Pointer",
+                    "className" : "Players",
+                    "objectId" : rosterPlayer.id
+                };
+
+                var playerStats = new gamePlayerStatsTable();
+                playerStats.set("player",ptr);
+                playerStats.save().then(function(gamePlayerStats){
+                    players.push(gamePlayerStats);
+                    
+                    if(players.length == roster.length){
+                        promise.resolve("ok");
+                    }
+                });
+            });
+
+            promise.then(function(result){
+                query = new Parse.Query(gameTable);
+                query.include("gameTeamStats");
+                query.equalTo("objectId",gameId);
+                query.first().then(function(game){
+                    var gameStats = game.get("gameTeamStats");
+                    gameStats.set("roster",players);
+                    return gameStats.save();
+                }).then(function(gameStats){
+                    console.log(gameStats);
+                });
+
+            });
+        }
+
         , saveRoster = function (roster, gameId) {
 
             getGameStatsById(gameId).then(function(game) {
@@ -1095,7 +1134,8 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
         getGamePlayerStatsById : getGamePlayerStatsById,
         gamePlayerConstructor : gamePlayerConstructor,
         saveRoster : saveRoster,
-        getGameByGameId : getGameByGameId
+        getGameByGameId : getGameByGameId,
+        createRoster : createRoster
     }
 
 });
