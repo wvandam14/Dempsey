@@ -763,33 +763,6 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                 });
             });
         }
-        // , saveGameTeamStats = function(gameTeamStats, gameId) {
-        //     //console.log(gameTeamStats);
-        //     gameTeamStats.save(null, {
-        //         success: function(gameTeamStats) {
-        //             console.log(gameTeamStats);
-        //             getGameByGameId(gameId).then(function(game) {
-        //                 game.set("status", "prepared");
-        //                 game.save(null, {
-        //                     success: function(game) {
-        //                         toastService.success("Game roster successfully created");
-        //                         viewService.goToPage('/game-review');
-        //                     },
-        //                     error: function(error) {
-        //                         console.log("Error: " + error.code + " " + error.message);
-        //                         toastService.error("There was a an error (" + error.code +"). Please try again.");
-        //                     }
-        //                 });
-
-        //             });
-
-        //         } ,
-        //         error: function(error) {
-        //             console.log("Error: " + error.code + " " + error.message);
-        //             toastService.error("There was a an error (" + error.code +"). Please try again.");
-        //         }
-        //     });
-        // }
 
         , playerConstructor = function(player, stats) {
             var retPlayer = {

@@ -189,7 +189,7 @@ soccerStats.controller('gameSetupController',
         };
 
         $scope.assignPosition = function(player) {
-            //console.log($scope.currFormation);
+            console.log(player);
             var position = _.find($scope.currFormation, function(position) {return player == position.player});
 
             if ($scope.playerSelected) {

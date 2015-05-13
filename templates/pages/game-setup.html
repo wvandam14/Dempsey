@@ -21,6 +21,7 @@
             </div>
             <div class="field-container flex flex-column flex-one">
                 <formation-field formation="currFormation" select-player="assignPosition(player)" is-selected="isSelected(player)"></formation-field>
+                <bench-formation select-player="assignPosition(player)" is-selected="isSelected(player)"></bench-formation>
                 <div class="button green" ng-click="saveRoster()" ng-class="{disabled: !checkRoster()}">
                     <h1>Save Roster</h1>
                 </div>
