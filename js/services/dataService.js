@@ -675,12 +675,22 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
         }
 
         , createRoster = function(roster, gameId){
-
             //console.log(gameId);
 
             var players = [];
             var game = {};
             var promise = new Parse.Promise();
+            var getRosterLength = function(roster) {
+                var counter = 0;
+                 _.each(roster, function(rosterPlayer) { 
+                    if (rosterPlayer.selected) {
+                        counter++;
+                    }
+                 });
+                 return counter;
+            }
+            var rosterLength = getRosterLength(roster);
+            
             _.each(roster, function(rosterPlayer){
                 if (rosterPlayer.selected) {
                     var ptr = {
@@ -695,11 +705,11 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                     playerStats.save().then(function (gamePlayerStats) {
                         players.push(gamePlayerStats);
 
-                        if (players.length == roster.length) {
+                        if (players.length == rosterLength) {
                             promise.resolve("ok");
                         }
                     });
-                }
+                } 
             });
 
             promise.then(function(result){
