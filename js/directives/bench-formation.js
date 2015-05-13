@@ -11,7 +11,6 @@ soccerStats.directive('benchFormation', function () {
             scope.init(elem);
         },
         controller: function($scope) {
-        	$scope.bench = new Array(7);
             $scope.init = function(elem) {
             }
         }
