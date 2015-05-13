@@ -776,18 +776,19 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                                         }
                                     ],
                                     accuracy: 0,
-                                    blocks: 0,
-                                    onGoal: 0,
-                                    offGoal: 0,
                                     goals: 0,
                                     shotInit: function(playerShot, stats) {
+                                        var blocks, 
+                                            onGoal, 
+                                            offGoal
+                                        ;
                                         _.each(stats.attributes.shots, function(shot) {
-                                            playerShot.blocks += shot.blocked;
-                                            playerShot.onGoal += shot.onGoal;
-                                            playerShot.offGoal += shot.offGoal;
+                                            blocks += shot.blocked;
+                                            onGoal += shot.onGoal;
+                                            offGoal += shot.offGoal;
                                             playerShot.goals += shot.goals;
                                         });
-                                        var total = playerShot.blocks + playerShot.onGoal + playerShot.offGoal + playerShot.goals;
+                                        var total = blocks + onGoal + offGoal + playerShot.goals;
                                         playerShot.accuracy = Math.round(((total - playerShot.offGoal) / total)*100);
                                         playerShot.data[0].value = playerShot.offGoal;
                                         playerShot.data[1].value = total;
@@ -799,29 +800,26 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                                             value: 0,
                                             color: "#B4B4B4",
                                             highlight: "#B4B4B4",
-                                            label: "Turnovers"
+                                            label: "Completed"
                                         },
                                         {
                                             value: 0,
                                             color:"#5DA97B",
                                             highlight: "#5DA97B",
-                                            label: "Total Passes"
+                                            label: "Total"
                                         }
                                     ],
-                                    completion: '0/0',
-                                    turnovers: 0,
+                                    completed: 0,
                                     total: 0,
                                     passInit: function(playerPass, stats) {
                                         _.each(stats.attributes.passes, function(pass) {
-                                            playerPass.turnovers += pass.turnovers;
+                                            playerPass.completed += pass.completed;
                                             playerPass.total += pass.total;
                                         });
-                                        playerPass.completion = (playerPass.total-playerPass.turnovers) + '/' + playerPass.total;
-                                        playerPass.data[0].value = playerPass.turnovers;
+                                        playerPass.data[0].value = playerPass.completed;
                                         playerPass.data[1].value = playerPass.total;
                                     }
                                 },
-                                phone: "(123) 456 7890",
                                 emergencyContact: {
                                     name: player.attributes.emergencyContact,
                                     phone: player.attributes.phone,
@@ -905,15 +903,13 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                                 label: "Completed"
                             }
                         ],
-                        completion: '0/0',
-                        turnovers: 0,
+                        completed: 0,
                         total: 0,
                         passInit: function(playerPasses, passes) {
-                            playerPasses.turnovers = passes.turnovers;
+                            playerPasses.completed = passes.completed;
                             playerPasses.total = passes.total;
-                            playerPasses.data[0].value = passes.turnovers;;
+                            playerPasses.data[0].value = passes.completed;;
                             playerPasses.data[1].value = passes.total;
-                            playerPasses.completion = (passes.total - passes.turnovers) + '/' + passes.total;
                         }
                     },
                     shots: {
@@ -954,52 +950,12 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                             resultPos: [],
                             time: []
                         },
-                        shotInit: function(playerShots, shots, goals) {
-                            //console.log(shots);
-                            if (shots) {
-                                _.each(shots, function (shot) {
-                                    if (shot.blocked) {
-                                        playerShots.blocks.total++;
-                                        playerShots.blocks.startPos.push(shot.blocked.shotPos);
-                                        playerShots.blocks.resultPos.push(shot.blocked.resultPos);
-                                    }
-                                    if (shot.onGoal) {
-                                        playerShots.onGoal.total++;
-                                        playerShots.onGoal.startPos.push(shot.onGoal.shotPos);
-                                        playerShots.onGoal.resultPos.push(shot.onGoal.resultPos);
-                                    }
-                                    if (shot.offGoal) {
-                                        playerShots.offGoal.total++;
-                                        playerShots.offGoal.startPos.push(shot.offGoal.shotPos);
-                                        playerShots.offGoal.resultPos.push(shot.offGoal.resultPos);
-                                    }
-                                     if (shot.goal) {
-                                        playerShots.offGoal.total++;
-                                        playerShots.offGoal.startPos.push(shot.offGoal.shotPos);
-                                        playerShots.offGoal.resultPos.push(shot.offGoal.resultPos);
-                                    }
-                                });
-                            }
-  
-                           
-                            if (goals) {
-                                _.each(goals, function (goal) {
-                                    if (goal) {
-                                        playerShots.goals.total++;
-                                        playerShots.goals.startPos.push(goal.startPos);
-                                        playerShots.goals.resultPos.push(goal.resultPos);
-                                        playerShots.goals.time.push(goal.time);
-                                    }
-                                });
-                            }
-
-                            /*
-                            // TODO -> This code should work for the model we will use on the final version of the database
+                        shotInit: function(playerShots, shots) {
 
                             if(shots){
                                 _.each(shots,function(shot){
                                     switch(shot.type){
-                                        case "ofGoal":
+                                        case "offGoal":
                                             playerShots.offGoal.total++;
                                             playerShots.offGoal.startPos.push(shot.offGoal.shotPos);
                                             playerShots.offGoal.resultPos.push(shot.offGoal.resultPos);
@@ -1008,11 +964,11 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                                             playerShots.onGoal.total++;
                                             playerShots.onGoal.startPos.push(shot.onGoal.shotPos);
                                             playerShots.onGoal.resultPos.push(shot.onGoal.resultPos);
-                                        case "Goal":
+                                        case "goal":
                                             playerShots.goals.total++;
-                                            playerShots.goals.startPos.push(shot.onGoal.startPos);
-                                            playerShots.goals.resultPos.push(shot.onGoal.resultPos);
-                                            playerShots.goals.time.push(shot.onGoal.time);
+                                            playerShots.goals.startPos.push(shot.shotPos);
+                                            playerShots.goals.resultPos.push(shot.resultPos);
+                                            playerShots.goals.time.push(shot.time);
                                             break;
                                         case "blocked":
                                             playerShots.blocks.total++;
@@ -1021,10 +977,7 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                                             break;
                                     }
                                 });
-                            }*/
-
-
-
+                            }
 
                             var total = playerShots.blocks.total + playerShots.onGoal.total + playerShots.offGoal.total + playerShots.goals.total;
                             playerShots.total = total;
@@ -1040,8 +993,8 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                 retPlayer.eventsInit(retPlayer, gamePlayer.get("subbedOut"), gamePlayer.get("subbedIn"));
             if (gamePlayer.get("passes"))
                 retPlayer.passes.passInit(retPlayer.passes, gamePlayer.get("passes"));
-            if (gamePlayer.get("shots") || gamePlayer.get("goals"))
-                retPlayer.shots.shotInit(retPlayer.shots, gamePlayer.get("shots"), gamePlayer.get("goals"));
+            if (gamePlayer.get("shots"))
+                retPlayer.shots.shotInit(retPlayer.shots, gamePlayer.get("shots"));
 
             return retPlayer;
         }

@@ -25,43 +25,7 @@
             //show login page
         }
 
-       /* var seasonPlayersTable = Parse.Object.extend("SeasonPlayerStats");
-        var query = new Parse.Query(seasonPlayersTable);
-        query.get("BVzkQmN2MY", {
-            success: function (player) {
-                player.set("shots", {
-                    total: 10,
-                    goals: 3,
-                    blocked: 2,
-                    onGoal: 5,
-                    offGoal: 7
-                });
-                player.set("passes", {
-                    turnovers: 2,
-                    total: 10
-                });
-                //player.set("fouls", 3);
-                player.set("cards", {
-                    type: "yellow",
-                    time: "05:42"
-                });
-                //player.set("goals", 5);
-                //player.set("playingTime", 15.36);
-                //player.set("season", "2015-2016");
-                //player.set("assists", 10);
-                player.save(null, {
-                    success: function(player) {
-                        console.log('save successful');
-                    },
-                    error : function(player, error) {
-                        console.log(error.message)
-                    }
-                });
-            },
-            error: function (player, error) {
-                console.log(error.message);
-            }
-        });*/
+      
 
         $scope.updatePlayer = function(player) {
             viewService.openModal('playerModal');

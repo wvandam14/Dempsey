@@ -211,6 +211,7 @@ soccerStats.controller('gameReviewController',
                     }
                 }
             });
+            console.log($scope.shotLinesData);
             
             $rootScope.$broadcast(configService.messages.notableEvents, {players: $scope.players, subs: $scope.gameSubs});
 

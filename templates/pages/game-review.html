@@ -137,10 +137,10 @@
                         </div>
                         <div class="flex">
                             <div class="flex flex-center flex-one">
-                                <doughnut-chart data="currPlayer.passes.data" num="currPlayer.passes.completion" label="'PASSES COMPLETED'" style="zoom: 0.5;"></doughnut-chart>
+                                <doughnut-chart data="currPlayer.passes.data" num="currPlayer.passes.completed + '/' + currPlayer.passes.total" label="'PASSES COMPLETED'" style="zoom: 0.5;"></doughnut-chart>
                             </div>
                             <div class="flex flex-center flex-one">  
-                                <doughnut-chart data="currPlayer.shots.data" num="currPlayer.shots.accuracy" label="'SHOTS ACCURACY' + '%'" style="zoom: 0.5;"></doughnut-chart>
+                                <doughnut-chart data="currPlayer.shots.data" num="currPlayer.shots.accuracy + '%'" label="'SHOTS ACCURACY' + '%'" style="zoom: 0.5;"></doughnut-chart>
                             </div>
                         </div>
                         <div class="flex">
