@@ -35,16 +35,20 @@
     <link rel="stylesheet" type="text/css" href="./css/formation-field.css">
     <link rel="stylesheet" type="text/css" href="./css/roster.css">
     <link rel="stylesheet" type="text/css" href="./css/game-setup.css">
+    <link rel="stylesheet" type="text/css" href="./css/jersey-icon.css">
     <!-- <link rel="stylesheet" type="text/css" href="./css/ngDialog.css"> -->
 
 </head>
-<body ng-controller="shellController"  ng-class="{'tablet': $root.isTablet, 'mobile': $root.isMobile, 'isModal': currentModal != ''}">
+<body ng-controller="shellController"  ng-class="{'tablet': $root.isTablet, 'mobile': $root.isMobile, 'isModal': currentModal !== ''}">
 
-    <header ng-if="currentPage != 'login' && currentPage != 'registration' && currentPage != 'verify-email' && currentPage != 'password-reset-success' && currentPage != 'password-reset'"></header>
+    <header ng-if="currentPage !== 'login' && currentPage !== 'registration' && currentPage !== 'verify-email' && currentPage !== 'password-reset-success' && currentPage !== 'password-reset'"></header>
 
-    <div ng-if="currentPage != 'login' && currentPage != 'registration' && currentPage != 'verify-email' && currentPage != 'password-reset-success' && currentPage != 'password-reset'" class="flex flex-column flex-center">
+    <div ng-show="currentPage !== 'login' && currentPage !== 'registration' && currentPage !== 'verify-email' && currentPage !== 'password-reset-success' && currentPage !== 'password-reset'" class="flex flex-column flex-center">
         <div class="gameReview">
-            <h5 class="header text-center">{{currGame.date | date:'MM/dd/yyyy'}}</h5>
+            <h5 class="header text-center">
+                <span ng-show="currentPage !== 'game-review'">Next Match<br/></span>
+                {{currGame.date | date:'MM/dd/yyyy'}}
+            </h5>
             <div class="flex flex-center-horizontal">
                 <!-- User team logo/name -->
                 <div class="team-container flex flex-one flex-center-vertical flex-column">
@@ -56,7 +60,10 @@
                 </div>
 
                 <!-- Game score -->
-                <div class="flex flex-center-horizontal">
+                <div ng-show="currentPage !== 'game-review'" class="flex flex-center">
+                    <h1>VS</h1>
+                </div>
+                <div ng-show="currentPage === 'game-review'" class="flex flex-center-horizontal">
                     <div class="score flex flex-center">
                         <h5 class="">{{currGame.team.score}}</h5>
                     </div>
@@ -159,6 +166,7 @@
     <script src="./js/directives/formation-field.js"></script>
     <script src="./js/directives/player-modal.js"></script>
     <script src="./js/directives/create-game-modal.js"></script>
+    <script src="./js/directives/jersey-icon.js"></script>
 
     <!-- Services -->
     <script src="./js/services/viewService.js"></script>

@@ -4,11 +4,15 @@
     </div>
 
     <div class="player-layer">
-        <div class="flex flex-column flex-center" ng-click="selectPlayer({player: position.player})" ng-repeat="position in formation"
+        <div class="player flex flex-column flex-center" ng-class="{selected: isSelected({player: position.player})}" ng-click="selectPlayer({player: position.player})" ng-repeat="position in formation"
                style="position:absolute; left:{{position.x}}%; top:{{position.y}}%">
-            <div class="formation-circle flex flex-center" ng-class="{selected: isSelected({player: position.player})}">
+
+            <jersey-icon></jersey-icon>
+
+            <div class="num flex flex-center">
                 <h5>{{position.player.number}}</h5>
             </div>
+
             <h5>{{position.player.lname}}</h5>
         </div>
     </div>

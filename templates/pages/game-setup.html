@@ -19,9 +19,9 @@
                     </div>
                 </div>
             </div>
-            <div class="field-container flex flex-one flex-center-horizontal">
+            <div class="field-container flex flex-column flex-one">
                 <formation-field formation="currFormation" select-player="assignPosition(player)" is-selected="isSelected(player)"></formation-field>
-                <div class="button green flex-one" ng-click="saveRoster()" ng-class="{disabled: !checkRoster()}">
+                <div class="button green" ng-click="saveRoster()" ng-class="{disabled: !checkRoster()}">
                     <h1>Save Roster</h1>
                 </div>
             </div>

@@ -11,9 +11,19 @@
 
 }
 
+.gameReview h1 {
+    font-size: 40px;
+}
+
 .gameReview h5 {
 	width: 100%;
     padding: 5px;
+    text-transform: uppercase;
+}
+
+.gameReview h5 span {
+    padding-bottom: 5px;
+    display: block;
 }
 
 .gameReview .header {
