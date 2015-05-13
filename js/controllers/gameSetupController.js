@@ -10,7 +10,7 @@ soccerStats.controller('gameSetupController',
 
 
         $scope.initFormation = function() {
-          $scope.currFormation = [
+            $scope.currFormation = [
               {
                  type: "GK",
                  player: {},

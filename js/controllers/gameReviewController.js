@@ -1,54 +1,6 @@
 soccerStats.controller('gameReviewController', 
     function gameReviewController($scope, $rootScope, $location, $timeout, configService, dataService, viewService) {
 
-        //var gamePlayersTable = Parse.Object.extend("GamePlayerStats");
-        //var query = new Parse.Query(gamePlayersTable);
-        //query.get("jceOI7KFM3", {
-        //    success: function(stats) {
-        //        stats.addUnique("shots", {
-        //            onGoal: {
-        //                    shotPos: {x: 193, y: 138},
-        //                    resultPos: {x: 148, y: 24}
-        //            },
-        //            offGoal: {
-        //                    shotPos: {x: 98, y: 111},
-        //                    resultPos: {x: 218, y: 24}
-        //            },
-        //            blocked: {
-        //                    shotPos: {x: 157, y: 125},
-        //                    resultPos: {x:192, y: 49}
-        //            }
-        //        });
-        //        stats.set("fouls", 8);
-        //        //stats.addUnique("cards", {});
-        //        stats.addUnique("goals", {
-        //            time: "68",
-        //            shotPos: {x: 115, y: 69},
-        //            resultPos: {x: 166, y: 24}
-        //        });
-        //        stats.set("playingTime", 0);
-        //        stats.addUnique("subbedOut", "88");
-        //        stats.addUnique("subbedIn", "53");
-        //        stats.set("startingStatus", "On");
-        //        stats.set("position", "ST");
-        //        stats.set("passes", {
-        //            turnovers: 7,
-        //            total: 13
-        //        });
-        //        stats.save(null, {
-        //           success: function(stats) {
-        //               cnsole.log(stats);
-        //           },
-        //            error: function(stats, error) {
-        //                console.log(error.message);
-        //            }
-        //        });
-        //    },
-        //    error: function(stats, error) {
-        //        console.log(error.message);
-        //    }
-        //});
-
         $scope.initCurrFormation = function() {
             $scope.currFormation = [
                 {
