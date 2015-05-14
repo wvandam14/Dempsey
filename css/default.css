@@ -303,6 +303,10 @@ color-picker {
     background-color: #5DA97B;
 }
 
+.button.red {
+    background-color: #ff6666;
+}
+
     .button.green:active {
         background-color: #FFF;
     }

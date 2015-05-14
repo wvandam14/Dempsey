@@ -7,7 +7,7 @@ soccerStats.directive('playerModal', function ($location, $rootScope, $timeout, 
 
             $scope.closeModal = function() {
                 viewService.closeModal(self);
-            }
+            };
 
             var currentUser = dataService.getCurrentUser();
 
@@ -31,7 +31,8 @@ soccerStats.directive('playerModal', function ($location, $rootScope, $timeout, 
                                 var _team = _.find($scope.teamDict, function(obj){return obj.id == player.get("team").id});
                                 $scope.player = {
                                     photo: player.get("photo") ? player.get("photo")._url : './img/team-logo-icon.svg',
-                                    name: player.get("name"),
+                                    firstName: player.get("firstName"),
+                                    lastName: player.get("lastName"),
                                     birthday: player.get("birthday"),
                                     team: _team,
                                     jerseyNumber: player.get("jerseyNumber"),
@@ -55,7 +56,8 @@ soccerStats.directive('playerModal', function ($location, $rootScope, $timeout, 
                         // Player object
                         $scope.player = {
                             photo: './img/team-logo-icon.svg',
-                            name: 'Player',
+                            firstName: 'Player',
+                            lastName: 'Person',
                             birthday: '',
                             team: '',
                             jerseyNumber: '12',
@@ -79,7 +81,7 @@ soccerStats.directive('playerModal', function ($location, $rootScope, $timeout, 
                 $timeout(function() {
                     viewService.goToPage(path);
                 });
-            }
+            };
 
             // Register a player
             $scope.registerPlayer = function(player) {
@@ -104,7 +106,7 @@ soccerStats.directive('playerModal', function ($location, $rootScope, $timeout, 
                         });
                     });
                 });
-            }
+            };
 
             $scope.registerTempPlayer = function(player) {
                 if ($scope.update)
@@ -116,7 +118,13 @@ soccerStats.directive('playerModal', function ($location, $rootScope, $timeout, 
                         toastService.error(configService.toasts.requiredFields);
                     }
                 }
-            }
+            };
+
+            //TODO: implement this
+            $scope.removePlayer = function(player) {
+                console.log(player);
+                //dataService.removePlayer(player, self);
+            };
 
             $scope.states = dataService.states;  
             // TODO: verify if user is logged in

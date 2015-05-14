@@ -14,7 +14,7 @@ soccerStats.directive('schedule', function () {
               };
 
 	        $scope.setGame = function (game) {
-                console.log(game);
+                //console.log(game);
                 $scope.currGame = game;
                 dataService.setCurrentGame(game);
 

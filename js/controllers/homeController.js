@@ -94,8 +94,8 @@
                         topShots : []
                     };
 
-
                     _.each(teamStats.get('topAssists'),function(player){
+                        console.log(player);
                         var photo = player.get("photo") ? player.get("photo")._url : "./img/sample/profile-small.jpg";
                         $scope.teamStats.topAssists.push({ name : player.get("name"), num : player.get("playerStats").get("assists"), photo : photo});
                     });

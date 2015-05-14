@@ -46,8 +46,11 @@
     <div role="coach">
         <form name="tempPlayerForm" class="body flex two-column">
             <div class="flex-one">
-                <h3 class="ellipse">Player Name</h3>
-                <input type="text" ng-model="player.name" placeholder="Player Name" required />
+                <h3 class="ellipse">Name</h3>
+                <div class="flex">
+                    <input type="text" ng-model="player.firstName" placeholder="First Name" required class="first" />
+                    <input type="text" ng-model="player.lastName" placeholder="Last Name" required />
+                </div>
                 <h3 class="ellipse">Parent Email</h3>
                 <select ng-model="player.parentId" 
                         ng-options="k for (k, v) in parents" 
@@ -75,7 +78,10 @@
         <div role="coach" class="button green flex-one" ng-click="registerTempPlayer(player)">
             <h1>Save</h1>
         </div>
-        <div class="button navy flex-one" ng-click="closeModal()">
+        <div class="button red flex-one" ng-if="update" ng-click="removePlayer(player)">
+            <h1>Remove</h1>
+        </div>
+        <div class="button navy flex-one" ng-if="!update" ng-click="closeModal()">
             <h1>Cancel</h1>
         </div>
     </div>

@@ -210,3 +210,33 @@ Parse.Cloud.define("removePlayer", function(request, response) {
         }
     });
 });
+
+//Parse.Cloud.define("removeAllPlayers", function(request, response) {
+//
+//    var player = request.params.player;
+//    var _ = require('underscore.js');
+//
+//    var userTable = Parse.Object.extend("_User");
+//    var query = new Parse.Query(userTable);
+//
+//    query.include("players");
+//    query.find({
+//        success: function(users) {
+//            Parse.Cloud.useMasterKey();
+//            // remove the users that have associated player
+//            _.each(users, function(user) {
+//                var player = _.find(user.get("players"), function(userPlayer) {return userPlayer.id == player.id});
+//                user.remove("players", player);
+//                user.save();
+//            });
+//            //remove player from players and season players tables
+//
+//            //remove player from gameplayers table and gameteamstats roster
+//            response.success('all player references removed');
+//        },
+//        error: function(users, error) {
+//            response.error(parents);
+//        }
+//    });
+//
+//});

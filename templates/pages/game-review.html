@@ -134,7 +134,7 @@
                         </div>
                     </div>
 
-                    <div class="stats-display numbers flex flex-column flex-one" ng-show="currPlayer.myKid">
+                    <div class="stats-display numbers flex flex-column flex-one" ng-if="currPlayer.myKid">
                         <div class="flex">
                             <div class="flex flex-center flex-column flex-one">
                                 <h6>{{currPlayer.shots.goals.total}}</h6>

@@ -254,14 +254,18 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
             query.get(player.team.id, {
                 success: function (team) {
                     if (coach) {
-                        newPlayer.set("name", player.name);
+                        newPlayer.set("name", player.firstName + ' ' + player.lastName);
+                        newPlayer.set("firstName", player.firstName);
+                        newPlayer.set("lastName", player.lastName);
                         newPlayer.set("jerseyNumber", player.jerseyNumber);
                         newPlayer.set("team", team);
                         newPlayer.set("playerStats", playerStats);
 
                     } else {
                         if (player.newPhoto) newPlayer.set("photo", player.newPhoto);
-                        newPlayer.set("name", player.name);
+                        newPlayer.set("name", player.firstName + ' ' + player.lastName);
+                        newPlayer.set("firstName", player.firstName);
+                        newPlayer.set("lastName", player.lastName);
                         newPlayer.set("birthday", player.birthday);
                         newPlayer.set("team", team);
                         newPlayer.set("jerseyNumber", player.jerseyNumber);
@@ -482,6 +486,21 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                }
             });
         }
+
+        //, removePlayer = function(player, self) {
+        //    Parse.Cloud.run('removeAllPlayers', {player: player}, {
+        //        success: function (result) {
+        //            console.log(result)
+        //            configService.closeModal(self);
+        //            console.log('player successfully removed');
+        //            $rootScope.$broadcast(configService.messages.teamChanged, {refresh: true});
+        //        },
+        //        error: function(error) {
+        //            console.log("Error: " + error.code + " " + error.message);
+        //            toastService.error("There was an error (" + error.code +"). Please try again.");
+        //        }
+        //    });
+        //}
 
         , getTeamById = function(id, callback) {
             var query = new Parse.Query(teamTable);
@@ -753,13 +772,14 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                                     yellows: 0,
                                     reds: 0,
                                     cardInit : function(playerCard, stats) {
+                                        card = stats.attributes.cards;
                                         //console.log(stats);
-                                        _.each(stats.attributes.cards, function(card) {
-                                            if (card.type === "yellow")
-                                                playerCard.yellows++;
-                                            else if (card.type === "red")
-                                                playerCard.reds++;
-                                        });
+                                        //_.each(stats.attributes.cards, function(card) {
+                                            //if (card.type === "yellow")
+                                                playerCard.yellows = card.yellow;
+                                            //else if (card.type === "red")
+                                                playerCard.reds = card.red;
+                                       // });
                                     }
                                 },
                                 // TODO: how are we calculating shot accuracy?
@@ -781,18 +801,20 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                                     accuracy: 0,
                                     goals: 0,
                                     shotInit: function(playerShot, stats) {
-                                        var blocks, 
-                                            onGoal, 
-                                            offGoal
+                                        var blocks = 0,
+                                            onGoal = 0,
+                                            offGoal = 0,
+                                            shot = stats.attributes.shots
                                         ;
-                                        _.each(stats.attributes.shots, function(shot) {
-                                            blocks += shot.blocked;
-                                            onGoal += shot.onGoal;
-                                            offGoal += shot.offGoal;
-                                            playerShot.goals += shot.goals;
-                                        });
+                                        //_.each(stats.attributes.shots, function(shot) {
+                                            blocks = shot.blocked;
+                                            onGoal = shot.onGoal;
+                                            offGoal = shot.offGoal;
+                                            playerShot.goals = shot.goal;
+                                        //});
                                         var total = blocks + onGoal + offGoal + playerShot.goals;
-                                        playerShot.accuracy = Math.round(((total - playerShot.offGoal) / total)*100);
+                                        playerShot.accuracy = Math.round(((total - offGoal) / total)*100);
+                                        console.log(playerShot.accuracy);
                                         playerShot.data[0].value = playerShot.offGoal;
                                         playerShot.data[1].value = total;
                                     }
@@ -815,10 +837,11 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                                     completed: 0,
                                     total: 0,
                                     passInit: function(playerPass, stats) {
-                                        _.each(stats.attributes.passes, function(pass) {
-                                            playerPass.completed += pass.completed;
-                                            playerPass.total += pass.total;
-                                        });
+                                        pass = stats.attributes.passes;
+                                        //_.each(stats.attributes.passes, function(pass) {
+                                            playerPass.completed = pass.completed;
+                                            playerPass.total = pass.total;
+                                        //});
                                         playerPass.data[0].value = playerPass.completed;
                                         playerPass.data[1].value = playerPass.total;
                                     }
@@ -1067,6 +1090,7 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
         gamePlayerConstructor : gamePlayerConstructor,
         getGameByGameId : getGameByGameId,
         createRoster : createRoster
+        //removePlayer : removePlayer
     }
 
 });

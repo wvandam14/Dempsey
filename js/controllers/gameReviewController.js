@@ -84,6 +84,7 @@ soccerStats.controller('gameReviewController',
         };
 
         $scope.selectPlayer = function (player) {
+            console.log(player);
             $scope.currPlayer = player;
         };
 
@@ -110,15 +111,7 @@ soccerStats.controller('gameReviewController',
         };
 
         $scope.populateStats = function() {
-            if (currentUser.get("accountType") == 2) {
-                _.each($scope.players, function(player) {
-                    //console.log(currentUser.get("players"));
-                    var child = _.find(currentUser.get("players"), function(childPlayer) {return childPlayer.id == player.playerId});
-                    if (child == undefined) {
-                        player.myKid = false;
-                    }
-                });
-            }
+
 
             var shots = 0,
                 onGoal = 0,
@@ -130,13 +123,13 @@ soccerStats.controller('gameReviewController',
             $scope.passData = {
                 data : [
                     {
-                        value: 95,
+                        value: 0,
                         color: "#B4B4B4",
                         highlight: "#B4B4B4",
                         label: "Missed"
                     },
                     {
-                        value: 5,
+                        value: 0,
                         color:"#5DA97B",
                         highlight: "#5DA97B",
                         label: "Completed"
@@ -248,15 +241,30 @@ soccerStats.controller('gameReviewController',
                 //console.log(player);
                 var assistPlayer = {};
                 _.each(player.shots.goals.assistedBy, function(assistId) {
+                    //console.log(assistId);
                     assistPlayer = _.find($scope.players, function(assistPlayer) {
-                        return  assistPlayer.id === assistId;
+                        //console.log(assistPlayer.id);
+                        return  assistPlayer.gameId === assistId;
                     });
-                    player.notableEvents.push({
-                        type: "Assisted By",
-                        assistedBy: assistPlayer.lname
-                    });
+                    //console.log(assistPlayer);
+                    if (assistPlayer) {
+                        player.notableEvents.push({
+                            type: "Assisted By",
+                            assistedBy: assistPlayer.lname
+                        });
+                    }
                 });
             });
+
+            if (currentUser.get("accountType") == 2) {
+                _.each($scope.players, function(player) {
+                    //console.log(currentUser.get("players"));
+                    var child = _.find(currentUser.get("players"), function(childPlayer) {return childPlayer.id == player.playerId});
+                    if (child == undefined) {
+                        player.myKid = false;
+                    }
+                });
+            }
 
             $rootScope.$broadcast(configService.messages.notableEvents, {players: $scope.players, subs: $scope.gameSubs});
 
