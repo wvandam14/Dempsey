@@ -110,6 +110,15 @@ soccerStats.controller('gameReviewController',
         };
 
         $scope.populateStats = function() {
+            if (currentUser.get("accountType") == 2) {
+                _.each($scope.players, function(player) {
+                    //console.log(currentUser.get("players"));
+                    var child = _.find(currentUser.get("players"), function(childPlayer) {return childPlayer.id == player.playerId});
+                    if (child == undefined) {
+                        player.myKid = false;
+                    }
+                });
+            }
 
             var shots = 0,
                 onGoal = 0,
@@ -247,14 +256,6 @@ soccerStats.controller('gameReviewController',
                         assistedBy: assistPlayer.lname
                     });
                 });
-                //console.log(assistPlayer);
-                //if (assistPlayer) {
-                //    player.notableEvents.push({
-                //        type: "Assisted By",
-                //        assistedBy: assistPlayer.lname
-                //    });
-                //    player.shots.goals.assistedBy.push(assistPlayer.lname);
-                //}
             });
 
             $rootScope.$broadcast(configService.messages.notableEvents, {players: $scope.players, subs: $scope.gameSubs});
@@ -342,12 +343,29 @@ soccerStats.controller('gameReviewController',
             blocked: 0
         };
 
+        $scope.populateGameData(dataService.getCurrentGame());
 
         $scope.$on(configService.messages.setGame, function(event, data) {
+            //console.log(dataService.getCurrentGame());
+            $scope.currPlayer = {};
+            $scope.players = [];
+            $scope.gameSubs = {};
+            $scope.shotLinesData = [];
+            $scope.passData = {};
+            $scope.currFormation = [];
+            $scope.otherData = {};
+            $scope.notes = '';
+            $scope.shotCountData = {
+                shots: 0,
+                onGoal: 0,
+                offGoal: 0,
+                blocked: 0
+            };
+            $rootScope.$broadcast(configService.messages.notableEvents, {players: $scope.players, subs: $scope.gameSubs})
             //$timeout(function() {
-                $scope.populateGameData(dataService.getCurrentGame()); 
+                $scope.populateGameData(dataService.getCurrentGame());
             //});
-            
+
         });
 
     });

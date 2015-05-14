@@ -149,18 +149,19 @@
                     });
                 });
             } else {
-                console.log(currentUser.get("players"));
+                //console.log(currentUser.get("players"));
                 _.each(currentUser.get("players"), function(playerPointer) {
                     dataService.getPlayerByPlayerId(playerPointer.id, function(player) {
-                        //console.log(player.get("team").id);
                         //console.log(player);
-                        if (player.get("team").id === dataService.getCurrentTeam().id) {
-                            //console.log(player);
-                            dataService.getSeasonPlayerStatsByPlayerId(player.get("playerStats").id, function(stats) {
-                                //console.log(stats);
-                                $scope.myPlayers.push(dataService.playerConstructor(player, stats));
-                                //console.log($scope.myPlayers);
-                            });
+                        if (player) {
+                            if (player.get("team").id === dataService.getCurrentTeam().id) {
+                                //console.log(player);
+                                dataService.getSeasonPlayerStatsByPlayerId(player.get("playerStats").id, function (stats) {
+                                    //console.log(stats);
+                                    $scope.myPlayers.push(dataService.playerConstructor(player, stats));
+                                    //console.log($scope.myPlayers);
+                                });
+                            }
                         }
                     });
                 });

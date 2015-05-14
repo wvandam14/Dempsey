@@ -726,6 +726,8 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                      game.set("status", "ready ");
                      return game.save();
                 }).then(function(result){
+                    setCurrentGame(result);
+                    $rootScope.$broadcast(configService.messages.gameStatusChanged);
                     toastService.success("Game roster successfully created");
                     viewService.goToPage('/game-review');
                 },function(error){
@@ -842,13 +844,15 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
             //console.log(gamePlayer);
             var retPlayer =
                 {
-                    id: gamePlayer.id,
+                    gameId: gamePlayer.id,
+                    playerId: player.id,
                     fname: player.get("firstName"),
                     lname: player.get("lastName"),
                     number: player.get("jerseyNumber"),
                     photo: player.get("photo") ? player.get("photo")._url : './img/player-icon.svg',
                     position: gamePlayer.get("position") ? gamePlayer.get("position") : '',
                     benched: gamePlayer.get("startingStatus") !== "On" ? true : false,
+                    myKid : true,
                     notableEvents: [],
                     eventsInit : function(retPlayer, subbedOut, subbedIn) {
                         if (subbedOut) {

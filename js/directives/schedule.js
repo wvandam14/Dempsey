@@ -14,7 +14,7 @@ soccerStats.directive('schedule', function () {
               };
 
 	        $scope.setGame = function (game) {
-                //$scope.selectGame(game);
+                console.log(game);
                 $scope.currGame = game;
                 dataService.setCurrentGame(game);
 
@@ -23,9 +23,9 @@ soccerStats.directive('schedule', function () {
                 else
                     viewService.goToPage('/game-review');
 
-                $timeout(function() {
+                //$timeout(function() {
 	               $rootScope.$broadcast(configService.messages.setGame, {game: $scope.currGame});
-                });
+                //});
 	        };
 
         	$scope.selectGame = function (game) {
@@ -64,7 +64,11 @@ soccerStats.directive('schedule', function () {
                 });
             };
 
-            $scope.$on(configService.messages.teamChanged,function(event,data){
+            $scope.$on(configService.messages.teamChanged,function(event, data){
+                $scope.populateGames(dataService.getCurrentTeam());
+            });
+
+            $scope.$on(configService.messages.gameStatusChanged, function(event, data) {
                 $scope.populateGames(dataService.getCurrentTeam());
             });
 
