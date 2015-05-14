@@ -116,6 +116,7 @@ soccerStats.controller('gameSetupController',
                                 $scope.roster.push({
                                     id : player.id,
                                     name: player.get("name"),
+                                    fname: player.get("firstName")
                                     lname: player.get("lastName"),
                                     number: player.get("jerseyNumber"),
                                     photo: player.get("photo") ? player.get("photo")._url : './img/player-icon.svg',

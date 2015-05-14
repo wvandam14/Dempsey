@@ -19,10 +19,12 @@
 }
 
 .roster-container {
+    padding-right: 50px;
 }
 
 .roster-container > div {
     padding-bottom: 50px;
+    /*width: 45%;*/
 }
 
 .player-selector {
@@ -52,8 +54,7 @@
 }
 
 .stats-display-container {
-    padding-left: 50px;
-    padding-top: 41px;
+    padding-top: 31px;
 }
 
 .stats-display-container > div {
@@ -61,6 +62,7 @@
 }
 
 .stats-display {
+    width: 55%;
     /*max-width: 50%;*/
 }
 
