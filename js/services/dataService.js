@@ -815,7 +815,7 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                                         var total = blocks + onGoal + offGoal + playerShot.goals;
                                         playerShot.accuracy = Math.round(((total - offGoal) / total)*100);
                                         console.log(playerShot.accuracy);
-                                        playerShot.data[0].value = playerShot.offGoal;
+                                        playerShot.data[0].value = offGoal;
                                         playerShot.data[1].value = total;
                                     }
                                 },
