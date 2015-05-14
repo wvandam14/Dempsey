@@ -46,8 +46,8 @@ formation-field .player {
     height: 5vw;
 }
 
-formation-field .player.selected svg path {
-    fill: #5DA97B;
+formation-field jersey-icon svg path {
+    fill: #081629;
 }
 
 formation-field .num {
