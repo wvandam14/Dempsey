@@ -1,17 +1,19 @@
+// directive for editing an account
 soccerStats.directive('accountModal', function ($location, $timeout, $route, viewService, toastService, configService, dataService) {
     return {
         restrict: 'E',
         templateUrl: "./templates/directives/account-modal.html",
         controller: function($scope, viewService) {
-            var self = 'accountModal';
+            var self = 'accountModal';  // name of modal
 
+            // closing the modal
             $scope.closeModal = function() {
                 viewService.closeModal(self);
-            }
+            };
 
-            //below are static arrays
-            $scope.states = dataService.states;
+            $scope.states = dataService.states; // static array of states
 
+            // checks the passwords if user wishes to change their password
             $scope.checkPassword = function() {
                 if (!$scope.editUser.newPassword && !$scope.editUser.confirmPassword) 
                     return true;
@@ -29,6 +31,7 @@ soccerStats.directive('accountModal', function ($location, $timeout, $route, vie
             };
 
             var currentUser = Parse.User.current();
+            // get the user information from parse
             $scope.editUser = {
                 firstName: currentUser.get('firstName') ? currentUser.get('firstName') : '',
                 lastName: currentUser.get('lastName') ? currentUser.get('lastName') : '',
@@ -43,7 +46,7 @@ soccerStats.directive('accountModal', function ($location, $timeout, $route, vie
                 newPhoto: ''      
             };
             
-            // User information
+            // update user account
             $scope.updateAccount = function(editUser) {
                 if (viewService.validateAreaByFormName('accountForm')) {
                     if ($scope.checkPassword()) {
@@ -56,7 +59,6 @@ soccerStats.directive('accountModal', function ($location, $timeout, $route, vie
 
             console.log($scope.editUser);
 
-            //TODO: not working
             $scope.goToPage = function(page) {
                 //console.log(page);
                 viewService.goToPage(page);

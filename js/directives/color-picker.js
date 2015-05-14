@@ -1,3 +1,4 @@
+// directive handles the color picker based on image upload
 soccerStats.directive('colorPicker', function ($timeout, toastService, configService) {
     return {
         restrict: 'E',

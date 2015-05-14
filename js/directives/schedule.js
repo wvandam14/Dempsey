@@ -1,3 +1,4 @@
+// directive for handling the schedule of games
 soccerStats.directive('schedule', function () {
     return {
         restrict: 'E',
@@ -13,6 +14,7 @@ soccerStats.directive('schedule', function () {
                 return input;
               };
 
+            // set the current game to the selected game and redirect to appropriate page
 	        $scope.setGame = function (game) {
                 //console.log(game);
                 $scope.currGame = game;
@@ -28,16 +30,19 @@ soccerStats.directive('schedule', function () {
                 //});
 	        };
 
+            // set the current game to the selected game
         	$scope.selectGame = function (game) {
         		$scope.currGame = game;
         	};
 
+            // moving panel to the right
             $scope.goRight = function() {
                 if (Math.abs($scope.slidePos) < ($scope.containerWidth - $window.innerWidth - 100)) {
                     $scope.slidePos -= 100;
                 }
             }
 
+            // moving panel to the left
             $scope.goLeft = function() {
                 if ($scope.slidePos) {
                     $scope.slidePos += 100;
@@ -52,6 +57,7 @@ soccerStats.directive('schedule', function () {
                                "transform: translate3d(" + $scope.slidePos + "px,0,0);"
             }
 
+            // get all games
             $scope.populateGames = function(team) {
                 $scope.games = [];
                 $scope.currGame = {};
@@ -64,17 +70,19 @@ soccerStats.directive('schedule', function () {
                 });
             };
 
+            // get all games based if team has changed
             $scope.$on(configService.messages.teamChanged,function(event, data){
                 $scope.populateGames(dataService.getCurrentTeam());
             });
 
+            // get all games if status of game has changed
             $scope.$on(configService.messages.gameStatusChanged, function(event, data) {
                 $scope.populateGames(dataService.getCurrentTeam());
             });
 
-            $scope.populateGames(dataService.getCurrentTeam());
+            $scope.populateGames(dataService.getCurrentTeam()); // initialization
             
-            $scope.slidePos = 0;
+            $scope.slidePos = 0; // start at first game
             
         }
     };

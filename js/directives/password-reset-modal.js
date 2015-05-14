@@ -1,3 +1,4 @@
+// directive for handling password resets
 soccerStats.directive('passwordResetModal', function (viewService, toastService) {
     return {
         restrict: 'E',
@@ -6,6 +7,7 @@ soccerStats.directive('passwordResetModal', function (viewService, toastService)
             var self = 'passwordResetModal';
             $scope.userEmail = "";
 
+            // reset the password
             $scope.passwordReset = function() {
                 Parse.User.requestPasswordReset($scope.userEmail, {
                     success:function() {

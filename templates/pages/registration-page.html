@@ -1,3 +1,4 @@
+<!-- Registration modal -->
 <div class="registration-page">
     <div class="modal registration">
     	<div class="head flex" ng-show="isTab(0)">
@@ -116,6 +117,7 @@
             </div>
         </div> 
 
+        <!-- tab numbers at the bottom of the form -->
         <div class="flex flex-center">
             <div class="circle" ng-click="setTab(0)" ng-class="{'active': isTab(0)}"><h1>1</h1></div>
             <div class="connection"></div>
@@ -124,6 +126,7 @@
             <div class="circle" ng-click="setTab(2)" ng-class="{'active': isTab(2)}"><h1>3</h1></div>
         </div>
 
+        <!-- buttons -->
         <div class="foot flex">
             <div class="button navy flex-one" ng-click="incrementTab()" ng-hide="isTab(2)">
                 <h1>Continue</h1>

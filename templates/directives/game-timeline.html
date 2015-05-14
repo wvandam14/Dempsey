@@ -1,9 +1,10 @@
+<!-- game timeline that shows notable events which shows on the game review page-->
 <div>
-
     <div class="event-container">
         <div class="event" ng-class="{'opponent': event.opponent }" ng-repeat="event in events track by $index" style="left: {{event.time}}%">
             <div ng-if="event.opponent" class="circle opponent-circle"></div>
             <div class="flex flex-center-vertical">
+                <!-- image dependent on type of event -->
                 <div>
                     <img ng-if="event.type === 'goal'" src="./img/timeline-goal-light.svg"/>
                     <img ng-if="event.type === 'yellow'" src="./img/timeline-card-yellow.svg"/>
@@ -25,5 +26,4 @@
         <div class="line flex-one"></div>
         <div class="circle"></div>
     </div>
-
 </div>

@@ -1,3 +1,4 @@
+// service for handing general toast messages and broadcasting
 soccerStats.factory('toastService', function ($rootScope, configService) {
 
     var

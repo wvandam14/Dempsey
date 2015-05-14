@@ -1,3 +1,4 @@
+// directive for adding a new team
 soccerStats.directive('teamModal', function ($location, $route, $rootScope, $timeout, viewService, toastService, configService, dataService) {
     return {
         restrict: 'E',
@@ -20,6 +21,7 @@ soccerStats.directive('teamModal', function ($location, $route, $rootScope, $tim
                 state: ''
             };
 
+            // add a new team
             $scope.addNewTeam = function(newTeam) {
                 console.log(newTeam);
                 var _team = dataService.registerTeam(newTeam);

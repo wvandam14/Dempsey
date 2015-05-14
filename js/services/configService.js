@@ -1,6 +1,7 @@
+// service in charge of static messages (to reduce spelling errors) and toast messages
 soccerStats.factory('configService', function () {
     return {
-
+        // static messages
         messages: {
               navigate: 'navigate'
             , loginSuccess: 'loginSuccess'
@@ -15,7 +16,7 @@ soccerStats.factory('configService', function () {
             , notableEvents : 'notableEvents'
             , gameStatusChanged : 'gameStatusChanged'
 
-        }, toasts: {
+        }, toasts: {    // toast messaging
             general: function(action, type, success){
                 switch(action){
                     case 'a':  //add

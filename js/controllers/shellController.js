@@ -1,3 +1,4 @@
+// controller that wraps around all other controllers and in charge of handing page history and broadcasting messages
 soccerStats.controller('shellController',
     function shellController($scope, $rootScope, $location, $route, $timeout, configService, deviceDetector, viewService, toastService, dataService) {
 
@@ -11,6 +12,7 @@ soccerStats.controller('shellController',
         $scope.currentPage = 'login';
         $scope.currentUser = {};
 
+        // if a user changes their page location
         $scope.$on('$locationChangeSuccess', function (next, current) {
           $timeout(function() {
                // check if user is logged in if accessing most pages
@@ -51,10 +53,12 @@ soccerStats.controller('shellController',
             });
         });
 
+         // redirect to another page
          $scope.goToPage = function(page) {
              viewService.goToPage(page);
          }
 
+        // view the home page
          $scope.viewHomePage = function(page) {
             $scope.goToPage(page);
             $timeout(function() {
@@ -63,6 +67,7 @@ soccerStats.controller('shellController',
             
          }
 
+        // logout
         $scope.logout = function () {
             Parse.User.logOut();
             toastService.success(configService.toasts.logoutSuccess);

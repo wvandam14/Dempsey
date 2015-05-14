@@ -1,3 +1,4 @@
+// directive for checking the role of a user
 soccerStats.directive('role', function ($rootScope) {
     return {
     	

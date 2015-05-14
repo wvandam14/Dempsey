@@ -1,4 +1,4 @@
-// Code by http://joelhooks.com
+// Code by http://joelhooks.com - dropdown service
 soccerStats.service('dropdownService', function($document) {
     var self = this, openScope = null;
 

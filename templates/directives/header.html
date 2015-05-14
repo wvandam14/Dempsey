@@ -1,4 +1,6 @@
+<!-- navigation bar at the top of the page -->
 <div class="flex">
+    <!-- dropdown menu that shows all teams -->
     <div class="team flex flex-center-vertical">
         <div ng-click="toggleTeams()" class="team-current flex flex-center-vertical">
             <div class="img-container">
@@ -19,7 +21,7 @@
             </div>
         </div>
     </div>
-
+    <!-- navigation buttons -->
     <div class="buttons flex flex-one">
         <div ng-click="viewRoster()" class="flex link flex-center">
             <img src="./img/roster-icon.svg"/>
@@ -48,6 +50,7 @@
 
     </div>
 
+    <!-- further right button for user specific options-->
     <div class="user flex flex-center">
         <div ng-click="toggleAccount()" class="circle flex flex-center">
             <h5>{{currentUser.initials}}</h5>

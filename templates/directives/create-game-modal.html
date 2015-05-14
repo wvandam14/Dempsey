@@ -1,3 +1,4 @@
+<!-- Allows a coach to create a game-->
 <div class="modal create-game registration">
     <div class="head flex flex-column">
         <div class="flex">
@@ -9,7 +10,7 @@
         <p>Add your upcoming games to the schedule so you can prepare for gametime and submit your game stats.</p>
     </div>
 
-    <!-- Invite Email Form -->
+    <!-- Create game form -->
     <div class="body flex flex-column body">
         <form name="gameForm" class="flex flex-one body">
             <div class="flex-one">
@@ -27,8 +28,7 @@
         </form>
         <div>
             <div class="button green inline" ng-click="addGame()"><h1>Add Game</h1></div>
-        </div>            
-    <!-- TODO: change the close button into not an 'X' (make it pretty) -->
+        </div>
         <div>
             <div class="box">
                 <div class="email-box flex" ng-repeat="game in games track by $index">
@@ -37,6 +37,7 @@
             </div>
         </div>
     </div>
+    <!-- buttons -->
     <div class="foot flex">
         <!-- TODO: implement sendGames() in create-game-modal.js -->
         <div class="button green flex-one" ng-click="sendGames()">

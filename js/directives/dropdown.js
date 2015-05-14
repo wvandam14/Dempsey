@@ -1,3 +1,4 @@
+// directive to handle the actions of the dropdown menu
 soccerStats.directive('colorPicker', function ($timeout, toastService, configService) {
     return {
         restrict: 'E',

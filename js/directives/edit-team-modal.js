@@ -1,3 +1,4 @@
+// directive for editing a team
 soccerStats.directive('editTeamModal', function ($location, $timeout, $route, $rootScope, viewService, toastService, configService, dataService) {
     return {
         restrict: 'E',
@@ -12,15 +13,16 @@ soccerStats.directive('editTeamModal', function ($location, $timeout, $route, $r
                 viewService.closeModal(self);
             }
 
-            // Team information
+            // update the team
             $scope.updateTeam = function(editTeam) {
                 if (viewService.validateAreaByFormName('teamForm')) {
                     dataService.updateTeam($scope.currentTeam.id, editTeam, self);
                 } else {
                     toastService.error(configService.toasts.requiredFields);
                 }
-            }
+            };
 
+            // TODO: delete the team
             $scope.deleteTeam = function(team) {
 
             };
@@ -29,12 +31,8 @@ soccerStats.directive('editTeamModal', function ($location, $timeout, $route, $r
                 viewService.goToPage(page);
             };
 
-            //below are static arrays
-            $scope.ageGroups = dataService.ageGroups;
-
-            $scope.states = dataService.states;
-            
             // console.log(dataService.getCurrentTeam());
+            // get current team information
             if (currentUser) {
                 dataService.getTeams( function(_teams) {
                     console.log(dataService.currentTeam);

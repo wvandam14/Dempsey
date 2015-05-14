@@ -1,6 +1,8 @@
-soccerStats.controller('gameReviewController', 
+// controller in charge of game review page
+soccerStats.controller('gameReviewController',
     function gameReviewController($scope, $rootScope, $location, $timeout, configService, dataService, viewService) {
 
+        // initializes current formation of the field - currently static field
         $scope.initCurrFormation = function() {
             $scope.currFormation = [
                 {
@@ -74,6 +76,7 @@ soccerStats.controller('gameReviewController',
             ];
         };
 
+        // returns whether or not a player is selected
         $scope.isSelected = function (player) {
             if ( player === $scope.currPlayer ) {
                 return true;
@@ -83,24 +86,29 @@ soccerStats.controller('gameReviewController',
             }
         };
 
+        // sets the current player to selected player
         $scope.selectPlayer = function (player) {
             console.log(player);
             $scope.currPlayer = player;
         };
 
+        // save game notes from input
         $scope.saveGameNotes = function () {
             //console.log($scope.currGame)
             dataService.saveGameAttributes(dataService.getCurrentGame(), ["gameNotes"], [$scope.notes]);
-        }    
+        };
 
+        // retrieves players and sets up their statistics
         $scope.populatePlayers = function(teamStatsId) {
             var promise = new Parse.Promise();
+            // get game player stats for each player
             dataService.getGamePlayerStatsById(teamStatsId).then(function(gameTeamStats) {
                 $timeout(function() {
                     //console.log(gameTeamStats);
                     $scope.gameSubs = gameTeamStats.get("substitutions");
                     $scope.players = [];
                     _.each(gameTeamStats.get("roster"), function(gamePlayer) {
+                        // for every player in the roster, we create a javascript object with all of their information and stats
                         $scope.players.push(dataService.gamePlayerConstructor(gamePlayer.get("player"), gamePlayer));
                     });
 
@@ -110,9 +118,8 @@ soccerStats.controller('gameReviewController',
             return promise;
         };
 
+        // calculates all team statistics including notable events for the timeline and shot accuracy shot
         $scope.populateStats = function() {
-
-
             var shots = 0,
                 onGoal = 0,
                 offGoal = 0,
@@ -120,6 +127,7 @@ soccerStats.controller('gameReviewController',
                 passCompletion = 0,
                 passTotal = 0;
 
+            // contains pass information
             $scope.passData = {
                 data : [
                     {
@@ -140,7 +148,7 @@ soccerStats.controller('gameReviewController',
                 successRate: 0
             };
 
-
+            // contains shot information for shot chart
             $scope.shotCountData = {
                 shots: 0,
                 onGoal: 0,
@@ -148,13 +156,15 @@ soccerStats.controller('gameReviewController',
                 blocked: 0
             };
 
+            // any other relevant information for the page
             $scope.otherData = {
                 goals: 0,
                 fouls: 0,
                 reds: 0,
                 yellows: 0
             };
-            //console.log($scope.players);
+
+            // calculate team statistics from each player
             _.each($scope.players, function(player) {
                 $scope.shotCountData.shots += player.shots.total;
                 $scope.shotCountData.onGoal += player.shots.onGoal.total;
@@ -168,19 +178,20 @@ soccerStats.controller('gameReviewController',
                 $scope.passData.total += player.passes.total;
             });
 
-
+            // sets up the pass data success rate for team
             $scope.passData.successRate = $scope.passData.total && $scope.passData.completed ? Math.round(( $scope.passData.completed / $scope.passData.total)*100) : 0;
             $scope.passData.data[1].value = $scope.passData.successRate;
             $scope.passData.data[0].value = 100 - $scope.passData.successRate;
 
+            // initialize the current formation
             $scope.initCurrFormation();
 
-            //console.log($scope.passData);
+            // creates the positions and angles for the shot data chart
             $scope.shotLinesData = [];
-            //console.log($scope.players.shots);
             _.each($scope.players, function(player) {
-                //console.log($scope.shotLinesData.length);
-                var shotLineData = {};
+                var shotLineData = {};  // create a simple object
+
+                // offGoal shots
                 if (player.shots.offGoal.total) {
                     for (var i = 0; i < player.shots.offGoal.total; i++) {
                         shotLineData =
@@ -189,9 +200,11 @@ soccerStats.controller('gameReviewController',
                             shotPos: player.shots.offGoal.startPos[i],
                             resultPos: player.shots.offGoal.resultPos[i]
                         };
-                        $scope.shotLinesData.push(shotLineData);
+                        $scope.shotLinesData.push(shotLineData);    // push to data array for chart
                     }
                 }
+
+                // onGoal shots
                 if (player.shots.onGoal.total) {
                     for (var i = 0; i < player.shots.onGoal.total; i++) {
                         shotLineData =
@@ -203,6 +216,8 @@ soccerStats.controller('gameReviewController',
                         $scope.shotLinesData.push(shotLineData);
                     }
                 }
+
+                // blocked shots
                 if (player.shots.blocks.total) {
                     for (var i = 0; i < player.shots.blocks.total; i++) {
                         shotLineData =
@@ -214,6 +229,8 @@ soccerStats.controller('gameReviewController',
                         $scope.shotLinesData.push(shotLineData);
                     }
                 }
+
+                // goal shots
                 if (player.shots.goals.total) {
                     for (var i = 0; i < player.shots.goals.total; i++) {
                         shotLineData =
@@ -227,6 +244,7 @@ soccerStats.controller('gameReviewController',
                 }
             });
 
+            // fill in the formation field with players set up from the setup page
             _.each($scope.players, function(player) {
                 if (!player.benched) {
                     var position = _.find($scope.currFormation, function(position) {
@@ -237,6 +255,7 @@ soccerStats.controller('gameReviewController',
                 }
             });
 
+            // get the assisted players for each player that had a goal with an assisted player
             _.each($scope.players, function(player) {
                 //console.log(player);
                 var assistPlayer = {};
@@ -256,10 +275,12 @@ soccerStats.controller('gameReviewController',
                 });
             });
 
+            // if a parent is reviewing the page, we want to limit their view to only seeing their own player stats
             if (currentUser.get("accountType") == 2) {
                 _.each($scope.players, function(player) {
                     //console.log(currentUser.get("players"));
                     var child = _.find(currentUser.get("players"), function(childPlayer) {return childPlayer.id == player.playerId});
+                    // set the player to false so we do not see their information
                     if (child == undefined) {
                         player.myKid = false;
                     }
@@ -270,14 +291,15 @@ soccerStats.controller('gameReviewController',
 
         };
 
+        // set up all of the game data
         $scope.populateGameData = function(game) {
             //console.log(game);
             //var promise = new Parse.Promise();
 
+            // get the game stats
             dataService.getGameStatsById(game.id).then(function(game) {
-
                 $timeout(function() {
-
+                    // set up empty object
                     $scope.gameStats = {
                         corners : 0,
                         offsides : 0,
@@ -290,8 +312,9 @@ soccerStats.controller('gameReviewController',
                         teamPossession : { data: []}
                     };
 
-                    if(game){
+                    if(game){   // if viable game
                         $scope.notes = game.get("gameNotes");
+                        // set up the game stats
                         $scope.gameStats = {
                             corners : game.get('gameTeamStats').get('corners') ? game.get('gameTeamStats').get('corners') : 0,
                             offsides : game.get('gameTeamStats').get('offsides') ? game.get('gameTeamStats').get('offsides') : 0,
@@ -322,7 +345,9 @@ soccerStats.controller('gameReviewController',
                         // console.log(promise);
                         //promise.resolve(game.get('gameTeamStats').id);
 
+                        //set up the players
                         $scope.populatePlayers(game.get('gameTeamStats').id).then(function(result) {
+                            //set up player stats
                             $scope.populateStats();          
                         });
                     }
@@ -334,9 +359,10 @@ soccerStats.controller('gameReviewController',
             //return promise;
         };
            
-        var currentUser = Parse.User.current();
-        $scope.currPlayer = dataService.currentPlayer;
+        var currentUser = Parse.User.current();         // current user
+        $scope.currPlayer = dataService.currentPlayer;  // set up current player
 
+        // set up empty objects and arrays
         $scope.players = [];
         $scope.gameSubs = {};
         $scope.shotLinesData = [];
@@ -351,10 +377,11 @@ soccerStats.controller('gameReviewController',
             blocked: 0
         };
 
-        $scope.populateGameData(dataService.getCurrentGame());
+        $scope.populateGameData(dataService.getCurrentGame()); // initialize game data
 
+        // when a game is clicked on from the scheduler
         $scope.$on(configService.messages.setGame, function(event, data) {
-            //console.log(dataService.getCurrentGame());
+            // set everything to empty so we do not conflict with previous information
             $scope.currPlayer = {};
             $scope.players = [];
             $scope.gameSubs = {};
@@ -369,9 +396,11 @@ soccerStats.controller('gameReviewController',
                 offGoal: 0,
                 blocked: 0
             };
+
+            // clear timeline
             $rootScope.$broadcast(configService.messages.notableEvents, {players: $scope.players, subs: $scope.gameSubs})
             //$timeout(function() {
-                $scope.populateGameData(dataService.getCurrentGame());
+                $scope.populateGameData(dataService.getCurrentGame());  // populate the game data
             //});
 
         });

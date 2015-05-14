@@ -1,3 +1,4 @@
+// directive to handle image uploading
 soccerStats.directive('imageUpload', function ($timeout, toastService, configService) {
     return {
         restrict: 'E',

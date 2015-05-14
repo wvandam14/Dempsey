@@ -1,3 +1,4 @@
+// controller in charge of registering the user
 soccerStats.controller('registrationController',
     function registrationController($scope, emailService, viewService, $timeout, toastService, configService, dataService) {
     	

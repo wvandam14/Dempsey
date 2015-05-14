@@ -1,4 +1,5 @@
-soccerStats.controller('rosterController', 
+// controller in charge of viewing the roster
+soccerStats.controller('rosterController',
     function rosterController($scope, $rootScope, $location, $timeout, configService, dataService) {
 
         $scope.players = [];
@@ -6,6 +7,7 @@ soccerStats.controller('rosterController',
     	var currentUser = dataService.getCurrentUser();
         //console.log(currentUser);
 
+        // returns whether or not a player has been selected
         $scope.isSelected = function (player) {
             if (player === $scope.currPlayer ) {
                 return true;
@@ -13,11 +15,12 @@ soccerStats.controller('rosterController',
             return false;
         };
 
+        // sets the current player to the selected player
         $scope.selectPlayer = function (player) {
             $scope.currPlayer = player;
         };
 
-
+        // get all of the players associated with the current team
         var populatePlayers = function(team) {
             $scope.players = [];
             $timeout(function(){
@@ -36,9 +39,9 @@ soccerStats.controller('rosterController',
             });
         };
 
-        populatePlayers(dataService.getCurrentTeam());
+        populatePlayers(dataService.getCurrentTeam());  // initialize players
 
-
+        // if a team change occurs
         $scope.$on(configService.messages.teamChanged, function(msg, data) {
             populatePlayers(dataService.getCurrentTeam());
         });

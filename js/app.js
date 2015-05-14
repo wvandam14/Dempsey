@@ -1,3 +1,4 @@
+// the main module to start the angular application. handles all of the routing and connection between pages
 var soccerStats = angular.module('soccerStats', ['ngRoute','ngSanitize','ngResource','ng.deviceDetector'])
     .config(function ($routeProvider) {
 

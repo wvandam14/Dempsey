@@ -1,3 +1,4 @@
+<!-- displays the form for either adding a new player of editing a player-->
 <div class="modal player registration">
     <div class="head flex">
         <h1 ng-hide="update" class="flex-one">Create your player</h1>
@@ -7,6 +8,7 @@
         </div>
     </div>
 
+    <!-- parent is able to see all of player information -->
     <div role="parent">
         <form name="playerForm" class="body flex two-column">
             <div class="flex-one">
@@ -42,7 +44,7 @@
             </div>
         </form>
     </div>
-
+    <!-- coach is able to see minimal information for the purpose of temporarily setting up a player for parent -->
     <div role="coach">
         <form name="tempPlayerForm" class="body flex two-column">
             <div class="flex-one">
@@ -70,7 +72,7 @@
             </div>
         </form>
     </div>
-
+    <!-- buttons -->
     <div class="foot flex">
         <div role="parent" class="button green flex-one" ng-click="registerPlayer(player)">
             <h1>Save</h1>
@@ -78,6 +80,7 @@
         <div role="coach" class="button green flex-one" ng-click="registerTempPlayer(player)">
             <h1>Save</h1>
         </div>
+        <!-- show based on if the user is updating or not-->
         <div class="button red flex-one" ng-if="update" ng-click="removePlayer(player)">
             <h1>Remove</h1>
         </div>

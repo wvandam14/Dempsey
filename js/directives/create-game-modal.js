@@ -1,9 +1,10 @@
+// directive for creating a game
 soccerStats.directive('createGameModal', function (viewService, toastService, configService, dataService, emailService) {
     return {
         restrict: 'E',
         templateUrl: "./templates/directives/create-game-modal.html",
         controller: function($scope) {
-            var self = 'createGameModal';
+            var self = 'createGameModal';   // name of modal
             $scope.currentTeam = {};
             $scope.teams = [];
             var currentUser = Parse.User.current();
@@ -12,8 +13,10 @@ soccerStats.directive('createGameModal', function (viewService, toastService, co
                 viewService.closeModal(self);
             }
 
-                // Array containing the emails who will receive the invitation to the team
+            // Array containing the emails who will receive the invitation to the team
             $scope.games = [];
+
+            // create a new game
             $scope.addGame = function (game) {
                 if(viewService.validateAreaByFormName("gameForm")){
                     $scope.games.unshift({
@@ -30,16 +33,19 @@ soccerStats.directive('createGameModal', function (viewService, toastService, co
                 }
             };
 
+            // remove the game from the list
             $scope.removeGame = function (index){
                 $scope.games.splice(index, 1);
             };
 
             $scope.currentTeam = {};
+
+            // change current team based on team changed
             $scope.$on(configService.messages.teamChanged, function(event, data) {
                 $scope.currentTeam = data.team;
             });
 
-            // Register a player
+            // save all games scheduled
             $scope.sendGames = function() {
                 var teamID = $scope.currentTeam.id;
                 if (viewService.validateAreaByFormName('gameForm')) {

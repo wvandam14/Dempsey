@@ -1,6 +1,8 @@
-soccerStats.controller('emailController', 
+// controller deals with email sending
+soccerStats.controller('emailController',
     function emailController($scope, $location, toastService, configService, $timeout, viewService) {
 
+        // direct to a page
         $scope.goToPage = function(path) {
             //$timeout(function() {
                 viewService.goToPage(path);

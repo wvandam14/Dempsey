@@ -1,10 +1,11 @@
+<!-- View roster page that displays all players and emergency contact information as well as minimal player statistics -->
 <div class="roster-page">
     <div class="content">
-        <!-- Roster shtuff (will be converted to a directive -->
+        <!-- Roster -->
         <div class="player-stats-container flex">
+            <!-- Lineup -->
             <div class="roster-container flex-one">
                 <div class="list">
-                    <!-- TODO: Figure out how we want to store the roster vs lineup data and then display accordingly -->
                     <h5 class="title">LINEUP</h5>
                     <div class="item player-selector flex flex-center-vertical" ng-repeat="player in players | orderBy:'lname'" ng-class="{selected: isSelected(player)}" ng-click="selectPlayer(player)">
                         <div class="circle flex flex-center">
@@ -16,6 +17,7 @@
                     </div>
                 </div>
             </div>
+            <!-- player information -->
             <div class="stats-display-container flex-one flex flex-column">
                 <div class="player-card flex flex-space-between">
                     <div class="player-info">
@@ -51,7 +53,7 @@
 
                     </div>
 
-                    <!-- TODO: replace these numbers with actual content... -->
+                    <!-- player statistics -->
                     <div class="stats-display numbers flex flex-column flex-one" role="coach">
                         <div class="flex">
                             <div class="flex flex-center flex-column flex-one">
@@ -80,6 +82,7 @@
                                 <h6>{{currPlayer.total.fouls}}</h6>
                                 <h5>FOULS</h5>
                             </div>
+                            <!-- cards -->
                             <div class="flex flex-center flex-column flex-one">
                                 <h6>{{currPlayer.total.yellows}}</h6>
                                 <h5>YELLOW</h5>
@@ -91,7 +94,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>

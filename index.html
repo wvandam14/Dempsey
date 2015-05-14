@@ -9,6 +9,7 @@
 
     <title>Soccer Stats</title>
 
+    <!-- Contains all of the css files for this application -->
     <link rel="stylesheet" type="text/css" href="./css/reset.css">
     <link rel="stylesheet" type="text/css" href="./css/fonts.css">
     <link rel="stylesheet" type="text/css" href="./css/default.css">
@@ -40,10 +41,12 @@
     <!-- <link rel="stylesheet" type="text/css" href="./css/ngDialog.css"> -->
 
 </head>
+
+<!-- ng-class inside of body tests for light-devices -->
 <body ng-controller="shellController"  ng-class="{'tablet': $root.isTablet, 'mobile': $root.isMobile, 'isModal': currentModal !== ''}">
 
     <header ng-if="currentPage !== 'login' && currentPage !== 'registration' && currentPage !== 'verify-email' && currentPage !== 'password-reset-success' && currentPage !== 'password-reset'"></header>
-
+    <!-- contains the game score of a selected game as well as a panel of games for a team -->
     <div ng-show="currentPage !== 'login' && currentPage !== 'registration' && currentPage !== 'verify-email' && currentPage !== 'password-reset-success' && currentPage !== 'password-reset'" class="flex flex-column flex-center">
         <div class="gameReview">
             <h5 class="header text-center">
@@ -89,6 +92,7 @@
 
     <ng-view></ng-view>
 
+    <!-- Toast appearance -->
     <div class="toast-container">
         <div class="flex flex-center-vertical toast" ng-repeat="toast in toasts" ng-class="{'slideOut': toast.slideOut,  'slideIn': toast.slideIn, 'error': toast.error, 'success': toast.success}">
             <img ng-if="!toast.error && !toast.success" src="./img/ball-icon-large.svg"/>
@@ -102,6 +106,7 @@
         </div>
     </div>
 
+    <!-- opens specific modal upon request -->
     <div ng-if="currentModal != ''" class="modal-container flex flex-center-horizontal">
         <div ng-if="checkModal('teamModal')"><team-modal></team-modal></div>
         <div ng-if="checkModal('accountModal')"><account-modal></account-modal></div>

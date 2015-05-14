@@ -1,3 +1,4 @@
+// modal for testing
 soccerStats.directive('testModal', function ($location, $timeout, $route, viewService, toastService, registerService, configService, dataService) {
     return {
         restrict: 'E',

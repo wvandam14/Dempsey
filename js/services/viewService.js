@@ -1,3 +1,4 @@
+// service for handling the opening and closing of modals and validating forms
 soccerStats.factory('viewService', function ($location, $timeout, $rootScope, configService) {
 
     var
@@ -7,15 +8,17 @@ soccerStats.factory('viewService', function ($location, $timeout, $rootScope, co
             });
         }
 
+        // closing modals
         , closeModal = function (modal) {
             $rootScope.$broadcast(configService.messages.closeModal, { modal : modal});
         }
 
+        // opening modals
         , openModal = function (modal, state) {
             $rootScope.$broadcast(configService.messages.openModal, { modal: modal, state: state});
         }
 
-        , validateAreaByFormName = function (form) {
+        , validateAreaByFormName = function (form) {    // form validation
             // Find all the required fields
             var isValid = true;
             _.each($('form[name=' + form + '] input, form[name=' + form + '] select'), function (field) {

@@ -1,3 +1,4 @@
+// directive handles the bench formation
 soccerStats.directive('benchFormation', function () {
     return {
         restrict: 'E',

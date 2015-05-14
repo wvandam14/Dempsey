@@ -1,11 +1,14 @@
+<!-- Viewing a game that has been submitted or yet to be submitted. Shows all player and team statistics -->
 <div class="game-review">
 
     <div class="content">
 
         <div class="section flex">
+            <!-- shows all notable events during the game: cards, goals, substitutions -->
             <game-timeline></game-timeline>
         </div>
 
+        <!-- Game team statistics -->
         <div class="section flex">
             <div class="flex-one flex flex-center">
                 <doughnut-chart data="gameStats.teamPossession.data" num="gameStats.possession+ '%'" label="'POSSESSION'"></doughnut-chart>
@@ -76,11 +79,10 @@
             </div>
         </div>
 
-        <!-- Roster shtuff (will be converted to a directive -->
+        <!-- List of lineup and bench information  -->
         <div class="player-stats-container flex section">
             <div class="roster-container flex-one">
                 <div class="list">
-                    <!-- TODO: Figure out how we want to store the roster vs lineup data and then display accodingly -->
                     <h5 class="title">LINEUP</h5>
                     <div ng-if="!player.benched" class="player-selector flex flex-center-vertical" ng-repeat="player in players | orderBy:'lname'" ng-class="{selected: isSelected(player)}" ng-click="selectPlayer(player)">
                         <div class="circle flex flex-center">
@@ -103,9 +105,11 @@
                     </div>
                 </div>
             </div>
+            <!-- displays player statistics information when player is clicked -->
             <div class="stats-display-container flex-one flex flex-column">
                 <div class="player-card flex flex-space-between">
                     <div class="player-info">
+                        <!-- player information -->
                         <div class="info flex">
                             <div class="img-container">
                                 <img src="{{currPlayer.photo}}" />
@@ -118,6 +122,7 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- displays player's notable events -->
                         <div class="notable-events">
                             <div class="event-container flex flex-center-vertical" ng-repeat="event in currPlayer.notableEvents">
                                 <!-- TODO: make this image change based on event type -->
@@ -133,7 +138,7 @@
                             </div>
                         </div>
                     </div>
-
+                    <!-- displays player statistics -->
                     <div class="stats-display numbers flex flex-column flex-one" ng-if="currPlayer.myKid">
                         <div class="flex">
                             <div class="flex flex-center flex-column flex-one">
@@ -177,8 +182,9 @@
                         </div>
                     </div>
                 </div>
-
+                <!-- displays the formation of the team that was setup from the game setup page -->
                 <formation-field formation="currFormation" select-player="selectPlayer(player)" is-selected="isSelected(player)"></formation-field>
+                <!-- coach can submit game notes: special events, plays, improvements, notable memories, etc -->
                 <div class="game-notes list ">
                     <h5 class="title">GAME NOTES</h5>
                     <textarea class="notes" ng-model="notes"></textarea>

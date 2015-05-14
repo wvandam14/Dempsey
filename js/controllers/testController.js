@@ -1,4 +1,5 @@
-﻿soccerStats.controller('testController',
+﻿// controller used for testing
+soccerStats.controller('testController',
     function testController($scope, $location, toastService, configService) {
 
     	var currentUser = Parse.User.current();

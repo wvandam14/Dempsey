@@ -1,3 +1,4 @@
+// controller in charge of user login
 soccerStats.controller('loginController', function loginController($scope, $rootScope, $timeout, $location, viewService, toastService, configService, dataService) {
         // User object
         $scope.user = {email: '', password: ''};
@@ -14,6 +15,8 @@ soccerStats.controller('loginController', function loginController($scope, $root
         $scope.goToPage = function(path) {
             viewService.goToPage(path);
         }
+
+        // user login
         $scope.login = function(user) {
             if (viewService.validateAreaByFormName('loginForm')) {
                 Parse.User.logIn(user.email, user.password, {
@@ -43,6 +46,7 @@ soccerStats.controller('loginController', function loginController($scope, $root
             }
         };
 
+        // reset password modal
         $scope.resetPassword = function() {
             viewService.openModal('passwordResetModal');
             // $scope.user.email

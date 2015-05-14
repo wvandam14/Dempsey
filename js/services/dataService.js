@@ -1,8 +1,9 @@
+// main data service for handling all query get and set requests to the parse database
 soccerStats.factory('dataService', function ($location, $timeout, $rootScope, configService, toastService, emailService, viewService) {
 
     var
-         ageGroups = { "U12" : "U12" , "U16" : "U16", "U18" : "U18", "U20" : "U20", "U23" : "U23" }
-        , states = {AL:"Alabama",AK:"Alaska",AZ:"Arizona",AR:"Arkansas",CA:"California",CO:"Colorado",CT:"Connecticut",DE:"Delaware",DC:"District Of Columbia",FL:"Florida",GA:"Georgia",HI:"Hawaii",ID:"Idaho",IL:"Illinois",IN:"Indiana",IA:"Iowa",KS:"Kansas",KY:"Kentucky",LA:"Louisiana",ME:"Maine",MD:"Maryland",MA:"Massachusetts",MI:"Michigan",MN:"Minnesota",MS:"Mississippi",MO:"Missouri",MT:"Montana",NE:"Nebraska",NV:"Nevada",NH:"New Hampshire",NJ:"New Jersey",NM:"New Mexico",NY:"New York",NC:"North Carolina",ND:"North Dakota",OH:"Ohio",OK:"Oklahoma",OR:"Oregon",PA:"Pennsylvania",RI:"Rhode Island",SC:"South Carolina",SD:"South Dakota",TN:"Tennessee",TX:"Texas",UT:"Utah",VT:"Vermont",VA:"Virginia",WA:"Washington",WV:"West Virginia",WI:"Wisconsin",WY:"Wyoming"}
+         ageGroups = { "U12" : "U12" , "U16" : "U16", "U18" : "U18", "U20" : "U20", "U23" : "U23" }     // static array of age groups
+        , states = {AL:"Alabama",AK:"Alaska",AZ:"Arizona",AR:"Arkansas",CA:"California",CO:"Colorado",CT:"Connecticut",DE:"Delaware",DC:"District Of Columbia",FL:"Florida",GA:"Georgia",HI:"Hawaii",ID:"Idaho",IL:"Illinois",IN:"Indiana",IA:"Iowa",KS:"Kansas",KY:"Kentucky",LA:"Louisiana",ME:"Maine",MD:"Maryland",MA:"Massachusetts",MI:"Michigan",MN:"Minnesota",MS:"Mississippi",MO:"Missouri",MT:"Montana",NE:"Nebraska",NV:"Nevada",NH:"New Hampshire",NJ:"New Jersey",NM:"New Mexico",NY:"New York",NC:"North Carolina",ND:"North Dakota",OH:"Ohio",OK:"Oklahoma",OR:"Oregon",PA:"Pennsylvania",RI:"Rhode Island",SC:"South Carolina",SD:"South Dakota",TN:"Tennessee",TX:"Texas",UT:"Utah",VT:"Vermont",VA:"Virginia",WA:"Washington",WV:"West Virginia",WI:"Wisconsin",WY:"Wyoming"}    // static array of states
         
         // Current focus variables
         , getCurrentUser = function() {
@@ -23,7 +24,7 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
         , gameStatsTable = Parse.Object.extend("GameTeamStats")
         , gamePlayerStatsTable = Parse.Object.extend("GamePlayerStats")
 
-        // Team Table        
+        // get and set teams
         , setCurrentTeam = function(team) {
             currentTeam = team;
             //window.localStorage['currentTeam'] = JSON.stringify(currentTeam);
@@ -35,6 +36,7 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
             //return JSON.parse( window.localStorage['currentTeam'] || '{}');
         }
 
+        // get and set games
         , setCurrentGame = function (game) {
             currentGame = game;
         }
@@ -43,6 +45,7 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
             return currentGame;
         }
 
+        // get teams associated with the current user
         , getTeams = function(callback) {
             var teamDict = [];
             var query = new Parse.Query(userTable);
@@ -52,15 +55,15 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
             query.get(currentUser.id, {
                 success: function(user) {
                     $timeout(function(){
+                        // get the user teams
                         var teams = user.get("teams");
-                        // Add each team associated with the current user to the team dropdown list
+                        // add each team to an array
                         _.each(teams, function (team) {
                             teamDict.push(team);
                         });
-
+                        // return the team array
                         callback(teamDict);
                     });
-
                 }, error: function(user, error) {
                     toastService.error("There was an error (" + error.code + "). Please try again.");
                 }
@@ -68,6 +71,7 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
             return teamDict;
         }
 
+        // get players associated with the current user
         , getPlayers = function(callback) {
             var dictionary = [];
             var currentUser = Parse.User.current();
@@ -76,8 +80,9 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
             query.get(currentUser.id, {
                 success: function (user) {
                     $timeout(function() {
-                        var players = user.get("players");
+                        var players = user.get("players");  // get the players associated with current user
                         _.each(players, function (player) {
+                            // set up variables from player information
                             var photo = player.get("photo"),
                                 name = player.get("name"),
                                 birthday = player.get("birthday"),
@@ -91,6 +96,7 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                                     relationship : player.get("relationship")
                                 }
                             ;
+                            // push variables into custom javascript objects for use
                             dictionary.push({
                                 photo : photo,
                                 name : name,
@@ -103,7 +109,7 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                                 id : player.id
                             });
                         });
-                        
+                        // return array
                         callback(dictionary);
                     });
                     
@@ -115,22 +121,24 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
             return dictionary;
         }
 
+        // get games based on team id
         , getGames = function(_team,callback){
             var team = new teamTable();
             var query = new Parse.Query(gameTable);
 
-
+            // get the team
             team.id = _team.id;
             team.fetch().then(function(team){
                 query.equalTo('team',team);
                 query.include('gameTeamStats');
+                // get the team stats
                 query.find().then(function(games_brute){
                     //console.log(games_brute);
                     var game;
                     var games = [];
-                    
-                    for(var i = 0; i < games_brute.length; i++ ){
 
+                    // set up game objects
+                    for(var i = 0; i < games_brute.length; i++ ){
                        game = {
                             id: games_brute[i].id,
                             date: games_brute[i].get("date"),
@@ -147,11 +155,11 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                             status: games_brute[i].get("status"),
                             notes: games_brute[i].get("gameNotes")
                         }
-                        // console.log(game);
+                        // push games into an array
                         games.push(game);
                     }
                     //console.log(games);
-
+                    // return games array
                     callback(games);
                 }, function(error){
                     console.log("Error: " + error.code + " " + error.message);
@@ -161,10 +169,12 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
             });
         }
 
+        // get season team stats based on team id
         , getSeasonTeamStats = function(team_id,callback){
             
             var query = new Parse.Query(teamTable);
 
+            // have the query also include the actual following parse objects
             query.include('teamStats');
             query.include("teamStats.topAssists");
             query.include("teamStats.topAssists.playerStats");
@@ -174,11 +184,14 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
             query.include("teamStats.topShots.playerStats");
 
             query.equalTo('objectId',team_id)
-            query.first().then(function(team){
 
+            // get the team
+            query.first().then(function(team){
+                // get the top 5 players
                 if (team.get('teamStats').get('topAssists'))  team.get('teamStats').get('topAssists').slice(0,4);
                 if (team.get('teamStats').get('topGoals'))  team.get('teamStats').get('topGoals').slice(0,4);
                 if(team.get('teamStats').get('topShots'))  team.get('teamStats').get('topShots').slice(0,4);
+                // return the team stats
                 callback(team.get('teamStats'));
             }, function(error){
                  console.log("Error: " + error.code + " " + error.message);
@@ -186,9 +199,11 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
             });
         }
 
+        // register a team with a team passed in as a parameter - part 2 of registration process
         , registerTeam = function(newTeam) {
             var _team = new teamTable();
 
+            // set up a new team
             _team.set("ageGroup", newTeam.ageGroup);
             _team.set("city", newTeam.city);
             _team.set("leagueName", newTeam.leagueName);
@@ -199,14 +214,17 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
             _team.set("primaryColor", newTeam.primaryColor);
             _team.set("teamStats", new SeasonTeamTable());
 
+            // return parse object
             return _team;
         }
 
+        // register a new coach - part 1 of registration process
         , registerCoach = function (newUser, _team, inviteEmails) {
             _team.save(null, {
                 success: function (_team) {
+                    // create a new parse user object
                     var registerUser = new Parse.User();
-
+                    // set up new parse user information
                     registerUser.set("username", newUser.email);
                     registerUser.set("firstName", newUser.firstName);
                     registerUser.set("lastName", newUser.lastName);
@@ -226,8 +244,9 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                     registerUser.signUp(null, {
                         success: function (registerUser) {
                             toastService.success(configService.toasts.registrationSuccess);
+                            // part 3 of registration process
                             sendEmailInvite(registerUser, _team.id, _team.get("name"), inviteEmails);
-                            viewService.goToPage('/home');
+                            viewService.goToPage('/home');  // redirect back to home
                         },
                         error: function (registerUser, error) {
                             console.log("Error: " + error.code + " " + error.message);
@@ -246,14 +265,16 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
             });
         }
 
+        // register the player
         , registerPlayer = function(player, self, coach) {
             var currentUser = getCurrentUser();
             var newPlayer = new playersTable();
             var playerStats = new playerStatsTable();
             var query = new Parse.Query(teamTable);
+            // get the team based on the team the player belongs to
             query.get(player.team.id, {
                 success: function (team) {
-                    if (coach) {
+                    if (coach) {    // set up information if parent is registering
                         newPlayer.set("name", player.firstName + ' ' + player.lastName);
                         newPlayer.set("firstName", player.firstName);
                         newPlayer.set("lastName", player.lastName);
@@ -261,7 +282,7 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                         newPlayer.set("team", team);
                         newPlayer.set("playerStats", playerStats);
 
-                    } else {
+                    } else {       // set up information if parent is registering
                         if (player.newPhoto) newPlayer.set("photo", player.newPhoto);
                         newPlayer.set("name", player.firstName + ' ' + player.lastName);
                         newPlayer.set("firstName", player.firstName);
@@ -276,11 +297,12 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                         newPlayer.set("relationship", player.emergencyContact.relationship);
                         newPlayer.set("playerStats", playerStats);
                     }
-                    //update parse
+
+                    // create a new player
                     newPlayer.save(null, {
                         success: function (newPlayer) {
-                            if (player.parentId) {
-                                //parseRegisterPlayer(newPlayer, player, self);
+                            if (player.parentId) {  // if the player has a parent id
+                                // run parse to add player to parent
                                 Parse.Cloud.run('addPlayer', {newPlayerId: newPlayer.id, parentId: player.parentId}, {
                                     success: function (result) {
                                         console.log(result);
@@ -294,7 +316,7 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                                         toastService.error("There was an error (" + error.code +"). Please try again.");
                                     }
                                 });
-                            } else {
+                            } else {    // if the player does not have a parent, just add the player to coach for now
                                 currentUser.addUnique("players", newPlayer);
                                 currentUser.save(null, {
                                     success: function (currentUser) {
@@ -323,13 +345,16 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
             });
         } 
 
+        // register a new team
         , registerNewTeam = function(_team, self) {
             var currentUser = getCurrentUser();
+            // create a new team
             _team.save(null, {
                 success: function(_team) {
                     currentUser.addUnique("teams", _team);
+                    // update current user table
                     currentUser.save(null, {
-                        success: function(currenUser) {
+                        success: function(currentUser) {
                             toastService.success(configService.toasts.teamAddSuccess);
                             viewService.closeModal(self);
                             $rootScope.$broadcast(configService.messages.addNewTeam, _team);
@@ -349,8 +374,10 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
             }); 
         }
 
+        // update account
         , updateAccount = function (editUser, self) {
             var currentUser = getCurrentUser();
+            // set up edited information
             currentUser.set("username", editUser.email);
             currentUser.set("firstName", editUser.firstName);
             currentUser.set("lastName", editUser.lastName);
@@ -360,11 +387,14 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
             currentUser.set("city", editUser.city);
             currentUser.set("state", (_.invert(states))[editUser.state]);
             //console.log((_.invert($scope.states))[$scope.editUser.state]);
+            // if user has a new photo
             if (editUser.newPhoto)
                 currentUser.set("photo", editUser.newPhoto);
+            // if user has a new password
             if(editUser.newPassword !== '')
                 currentUser.set("password", editUser.newPassword);
-            
+
+            // update user
             currentUser.save(null, {
                 success: function (currentUser) {
                     toastService.success(configService.toasts.accountUpdateSuccess);
@@ -379,10 +409,13 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
             });
         }
 
+        // update team information
         , updateTeam = function(currentTeamID, editTeam, self) {
             var query = new Parse.Query(teamTable);
+            // get team object from parse
             query.get(currentTeamID, {
                 success: function(team) {
+                    // set up the edited information
                     team.set("leagueName", editTeam.leagueName);
                     team.set("ageGroup", editTeam.ageGroup);
                     team.set("primaryColor", editTeam.primaryColor);
@@ -390,11 +423,13 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                     team.set("name", editTeam.name);
                     team.set("number", editTeam.number);
                     team.set("state", (_.invert(states))[editTeam.state]);
+                    // if the tema has a new logo
                     if (editTeam.newLogo) 
                         team.set("logo", editTeam.newLogo);
+                    // update team
                     team.save(null, {
                         success: function (editTeam) {
-                            setCurrentTeam(editTeam);
+                            setCurrentTeam(editTeam);   // set the current team to same team, but not edited
                             toastService.success(configService.toasts.teamUpdateSuccess);
                             viewService.closeModal(self);
                             //$route.reload();
@@ -410,17 +445,22 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                 }
             });
         }
-        
+
+        // update player information
         , updatePlayer = function(player, self) {
             var query = new Parse.Query(playersTable);
+            // get player object from parse
             query.get(player.id, {
                 success: function(editPlayer) {
                     query = new Parse.Query(teamTable);
+                    // get team player is associated with
                     query.get(player.team.id, {
                         success: function(team) {
                             //console.log(team);
+                            // if player has a new photo
                             if (player.newPhoto)
                                 editPlayer.set("photo", player.newPhoto);
+                            // set up edited player information
                             editPlayer.set("name", player.name);
                             editPlayer.set("birthday", player.birthday);
                             editPlayer.set("team", team);
@@ -430,10 +470,12 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                             editPlayer.set("emergencyContact", player.emergencyContact.name);
                             editPlayer.set("phone", player.emergencyContact.phone);
                             editPlayer.set("relationship", player.emergencyContact.relationship);
+                            // update parse
                             editPlayer.save(null, {
                                 success: function(editPlayer) {
-                                    if (player.parentId) {
-                                        removeParentsByPlayerId(player.id);
+                                    if (player.parentId) {  // if the player now has a parent
+                                        removeParentsByPlayerId(player.id); // remove parents from other users in the case of accidental switching
+                                        // add the player to the parent using direct parse cloud
                                         Parse.Cloud.run('addPlayer', {newPlayerId: editPlayer.id, parentId: player.parentId}, {
                                             success: function (result) {
                                                 //console.log(result);
@@ -475,7 +517,9 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
             });
         }
 
+        // remove parents by the player id
         , removeParentsByPlayerId = function(playerId) {
+            // remove the player from the parent
             Parse.Cloud.run('removePlayer', {playerId : playerId}, {
                success: function (result) {
                    console.log('remove player from parent successful')
@@ -487,6 +531,7 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
             });
         }
 
+    // TODO: remove player from several tables
         //, removePlayer = function(player, self) {
         //    Parse.Cloud.run('removeAllPlayers', {player: player}, {
         //        success: function (result) {
@@ -502,12 +547,15 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
         //    });
         //}
 
+        // get team based on team id
         , getTeamById = function(id, callback) {
             var query = new Parse.Query(teamTable);
             query.equalTo('objectId', id);
+            // get team
             query.first({
                 success: function(team) {
                     $timeout(function(){
+                        // return the parse team object
                         callback(team);
                     });
 
@@ -517,7 +565,7 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
             });
         }
 
-        // Player Table
+        // get all the players associated with the team id
         , getPlayersByTeamId = function(id, callback) {
             var query = new Parse.Query(playersTable);
             query.equalTo('team', {
@@ -525,9 +573,11 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                 className: "Team",
                 objectId: id
             });
+            // get all players
             query.find({
                 success: function(players) {
                     $timeout(function(){
+                        // return players array
                         callback(players);
                     });
 
@@ -537,12 +587,15 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
             });
         }
 
+        // get season stats of player based on their id
         , getSeasonPlayerStatsByPlayerId = function(id, callback) {
             var query = new Parse.Query(playerStatsTable);
             query.equalTo('objectId', id);
+            // get player season stats
             query.first({
                 success: function(playerStats) {
                     $timeout(function() {
+                        // return player's season stats
                         callback(playerStats);
                     });
                 }, error: function(user, error) {
@@ -551,12 +604,15 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
             });
         }
 
+        // get player by player id in the case we need the whole parse object
         , getPlayerByPlayerId = function (playerID, callback) {
             var query = new Parse.Query(playersTable);
             query.equalTo("objectId", playerID);
+            // get player
             query.first({
                 success: function(player) {
                     $timeout(function() {
+                        // return player
                         callback(player);
                     });
                 },
@@ -567,17 +623,21 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
             });
         }
 
+        // get game stats based on the game id
         , getGameStatsById = function(game_id){
             //console.log(game_id);
             var query = new Parse.Query(gameTable);
             query.include('gameTeamStats');
             query.equalTo("objectId", game_id);
+            // return game
             return query.first();
         }
 
+        // get stats of the players that are playing in the game
         , getGamePlayerStatsById = function(gameTeamStatsId) {
             var query = new Parse.Query(gameStatsTable);
             query.equalTo('objectId', gameTeamStatsId);
+            // include parse objects associated with the players in the roster and substitutions
             query.include('roster');
             query.include('roster.player');
             query.include('substitutions');
@@ -590,9 +650,11 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
             //     query = new Parse.Query(playersTable);
             //     var playerPointers = _.pluck(gameTeamStats.get("substitutions"),  )
             // });
+            // return player game stats
             return query.first();
         }
 
+        // get parent emails based on which parents are on the team
         , getParentEmailsByTeamId = function(teamId, callback) {
             var query = new Parse.Query(userTable);
             query.equalTo("teams", {
@@ -600,9 +662,11 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                 className : "Team",
                 objectId : teamId
             });
-            query.equalTo("accountType", 2);
+            query.equalTo("accountType", 2);    // limit our search to parents
+            // get all parents so we can access their email later
             query.find({
                 success: function(parentEmails) {
+                    // return parents
                     callback(parentEmails);
                 },
                 error: function(parentEmails, error) {
@@ -612,6 +676,7 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
             });
         }
 
+        // get parent based on the player's id
         , getParentByPlayerId = function(playerId, callback) {
             var query = new Parse.Query(userTable);
             query.equalTo("players", {
@@ -619,9 +684,11 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                 className: "Players",
                 objectId : playerId
             });
-            query.equalTo("accountType", 2);
+            query.equalTo("accountType", 2);    // limit search to parents in case the coach has the player
+            // get parent
             query.first({
                 success: function(parent) {
+                    // return parent
                     callback(parent);
                 },
                 error : function(parent, error) {
@@ -631,19 +698,22 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
             });
         }
 
+        // get game by game id in the case we need the whole parse object
         , getGameByGameId = function(gameId) {
             // console.log(gameId);
             var query = new Parse.Query(gameTable);
             query.equalTo('objectId', gameId);
+            // return game
             return query.first();
         }
 
+        // create a new game
         , saveGame = function(game, teamID) {
             console.log(game);
             console.log(teamID);
-            var newGame = new gameTable();
+            var newGame = new gameTable();  // create a new game object
   
-            // Things the user entered
+            // set up new game information
             newGame.set("date", game.date);
             newGame.set("opponent", game.opponent.name);
             newGame.set("opponentSymbol", game.opponent.symbol);
@@ -666,9 +736,11 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
             });
         }
 
+        // save game attributes of the game such as game notes
         , saveGameAttributes = function (game, attributes, data) {
             var query = new Parse.Query(gameTable);
             query.equalTo("objectId", game.id);
+            // first get the game parse object
             query.first({
                 success: function(editGame) {
                     console.log(editGame);
@@ -676,7 +748,7 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                     for(var i = 0; i < attributes.length; i++) {
                         editGame.set(attributes[i], data[i]);
                     }
-
+                    // update parse object
                     editGame.save(null, {
                         success: function() {
                             toastService.success("Successfully saved game notes.");
@@ -693,12 +765,15 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
             });
         }
 
+        // create a roster for a game
         , createRoster = function(roster, gameId){
             //console.log(gameId);
 
             var players = [];
             var game = {};
             var promise = new Parse.Promise();
+
+            // get the length of the roster being passed in
             var getRosterLength = function(roster) {
                 var counter = 0;
                  _.each(roster, function(rosterPlayer) { 
@@ -709,7 +784,8 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                  return counter;
             }
             var rosterLength = getRosterLength(roster);
-            
+
+            // for each player in the roster, set up a new game player so we can record stats for that game
             _.each(roster, function(rosterPlayer){
                 if (rosterPlayer.selected) {
                     var ptr = {
@@ -719,9 +795,11 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                     };
 
                     var playerStats = new gamePlayerStatsTable();
+                    // set up game player information
                     playerStats.set("player", ptr);
                     !rosterPlayer.benched ? playerStats.set("startingStatus", "On") : playerStats.set("startingStatus", "Off");
                     playerStats.set("position", rosterPlayer.position);
+                    // create new player stats for the game
                     playerStats.save().then(function (gamePlayerStats) {
                         players.push(gamePlayerStats);
 
@@ -732,23 +810,27 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                 } 
             });
 
+            // after a player for a game has been created
             promise.then(function(result){
                 query = new Parse.Query(gameTable);
                 query.include("gameTeamStats");
                 query.equalTo("objectId",gameId);
+                // get game statistics
                 query.first().then(function(result){
                     game = result;
+                    // save the roster into the game stats table
                     var gameStats = result.get("gameTeamStats");
                     gameStats.set("roster",players);
+                    // save the game stats object
                     return gameStats.save();
                 }).then(function(gameStats){
-                     game.set("status", "ready ");
+                     game.set("status", "ready ");  // set the status of the game to ready so stats can start recording
                      return game.save();
                 }).then(function(result){
-                    setCurrentGame(result);
+                    setCurrentGame(result); // set the edited current game
                     $rootScope.$broadcast(configService.messages.gameStatusChanged);
                     toastService.success("Game roster successfully created");
-                    viewService.goToPage('/game-review');
+                    viewService.goToPage('/game-review');   // go to the game review page
                 },function(error){
                      console.log("Error: " + error.code + " " + error.message);
                 });
@@ -756,6 +838,10 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
             });
         }
 
+        /*  creating a custom player object for the home-page
+            contains player information and player statistics
+            for a season
+         */
         , playerConstructor = function(player, stats) {
             var retPlayer = {
                                 id : player.id,
@@ -771,7 +857,9 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                                     assists: stats.attributes.assists ? stats.attributes.assists : 0,
                                     yellows: 0,
                                     reds: 0,
+                                    // initialize the card data
                                     cardInit : function(playerCard, stats) {
+                                        // calculate totals and set data values
                                         card = stats.attributes.cards;
                                         //console.log(stats);
                                         //_.each(stats.attributes.cards, function(card) {
@@ -782,7 +870,6 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                                        // });
                                     }
                                 },
-                                // TODO: how are we calculating shot accuracy?
                                 shots : {
                                     data : [
                                         {
@@ -800,6 +887,7 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                                     ],
                                     accuracy: 0,
                                     goals: 0,
+                                    // initialziing shot data
                                     shotInit: function(playerShot, stats) {
                                         var blocks = 0,
                                             onGoal = 0,
@@ -812,6 +900,7 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                                             offGoal = shot.offGoal;
                                             playerShot.goals = shot.goal;
                                         //});
+                                        // calculate totals and set data values
                                         var total = blocks + onGoal + offGoal + playerShot.goals;
                                         playerShot.accuracy = Math.round(((total - offGoal) / total)*100);
                                         console.log(playerShot.accuracy);
@@ -836,7 +925,9 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                                     ],
                                     completed: 0,
                                     total: 0,
+                                    // initializing pass data
                                     passInit: function(playerPass, stats) {
+                                        // calculate totals and set data values
                                         pass = stats.attributes.passes;
                                         //_.each(stats.attributes.passes, function(pass) {
                                             playerPass.completed = pass.completed;
@@ -852,7 +943,7 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                                     relationship: player.attributes.relationship
                                 }
                             }; 
-            // console.log(index);
+            // call the initializing functions
             if (stats.attributes.cards)
                 retPlayer.total.cardInit(retPlayer.total, stats);
             if (stats.attributes.shots)
@@ -860,9 +951,14 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
             if (stats.attributes.passes)
                 retPlayer.passes.passInit(retPlayer.passes, stats); 
 
+            // return the player constructor object
             return retPlayer;            
         }
 
+        /*  creating a custom player object for the game review page
+            contains player information and player statistics
+            for a specific game
+         */
         , gamePlayerConstructor = function(player, gamePlayer) {
             //console.log(gamePlayer);
             var retPlayer =
@@ -874,9 +970,10 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                     number: player.get("jerseyNumber"),
                     photo: player.get("photo") ? player.get("photo")._url : './img/player-icon.svg',
                     position: gamePlayer.get("position") ? gamePlayer.get("position") : '',
-                    benched: gamePlayer.get("startingStatus") !== "On" ? true : false,
-                    myKid : true,
-                    notableEvents: [],
+                    benched: gamePlayer.get("startingStatus") !== "On" ? true : false,  // check if user is benched to determine lineups
+                    myKid : true,   // boolean variable for parent to determine which player is there
+                    notableEvents: [],  // array of notable events: cards, goals, substitutions
+                    // initializes events
                     eventsInit : function(retPlayer, subbedOut, subbedIn) {
                         if (subbedOut) {
                             _.each(subbedOut, function (subOut) {
@@ -907,6 +1004,7 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                             total: 0,
                             time: []
                         },
+                        // initializes cards
                         cardInit: function(player, cards) {
                             playerCards = player.total;
                             _.each(cards, function(card) {
@@ -947,7 +1045,9 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                         ],
                         completed: 0,
                         total: 0,
+                        // initializes pass data
                         passInit: function(playerPasses, passes) {
+                            // calculate totals and set data values
                             playerPasses.completed = passes.completed;
                             playerPasses.total = passes.total;
                             playerPasses.data[0].value = passes.completed;
@@ -993,6 +1093,7 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                             time: [],
                             assistedBy: []
                         },
+                        // initializes shot data
                         shotInit: function(player, shots) {
                             playerShots = player.shots;
                             if(shots){
@@ -1029,7 +1130,7 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                                     }
                                 });
                             }
-
+                            // calculate totals and set data values
                             var total = playerShots.blocks.total + playerShots.onGoal.total + playerShots.offGoal.total + playerShots.goals.total;
                             playerShots.total = total;
                             playerShots.accuracy = Math.round(((total - playerShots.offGoal.total) / total)*100);
@@ -1038,6 +1139,7 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                         }
                     }
                 };
+            // call the initializing functions within each data
             if (gamePlayer.get("cards"))
                 retPlayer.total.cardInit(retPlayer, gamePlayer.get("cards"));
             if (gamePlayer.get("subbedOut") || gamePlayer.get("subbedIn"))

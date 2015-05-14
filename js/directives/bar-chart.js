@@ -1,3 +1,4 @@
+// directive handles the bar chart
 soccerStats.directive('barChart', function () {
     return {
         restrict: 'E',

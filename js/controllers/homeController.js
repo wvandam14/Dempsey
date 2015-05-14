@@ -1,4 +1,5 @@
-﻿soccerStats.controller('homeController', 
+﻿// controller in charge of all the features on the home-page
+soccerStats.controller('homeController',
     function homeController($scope, $location, $timeout, $rootScope, toastService, configService, dataService, viewService) {
 
     	$scope.verified = false;
@@ -7,11 +8,9 @@
             accountType: ''
         };
 
-        
+        var currentUser = Parse.User.current();     // get current parse user
 
-
-        var currentUser = Parse.User.current();
-
+        // see if a user has been verified. otherwise, notify them
         if (currentUser.fetch()) {
             $scope.user.name = currentUser.get("name");
             //check for email verification 
@@ -25,8 +24,7 @@
             //show login page
         }
 
-      
-
+        // update player
         $scope.updatePlayer = function(player) {
             viewService.openModal('playerModal');
             $timeout(function() {
@@ -34,10 +32,10 @@
             });
         }
 
-
+        // populate season team statistics
         $scope.populateTeamStats = function(team) {
+            // get season team statistics
             dataService.getSeasonTeamStats(team.id,function(teamStats){
-
                 //console.log(teamStats);
                 $scope.teamStats = {
 
@@ -54,6 +52,7 @@
                     topShots : []
                 };
 
+                // if the team stats exists, fill in information for season stats
                 if(teamStats){
                     var goalsDifference = (teamStats.get("goalsScored") && teamStats.get("goalsConceded")) ?
                     teamStats.get("goalsScored") -  teamStats.get("goalsConceded") :
@@ -94,19 +93,20 @@
                         topShots : []
                     };
 
+                    // top assists
                     _.each(teamStats.get('topAssists'),function(player){
                         console.log(player);
                         var photo = player.get("photo") ? player.get("photo")._url : "./img/sample/profile-small.jpg";
                         $scope.teamStats.topAssists.push({ name : player.get("name"), num : player.get("playerStats").get("assists"), photo : photo});
                     });
 
-
-
+                    // top goals
                     _.each(teamStats.get('topGoals'),function(player){
                         var photo = player.get("photo") ? player.get("photo")._url : "./img/sample/profile-small.jpg";
                         $scope.teamStats.topGoals.push({ name : player.get("name"), num : player.get("playerStats").get("goals"), photo : photo});
                     });
 
+                    // top shots
                     _.each(teamStats.get('topShots'),function(player){
                         var photo = player.get("photo") ? player.get("photo")._url : "./img/sample/profile-small.jpg";
                         $scope.teamStats.topShots.push({ name : player.get("name"), num : player.get("playerStats").get("shots").total, photo : photo});
@@ -114,7 +114,6 @@
                 }
                 else{
                     $scope.teamStats = {
-
                         teamGames : { data: []},
                         goalsConceded : 0,
                         goalsScored : 0,
@@ -134,22 +133,28 @@
         // Ignore below here
         $scope.isCoach = false;
 
+        // get all of the players based on user account
         $scope.populatePlayers = function() {
 
             //console.log($scope.currentTeam);
             $scope.myPlayers = [];
             //console.log($scope.currentTeam);
+
+            // if the current user is a coach
             if (currentUser.get("accountType") === 1) {
                 dataService.getPlayersByTeamId(dataService.getCurrentTeam().id, function(players) {
                     _.each(players, function(player) {
                         //console.log(player);
                         dataService.getSeasonPlayerStatsByPlayerId(player.get("playerStats").id, function(stats) {
+                            // create a player with information and stats
                             $scope.myPlayers.push(dataService.playerConstructor(player, stats));
                         });
                     });
                 });
             } else {
                 //console.log(currentUser.get("players"));
+
+                // if the current user is a parent
                 _.each(currentUser.get("players"), function(playerPointer) {
                     dataService.getPlayerByPlayerId(playerPointer.id, function(player) {
                         //console.log(player);
@@ -171,6 +176,7 @@
         //$scope.populatePlayers();
         //$scope.populateTeamStats(dataService.getCurrentTeam());
 
+        // on team changes, populate the data for players and team stats
         $scope.$on(configService.messages.teamChanged, function(event, data) {
             //console.log(data);
             if (!data.refresh)
@@ -179,12 +185,14 @@
             $scope.populateTeamStats(dataService.getCurrentTeam());
         });
 
+        // if a user has added a player, the page will automatically update that change
         $scope.$on(configService.messages.playerAdded, function(event, player) {
             dataService.getSeasonPlayerStatsByPlayerId(player.get("playerStats").id, function(stats) {
                 $scope.myPlayers.push(dataService.playerConstructor(player, stats));
             });
         });
 
+        // initial values
         $scope.myPlayers = [];
         $scope.currentTeam = {};
     

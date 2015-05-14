@@ -1,14 +1,17 @@
-soccerStats.controller('gameSetupController', 
+// controller in charge of coach setting up the roster
+soccerStats.controller('gameSetupController',
     function gameReviewController($scope, $rootScope, $location, $timeout, configService, dataService, viewService, toastService) {
         //$scope.players = [];
         //$scope.currFormation= [];
 
-        $scope.roster = [];
+        $scope.roster = []; //empty array for player roster
 
         var currentUser = dataService.getCurrentUser();
         //console.log(currentUser);
 
+        $scope.game = dataService.getCurrentGame();     // get the current game
 
+        // initialize the formation and bench for the field and list
         $scope.initFormation = function() {
             $scope.currFormation = [
               {
@@ -105,6 +108,7 @@ soccerStats.controller('gameSetupController',
             ];
         };
 
+        // get all of the players
         var populatePlayers = function(team) {
             $scope.roster = [];
             $timeout(function(){
@@ -134,15 +138,16 @@ soccerStats.controller('gameSetupController',
           $scope.initFormation();
         };
 
-        populatePlayers(dataService.getCurrentTeam());
+        populatePlayers(dataService.getCurrentTeam()); // initialize player setup
 
-
+        // if the user switches team, we can use a different roster list
         $scope.$on(configService.messages.teamChanged, function(msg, data) {
             populatePlayers(dataService.getCurrentTeam());
         });
 
         $scope.playerSelected = false;
 
+        // returns a boolean to see if a player has been selected or not
         $scope.isSelected = function (player) {
             if (player === $scope.currPlayer ) {
                 return true;
@@ -150,20 +155,25 @@ soccerStats.controller('gameSetupController',
             return false;
         };
 
+        // set current player to selected player
         $scope.selectPlayer = function (player) {
             //console.log(player);
             $scope.currPlayer = player;
             $scope.playerSelected = true;
         };
 
+        // assign the selected player to the position on the field
         $scope.assignPosition = function(player) {
-            console.log(player);
+
+            // find the position in the current formation based on the player
             var position = _.find($scope.currFormation, function(position) {return player == position.player});
+            // if there is no player on the field, disable selection and position of the player in the roster
             if (!_.isEmpty(player)) {
                 var index = $scope.roster.indexOf(player);
                 $scope.roster[index].selected = false;
                 $scope.roster[index].position = '';
             }
+            // if a player has been selected from the roster, we want to set the position of the player in the current formation to the selected player in the list
             if ($scope.playerSelected) {
                 //if (!_.isEmpty(player)) {
                 //    var index = $scope.roster.indexOf(player);
@@ -176,7 +186,7 @@ soccerStats.controller('gameSetupController',
                 formationIndex = $scope.currFormation.indexOf(position);
                 $scope.roster[rosterIndex].position = $scope.currFormation[formationIndex].type;
                 console.log($scope.roster[rosterIndex]);
-            } else {
+            } else {    // otherwise we can remove the player from the formation
                 //if (!_.isEmpty(player)) {
                 //    //console.log(player);
                 //    var index = $scope.roster.indexOf(player);
@@ -185,10 +195,11 @@ soccerStats.controller('gameSetupController',
                 //}
                 position.player = {};
             }
-            $scope.currPlayer = {};
+            $scope.currPlayer = {};     // de-select roster
             $scope.playerSelected = false;
         };
 
+        // similar to assignPosition but for the bench list below the formation field
         $scope.assignBench = function(player) {
             console.log(player);
             var position = _.find($scope.bench, function(position) {return player == position.player});
@@ -224,8 +235,10 @@ soccerStats.controller('gameSetupController',
             $scope.playerSelected = false;
         };
 
+        // gets the total length of players on the field and bench = 18
         var total = $scope.currFormation.length + $scope.bench.length;
 
+        // do not allow user to save until they have filled out the field and bench
         $scope.checkRoster = function() {
             var counter = 0;
             _.each($scope.currFormation, function(position) {
@@ -245,6 +258,7 @@ soccerStats.controller('gameSetupController',
             else return false;
         };
 
+        // saving the roster
         $scope.saveRoster = function() {
             dataService.createRoster($scope.roster, dataService.getCurrentGame().id);
         }

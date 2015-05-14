@@ -1,3 +1,4 @@
+// directive to handle the field formation
 soccerStats.directive('formationField', function () {
     return {
         restrict: 'E',

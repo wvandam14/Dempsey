@@ -1,3 +1,4 @@
+// service that calls the call cloud to invite parents
 soccerStats.factory('emailService', function (toastService) {
 
     var

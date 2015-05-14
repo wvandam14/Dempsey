@@ -1,12 +1,17 @@
+/*
+    These lines of code runs in the Parse Cloud so you don't have to wait for a new release of application.
+    https://www.parse.com/docs/js/guide#cloud-code
+ */
 
+// cloud code to send emails
 Parse.Cloud.define("sendEmailInvite", function(request, response) {
     // Require sendgrid node api
     var sendgrid = require("sendgrid");
-    sendgrid.initialize("alecm00re", "$occerStats123");
+    sendgrid.initialize("alecm00re", "$occerStats123"); // email authorization
 
     var email;
     var emailBody;
-
+    // parameters
     var coachName = request.params.coachName;
     var teamId = request.params.teamId;
     var teamName = request.params.teamName;
@@ -23,6 +28,7 @@ Parse.Cloud.define("sendEmailInvite", function(request, response) {
 
                 // Generate temporary password for email and account creation
 
+                // email message
                 emailBody = "<p style='font-family:sans-serif;'>" +
                     "Hi There! " +
                     "<br/><br/>You have been invited to Soccer Stats by <i>" + coachName + "</i> with the team <b>" + teamName + "</b>! " +
@@ -37,6 +43,7 @@ Parse.Cloud.define("sendEmailInvite", function(request, response) {
                     "<br/>" +
                     "Soccer Stats Development Team</p>";
 
+                // query for a team and create a new parent user
                 var Teams = Parse.Object.extend("Team");
                 var teams = new Parse.Query(Teams);
                 teams.equalTo("objectId", teamId);
@@ -82,6 +89,8 @@ Parse.Cloud.define("sendEmailInvite", function(request, response) {
 
             }
             else {
+                // if parent already exists, we can re-send them an email to just login and register their player
+
                 emailBody = "<p style='font-family:sans-serif;'>" +
                     "Hi There! " +
                     "<br/><br/>You have been invited to Soccer Stats by <i>"
@@ -141,6 +150,7 @@ Parse.Cloud.define("sendEmailInvite", function(request, response) {
 
 });
 
+// adding a player to a coach or parent array
 Parse.Cloud.define("addPlayer", function(request, response) {
 
     var newPlayerId = request.params.newPlayerId;
@@ -158,13 +168,13 @@ Parse.Cloud.define("addPlayer", function(request, response) {
             parentQuery.equalTo("objectId", parentId);
             parentQuery.first({
                 success: function(user) {
-                    Parse.Cloud.useMasterKey();
+                    Parse.Cloud.useMasterKey(); // must be used to edit users in the user table
                     user.addUnique("players", player);
                     user.save(null, {
                         success: function (user) {
                             response.success('player added');
                         },
-                        erorr: function (user, error) {
+                        error: function (user, error) {
                              response.error(error);
                         }
                     });
@@ -178,10 +188,9 @@ Parse.Cloud.define("addPlayer", function(request, response) {
             response.error(error);
         }
     });
-
-    
 });
 
+// Remove player that no longer belongs to a parent or coach
 Parse.Cloud.define("removePlayer", function(request, response) {
 
     var playerId = request.params.playerId;
@@ -194,7 +203,7 @@ Parse.Cloud.define("removePlayer", function(request, response) {
         className: "Players",
         objectId: playerId
     });
-    query.equalTo("accountType", 2);
+    query.equalTo("accountType", 2);    // only remove players from parent account
     query.find({
         success: function(parents) {
             Parse.Cloud.useMasterKey();
@@ -211,6 +220,7 @@ Parse.Cloud.define("removePlayer", function(request, response) {
     });
 });
 
+// remove all players
 //Parse.Cloud.define("removeAllPlayers", function(request, response) {
 //
 //    var player = request.params.player;

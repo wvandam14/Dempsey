@@ -1,3 +1,4 @@
+// directive for handling the doughnut chart information
 soccerStats.directive('doughnutChart', function ($timeout) {
     return {
         restrict: 'E',

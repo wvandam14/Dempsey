@@ -1,3 +1,4 @@
+// directive for handling
 soccerStats.directive('playerModal', function ($location, $rootScope, $timeout, $route, viewService, toastService, configService, dataService) {
     return {
         restrict: 'E',
@@ -17,11 +18,14 @@ soccerStats.directive('playerModal', function ($location, $rootScope, $timeout, 
 
             //below are static arrays
             $scope.states = dataService.states;
-            
+
+            // when the modal is clicked on, check if this is a new or existing player
             $scope.$on(configService.messages.updatePlayer, function(event, data) {  
                 $timeout(function() {
+                    // if player exists
                     if (data.state) {
-                        $scope.update = true;
+                        $scope.update = true;   // ready for update
+                        // get players
                         $scope.players = dataService.getPlayerByPlayerId(data.id, function(player) {
                             $scope.getParentEmails(player.get("team"));
                             dataService.getParentByPlayerId(player.id, function(parent) {
@@ -50,7 +54,7 @@ soccerStats.directive('playerModal', function ($location, $rootScope, $timeout, 
                                 //console.log($scope.player.parentId);
                             });
                         });
-                    } else {
+                    } else {    // if player does not exist - adding a new player
                         $scope.update = false;
                         //console.log("add player");
                         // Player object
@@ -75,8 +79,6 @@ soccerStats.directive('playerModal', function ($location, $rootScope, $timeout, 
                 });
             });
 
-            
-
             $scope.goToPage = function(path) {
                 $timeout(function() {
                     viewService.goToPage(path);
@@ -96,6 +98,7 @@ soccerStats.directive('playerModal', function ($location, $rootScope, $timeout, 
                 }
             };
 
+            // get parent emails so we can assign players to parents
             $scope.getParentEmails = function(team) {
                 //console.log(team.id);
                 $scope.parents = {};
@@ -108,6 +111,7 @@ soccerStats.directive('playerModal', function ($location, $rootScope, $timeout, 
                 });
             };
 
+            // allows coach to temporarily register a player for a parent
             $scope.registerTempPlayer = function(player) {
                 if ($scope.update)
                     dataService.updatePlayer(player, self);
@@ -127,8 +131,7 @@ soccerStats.directive('playerModal', function ($location, $rootScope, $timeout, 
             };
 
             $scope.states = dataService.states;  
-            // TODO: verify if user is logged in
-            // moved to dataService
+
             if (currentUser) {
                 $scope.teamDict = dataService.getTeams( function(dictionary) {
                    //console.log(dictionary);

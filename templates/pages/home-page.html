@@ -1,7 +1,7 @@
-﻿<div class="home-page">
-
-    <!-- <div class="content" ng-if="user is a coach"> -->
+﻿<!-- Contains all season team and season player statistics-->
+<div class="home-page">
     <div class="content">
+        <!-- team statistics -->
         <div class="section flex">
             <div class="flex-one flex flex-center">
                 <doughnut-chart data="teamStats.teamGames.data" num="teamStats.gamesPlayed" label="'GAMES PLAYED'" large="true"></doughnut-chart>
@@ -41,8 +41,9 @@
                 <div class="flex-one"></div>
             </div>
         </div>
-
+        <!-- top player stats -->
         <div class="section lists flex">
+            <!-- top goals -->
             <div class="flex-one flex flex-center-horizontal flex-column">
                 <img class="hero-image" src="./img/goal-icon.svg"/>
                 <div class="list">
@@ -59,7 +60,7 @@
                 </div>
 
             </div>
-
+            <!-- top assists -->
             <div class="flex-one flex flex-center-horizontal flex-column">
                 <img class="hero-image" src="./img/ball-large-grey.svg"/>
                 <div class="list">
@@ -76,7 +77,7 @@
                 </div>
 
             </div>
-
+            <!-- top shots -->
             <div class="flex-one flex flex-center-horizontal flex-column">
                 <img class="hero-image" src="./img/ball-large-grey.svg"/>
                 <div class="list">
@@ -91,16 +92,19 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
 
-<!-- Parent stuff -->
+    <!-- Players associated with user
+         Players only associated with parents will show on parent account
+         All players on the same team will show all players, including parents' players
+     -->
     <div class="content list">
         <h5 class="title">MY PLAYERS</h5>
         <!-- <div class="item player-card flex"> -->
         <div class="item player-card flex" ng-repeat="player in myPlayers | orderBy:'lname'">
+            <!-- player information -->
             <div class="player-info">
                 <div class="info flex">
                     <div class="img-container" ng-click="updatePlayer(player)">
@@ -131,7 +135,7 @@
                 </div>
             </div>
 
-            <!-- TODO: replace these numbers with actual content... -->
+             <!-- player statistics -->
             <div class="stats-display numbers flex flex-column flex-one">
                 <div class="flex">
                     <div class="flex flex-center flex-column flex-one">

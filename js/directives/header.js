@@ -1,3 +1,4 @@
+// directive to handle the navigation bar actions
 soccerStats.directive('header', function ($timeout, $rootScope, $route, viewService, configService, dataService, $location) {
     return {
         restrict: 'E',
@@ -16,21 +17,21 @@ soccerStats.directive('header', function ($timeout, $rootScope, $route, viewServ
 
             $scope.goToPage = function(page) {
                 viewService.goToPage(page);
-            }
+            };
 
             $scope.toggleTeams = function() {
                 $scope.showTeams = !$scope.showTeams;
-            }
+            };
 
             $scope.toggleAccount = function() {
                 $scope.showAccount = !$scope.showAccount;
-            }
+            };
 
             // create a new team
             $scope.createTeam = function() {
                 $scope.toggleTeams();
                 viewService.openModal('teamModal');
-            }
+            };
 
             // edit team 
             $scope.editTeam = function() {
@@ -38,27 +39,28 @@ soccerStats.directive('header', function ($timeout, $rootScope, $route, viewServ
                 // $timeout(function() {
                 //     $rootScope.$broadcast(configService.messages.updateTeam, {team: $scope.currentTeam, state: true});
                 // });
-            }
+            };
 
             // edit coach or parent account
             $scope.editAccount = function() {
                 $scope.toggleAccount();
                 viewService.openModal('accountModal');
-            }
+            };
 
             // coach can invite more parents
             $scope.inviteEmails = function() {
                 viewService.openModal('inviteEmailModal');
-            }
+            };
 
+            // user can add new players
             $scope.addNewPlayer = function() {
                 viewService.openModal('playerModal');
                 $timeout(function() {
                     $rootScope.$broadcast(configService.messages.updatePlayer, {state: false});
                 });
-                
-            }
+            };
 
+            // change the team upon click from dropdown menu
             $scope.changeTeam = function(team) {
                 //console.log(team);
                 $scope.toggleTeams();
@@ -72,17 +74,20 @@ soccerStats.directive('header', function ($timeout, $rootScope, $route, viewServ
                     $rootScope.$broadcast(configService.messages.teamChanged, {team: team});
                 });
                 //$route.reload();
-            }
+            };
 
+            // upon click for creating a game
             $scope.createGame = function() {
                 viewService.openModal('createGameModal');
-            }
+            };
 
+            // upon click for viewing the roster
             $scope.viewRoster = function() {
                 $scope.goToPage('/roster');
                 //$rootScope.$broadcast(configService.messages.teamChanged, {team: dataService.getCurrentTeam()}); 
-            }
+            };
 
+            // if a new team has been added, retrieve the update
             $scope.$on(configService.messages.addNewTeam, function(event, team) {
                 $timeout(function() {
                     // console.log(team);
@@ -92,6 +97,7 @@ soccerStats.directive('header', function ($timeout, $rootScope, $route, viewServ
                 });
             });
 
+            // get recent changes from team update
             $scope.$on(configService.messages.updateTeam, function(event, team) {
                 $timeout(function() {
                     // console.log($scope.teams);
@@ -100,11 +106,11 @@ soccerStats.directive('header', function ($timeout, $rootScope, $route, viewServ
                 });
             });
 
-            
 
             // verify if user is logged in
             if (Parse.User.current()) {
                 $scope.teams = dataService.getTeams( function(_teams) {
+                    // set the current team
                     $scope.currentTeam = _teams[0];
                     dataService.setCurrentTeam(_teams[0]);
                     //console.log(dataService.getCurrentTeam());

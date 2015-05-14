@@ -1,7 +1,8 @@
+<!-- Enables coach to setup the roster to ready a game for statistical retrieval -->
 <div class="game-setup-page">
     <div class="content">
-        <!-- Roster shtuff (will be converted to a directive -->
-        <div class="player-stats-container flex">
+        <!-- enables coach to select lineup -->
+        <div class="player-stats-container flex" role="coach">
             <div class="roster-container flex-one">
                 <p>Select your lineup by clicking on the players in the list and inserting them into the desired position or bench. Inserted players can be disabled by clicking on their position.</p><br>
                 <div class="list">
@@ -27,7 +28,12 @@
                     <h1>Save Roster</h1>
                 </div>
             </div>
-
+        </div>
+        <!-- parent is not allowed to setup roster -->
+        <div class="player-stats-container flex" role="parent">
+            <div class="roster-container flex-one">
+                <p>This game has yet to be created. Please come back at a later time.</p>
+            </div>
         </div>
     </div>
 </div>

@@ -1,3 +1,4 @@
+<!-- modal for a coach to invite more parents -->
 <div class="modal invite registration">
     <div class="head flex">
         <h1 class="flex-one">Emails</h1>
@@ -16,7 +17,6 @@
                         <div class="button green inline" ng-click="addEmail(invite.email)"><h1>Add Email</h1></div>
                     </form>
                 </div>
-            <!-- TODO: change the close button into not an 'X' (make it pretty) -->
             <div class="box">
                 <div class="email-box flex" ng-repeat="email in inviteEmails track by $index">
                     <p class="ellipse">{{email}}</p><div class="close-button" ng-click="removeEmail($index)"><p>x</p></div>
@@ -24,6 +24,7 @@
             </div>
         </div>
     </div>
+    <!-- buttons -->
     <div class="foot flex">
         <div class="button green flex-one" ng-click="sendEmailInvite();">
             <h1>Send</h1>

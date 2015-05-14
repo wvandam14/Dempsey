@@ -1,3 +1,4 @@
+// directive to handle email invites
 soccerStats.directive('inviteEmailModal', function (viewService, toastService, configService, dataService, emailService) {
     return {
         restrict: 'E',
@@ -12,7 +13,7 @@ soccerStats.directive('inviteEmailModal', function (viewService, toastService, c
                 viewService.closeModal(self);
             }
 
-                // Array containing the emails who will receive the invitation to the team
+            // Array containing the emails who will receive the invitation to the team
             $scope.inviteEmails = [];
             $scope.addEmail = function () {
                 if(viewService.validateAreaByFormName("inviteForm")){

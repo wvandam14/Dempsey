@@ -1,3 +1,4 @@
+// directive in charge of handling the shot accuracy chart
 soccerStats.directive('shotAccuracyChart', function () {
     return {
         restrict: 'E',
