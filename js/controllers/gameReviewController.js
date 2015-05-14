@@ -5,69 +5,69 @@ soccerStats.controller('gameReviewController',
             $scope.currFormation = [
                 {
                    type: "GK",
-                   player: $scope.players[0],
+                   player: {},
                    x: 44,
                    y: 74
                 },
                 {
                    type: "CB",
-                   player: $scope.players[1],
+                   player: {},
                    x: 56,
                    y: 55
                 },
                 {
                    type: "CB",
-                   player: $scope.players[2],
+                   player: {},
                    x: 74,
                    y: 52
                 },
                 {
                    type: "CB",
-                   player: $scope.players[3],
+                   player: {},
                    x: 15,
                    y: 52
                 },
                 {
                    type: "CB",
-                   player: $scope.players[4],
+                   player: {},
                    x: 33,
                    y: 55
                 },
                 
                 {
                    type: "CM",
-                   player: $scope.players[5],
+                   player: {},
                    x: 56,
                    y: 31
                 },
                 {
                    type: "CM",
-                   player: $scope.players[6],
+                   player: {},
                    x: 74,
                    y: 28
                 },
                 {
                    type: "CM",
-                   player: $scope.players[7],
+                   player: {},
                    x: 15,
                    y: 28
                 },
                 {
                    type: "CM",
-                   player: $scope.players[8],
+                   player: {},
                    x: 33,
                    y: 31
                 },
                 
                 {
                    type: "ST",
-                   player: $scope.players[9],
+                   player: {},
                    x: 56,
                    y: 10
                 },
                 {
                    type: "ST",
-                   player: $scope.players[10],
+                   player: {},
                    x: 33,
                    y: 10
                 },
@@ -118,7 +118,6 @@ soccerStats.controller('gameReviewController',
                 passCompletion = 0,
                 passTotal = 0;
 
-
             $scope.passData = {
                 data : [
                     {
@@ -134,7 +133,7 @@ soccerStats.controller('gameReviewController',
                         label: "Completed"
                     }
                 ],
-                turnovers: 0,
+                completed: 0,
                 total: 0,
                 successRate: 0
             };
@@ -146,17 +145,29 @@ soccerStats.controller('gameReviewController',
                 offGoal: 0,
                 blocked: 0
             };
+
+            $scope.otherData = {
+                goals: 0,
+                fouls: 0,
+                reds: 0,
+                yellows: 0
+            };
             //console.log($scope.players);
             _.each($scope.players, function(player) {
                 $scope.shotCountData.shots += player.shots.total;
                 $scope.shotCountData.onGoal += player.shots.onGoal.total;
                 $scope.shotCountData.offGoal += player.shots.offGoal.total;
                 $scope.shotCountData.blocked += player.shots.blocks.total;
-                $scope.passData.turnovers += player.passes.turnovers;
+                $scope.otherData.goals += player.shots.goals.total;
+                $scope.otherData.fouls += player.total.fouls;
+                $scope.otherData.reds += player.total.red.total;
+                $scope.otherData.yellows += player.total.yellow.total;
+                $scope.passData.completed += player.passes.completed;
                 $scope.passData.total += player.passes.total;
             });
 
-            $scope.passData.successRate = $scope.passData.total && $scope.passData.turnovers ? Math.round((($scope.passData.total - $scope.passData.turnovers) / $scope.passData.total)*100) : 0;
+
+            $scope.passData.successRate = $scope.passData.total && $scope.passData.completed ? Math.round(( $scope.passData.completed / $scope.passData.total)*100) : 0;
             $scope.passData.data[1].value = $scope.passData.successRate;
             $scope.passData.data[0].value = 100 - $scope.passData.successRate;
 
@@ -213,8 +224,39 @@ soccerStats.controller('gameReviewController',
                     }
                 }
             });
-            console.log($scope.shotLinesData);
-            
+
+            _.each($scope.players, function(player) {
+                if (!player.benched) {
+                    var position = _.find($scope.currFormation, function(position) {
+                        return player.position == position.type
+                            && _.isEmpty(position.player)
+                    });
+                    position.player = player;
+                }
+            });
+
+            _.each($scope.players, function(player) {
+                //console.log(player);
+                var assistPlayer = {};
+                _.each(player.shots.goals.assistedBy, function(assistId) {
+                    assistPlayer = _.find($scope.players, function(assistPlayer) {
+                        return  assistPlayer.id === assistId;
+                    });
+                    player.notableEvents.push({
+                        type: "Assisted By",
+                        assistedBy: assistPlayer.lname
+                    });
+                });
+                //console.log(assistPlayer);
+                //if (assistPlayer) {
+                //    player.notableEvents.push({
+                //        type: "Assisted By",
+                //        assistedBy: assistPlayer.lname
+                //    });
+                //    player.shots.goals.assistedBy.push(assistPlayer.lname);
+                //}
+            });
+
             $rootScope.$broadcast(configService.messages.notableEvents, {players: $scope.players, subs: $scope.gameSubs});
 
         };
@@ -244,11 +286,12 @@ soccerStats.controller('gameReviewController',
                         $scope.gameStats = {
                             corners : game.get('gameTeamStats').get('corners') ? game.get('gameTeamStats').get('corners') : 0,
                             offsides : game.get('gameTeamStats').get('offsides') ? game.get('gameTeamStats').get('offsides') : 0,
-                            goalsMade : game.get('gameTeamStats').get('goalsMade') ? game.get('gameTeamStats').get('goalsMade') : 0,
+                            //goalsMade : game.get('gameTeamStats').get('goalsMade') ? game.get('gameTeamStats').get('goalsMade') : 0,
                             goalsTaken : game.get('gameTeamStats').get('goalsTaken') ? game.get('gameTeamStats').get('goalsTaken') : 0,
-                            passes : game.get('gameTeamStats').get('passes') ? game.get('gameTeamStats').get('passes') : 0,
+                            //passes : game.get('gameTeamStats').get('passes') ? game.get('gameTeamStats').get('passes') : 0,
                             tackles : game.get('gameTeamStats').get('tackles') ? game.get('gameTeamStats').get('tackles') : 0,
-                            fouls :  game.get('gameTeamStats').get('fouls') ? game.get('gameTeamStats').get('fouls') : 0,
+                            //fouls :  game.get('gameTeamStats').get('fouls') ? game.get('gameTeamStats').get('fouls') : 0,
+                            saves :  game.get('gameTeamStats').get('saves') ? game.get('gameTeamStats').get('saves') : 0,
                             possession : game.get('gameTeamStats').get('possession') ? game.get('gameTeamStats').get('possession') : 0,
                             teamPossession : {
                                 data : [
@@ -281,17 +324,6 @@ soccerStats.controller('gameReviewController',
             });
             //return promise;
         };
-
-        // $scope.setGame = function(game) {
-        //     console.log(dataService.getCurrentGame());
-        //     //console.log(game);
-        //       // $scope.populateGameData(game).then(function(gameStats){
-        //       //       $scope.populatePlayers(gameStats);
-        //       //   }).then(function(result){
-        //       //       $scope.populateStats();
-        //       //   });
-        //     $scope.populateGameData(game);
-        // }
            
         var currentUser = Parse.User.current();
         $scope.currPlayer = dataService.currentPlayer;
@@ -301,6 +333,7 @@ soccerStats.controller('gameReviewController',
         $scope.shotLinesData = [];
         $scope.passData = {};
         $scope.currFormation = [];
+        $scope.otherData = {};
         $scope.notes = '';
         $scope.shotCountData = {
             shots: 0,

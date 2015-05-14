@@ -702,6 +702,7 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                     var playerStats = new gamePlayerStatsTable();
                     playerStats.set("player", ptr);
                     !rosterPlayer.benched ? playerStats.set("startingStatus", "On") : playerStats.set("startingStatus", "Off");
+                    playerStats.set("position", rosterPlayer.position);
                     playerStats.save().then(function (gamePlayerStats) {
                         players.push(gamePlayerStats);
 
@@ -722,7 +723,7 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                     gameStats.set("roster",players);
                     return gameStats.save();
                 }).then(function(gameStats){
-                     game.set("status", "prepared");
+                     game.set("status", "ready ");
                      return game.save();
                 }).then(function(result){
                     toastService.success("Game roster successfully created");
@@ -838,19 +839,22 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
         }
 
         , gamePlayerConstructor = function(player, gamePlayer) {
+            //console.log(gamePlayer);
             var retPlayer =
                 {
+                    id: gamePlayer.id,
                     fname: player.get("firstName"),
                     lname: player.get("lastName"),
                     number: player.get("jerseyNumber"),
                     photo: player.get("photo") ? player.get("photo")._url : './img/player-icon.svg',
-                    position: gamePlayer.get("position"),
+                    position: gamePlayer.get("position") ? gamePlayer.get("position") : '',
+                    benched: gamePlayer.get("startingStatus") !== "On" ? true : false,
                     notableEvents: [],
                     eventsInit : function(retPlayer, subbedOut, subbedIn) {
                         if (subbedOut) {
                             _.each(subbedOut, function (subOut) {
                                 retPlayer.notableEvents.push({
-                                    type: "Subbed out",
+                                    type: "Subbed Out",
                                     time: subOut
                                 });
                             });
@@ -858,14 +862,16 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                         if (subbedIn) {
                             _.each(subbedIn, function (subIn) {
                                 retPlayer.notableEvents.push({
-                                    type: "Subbed in",
+                                    type: "Subbed In",
                                     time: subIn
                                 });
                             });
                         }
                     },
                     total: {
-                        fouls: gamePlayer.get("fouls"),
+                        fouls: gamePlayer.get("fouls") ? gamePlayer.get("fouls") : 0,
+                        assists: gamePlayer.get("assists") ? gamePlayer.get("assists") : 0,
+                        playingTime: gamePlayer.get("playingTime") ? gamePlayer.get("playingTime") : 0,
                         red: {
                             total: 0,
                             time: []
@@ -874,15 +880,24 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                             total: 0,
                             time: []
                         },
-                        cardInit: function(playerCards, cards) {
+                        cardInit: function(player, cards) {
+                            playerCards = player.total;
                             _.each(cards, function(card) {
-                               if (card.type == "yellow") {
+                               if (card.type == "red") {
                                    playerCards.red.total++;
                                    playerCards.red.time.push(card.time);
+                                   player.notableEvents.push({
+                                       type: "red",
+                                       time: card.time
+                                   });
                                }
-                                else if (card.type == "red") {
+                                else if (card.type == "yellow") {
                                    playerCards.yellow.total++;
                                    playerCards.yellow.time.push(card.time);
+                                   player.notableEvents.push({
+                                       type: "yellow",
+                                       time: card.time
+                                   });
                                }
 
                             });
@@ -894,13 +909,13 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                                 value: 0,
                                 color: "#B4B4B4",
                                 highlight: "#B4B4B4",
-                                label: "Attempted"
+                                label: "Completed"
                             },
                             {
                                 value: 0,
                                 color:"#5DA97B",
                                 highlight: "#5DA97B",
-                                label: "Completed"
+                                label: "Total"
                             }
                         ],
                         completed: 0,
@@ -908,7 +923,7 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                         passInit: function(playerPasses, passes) {
                             playerPasses.completed = passes.completed;
                             playerPasses.total = passes.total;
-                            playerPasses.data[0].value = passes.completed;;
+                            playerPasses.data[0].value = passes.completed;
                             playerPasses.data[1].value = passes.total;
                         }
                     },
@@ -948,9 +963,11 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                             total: 0,
                             startPos: [],
                             resultPos: [],
-                            time: []
+                            time: [],
+                            assistedBy: []
                         },
-                        shotInit: function(playerShots, shots) {
+                        shotInit: function(player, shots) {
+                            playerShots = player.shots;
                             if(shots){
                                 _.each(shots,function(shot){
                                     switch(shot.type){
@@ -969,6 +986,13 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                                             playerShots.goals.startPos.push(shot.shotPos);
                                             playerShots.goals.resultPos.push(shot.resultPos);
                                             playerShots.goals.time.push(shot.time);
+                                            if (shot.assistedBy) {
+                                                playerShots.goals.assistedBy.push(shot.assistedBy);
+                                            }
+                                            player.notableEvents.push({
+                                                type: "goal",
+                                                time: shot.time
+                                            });
                                             break;
                                         case "blocked":
                                             playerShots.blocks.total++;
@@ -988,13 +1012,13 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                     }
                 };
             if (gamePlayer.get("cards"))
-                retPlayer.total.cardInit(retPlayer.total, gamePlayer.get("cards"));
+                retPlayer.total.cardInit(retPlayer, gamePlayer.get("cards"));
             if (gamePlayer.get("subbedOut") || gamePlayer.get("subbedIn"))
                 retPlayer.eventsInit(retPlayer, gamePlayer.get("subbedOut"), gamePlayer.get("subbedIn"));
             if (gamePlayer.get("passes"))
                 retPlayer.passes.passInit(retPlayer.passes, gamePlayer.get("passes"));
             if (gamePlayer.get("shots"))
-                retPlayer.shots.shotInit(retPlayer.shots, gamePlayer.get("shots"));
+                retPlayer.shots.shotInit(retPlayer, gamePlayer.get("shots"));
             return retPlayer;
         }
 
