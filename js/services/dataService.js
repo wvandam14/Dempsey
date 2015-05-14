@@ -951,19 +951,19 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                             time: []
                         },
                         shotInit: function(playerShots, shots) {
-
                             if(shots){
                                 _.each(shots,function(shot){
                                     switch(shot.type){
                                         case "offGoal":
                                             playerShots.offGoal.total++;
-                                            playerShots.offGoal.startPos.push(shot.offGoal.shotPos);
-                                            playerShots.offGoal.resultPos.push(shot.offGoal.resultPos);
+                                            playerShots.offGoal.startPos.push(shot.shotPos);
+                                            playerShots.offGoal.resultPos.push(shot.resultPos);
                                             break;
                                         case "onGoal":
                                             playerShots.onGoal.total++;
-                                            playerShots.onGoal.startPos.push(shot.onGoal.shotPos);
-                                            playerShots.onGoal.resultPos.push(shot.onGoal.resultPos);
+                                            playerShots.onGoal.startPos.push(shot.shotPos);
+                                            playerShots.onGoal.resultPos.push(shot.resultPos);
+                                            break;
                                         case "goal":
                                             playerShots.goals.total++;
                                             playerShots.goals.startPos.push(shot.shotPos);
@@ -972,8 +972,8 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                                             break;
                                         case "blocked":
                                             playerShots.blocks.total++;
-                                            playerShots.blocks.startPos.push(shot.blocked.shotPos);
-                                            playerShots.blocks.resultPos.push(shot.blocked.resultPos);
+                                            playerShots.blocks.startPos.push(shot.shotPos);
+                                            playerShots.blocks.resultPos.push(shot.resultPos);
                                             break;
                                     }
                                 });
@@ -995,7 +995,6 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                 retPlayer.passes.passInit(retPlayer.passes, gamePlayer.get("passes"));
             if (gamePlayer.get("shots"))
                 retPlayer.shots.shotInit(retPlayer.shots, gamePlayer.get("shots"));
-
             return retPlayer;
         }
 

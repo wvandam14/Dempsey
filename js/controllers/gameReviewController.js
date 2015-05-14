@@ -164,7 +164,9 @@ soccerStats.controller('gameReviewController',
 
             //console.log($scope.passData);
             $scope.shotLinesData = [];
+            //console.log($scope.players.shots);
             _.each($scope.players, function(player) {
+                //console.log($scope.shotLinesData.length);
                 var shotLineData = {};
                 if (player.shots.offGoal.total) {
                     for (var i = 0; i < player.shots.offGoal.total; i++) {
@@ -192,7 +194,7 @@ soccerStats.controller('gameReviewController',
                     for (var i = 0; i < player.shots.blocks.total; i++) {
                         shotLineData =
                         {
-                            type: 'on',
+                            type: 'blocked',
                             shotPos: player.shots.blocks.startPos[i],
                             resultPos: player.shots.blocks.resultPos[i]
                         };
