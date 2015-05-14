@@ -6,12 +6,12 @@
                 <div class="list">
                     <!-- TODO: Figure out how we want to store the roster vs lineup data and then display accordingly -->
                     <h5 class="title">LINEUP</h5>
-                    <div class="item player-selector flex flex-center-vertical" ng-repeat="player in players | orderBy:'name'" ng-class="{selected: isSelected(player)}" ng-click="selectPlayer(player)">
+                    <div class="item player-selector flex flex-center-vertical" ng-repeat="player in players | orderBy:'lname'" ng-class="{selected: isSelected(player)}" ng-click="selectPlayer(player)">
                         <div class="circle flex flex-center">
                             <h5>{{player.number}}</h5>
                         </div>
                         <div class="flex flex-one">
-                            <h5 class="ellipse">{{player.name}}</h5><h5><span class="flex flex-center">{{player.position}}</span></h5>
+                            <h5 class="ellipse">{{player.fname + ' ' + player.lname}}</h5><h5><span class="flex flex-center">{{player.position}}</span></h5>
                         </div>
                     </div>
                 </div>
@@ -24,7 +24,7 @@
                                 <img src="{{currPlayer.photo}}" />
                             </div>
                             <div  class="flex flex-column">
-                                <h3>{{currPlayer.name}}</h3>
+                                <h3>{{currPlayer.fname + ' ' + currPlayer.lname}}</h3>
                                 <div class="flex">
                                     <h5>{{currPlayer.position}}</h5><span>{{currPlayer.number}}</span>
                                 </div>
@@ -58,20 +58,20 @@
                                 <h5>GOALS</h5>
                             </div>
                             <div class="flex flex-center flex-column flex-one">
-                                <h6>{{currPlayer.total.passes}}</h6>
+                                <h6>{{currPlayer.passes.total}}</h6>
                                 <h5>PASSES</h5>
                             </div>
-                            <div class="flex flex-center flex-column flex-one">
-                                <h6>{{currPlayer.total.corners}}</h6>
-                                <h5>CORNERS</h5>
-                            </div>
+                            <!--<div class="flex flex-center flex-column flex-one">-->
+                                <!--<h6>{{currPlayer.total.corners}}</h6>-->
+                                <!--<h5>CORNERS</h5>-->
+                            <!--</div>-->
                         </div>
                         <div class="flex">
                             <div class="flex flex-center flex-one">
-                                <doughnut-chart data="currPlayer.passData" num="'8/10'" label="'PASSES COMPLETED'" style="zoom: 0.5;"></doughnut-chart>
+                                <doughnut-chart data="currPlayer.passes.data" num="currPlayer.passes.completion" label="'PASSES COMPLETED'" style="zoom: 0.5;"></doughnut-chart>
                             </div>
                             <div class="flex flex-center flex-one">  
-                                <doughnut-chart data="currPlayer.shots.data" num="'3/4'" label="'SHOTS ON GOAL'"  style="zoom: 0.5;"></doughnut-chart>
+                                <doughnut-chart data="currPlayer.shots.data" num="currPlayer.shots.accuracy + '%'" label="'SHOTS ON GOAL'"  style="zoom: 0.5;"></doughnut-chart>
                             </div>
                         </div>
                         <div class="flex">

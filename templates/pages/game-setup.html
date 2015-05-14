@@ -3,6 +3,7 @@
         <!-- Roster shtuff (will be converted to a directive -->
         <div class="player-stats-container flex">
             <div class="roster-container flex-one">
+                <p>Select your lineup by clicking on the players in the list and inserting them into the desired position or bench. Inserted players can be disabled by clicking on their position.</p><br>
                 <div class="list">
                     <!-- TODO: Figure out how we want to store the roster vs lineup data and then display accordingly -->
                     <h5 class="title">LINEUP</h5>
@@ -21,6 +22,7 @@
             </div>
             <div class="field-container flex flex-column flex-one">
                 <formation-field formation="currFormation" select-player="assignPosition(player)" is-selected="isSelected(player)"></formation-field>
+                <bench-formation formation="bench" select-player="assignBench(player)" is-selected="isSelected(player)"></bench-formation>
                 <div class="button green" ng-click="saveRoster()" ng-class="{disabled: !checkRoster()}">
                     <h1>Save Roster</h1>
                 </div>

@@ -28,6 +28,11 @@ soccerStats.controller('shellController',
                        $scope.currentUser = {};
                    }
                }
+               else{
+                    if (Parse.User.current()){
+                        viewService.goToPage('/home');
+                   }
+               }
 
                 /*dataService.getTeams( function(_teams) {
                     dataService.setCurrentTeam(_teams[0]);

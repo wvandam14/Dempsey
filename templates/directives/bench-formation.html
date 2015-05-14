@@ -1,0 +1,17 @@
+<div class="relative">
+    <div class="list">
+        <!-- TODO: Figure out how we want to store the roster vs lineup data and then display accordingly -->
+        <h5 class="title">Bench</h5>
+        <div class="item player-selector flex flex-center-vertical"
+             ng-class="{selected: isSelected({player: position.player})}"
+             ng-click="selectPlayer({player: position.player})"
+             ng-repeat="position in formation">
+            <div class="circle flex flex-center">
+                <h5>{{position.player.number}}</h5>
+            </div>
+            <div class="flex flex-one">
+                <h6 class="ellipse">{{position.player.name}}</h6><h5><span class="flex flex-center">{{position.player.position}}</span></h5>
+            </div>
+        </div>
+    </div>
+</div>

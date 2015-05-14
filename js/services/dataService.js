@@ -675,29 +675,41 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
         }
 
         , createRoster = function(roster, gameId){
-
             //console.log(gameId);
 
             var players = [];
             var game = {};
             var promise = new Parse.Promise();
-            _.each(roster,function(rosterPlayer){
-                var ptr = {
-                    "__type" : "Pointer",
-                    "className" : "Players",
-                    "objectId" : rosterPlayer.id
-                };
-
-                var playerStats = new gamePlayerStatsTable();
-                playerStats.set("player",ptr);
-                rosterPlayer.selected ? playerStats.set("startingStatus","On") : playerStats.set("startingStatus","Off");
-                playerStats.save().then(function(gamePlayerStats){
-                    players.push(gamePlayerStats);
-                    
-                    if(players.length == roster.length){
-                        promise.resolve("ok");
+            var getRosterLength = function(roster) {
+                var counter = 0;
+                 _.each(roster, function(rosterPlayer) { 
+                    if (rosterPlayer.selected) {
+                        counter++;
                     }
-                });
+                 });
+                 return counter;
+            }
+            var rosterLength = getRosterLength(roster);
+            
+            _.each(roster, function(rosterPlayer){
+                if (rosterPlayer.selected) {
+                    var ptr = {
+                        "__type": "Pointer",
+                        "className": "Players",
+                        "objectId": rosterPlayer.id
+                    };
+
+                    var playerStats = new gamePlayerStatsTable();
+                    playerStats.set("player", ptr);
+                    !rosterPlayer.benched ? playerStats.set("startingStatus", "On") : playerStats.set("startingStatus", "Off");
+                    playerStats.save().then(function (gamePlayerStats) {
+                        players.push(gamePlayerStats);
+
+                        if (players.length == rosterLength) {
+                            promise.resolve("ok");
+                        }
+                    });
+                } 
             });
 
             promise.then(function(result){
@@ -722,81 +734,12 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
             });
         }
 
-        , saveRoster = function (roster, gameId) {
-
-            getGameStatsById(gameId).then(function(game) {
-                var rosterArray = [];
-                var gameTeamStats = game.get("gameTeamStats");
-                //gameTeamStats.attributes.roster =   gameTeamStats.get("roster") ?  gameTeamStats.get("roster"):[];
-                _.each(roster, function(gamePlayer) {
-
-
-                    getPlayerByPlayerId(gamePlayer.id, function(player) {
-                        var gamePlayerStats = new gamePlayerStatsTable();
-                        gamePlayerStats.set("player", player);
-                        if (gamePlayer.selected)
-                            gamePlayerStats.set("startingStatus", "On");
-                        else
-                            gamePlayerStats.set("startingStatus", "Off");
-                        gamePlayerStats.set("position", gamePlayer.position);
-
-                        gamePlayerStats.save().then(function(gamePlayerStats) {
-                                rosterArray.push(gamePlayerStats);
-                            },
-                            function(obj, error) {
-                                console.log("Error: " + error.code + " " + error.message);
-                                toastService.error("There was a an error (" + error.code +"). Please try again.");
-                            });
-                    });
-                });
-                console.log(gameTeamStats);
-                console.log(rosterArray);
-                gameTeamStats.set("roster", rosterArray);
-                gameTeamStats.save(null, {
-                    success: function(gameTeamStats) {
-                        console.log(gameTeamStats);
-                        console.log('added roster');
-                    },
-                    error: function(error) {
-                        console.log("Error: " + error.code + " " + error.message);
-                    }
-                });
-            });
-        }
-        // , saveGameTeamStats = function(gameTeamStats, gameId) {
-        //     //console.log(gameTeamStats);
-        //     gameTeamStats.save(null, {
-        //         success: function(gameTeamStats) {
-        //             console.log(gameTeamStats);
-        //             getGameByGameId(gameId).then(function(game) {
-        //                 game.set("status", "prepared");
-        //                 game.save(null, {
-        //                     success: function(game) {
-        //                         toastService.success("Game roster successfully created");
-        //                         viewService.goToPage('/game-review');
-        //                     },
-        //                     error: function(error) {
-        //                         console.log("Error: " + error.code + " " + error.message);
-        //                         toastService.error("There was a an error (" + error.code +"). Please try again.");
-        //                     }
-        //                 });
-
-        //             });
-
-        //         } ,
-        //         error: function(error) {
-        //             console.log("Error: " + error.code + " " + error.message);
-        //             toastService.error("There was a an error (" + error.code +"). Please try again.");
-        //         }
-        //     });
-        // }
-
         , playerConstructor = function(player, stats) {
             var retPlayer = {
                                 id : player.id,
                                 photo: player.attributes.photo ? player.attributes.photo._url : './img/player-icon.svg',
-                                fname: player.attributes.name,
-                                lname: '',
+                                fname: player.attributes.firstName,
+                                lname: player.attributes.lastName,
                                 number: player.attributes.jerseyNumber,
                                 position: '',
                                 total: {
@@ -1142,7 +1085,6 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
         getParentByPlayerId : getParentByPlayerId,
         getGamePlayerStatsById : getGamePlayerStatsById,
         gamePlayerConstructor : gamePlayerConstructor,
-        saveRoster : saveRoster,
         getGameByGameId : getGameByGameId,
         createRoster : createRoster
     }

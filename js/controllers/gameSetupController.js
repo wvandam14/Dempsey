@@ -10,7 +10,7 @@ soccerStats.controller('gameSetupController',
 
 
         $scope.initFormation = function() {
-          $scope.currFormation = [
+            $scope.currFormation = [
               {
                  type: "GK",
                  player: {},
@@ -80,6 +80,29 @@ soccerStats.controller('gameSetupController',
                  y: 10
               },
           ];
+            $scope.bench = [
+                {
+                    player: {}
+                },
+                {
+                    player: {}
+                },
+                {
+                    player: {}
+                },
+                {
+                    player: {}
+                },
+                {
+                    player: {}
+                },
+                {
+                    player: {}
+                },
+                {
+                    player: {}
+                },
+            ];
         };
 
         var populatePlayers = function(team) {
@@ -98,6 +121,7 @@ soccerStats.controller('gameSetupController',
                                     photo: player.get("photo") ? player.get("photo")._url : './img/player-icon.svg',
                                     position: '',
                                     selected: false,
+                                    benched: false,
                                     notableEvents: [
                                         {
                                             type: "Subbed out",
@@ -189,43 +213,90 @@ soccerStats.controller('gameSetupController',
         };
 
         $scope.assignPosition = function(player) {
-            //console.log($scope.currFormation);
+            console.log(player);
             var position = _.find($scope.currFormation, function(position) {return player == position.player});
-
+            if (!_.isEmpty(player)) {
+                var index = $scope.roster.indexOf(player);
+                $scope.roster[index].selected = false;
+                $scope.roster[index].position = '';
+            }
             if ($scope.playerSelected) {
-                if (!_.isEmpty(player)) {
-                    var index = $scope.roster.indexOf(player);
-                    $scope.roster[index].selected = false;
-                    $scope.roster[index].position = '';
-                }
+                //if (!_.isEmpty(player)) {
+                //    var index = $scope.roster.indexOf(player);
+                //    $scope.roster[index].selected = false;
+                //    $scope.roster[index].position = '';
+                //}
                 var rosterIndex = $scope.roster.indexOf($scope.currPlayer);
                 position.player = $scope.currPlayer;
                 $scope.roster[rosterIndex].selected = true;
                 formationIndex = $scope.currFormation.indexOf(position);
                 $scope.roster[rosterIndex].position = $scope.currFormation[formationIndex].type;
             } else {
-                if (!_.isEmpty(player)) {
-                    //console.log(player);
-                    var index = $scope.roster.indexOf(player);
-                    $scope.roster[index].selected = false;
-                    $scope.roster[index].position = '';
-                }
+                //if (!_.isEmpty(player)) {
+                //    //console.log(player);
+                //    var index = $scope.roster.indexOf(player);
+                //    $scope.roster[index].selected = false;
+                //    $scope.roster[index].position = '';
+                //}
                 position.player = {};
             }
             $scope.currPlayer = {};
             $scope.playerSelected = false;
         };
-        $scope.flag = false;
+
+        $scope.assignBench = function(player) {
+            console.log(player);
+            var position = _.find($scope.bench, function(position) {return player == position.player});
+
+            if (!_.isEmpty(player)) {
+                var index = $scope.roster.indexOf(player);
+                $scope.roster[index].selected = false;
+                $scope.roster[index].position = '';
+                $scope.roster[index].benched = false;
+            }
+            if ($scope.playerSelected) {
+                //if (!_.isEmpty(player)) {
+                //    var index = $scope.roster.indexOf(player);
+                //    $scope.roster[index].selected = false;
+                //    $scope.roster[index].position = '';
+                //    $scope.roster[index].benched = false;
+                //}
+                var rosterIndex = $scope.roster.indexOf($scope.currPlayer);
+                position.player = $scope.currPlayer;
+                $scope.roster[rosterIndex].selected = true;
+                $scope.roster[rosterIndex].benched = true;
+            } else {
+                //if (!_.isEmpty(player)) {
+                //    //console.log(player);
+                //    var index = $scope.roster.indexOf(player);
+                //    $scope.roster[index].selected = false;
+                //    $scope.roster[index].position = '';
+                //    $scope.roster[index].benched = false;
+                //}
+                position.player = {};
+            }
+            $scope.currPlayer = {};
+            $scope.playerSelected = false;
+        };
+
+        var total = $scope.currFormation.length + $scope.bench.length;
 
         $scope.checkRoster = function() {
             var counter = 0;
             _.each($scope.currFormation, function(position) {
-               if (!jQuery.isEmptyObject(position.player)) {
+               if (!_.isEmpty(position.player)) {
                    counter++;
                }
             });
+
+            _.each($scope.bench, function(position) {
+                if (!_.isEmpty(position.player)) {
+                    counter++;
+                }
+            });
+
             //console.log(counter);
-            if (counter === $scope.currFormation.length) return true;
+            if (counter === total) return true;
             else return false;
         };
 
