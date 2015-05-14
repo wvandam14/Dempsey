@@ -21,19 +21,22 @@ soccerStats.controller('emailController',
 
 		        while (pair = tokenize.exec(querystring))
 		           $scope.urlParams[re_space(pair[1])] = re_space(pair[2]);
+		        console.log($scope.urlParams)
+
+		        var base = 'https://www.parse.com';
+				var id = $scope.urlParams['id'];
+				document.getElementById('form').setAttribute('action', base + '/apps/' + id + '/request_password_reset');
+				document.getElementById('username').value = $scope.urlParams['username'];
+				//document.getElementById('username_label').appendChild(document.createTextNode($scope.urlParams['username']));
+
+				document.getElementById('token').value = $scope.urlParams['token'];
+				if ($scope.urlParams['error']) {
+				  document.getElementById('error').appendChild(document.createTextNode($scope.urlParams['error']));
+				}
+				$scope.$apply();
 		    })();
 
-		    var base = 'https://www.parse.com';
-		    var id = $scope.urlParams['id'];
-		    document.getElementById('form').setAttribute('action', base + '/apps/' + id + '/request_password_reset');
-		    document.getElementById('username').value = $scope.urlParams['username'];
-		    //document.getElementById('username_label').appendChild(document.createTextNode($scope.urlParams['username']));
-
-		    document.getElementById('token').value = $scope.urlParams['token'];
-		    if ($scope.urlParams['error']) {
-		      document.getElementById('error').appendChild(document.createTextNode($scope.urlParams['error']));
-		    }
-		    $scope.$apply();
+		    
 		 //    if ($scope.urlParams['app']) {
 		 //      document.getElementById('app').appendChild(document.createTextNode(' for ' + $scope.urlParams['app']));
 			// }
