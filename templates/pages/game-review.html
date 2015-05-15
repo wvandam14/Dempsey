@@ -81,7 +81,7 @@
 
         <!-- List of lineup and bench information  -->
         <div class="player-stats-container flex section">
-            <div class="roster-container flex-one">
+            <div class="roster-container">
                 <div class="list">
                     <h5 class="title">LINEUP</h5>
                     <div ng-if="!player.benched" class="player-selector flex flex-center-vertical" ng-repeat="player in players | orderBy:'lname'" ng-class="{selected: isSelected(player)}" ng-click="selectPlayer(player)">
@@ -147,7 +147,7 @@
                             </div>
                             <div class="flex flex-center flex-column flex-one">
                                 <h6>{{currPlayer.total.playingTime + "'"}}</h6>
-                                <h5>PLAYING TIME</h5>
+                                <h5>TIME</h5>
                             </div>
                             <div class="flex flex-center flex-column flex-one">
                                 <h6>{{currPlayer.passes.total}}</h6>

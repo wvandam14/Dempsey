@@ -31,7 +31,7 @@ Parse.Cloud.define("sendEmailInvite", function(request, response) {
                 // email message
                 emailBody = "<p style='font-family:sans-serif;'>" +
                     "Hi There! " +
-                    "<br/><br/>You have been invited to Soccer Stats by <i>" + coachName + "</i> with the team <b>" + teamName + "</b>! " +
+                    "<br/><br/>You have been invited to Premier Stats by <i>" + coachName + "</i> with the team <b>" + teamName + "</b>! " +
                     "<br/><br/>To login, go to <a href='http://alecmmoore.github.io#/login?teamid=" + teamId + "'>http://alecmmoore.github.io#/login?teamid=" + teamId + "</a> and use your email and temporary password to log in. You can change your password once you have already logged in." +
                     "<br/><br/><br/><br/>" +
                     "Email: <b>" + userEmail + "</b> " +
@@ -41,7 +41,7 @@ Parse.Cloud.define("sendEmailInvite", function(request, response) {
                     "Please logon and register your player.<br/><br/>" +
                     "Thanks!" +
                     "<br/>" +
-                    "Soccer Stats Development Team</p>";
+                    "Premier Stats Development Team</p>";
 
                 // query for a team and create a new parent user
                 var Teams = Parse.Object.extend("Team");
@@ -62,8 +62,8 @@ Parse.Cloud.define("sendEmailInvite", function(request, response) {
                                 // Send Email to new user
                                 email = sendgrid.Email({to: userEmail});
                                 email.setFrom('no-reply@soccerstats.com');
-                                email.setFromName('Soccer Stats');
-                                email.setSubject('Welcome to Soccer Stats!');
+                                email.setFromName('Premier Stats');
+                                email.setSubject('Welcome to Premier Stats!');
                                 email.setHTML(emailBody);
 
                                 sendgrid.sendEmail(email).then(
@@ -93,7 +93,7 @@ Parse.Cloud.define("sendEmailInvite", function(request, response) {
 
                 emailBody = "<p style='font-family:sans-serif;'>" +
                     "Hi There! " +
-                    "<br/><br/>You have been invited to Soccer Stats by <i>"
+                    "<br/><br/>You have been invited to Premier Stats by <i>"
                     + coachName + "</i> with the team <b>" + teamName + "</b>! " +
                     "<br/><br/>" +
                     "Looks like you already have an account with us, so go ahead and log in at http://alecmmoore.github.io#/login to accept the invitation." +
@@ -101,7 +101,7 @@ Parse.Cloud.define("sendEmailInvite", function(request, response) {
                     "Please logon and register your player." +
                     "Thanks!" +
                     "<br/>" +
-                    "Soccer Stats Development Team</p>";
+                    "Premier Stats Development Team</p>";
 
 
                 var Teams = Parse.Object.extend("Team");
@@ -116,8 +116,8 @@ Parse.Cloud.define("sendEmailInvite", function(request, response) {
                             success: function (data) {
                                 email = sendgrid.Email({to: userEmail});
                                 email.setFrom('no-reply@soccerstats.com');
-                                email.setFromName('Soccer Stats');
-                                email.setSubject('Welcome to Soccer Stats!');
+                                email.setFromName('Premier Stats');
+                                email.setSubject('Welcome to Premier Stats!');
                                 email.setHTML(emailBody);
 
                                 sendgrid.sendEmail(email).then(

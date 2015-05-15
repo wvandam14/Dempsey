@@ -51,9 +51,9 @@ testing mobile (chrome emulation)
 	// tested access to registration page, page accessable through direct URL
 	login page on other devices
 	// works as intended with the exception of the previously stated errors remaining present
-	// smaller devices have an inflated "Welcome to Soccer Stats!" window, 
+	// smaller devices have an inflated "Welcome to Premier Stats!" window, 
 		but might actualy be favorable so that the window is still useable on those smaller devices
-	// screen rotation is miss scailing the soccer stats window
+	// screen rotation is miss scailing the Premier Stats window
 	registration page
 	testing registration with test username from last error log (__+++_()!@~@##$%20gitoutoufhear48964您好admin) in all open text fields
 		Arizona for all state fields and U12 for age group field, test username and test password as two emails for the members

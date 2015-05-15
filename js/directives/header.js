@@ -9,6 +9,7 @@ soccerStats.directive('header', function ($timeout, $rootScope, $route, viewServ
             $scope.currentUser = {};
             $scope.currentTeam = {};
             $scope.teams = [];
+            $scope.loading = false;
 
             var parseUser = Parse.User.current();
             if (parseUser.fetch() && parseUser.get('firstName')) {
@@ -86,6 +87,15 @@ soccerStats.directive('header', function ($timeout, $rootScope, $route, viewServ
                 $scope.goToPage('/roster');
                 //$rootScope.$broadcast(configService.messages.teamChanged, {team: dataService.getCurrentTeam()}); 
             };
+
+            $scope.viewHomePage = function() {
+                //$scope.loading = true;                 
+                $scope.goToPage('/home');
+                $timeout(function() {
+                    $rootScope.$broadcast(configService.messages.teamChanged, {team: dataService.getCurrentTeam()});                    
+                });
+                //$scope.loading = false;
+             }
 
             // if a new team has been added, retrieve the update
             $scope.$on(configService.messages.addNewTeam, function(event, team) {

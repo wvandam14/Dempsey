@@ -10,7 +10,7 @@
         </div>
 
         <div ng-show="showTeams" class="team-dropdown dropdown">
-            <div class="team flex flex-center-vertical" ng-click="changeTeam(team)" ng-if="team != currentTeam" ng-repeat="team in teams track by $index">
+            <div class="team flex flex-center-vertical" ng-click="changeTeam(team)" ng-if="team != currentTeam" ng-repeat="team in teams | orderBy:'attributes.name'">
                 <div class="img-container">
                     <img ng-src="{{team.attributes.logo._url}}"/>
                 </div>
@@ -23,6 +23,11 @@
     </div>
     <!-- navigation buttons -->
     <div class="buttons flex flex-one">
+        <div ng-click="viewHomePage()" class="flex link flex-center" ng-hide="loading">
+            <img src="./img/roster-icon.svg"/>
+            <h5>Home</h5>
+        </div>
+
         <div ng-click="viewRoster()" class="flex link flex-center">
             <img src="./img/roster-icon.svg"/>
             <h5>View Roster</h5>

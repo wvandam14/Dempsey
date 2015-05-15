@@ -65,6 +65,7 @@ soccerStats.directive('schedule', function () {
                     $timeout(function() {
                         $scope.games = games;
                         $scope.currGame = $scope.games.length ? $scope.games[0] : {};
+                        console.log(games)
                     });
 
                 });

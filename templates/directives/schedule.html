@@ -6,7 +6,7 @@
 </div>
 
 <div class="games-container slider" style="width: {{games.length * 204}}px; {{getTransform()}}">
-	<div class="summary-box {{game.status}}" ng-repeat="game in games track by $index" ng-class="{'selected': currGame === game && currentPage === 'game-review' }" ng-click="setGame(game)">
+	<div class="summary-box {{game.status}}" ng-repeat="game in games | orderBy:'date'" ng-class="{'selected': currGame === game && currentPage === 'game-review' }" ng-click="setGame(game)">
 		<!-- Summary of the game -->
 		<div class="summary flex flex-center flex-column">
 			<div class="flex flex-center flex-one">

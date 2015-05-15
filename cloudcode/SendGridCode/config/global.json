@@ -1,11 +1,11 @@
 {
     "applications": {
-        "Soccer Stats (Dempsey)": {
+        "Premier Stats (Dempsey)": {
             "applicationId": "z9Sl23m5E0Ezun8NvpnBqk6NPzWvQpiIER1D2msS", 
             "masterKey": "SzrXuvM82O1w67xrLebNKNNQjreMmNgP1dI5iP8f"
         }, 
         "_default": {
-            "link": "Soccer Stats (Dempsey)"
+            "link": "Premier Stats (Dempsey)"
         }
     }, 
     "global": {

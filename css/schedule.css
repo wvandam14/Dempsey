@@ -67,9 +67,17 @@ schedule {
 
 .schedule .summary-box.not_started .action,
 .schedule .summary-box.draw .action,
-.schedule .summary-box.draw .score {
+.schedule .summary-box.draw .score
+{
     background-color: #DDD;
     color: #1C3D68;
+}
+
+.schedule .summary-box.ready .action,
+.schedule .summary-box.ready .score
+{
+    background-color: #FFA500;
+    color: #444;
 }
 
 .schedule .summary-box.selected {

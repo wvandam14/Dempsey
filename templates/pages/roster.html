@@ -4,7 +4,7 @@
         <!-- Roster -->
         <div class="player-stats-container flex">
             <!-- Lineup -->
-            <div class="roster-container flex-one">
+            <div class="roster-container">
                 <div class="list">
                     <h5 class="title">LINEUP</h5>
                     <div class="item player-selector flex flex-center-vertical" ng-repeat="player in players | orderBy:'lname'" ng-class="{selected: isSelected(player)}" ng-click="selectPlayer(player)">
@@ -12,7 +12,7 @@
                             <h5>{{player.number}}</h5>
                         </div>
                         <div class="flex flex-one">
-                            <h5 class="ellipse">{{player.fname + ' ' + player.lname}}</h5><h5><span class="flex flex-center">{{player.position}}</span></h5>
+                            <h5 class="ellipse">{{player.fname + ' ' + player.lname}}</h5>
                         </div>
                     </div>
                 </div>
@@ -29,7 +29,7 @@
                                 <h3 class="ellipse">{{currPlayer.fname}}</h3>
                                 <h3 class="ellipse">{{currPlayer.lname}}</h3>
                                 <div class="flex">
-                                    <h5>{{currPlayer.position}}</h5><span>{{currPlayer.number}}</span>
+                                    <h5>{{currPlayer.number}}</h5>
                                 </div>
                             </div>
                         </div>
