@@ -7,6 +7,7 @@ soccerStats.directive('schedule', function () {
 
             $scope.games = [];
             $scope.currGame = {};
+            var currentUser = dataService.getCurrentUser();
 
             $scope.range = function(size){
                 var input = [];
@@ -17,17 +18,23 @@ soccerStats.directive('schedule', function () {
             // set the current game to the selected game and redirect to appropriate page
 	        $scope.setGame = function (game) {
                 //console.log(game);
-                $scope.currGame = game;
-                dataService.setCurrentGame(game);
-
-                if (game.status === "not_started")
+                
+                //console.log(currentUser);
+                if (game.status === "not_started" && currentUser.get("accountType") == 2)
+                    toastService.error('This game has not been setup yet. Please try again at a later time');
+                else {
+                    $scope.currGame = game;
+                    dataService.setCurrentGame(game);
+                    if (game.status === "not_started" && currentUser.get("accountType") == 1)
                     viewService.goToPage('/game-setup');
-                else
-                    viewService.goToPage('/game-review');
-
-                //$timeout(function() {
-	               $rootScope.$broadcast(configService.messages.setGame, {game: $scope.currGame});
-                //});
+                    else
+                        viewService.goToPage('/game-review');
+                    
+                    //$timeout(function() {
+                       $rootScope.$broadcast(configService.messages.setGame, {game: $scope.currGame});
+                    //});
+                }
+                
 	        };
 
             // set the current game to the selected game

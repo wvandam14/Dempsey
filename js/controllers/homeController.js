@@ -136,9 +136,7 @@ soccerStats.controller('homeController',
         // get all of the players based on user account
         $scope.populatePlayers = function() {
 
-            //console.log($scope.currentTeam);
             $scope.myPlayers = [];
-            //console.log($scope.currentTeam);
 
             // if the current user is a coach
             if (currentUser.get("accountType") === 1) {
@@ -178,11 +176,12 @@ soccerStats.controller('homeController',
 
         // on team changes, populate the data for players and team stats
         $scope.$on(configService.messages.teamChanged, function(event, data) {
-            //console.log(data);
+            $scope.myPlayers = [];
             if (!data.refresh)
                 $scope.currentTeam = data.team;
             $scope.populatePlayers();
             $scope.populateTeamStats(dataService.getCurrentTeam());
+            //$rootScope.$on(configService.messages.homeClicked);
         });
 
         // if a user has added a player, the page will automatically update that change
@@ -195,5 +194,4 @@ soccerStats.controller('homeController',
         // initial values
         $scope.myPlayers = [];
         $scope.currentTeam = {};
-    
     });

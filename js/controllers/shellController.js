@@ -60,6 +60,7 @@ soccerStats.controller('shellController',
 
         // view the home page
          $scope.viewHomePage = function(page) {
+            //$scope.homeClicked = true;
             $scope.goToPage(page);
             $timeout(function() {
                 $rootScope.$broadcast(configService.messages.teamChanged, {team: dataService.getCurrentTeam()});
@@ -83,6 +84,10 @@ soccerStats.controller('shellController',
         $scope.$on(configService.messages.toast, function (event, message, type, callback) {
             showToast(message.message, type, callback);
         })
+
+        // $scope.$on(configService.messages.homeClicked, function (event, msg) {
+        //     $scope.homeClicked = true;
+        // })
 
         var showToast = function (message, type, callback) {
             // New Toast Item

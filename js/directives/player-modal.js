@@ -27,31 +27,35 @@ soccerStats.directive('playerModal', function ($location, $rootScope, $timeout, 
                         $scope.update = true;   // ready for update
                         // get players
                         $scope.players = dataService.getPlayerByPlayerId(data.id, function(player) {
-                            $scope.getParentEmails(player.get("team"));
-                            dataService.getParentByPlayerId(player.id, function(parent) {
-                                //console.log(parent.get("email"));
-                                //parent.id = $scope.parents[parent.get("email")];
-                                //console.log(parent.id);
-                                var _team = _.find($scope.teamDict, function(obj){return obj.id == player.get("team").id});
-                                $scope.player = {
-                                    photo: player.get("photo") ? player.get("photo")._url : './img/team-logo-icon.svg',
-                                    firstName: player.get("firstName"),
-                                    lastName: player.get("lastName"),
-                                    birthday: player.get("birthday"),
-                                    team: _team,
-                                    jerseyNumber: player.get("jerseyNumber"),
-                                    city: player.get("city"),
-                                    state: $scope.states[player.get("state")],
-                                    emergencyContact: {
-                                        name: player.get("emergencyContact"),
-                                        phone: player.get("phone"),
-                                        relationship: player.get("relationship")
-                                    },
-                                    newPhoto: '',
-                                    id : player.id,
-                                    parentId: parent ? parent.id : ''
-                                };
-                                //console.log($scope.player.parentId);
+                            $timeout(function() {
+                                $scope.getParentEmails(player.get("team"));
+                                dataService.getParentByPlayerId(player.id, function(parent) {
+                                    //console.log(parent.get("email"));
+                                    //parent.id = $scope.parents[parent.get("email")];
+                                    //console.log(parent.id);
+                                    $timeout(function() {
+                                        var _team = _.find($scope.teamDict, function(obj){return obj.id == player.get("team").id});
+                                        $scope.player = {
+                                            photo: player.get("photo") ? player.get("photo")._url : './img/team-logo-icon.svg',
+                                            firstName: player.get("firstName"),
+                                            lastName: player.get("lastName"),
+                                            birthday: player.get("birthday"),
+                                            team: _team,
+                                            jerseyNumber: player.get("jerseyNumber"),
+                                            city: player.get("city"),
+                                            state: $scope.states[player.get("state")],
+                                            emergencyContact: {
+                                                name: player.get("emergencyContact"),
+                                                phone: player.get("phone"),
+                                                relationship: player.get("relationship")
+                                            },
+                                            newPhoto: '',
+                                            id : player.id,
+                                            parentId: parent ? parent.id : ''
+                                        };
+                                    });
+                                    //console.log($scope.player.parentId);
+                                });
                             });
                         });
                     } else {    // if player does not exist - adding a new player
