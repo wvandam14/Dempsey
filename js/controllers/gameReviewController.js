@@ -5,75 +5,86 @@ soccerStats.controller('gameReviewController',
         // initializes current formation of the field - currently static field
         $scope.initCurrFormation = function() {
             $scope.currFormation = [
-                {
-                   type: "GK",
-                   player: {},
-                   x: 44,
-                   y: 74
-                },
-                {
-                   type: "CB",
-                   player: {},
-                   x: 56,
-                   y: 55
-                },
-                {
-                   type: "CB",
-                   player: {},
-                   x: 74,
-                   y: 52
-                },
-                {
-                   type: "CB",
-                   player: {},
-                   x: 15,
-                   y: 52
-                },
-                {
-                   type: "CB",
-                   player: {},
-                   x: 33,
-                   y: 55
-                },
-                
-                {
-                   type: "CM",
-                   player: {},
-                   x: 56,
-                   y: 31
-                },
-                {
-                   type: "CM",
-                   player: {},
-                   x: 74,
-                   y: 28
-                },
-                {
-                   type: "CM",
-                   player: {},
-                   x: 15,
-                   y: 28
-                },
-                {
-                   type: "CM",
-                   player: {},
-                   x: 33,
-                   y: 31
-                },
-                
-                {
-                   type: "ST",
-                   player: {},
-                   x: 56,
-                   y: 10
-                },
-                {
-                   type: "ST",
-                   player: {},
-                   x: 33,
-                   y: 10
-                },
-            ];
+              {
+                posId: 0,
+                 type: "GK",
+                 player: {},
+                 x: 44,
+                 y: 74
+              },
+              {
+                posId: 1,
+                 type: "CB",
+                 player: {},
+                 x: 56,
+                 y: 55
+              },
+              {
+                posId: 2,
+                 type: "RB",
+                 player: {},
+                 x: 74,
+                 y: 52
+              },
+              {
+                posId: 3,
+                 type: "LB",
+                 player: {},
+                 x: 15,
+                 y: 52
+              },
+              {
+                posId: 4,
+                 type: "CB",
+                 player: {},
+                 x: 33,
+                 y: 55
+              },
+              
+              {
+                posId: 5,
+                 type: "CM",
+                 player: {},
+                 x: 56,
+                 y: 31
+              },
+              {
+                posId: 6,
+                 type: "RM",
+                 player: {},
+                 x: 74,
+                 y: 28
+              },
+              {
+                posId: 7,
+                 type: "LM",
+                 player: {},
+                 x: 15,
+                 y: 28
+              },
+              {
+                posId: 8,
+                 type: "CM",
+                 player: {},
+                 x: 33,
+                 y: 31
+              },
+              
+              {
+                posId: 9,
+                 type: "ST",
+                 player: {},
+                 x: 56,
+                 y: 10
+              },
+              {
+                posId: 10,
+                 type: "ST",
+                 player: {},
+                 x: 33,
+                 y: 10
+              },
+          ];
         };
 
         // returns whether or not a player is selected
@@ -248,8 +259,8 @@ soccerStats.controller('gameReviewController',
             _.each($scope.players, function(player) {
                 if (!player.benched) {
                     var position = _.find($scope.currFormation, function(position) {
-                        return player.pos.x == position.x &&
-                                player.pos.y == position.y
+                        return player.x == position.x &&
+                                player.y == position.y
                     });
                     position.player = player;
                 }

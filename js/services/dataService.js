@@ -808,7 +808,9 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                     playerStats.set("subbedIn", []);
                     playerStats.set("assists", 0);
                     playerStats.set("tackles", 0);
-                    playerStats.set("pos", rosterPlayer.pos);
+                    playerStats.set("x", rosterPlayer.x);
+                    playerStats.set("y", rosterPlayer.y);
+                    playerStats.set("posId", rosterPlayer.posId);
                     !rosterPlayer.benched ? playerStats.set("startingStatus", "On") : playerStats.set("startingStatus", "Off");
                     rosterPlayer.position ? playerStats.set("position", rosterPlayer.position) : playerStats.set("position", "B");
                     // create new player stats for the game
@@ -992,7 +994,8 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                     number: player.get("jerseyNumber"),
                     photo: player.get("photo") ? player.get("photo")._url : './img/player-icon.svg',
                     position: gamePlayer.get("position") ? gamePlayer.get("position") : '',
-                    pos: gamePlayer.get("pos") ? gamePlayer.get("pos") : '',
+                    x: gamePlayer.get("x") ? gamePlayer.get("x") : 0,
+                    y: gamePlayer.get("y") ? gamePlayer.get("y") : 0,
                     benched: gamePlayer.get("startingStatus") !== "On" ? true : false,  // check if user is benched to determine lineups
                     myKid : true,   // boolean variable for parent to determine which player is there
                     notableEvents: [],  // array of notable events: cards, goals, substitutions
@@ -1000,9 +1003,10 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                     eventsInit : function(retPlayer, subbedOut, subbedIn) {
                         if (subbedOut) {
                             _.each(subbedOut, function (subOut) {
+                                console.log(d);
                                 retPlayer.notableEvents.push({
                                     type: "Subbed Out",
-                                    time: subOut
+                                    time: moment.duration(subOut).minutes()
                                 });
                             });
                         }
@@ -1010,7 +1014,7 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                             _.each(subbedIn, function (subIn) {
                                 retPlayer.notableEvents.push({
                                     type: "Subbed In",
-                                    time: subIn
+                                    time: moment.duration(subIn).minutes()
                                 });
                             });
                         }
@@ -1018,7 +1022,7 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                     total: {
                         fouls: gamePlayer.get("fouls") ? gamePlayer.get("fouls") : 0,
                         assists: gamePlayer.get("assists") ? gamePlayer.get("assists") : 0,
-                        playingTime: gamePlayer.get("playingTime") ? gamePlayer.get("playingTime") : 0,
+                        playingTime: gamePlayer.get("playingTime") ? moment.duration(gamePlayer.get("playingTime")).minutes() : 0,
                         red: {
                             total: 0,
                             time: []
@@ -1036,7 +1040,7 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                                    playerCards.red.time.push(card.time);
                                    player.notableEvents.push({
                                        type: "red",
-                                       time: card.time
+                                       time: moment.duration(card.time).minutes()
                                    });
                                }
                                 else if (card.type == "yellow") {
@@ -1044,7 +1048,7 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                                    playerCards.yellow.time.push(card.time);
                                    player.notableEvents.push({
                                        type: "yellow",
-                                       time: card.time
+                                       time: moment.duration(card.time).minutes()
                                    });
                                }
 
@@ -1122,12 +1126,12 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                             if(shots){
                                 _.each(shots,function(shot){
                                     switch(shot.type){
-                                        case "offGoal":
+                                        case "off":
                                             playerShots.offGoal.total++;
                                             playerShots.offGoal.startPos.push(shot.shotPos);
                                             playerShots.offGoal.resultPos.push(shot.resultPos);
                                             break;
-                                        case "onGoal":
+                                        case "on":
                                             playerShots.onGoal.total++;
                                             playerShots.onGoal.startPos.push(shot.shotPos);
                                             playerShots.onGoal.resultPos.push(shot.resultPos);
@@ -1136,13 +1140,14 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                                             playerShots.goals.total++;
                                             playerShots.goals.startPos.push(shot.shotPos);
                                             playerShots.goals.resultPos.push(shot.resultPos);
-                                            playerShots.goals.time.push(shot.time);
+                                            var time = moment.duration(shot.time).minutes()
+                                            playerShots.goals.time.push(time);
                                             if (shot.assistedBy) {
                                                 playerShots.goals.assistedBy.push(shot.assistedBy);
                                             }
                                             player.notableEvents.push({
                                                 type: "goal",
-                                                time: shot.time
+                                                time: time
                                             });
                                             break;
                                         case "blocked":
@@ -1156,7 +1161,7 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                             // calculate totals and set data values
                             var total = playerShots.blocks.total + playerShots.onGoal.total + playerShots.offGoal.total + playerShots.goals.total;
                             playerShots.total = total;
-                            playerShots.accuracy = Math.round(((total - playerShots.offGoal.total) / total)*100);
+                            total != 0 ? playerShots.accuracy = Math.round(((total - playerShots.offGoal.total) / total)*100) : 0;
                             playerShots.data[0].value = playerShots.offGoal.total;
                             playerShots.data[1].value = total;
                         }

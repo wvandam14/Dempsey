@@ -15,30 +15,35 @@ soccerStats.controller('gameSetupController',
         $scope.initFormation = function() {
             $scope.currFormation = [
               {
+                posId: 0,
                  type: "GK",
                  player: {},
                  x: 44,
                  y: 74
               },
               {
+                posId: 3,
                  type: "CB",
                  player: {},
                  x: 56,
                  y: 55
               },
               {
-                 type: "CB",
+                posId: 4,
+                 type: "RB",
                  player: {},
                  x: 74,
                  y: 52
               },
               {
-                 type: "CB",
+                posId: 1,
+                 type: "LB",
                  player: {},
                  x: 15,
                  y: 52
               },
               {
+                posId: 2,
                  type: "CB",
                  player: {},
                  x: 33,
@@ -46,24 +51,28 @@ soccerStats.controller('gameSetupController',
               },
               
               {
+                posId: 7,
                  type: "CM",
                  player: {},
                  x: 56,
                  y: 31
               },
               {
-                 type: "CM",
+                posId: 8,
+                 type: "RM",
                  player: {},
                  x: 74,
                  y: 28
               },
               {
-                 type: "CM",
+                posId: 5,
+                 type: "LM",
                  player: {},
                  x: 15,
                  y: 28
               },
               {
+                posId: 6,
                  type: "CM",
                  player: {},
                  x: 33,
@@ -71,12 +80,14 @@ soccerStats.controller('gameSetupController',
               },
               
               {
+                posId: 10,
                  type: "ST",
                  player: {},
                  x: 56,
                  y: 10
               },
               {
+                posId: 9,
                  type: "ST",
                  player: {},
                  x: 33,
@@ -126,7 +137,10 @@ soccerStats.controller('gameSetupController',
                                     photo: player.get("photo") ? player.get("photo")._url : './img/player-icon.svg',
                                     position: '',
                                     selected: false,
-                                    benched: false
+                                    benched: false,
+                                    x: 0,
+                                    y: 0,
+                                    posId: -1
                                 });
                                 // TODO: Get all time stats for player
                             });
@@ -167,12 +181,15 @@ soccerStats.controller('gameSetupController',
 
             // find the position in the current formation based on the player
             var position = _.find($scope.currFormation, function(position) {return player == position.player});
+            console.log(position.posId);
             // if there is no player on the field, disable selection and position of the player in the roster
             if (!_.isEmpty(player)) {
                 var index = $scope.roster.indexOf(player);
                 $scope.roster[index].selected = false;
                 $scope.roster[index].position = '';
-                $scope.roster[index].pos = '';
+                $scope.roster[index].x = 0;
+                $scope.roster[index].y = 0;
+                $scope.roster[index].posId = -1;
             }
             // if a player has been selected from the roster, we want to set the position of the player in the current formation to the selected player in the list
             if ($scope.playerSelected) {
@@ -186,12 +203,10 @@ soccerStats.controller('gameSetupController',
                 $scope.roster[rosterIndex].selected = true;
                 formationIndex = $scope.currFormation.indexOf(position);
                 $scope.roster[rosterIndex].position = $scope.currFormation[formationIndex].type;
-                var xy = {
-                  x: $scope.currFormation[formationIndex].x, 
-                  y: $scope.currFormation[formationIndex].y
-                };
-                $scope.roster[rosterIndex].pos = xy;
-                console.log($scope.roster[rosterIndex]);
+                $scope.roster[rosterIndex].x = $scope.currFormation[formationIndex].x;
+                $scope.roster[rosterIndex].y = $scope.currFormation[formationIndex].y;
+                $scope.roster[rosterIndex].posId = $scope.currFormation[formationIndex].posId;
+                //console.log($scope.roster[rosterIndex]);
             } else {    // otherwise we can remove the player from the formation
                 //if (!_.isEmpty(player)) {
                 //    //console.log(player);
