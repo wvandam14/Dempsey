@@ -274,7 +274,7 @@ soccerStats.controller('gameReviewController',
                     //console.log(assistId);
                     assistPlayer = _.find($scope.players, function(assistPlayer) {
                         //console.log(assistPlayer.id);
-                        return  assistPlayer.gameId === assistId;
+                        return  assistPlayer.playerId === assistId;
                     });
                     //console.log(assistPlayer);
                     if (assistPlayer) {
