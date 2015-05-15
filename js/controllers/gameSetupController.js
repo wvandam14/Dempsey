@@ -172,6 +172,7 @@ soccerStats.controller('gameSetupController',
                 var index = $scope.roster.indexOf(player);
                 $scope.roster[index].selected = false;
                 $scope.roster[index].position = '';
+                $scope.roster[index].pos = '';
             }
             // if a player has been selected from the roster, we want to set the position of the player in the current formation to the selected player in the list
             if ($scope.playerSelected) {
@@ -185,6 +186,11 @@ soccerStats.controller('gameSetupController',
                 $scope.roster[rosterIndex].selected = true;
                 formationIndex = $scope.currFormation.indexOf(position);
                 $scope.roster[rosterIndex].position = $scope.currFormation[formationIndex].type;
+                var xy = {
+                  x: $scope.currFormation[formationIndex].x, 
+                  y: $scope.currFormation[formationIndex].y
+                };
+                $scope.roster[rosterIndex].pos = xy;
                 console.log($scope.roster[rosterIndex]);
             } else {    // otherwise we can remove the player from the formation
                 //if (!_.isEmpty(player)) {

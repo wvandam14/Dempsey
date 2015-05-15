@@ -248,8 +248,8 @@ soccerStats.controller('gameReviewController',
             _.each($scope.players, function(player) {
                 if (!player.benched) {
                     var position = _.find($scope.currFormation, function(position) {
-                        return player.position == position.type
-                            && _.isEmpty(position.player)
+                        return player.pos.x == position.x &&
+                                player.pos.y == position.y
                     });
                     position.player = player;
                 }

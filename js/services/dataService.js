@@ -807,6 +807,8 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                     playerStats.set("subbedOut", []);
                     playerStats.set("subbedIn", []);
                     playerStats.set("assists", 0);
+                    playerStats.set("tackles", 0);
+                    playerStats.set("pos", rosterPlayer.pos);
                     !rosterPlayer.benched ? playerStats.set("startingStatus", "On") : playerStats.set("startingStatus", "Off");
                     rosterPlayer.position ? playerStats.set("position", rosterPlayer.position) : playerStats.set("position", "B");
                     // create new player stats for the game
@@ -839,6 +841,8 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                     gameStats.set("tackles", 0);
                     gameStats.set("saves", 0);
                     gameStats.set("substitutions", []);
+                    gameStats.set("fouls", 0);
+                    gameStats.set("passes", 0);
                     // save the game stats object
                     return gameStats.save();
                 }).then(function(gameStats){
@@ -988,6 +992,7 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                     number: player.get("jerseyNumber"),
                     photo: player.get("photo") ? player.get("photo")._url : './img/player-icon.svg',
                     position: gamePlayer.get("position") ? gamePlayer.get("position") : '',
+                    pos: gamePlayer.get("pos") ? gamePlayer.get("pos") : '',
                     benched: gamePlayer.get("startingStatus") !== "On" ? true : false,  // check if user is benched to determine lineups
                     myKid : true,   // boolean variable for parent to determine which player is there
                     notableEvents: [],  // array of notable events: cards, goals, substitutions
@@ -1066,10 +1071,10 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                         // initializes pass data
                         passInit: function(playerPasses, passes) {
                             // calculate totals and set data values
-                            playerPasses.completed = passes.completed;
-                            playerPasses.total = passes.total;
-                            playerPasses.data[0].value = passes.completed;
-                            playerPasses.data[1].value = passes.total;
+                            playerPasses.completed = passes.completed ? passes.completed : 0;
+                            playerPasses.total = passes.total ? passes.total : 0;
+                            playerPasses.data[0].value = passes.completed ? passes.completed : 0;
+                            playerPasses.data[1].value = passes.total ? passes.total : 0;
                         }
                     },
                     shots: {
