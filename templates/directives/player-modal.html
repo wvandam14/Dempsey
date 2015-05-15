@@ -17,8 +17,11 @@
                     <image-upload image="player.newPhoto" placeholder="player.photo"></image-upload>
                     <p class="flex-one text-center photo-text">Click to add a new picture</p>
                 </div>
-                <h3 class="ellipse">Player Name</h3>
-                <input type="text" ng-model="player.name" placeholder="Player Name" required />
+                <h3 class="ellipse">Name</h3>
+                <div class="flex">
+                    <input type="text" ng-model="player.firstName" placeholder="First Name" required class="first" />
+                    <input type="text" ng-model="player.lastName" placeholder="Last Name" required />
+                </div>
                 <h3 class="ellipse">Birthday</h3>
                 <input type="date" class="date" ng-model="player.birthday" required />
                 <h3 class="ellipse">Team</h3>

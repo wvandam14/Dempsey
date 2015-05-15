@@ -38,16 +38,17 @@ soccerStats.directive('createGameModal', function (viewService, toastService, co
                 $scope.games.splice(index, 1);
             };
 
-            $scope.currentTeam = {};
 
             // change current team based on team changed
             $scope.$on(configService.messages.teamChanged, function(event, data) {
                 $scope.currentTeam = data.team;
             });
 
+
             // save all games scheduled
             $scope.sendGames = function() {
-                var teamID = $scope.currentTeam.id;
+                var teamID = dataService.getCurrentTeam().id;
+                
                 if (viewService.validateAreaByFormName('gameForm')) {
 
                     //console.log("Form validated");
@@ -63,16 +64,16 @@ soccerStats.directive('createGameModal', function (viewService, toastService, co
                 $scope.closeModal();
             };
 
-            if (currentUser) {
-                dataService.getTeams( function(_teams) {
-                    if (jQuery.isEmptyObject(dataService.getCurrentTeam())) 
-                        $scope.currentTeam = _teams[0];
-                    else
-                        $scope.currentTeam = dataService.getCurrentTeam();
-                    console.log($scope.currentTeam)
-                    //console.log($scope.editTeam);
-                });
-            }
+            // if (currentUser) {
+            //     dataService.getTeams( function(_teams) {
+            //         if (jQuery.isEmptyObject(dataService.getCurrentTeam())) 
+            //             $scope.currentTeam = _teams[0];
+            //         else
+            //             $scope.currentTeam = dataService.getCurrentTeam();
+            //         console.log($scope.currentTeam)
+            //         //console.log($scope.editTeam);
+            //     });
+            // }
         }
     };
 });

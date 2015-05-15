@@ -306,7 +306,7 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                                 Parse.Cloud.run('addPlayer', {newPlayerId: newPlayer.id, parentId: player.parentId}, {
                                     success: function (result) {
                                         console.log(result);
-                                        toastService.success("Player " + player.name + ", successfully added.");
+                                        toastService.success("Player " + newPlayer.name + ", successfully added.");
                                         $rootScope.$broadcast(configService.messages.playerAdded, newPlayer);
                                         //$rootScope.$broadcast(configService.messages.teamChanged, {refresh: true});
                                         viewService.closeModal(self);
@@ -355,10 +355,11 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                     // update current user table
                     currentUser.save(null, {
                         success: function(currentUser) {
+                            setCurrentTeam(_team);
                             toastService.success(configService.toasts.teamAddSuccess);
                             viewService.closeModal(self);
                             $rootScope.$broadcast(configService.messages.addNewTeam, _team);
-                            $rootScope.$broadcast(configService.messages.teamChanged, {team: _team, refresh: false});
+                            $rootScope.$broadcast(configService.messages.teamChanged, {team: _team, refresh: true});
                         },
                         error: function(currentUser, error) {
                             toastService.error("There was a an error (" + error.code +"). Please try again.");
@@ -728,6 +729,7 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
             newGame.save(null, {
                 success: function(newGame) {
                     toastService.success("Game on " + (game.date.getMonth() + 1) + "/" + game.date.getDate() + " added.");
+                    $rootScope.$broadcast(configService.messages.gameStatusChanged);
                 },
                 error: function(newGame, error) {
                     console.log("Error saving game: " + error.code + " " + error.message);
@@ -797,8 +799,16 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                     var playerStats = new gamePlayerStatsTable();
                     // set up game player information
                     playerStats.set("player", ptr);
+                    playerStats.set("shots", []);
+                    playerStats.set("passes", {});
+                    playerStats.set("cards", []);
+                    playerStats.set("fouls", 0);
+                    playerStats.set("playingTime", 0);
+                    playerStats.set("subbedOut", []);
+                    playerStats.set("subbedIn", []);
+                    playerStats.set("assists", 0);
                     !rosterPlayer.benched ? playerStats.set("startingStatus", "On") : playerStats.set("startingStatus", "Off");
-                    playerStats.set("position", rosterPlayer.position);
+                    rosterPlayer.position ? playerStats.set("position", rosterPlayer.position) : playerStats.set("position", "B");
                     // create new player stats for the game
                     playerStats.save().then(function (gamePlayerStats) {
                         players.push(gamePlayerStats);
@@ -814,13 +824,21 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
             promise.then(function(result){
                 query = new Parse.Query(gameTable);
                 query.include("gameTeamStats");
-                query.equalTo("objectId",gameId);
+                query.equalTo("objectId", gameId);
                 // get game statistics
                 query.first().then(function(result){
                     game = result;
                     // save the roster into the game stats table
                     var gameStats = result.get("gameTeamStats");
-                    gameStats.set("roster",players);
+                    gameStats.set("roster", players);
+                    gameStats.set("goalsMade", 0);
+                    gameStats.set("goalsTaken", 0);
+                    gameStats.set("possession", 0);
+                    gameStats.set("corners", 0);
+                    gameStats.set("offsides", 0);
+                    gameStats.set("tackles", 0);
+                    gameStats.set("saves", 0);
+                    gameStats.set("substitutions", []);
                     // save the game stats object
                     return gameStats.save();
                 }).then(function(gameStats){
