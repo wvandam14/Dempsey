@@ -15,9 +15,9 @@ soccerStats.controller('gameSetupController',
         $scope.initFormation = function() {
             $scope.currFormation = [
               {
-                posId: 0,
-                 type: "GK",
-                 player: {},
+                posId: 0,     // this is how we link up the player to the position on the field
+                 type: "GK",  // default position
+                 player: {},  
                  x: 44,
                  y: 74
               },
