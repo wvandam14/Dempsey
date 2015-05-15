@@ -14,10 +14,10 @@ soccerStats.directive('gameTimeline', function ($rootScope, $location, $timeout,
 
                 // for substitution events
                 _.each(data.subs, function(sub) {
-                    if (sub.get("isSub") === "true") {
+                    if (sub.get("isSub")) {
                         var notableEvent = {
-                            name: sub.get("subbedOut").get("player").get("lastName"),
-                            sub: sub.get("subbedIn").get("player").get("lastName"),
+                            name: sub.get("subbedOut").get("lastName"),
+                            sub: sub.get("subbedIn").get("lastName"),
                             time: sub.get("time"),
                             type: 'sub',
                             opponent: false

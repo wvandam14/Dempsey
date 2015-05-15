@@ -846,7 +846,7 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                     // save the game stats object
                     return gameStats.save();
                 }).then(function(gameStats){
-                     game.set("status", "ready ");  // set the status of the game to ready so stats can start recording
+                     game.set("status", "ready");  // set the status of the game to ready so stats can start recording
                      return game.save();
                 }).then(function(result){
                     setCurrentGame(result); // set the edited current game
