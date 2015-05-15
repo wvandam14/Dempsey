@@ -1003,7 +1003,6 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                     eventsInit : function(retPlayer, subbedOut, subbedIn) {
                         if (subbedOut) {
                             _.each(subbedOut, function (subOut) {
-                                console.log(d);
                                 retPlayer.notableEvents.push({
                                     type: "Subbed Out",
                                     time: moment.duration(subOut).minutes()
