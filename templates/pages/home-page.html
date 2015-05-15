@@ -48,7 +48,7 @@
                 <img class="hero-image" src="./img/goal-icon.svg"/>
                 <div class="list">
                     <h5 class="title">TOP GOALS</h5>
-                    <div class="item flex flex-center-vertical" ng-repeat="player in teamStats.topGoals track by $index">
+                    <div class="item flex flex-center-vertical" ng-repeat="player in teamStats.topGoals | orderBy:'-num'">
                         <div class="img-container">
                             <img src="{{player.photo}}"/>
                         </div>
@@ -65,7 +65,7 @@
                 <img class="hero-image" src="./img/ball-large-grey.svg"/>
                 <div class="list">
                     <h5 class="title">TOP ASSISTS</h5>
-                    <div class="item flex flex-center-vertical" ng-repeat="player in teamStats.topAssists track by $index">
+                    <div class="item flex flex-center-vertical" ng-repeat="player in teamStats.topAssists | orderBy:'-num'">
                         <div class="img-container">
                             <img src="{{player.photo}}"/>
                         </div>
@@ -82,7 +82,7 @@
                 <img class="hero-image" src="./img/ball-large-grey.svg"/>
                 <div class="list">
                     <h5 class="title">TOP SHOTS</h5>
-                    <div class="item flex flex-center-vertical" ng-repeat="player in teamStats.topShots track by $index">
+                    <div class="item flex flex-center-vertical" ng-repeat="player in teamStats.topShots | orderBy:'-num'">
                         <div class="img-container">
                             <img src="{{player.photo}}"/>
                         </div>
