@@ -1122,8 +1122,9 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                         // initializes shot data
                         shotInit: function(player, shots) {
                             playerShots = player.shots;
+
                             if(shots){
-                                _.each(shots,function(shot){
+                                _.each(shots, function(shot){
                                     switch(shot.type){
                                         case "off":
                                             playerShots.offGoal.total++;
@@ -1136,17 +1137,22 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                                             playerShots.onGoal.resultPos.push(shot.resultPos);
                                             break;
                                         case "goal":
+                                            var event = {};
+
                                             playerShots.goals.total++;
                                             playerShots.goals.startPos.push(shot.shotPos);
                                             playerShots.goals.resultPos.push(shot.resultPos);
                                             var time = moment.duration(shot.time).minutes()
                                             playerShots.goals.time.push(time);
-                                            if (shot.assistedBy) {
-                                                playerShots.goals.assistedBy.push(shot.assistedBy);
-                                            }
+                                            //if (shot.assistedBy) {
+                                            //    //console.log(shot.assistedBy);
+                                            //    event.assistedBy = shot.assistedBy;
+                                            //    playerShots.goals.assistedBy.push(shot.assistedBy);
+                                            //}
                                             player.notableEvents.push({
                                                 type: "goal",
-                                                time: time
+                                                time: time,
+                                                assistId: shot.assistedBy ? shot.assistedBy : ''
                                             });
                                             break;
                                         case "blocked":

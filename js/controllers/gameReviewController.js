@@ -270,18 +270,31 @@ soccerStats.controller('gameReviewController',
             _.each($scope.players, function(player) {
                 //console.log(player);
                 var assistPlayer = {};
-                _.each(player.shots.goals.assistedBy, function(assistId) {
-                    //console.log(assistId);
-                    assistPlayer = _.find($scope.players, function(assistPlayer) {
-                        //console.log(assistPlayer.id);
-                        return  assistPlayer.playerId === assistId;
-                    });
-                    //console.log(assistPlayer);
-                    if (assistPlayer) {
-                        player.notableEvents.push({
-                            type: "Assisted By",
-                            assistedBy: assistPlayer.lname
+                //_.each(player.shots.goals.assistedBy, function(assistId) {
+                //    //console.log(assistId);
+                //    assistPlayer = _.find($scope.players, function(assistPlayer) {
+                //        //console.log(assistPlayer.id);
+                //        return  assistPlayer.playerId === assistId;
+                //    });
+                //    //console.log(assistPlayer);
+                //    if (assistPlayer) {
+                //        player.notableEvents.push({
+                //            type: "Assisted By",
+                //            assistedBy: assistPlayer.lname
+                //        });
+                //    }
+                //});
+                _.each(player.notableEvents, function(event) {
+                    if (event.type === 'goal') {
+                        assistPlayer = _.find($scope.players, function(assistPlayer) {
+                            //console.log(assistPlayer.id);
+                            return  assistPlayer.playerId === event.assistId;
                         });
+
+                        //console.log(assistPlayer);
+                        if (assistPlayer) {
+                            event.assistedBy = 'Asst. by ' + assistPlayer.lname;
+                        }
                     }
                 });
             });
