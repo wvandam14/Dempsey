@@ -129,7 +129,7 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
             // get the team
             team.id = _team.id;
             team.fetch().then(function(team){
-                query.equalTo('team',team);
+                query.equalTo('team', team);
                 query.include('gameTeamStats');
                 // get the team stats
                 query.find().then(function(games_brute){
@@ -704,6 +704,7 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
             // console.log(gameId);
             var query = new Parse.Query(gameTable);
             query.equalTo('objectId', gameId);
+            query.include('gameTeamStats')
             // return game
             return query.first();
         }
@@ -927,7 +928,7 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                                         // calculate totals and set data values
                                         var total = blocks + onGoal + offGoal + playerShot.goals;
                                         playerShot.accuracy = Math.round(((total - offGoal) / total)*100);
-                                        console.log(playerShot.accuracy);
+                                        //console.log(playerShot.accuracy);
                                         playerShot.data[0].value = offGoal;
                                         playerShot.data[1].value = total;
                                     }
@@ -976,6 +977,7 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                 retPlayer.passes.passInit(retPlayer.passes, stats); 
 
             // return the player constructor object
+            //console.log(retPlayer);
             return retPlayer;            
         }
 
@@ -997,7 +999,7 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                     x: gamePlayer.get("x") ? gamePlayer.get("x") : 0,
                     y: gamePlayer.get("y") ? gamePlayer.get("y") : 0,
                     benched: gamePlayer.get("startingStatus") !== "On" ? true : false,  // check if user is benched to determine lineups
-                    myKid : true,   // boolean variable for parent to determine which player is there
+                    myKid : true,   // boolean variable for parent to determine which player is theirs
                     notableEvents: [],  // array of notable events: cards, goals, substitutions
                     // initializes events
                     eventsInit : function(retPlayer, subbedOut, subbedIn) {
@@ -1057,13 +1059,13 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                     passes: {
                         data: [
                             {
-                                value: 0,
+                                value: 3,
                                 color: "#B4B4B4",
                                 highlight: "#B4B4B4",
                                 label: "Completed"
                             },
                             {
-                                value: 0,
+                                value: 4,
                                 color:"#5DA97B",
                                 highlight: "#5DA97B",
                                 label: "Total"
@@ -1076,7 +1078,7 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
                             // calculate totals and set data values
                             playerPasses.completed = passes.completed ? passes.completed : 0;
                             playerPasses.total = passes.total ? passes.total : 0;
-                            playerPasses.data[0].value = passes.completed ? passes.completed : 0;
+                            playerPasses.data[0].value = passes.completed ? 100 - (passes.completed/passes.total)*100 : 0;
                             playerPasses.data[1].value = passes.total ? passes.total : 0;
                         }
                     },
@@ -1191,6 +1193,141 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
             viewService.closeModal(self);
         }
 
+        , submitGame = function(currentRoster, gameTeamStats) {
+            getGameByGameId(getCurrentGame().id).then(function(game) {
+                game.set("status", "review");
+                return game.save();
+            }, function(error) {
+                console.log(error);
+            }).then(function(game) {
+                var pGameTeamStats = game.get("gameTeamStats");
+
+                if (gameTeamStats.corners != undefined) {
+                    pGameTeamStats.set("corners", gameTeamStats.corners);
+                }
+
+                if (gameTeamStats.fouls != undefined) {
+                    pGameTeamStats.set("fouls", gameTeamStats.fouls);
+                }
+
+                if (gameTeamStats.homeScore != undefined) {
+                    pGameTeamStats.set("goalsMade", gameTeamStats.homeScore);
+                }
+
+                if (gameTeamStats.substitutions != undefined && gameTeamStats.substitutions.length) {
+                    _.each(gameTeamStats.substitutions, function(item) {
+                        pGameTeamStats.addUnique("substitutions", item);
+                    });
+                }
+
+                if (gameTeamStats.goalsTaken != undefined) {
+                    pGameTeamStats.set("goalsTaken", gameTeamStats.opponentScore);
+                }
+
+                if (gameTeamStats.tackles != undefined) {
+                    pGameTeamStats.set("tackles", gameTeamStats.tackles);
+                }
+
+                if (gameTeamStats.saves != undefined) {
+                    pGameTeamStats.set("saves", gameTeamStats.saves);
+                }
+
+                if (gameTeamStats.possession != undefined) {
+                    pGameTeamStats.set("possession", gameTeamStats.possession);
+                }
+
+                if (gameTeamStats.passes != undefined) {
+                    pGameTeamStats.set("passes", gameTeamStats.passes);
+                }
+
+                if (gameTeamStats.offsides != undefined) {
+                    pGameTeamStats.set("offsides", gameTeamStats.offsides);
+                }
+
+                game.set("status", "review");
+
+                return pGameTeamStats.save();
+
+            }, function(error) {
+                console.log(error);
+            }).then(function(item) {
+
+                // Update Each Game Player Stats
+
+                // return item.save();
+
+                var roster = item.get("roster");
+
+                var promises = [];
+
+                _.each(roster, function() {
+                    promises.push(new Parse.Promise());
+                });
+
+                _.each(roster, function(gamePlayerStats, index) {
+
+                    var playerId = gamePlayerStats.get("player").id;
+
+                    console.log('gamePlayerStats');
+                    console.log(playerId);
+                    console.log(currentRoster[playerId]);
+
+                    if (currentRoster[playerId].assists) {
+                        gamePlayerStats.set("assists", currentRoster[playerId].assists);
+                    }
+
+                    if (currentRoster[playerId].fouls) {
+                        gamePlayerStats.set("fouls", currentRoster[playerId].fouls);
+                    }
+
+                    //TODO
+                    if (currentRoster[playerId].cards && currentRoster[playerId].cards.length) {
+                        _.each(currentRoster[playerId].cards, function(card) {
+                            gamePlayerStats.addUnique("cards", card);
+                        });
+                    }
+
+                    //TODO
+                    if (currentRoster[playerId].shots && currentRoster[playerId].shots.length) {
+                        _.each(currentRoster[playerId].shots, function(shot) {
+                            gamePlayerStats.addUnique("shots", shot);
+                        });
+                    }
+
+                    if (currentRoster[playerId].tackles) {
+                        gamePlayerStats.set("tackles", currentRoster[playerId].tackles);
+                    }
+
+                    if (currentRoster[playerId].passes) {
+                        gamePlayerStats.set("passes", currentRoster[playerId].passes);
+                    }
+
+                    if (currentRoster[playerId].subbedIn && currentRoster[playerId].subbedIn.length) {
+                        gamePlayerStats.set("subbedIn", currentRoster[playerId].subbedIn);
+                    }
+
+                    if (currentRoster[playerId].subbedOut && currentRoster[playerId].subbedOut.length) {
+                        gamePlayerStats.set("subbedOut", currentRoster[playerId].subbedOut);
+                    }
+
+                    // Complete promise
+                    gamePlayerStats.save().then(function(item) {
+                        promises[index].resolve(true);
+                    });
+                });
+
+                return Parse.Promise.when(promises);
+
+            }, function(error) {
+                console.log(error);
+            }).then(function(item) {
+                toastService.success('Game is ready for review');
+                $scope.closeModal();
+                viewService.goToPage('/games');
+            });
+
+        }
+
     ; return {
         ageGroups: ageGroups,
         states : states,
@@ -1224,8 +1361,8 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
         getGamePlayerStatsById : getGamePlayerStatsById,
         gamePlayerConstructor : gamePlayerConstructor,
         getGameByGameId : getGameByGameId,
-        createRoster : createRoster
-        //removePlayer : removePlayer
+        createRoster : createRoster,
+        submitGame: submitGame
     }
 
 });

@@ -1,0 +1,24 @@
+.two-col {
+    -moz-column-count: 2;
+    -webkit-column-count: 2;
+}
+
+.two-col input {
+    width: 83px;
+    height: 40px;
+}
+
+.two-col input.goal-assist {
+    width: 120px;
+    height: 40px;
+    padding: 0;
+}
+
+.two-col input.goal-time {
+    width: 45px;
+    height: 40px;
+}
+
+.two-col.shots-input {
+    margin-right: 40px;
+}

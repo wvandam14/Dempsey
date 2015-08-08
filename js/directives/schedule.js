@@ -26,7 +26,14 @@ soccerStats.directive('schedule', function () {
                     $scope.currGame = game;
                     dataService.setCurrentGame(game);
                     if (game.status === "not_started" && currentUser.get("accountType") == 1)
-                    viewService.goToPage('/game-setup');
+                        viewService.goToPage('/game-setup');
+                    else if (game.status === 'pending') {
+                        viewService.openModal('gameDataConfirm');
+                        $timeout(function() {
+                            $rootScope.$broadcast(configService.messages.pendingStats);
+                        });
+
+                    }
                     else
                         viewService.goToPage('/game-review');
                     
@@ -72,7 +79,7 @@ soccerStats.directive('schedule', function () {
                     $timeout(function() {
                         $scope.games = games;
                         $scope.currGame = $scope.games.length ? $scope.games[0] : {};
-                        console.log(games)
+                        //console.log(games)
                     });
 
                 });

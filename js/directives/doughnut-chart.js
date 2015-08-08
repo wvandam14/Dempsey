@@ -18,7 +18,7 @@ soccerStats.directive('doughnutChart', function ($timeout) {
             if (!$scope.large) $scope.large = false;
 
             var options = {
-                segmentShowStroke : false,
+                segmentShowStroke : true,
                 percentageInnerCutout : 70, // This is 0 for Pie charts
                 animation: false,
                 maintainAspectRatio: true,
@@ -37,7 +37,7 @@ soccerStats.directive('doughnutChart', function ($timeout) {
                         chart.canvas.height = 275;
                     }
                     // And for a doughnut chart
-                   var myDoughnutChart = new Chart(chart).Doughnut($scope.data,options);
+                   var myDoughnutChart = new Chart(chart).Doughnut($scope.data, options);
                 });
             }
 

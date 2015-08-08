@@ -17,6 +17,7 @@ soccerStats.factory('configService', function () {
             , gameStatusChanged : 'gameStatusChanged'
             , gameAdded: 'gameAdded'
             , homeClicked: 'homeClicked'
+            , pendingStats: 'pendingStats'
 
         }, toasts: {    // toast messaging
             general: function(action, type, success){

@@ -1,0 +1,188 @@
+<!-- Registration modal -->
+<div class="registration-page">
+    <div class="modal registration">
+        <div class="head flex" ng-show="isTab(0)">
+            <div class="flex-one">
+                <h1>Approve Team Game Statistics</h1>
+                <p>Please edit the team's overall statistics for this game.</p>
+            </div>
+            <div>
+                <x ng-click="closeModal()"></x>
+            </div>
+        </div>
+
+        <div class="head flex" ng-show="isTab(1)">
+            <div class="flex-one">
+                <h1>Approve Player Game Statistics</h1>
+                <p>Please edit each player's game statistics or press continue.</p>
+            </div>
+            <div>
+                <x ng-click="closeModal()"></x>
+            </div>
+        </div>
+
+        <div class="head flex" ng-show="isTab(2)">
+            <div class="flex-one">
+                <h1>Submit Game</h1>
+                <p>Press the Finish button. Otherwise, go back and change any statistics you would like.</p>
+            </div>
+            <div>
+                <x ng-click="closeModal()"></x>
+            </div>
+        </div>
+
+        <!-- Team Statistics -->
+        <form name="gameTeamStatsForm" class="body flex two-column" ng-show="isTab(0)">
+            <div class="flex-one">
+                <h3 class="ellipse">Home Score</h3>
+                <input type="text" ng-model="gameTeamStats.homeScore" disabled />
+                <h3 class="ellipse">Opponent Score</h3>
+                <input type="text" ng-model="gameTeamStats.opponentScore" list="opponentScoreList" required />
+                <datalist id="opponentScoreList">
+                    <option label="label1" value="value1"></option>
+                    <option label="label2" value="value2"></option>
+                </datalist>
+                <h3 class="ellipse">Possession</h3>
+                <h4 class="ellipse">{{gameTeamStats.currentTeam}}: {{gameTeamStats.possession}}%</h4>
+                <h4 class="ellipse">{{gameTeamStats.opponent}}: {{100 - gameTeamStats.possession}}%</h4>
+                <input type="range" ng-model="gameTeamStats.possession" min="0" max="100" value="50" required />
+
+            </div>
+            <div class="flex-one">
+                <h3 class="ellipse">Corners</h3>
+                <input type="text" ng-model="gameTeamStats.corners" list="cornerList" required />
+                <datalist id="cornerList">
+                    <option label="label1" value="value1"></option>
+                    <option label="label2" value="value2"></option>
+                </datalist>
+                <h3 class="ellipse">Offsides</h3>
+                <input type="text" ng-model="gameTeamStats.offsides" list="offsidesList" required />
+                <datalist id="offsidesList">
+                    <option label="label1" value="value1"></option>
+                    <option label="label2" value="value2"></option>
+                </datalist>
+                <h3 class="ellipse">Saves</h3>
+                <input type="text" ng-model="gameTeamStats.saves" list="savesList" required />
+                <datalist id="savesList">
+                    <option label="label1" value="value1"></option>
+                    <option label="label2" value="value2"></option>
+                </datalist>
+            </div>
+        </form>
+
+        <!-- Individual player statistics -->
+        <form name="gamePlayerStatsForm" class="body scroll" ng-show="isTab(1)">
+            <div class="flex-one" ng-repeat="gamePlayer in players track by $index">
+                <div ng-click="toggleShowPlayer($index)">
+                    <h3 class="ellipse">{{gamePlayer.showPlayer ? '&#9660' : '&#9654'}} {{gamePlayer.playerName}}</h3>
+                </div>
+                <ul ng-show="gamePlayer.showPlayer">
+                    <div class="two-col">
+                        <p>Playing Time:</p>
+                        <input type="text" ng-model="gamePlayer.playingTime" required />'
+                    </div>
+                    <div class="two-col">
+                        <p>Goals:</p>
+                        <input type="text" ng-model="gamePlayer.goals" disabled />
+                    </div>
+                    <div class="two-col">
+                        <p>Passes:</p>
+                        <input type="text" ng-model="gamePlayer.passes.completed" required /> /
+                        <input type="text" ng-model="gamePlayer.passes.total" required />
+                    </div>
+                    <div class="two-col">
+                        <p>Tackles:</p>
+                        <input type="text" ng-model="gamePlayer.tackles" required />
+                    </div>
+                    <div class="two-col">
+                        <p>Assists:</p>
+                        <input type="text" ng-model="gamePlayer.assists" required />
+                    </div>
+                    <div class="two-col">
+                        <p>Fouls:</p>
+                        <input type="text" ng-model="gamePlayer.fouls" required />
+                    </div>
+
+                    <div class="flex-one">
+                        <div class="two-col">
+                            <p>Yellow Cards:</p>
+                            <a ng-click="addYellow(gamePlayer)">+ Add Yellow</a>
+                        </div>
+                        <ul>
+                            <div></div>
+                            <div class="two-col shots-input" ng-repeat="yellowCard in gamePlayer.cards.yellows track by $index">
+                                <p>&nbsp;</p>
+                                <input type="text" ng-model="yellowCard" required />'
+                                <x ng-click="removeYellow(gamePlayer, $index)"></x>
+                            </div>
+                        </ul>
+                    </div>
+
+                    <div class="flex-one">
+                        <div class="two-col">
+                            <p>Red Cards:</p>
+                            <a ng-click="addRed(gamePlayer)">+ Add Red</a>
+                        </div>
+                        <ul>
+                            <div class="two-col shots-input" ng-repeat="redCard in gamePlayer.cards.reds track by $index">
+                                <p>&nbsp;</p>
+                                <input type="text" ng-model="redCard" required />'
+                                <x ng-click="removeRed(gamePlayer, $index)"></x>
+                            </div>
+                        </ul>
+                    </div>
+
+                    <div class="flex-one">
+                        <div class="two-col">
+                            <p>Shots:</p>
+                            <a ng-click="addGoal(gamePlayer)">+ Add Goal</a>
+                        </div>
+                        <ul>
+                            <div class="two-col shots-input">
+                                <p>On:</p>
+                                <input type="text" ng-model="gamePlayer.shots.on" required />
+                            </div>
+                            <div class="two-col shots-input">
+                                <p>Off:</p>
+                                <input type="text" ng-model="gamePlayer.shots.off" required />
+                            </div>
+                            <div class="two-col shots-input">
+                                <p>Blocked:</p>
+                                <input type="text" ng-model="gamePlayer.shots.blocked" required />
+                            </div>
+                            <div class="two-col shots-input" ng-repeat="goal in gamePlayer.shots.goals track by $index">
+                                <p>{{$index == 0 ? 'Goal:' : '&nbsp;'}}</p>
+                                <input class="goal-time" type="text" ng-model="goal.time" required />'
+                                Asst. By: <input class="goal-assist" type="text" ng-model="goal.assistedBy" list="players" />
+                                <datalist id="players">
+                                    <option ng-repeat="player in players" value="{{player.playerName}}"></option>
+                                </datalist>
+                                <x ng-click="removeGoal(gamePlayer, $index)"></x>
+                            </div>
+                        </ul>
+                    </div>
+                </ul>
+            </div>
+        </form>
+
+        <!-- tab numbers at the bottom of the form -->
+        <div class="flex flex-center">
+            <div class="circle" ng-click="setTab(0)" ng-class="{'active': isTab(0)}"><h1>1</h1></div>
+            <div class="connection"></div>
+            <div class="circle" ng-click="setTab(1)" ng-class="{'active': isTab(1)}"><h1>2</h1></div>
+            <div class="connection"></div>
+            <div class="circle" ng-click="setTab(2)" ng-class="{'active': isTab(2)}"><h1>3</h1></div>
+        </div>
+
+        <!-- buttons -->
+        <div class="foot flex">
+            <div class="button navy flex-one" ng-click="incrementTab()" ng-hide="isTab(2)">
+                <h1>Continue</h1>
+            </div>
+            <div class="button navy flex-one" ng-click="submitGame()" ng-show="isTab(2)">
+                <h1>Finish</h1>
+            </div>
+        </div>
+    </div>
+
+</div>

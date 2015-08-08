@@ -38,6 +38,8 @@
     <link rel="stylesheet" type="text/css" href="./css/game-setup.css">
     <link rel="stylesheet" type="text/css" href="./css/jersey-icon.css">
     <link rel="stylesheet" type="text/css" href="./css/bench-formation.css">
+    <link rel="stylesheet" type="text/css" href="./css/slider-bar.css">
+    <link rel="stylesheet" type="text/css" href="./css/player-stats.css">
     <!-- <link rel="stylesheet" type="text/css" href="./css/ngDialog.css"> -->
 
 </head>
@@ -114,7 +116,7 @@
         <div ng-if="checkModal('inviteEmailModal')"><invite-email-modal></invite-email-modal></div>
         <div ng-if="checkModal('playerModal')"><player-modal></player-modal></div>
         <div ng-if="checkModal('createGameModal')"><create-game-modal></create-game-modal></div>
-        <div ng-if="checkModal('passwordResetModal')"><password-reset-modal></password-reset-modal></div>
+        <div ng-if="checkModal('gameDataConfirm')"><game-data-confirm></game-data-confirm></div>
     </div>
 
     <!-- Libraries -->
@@ -174,6 +176,7 @@
     <script src="./js/directives/create-game-modal.js"></script>
     <script src="./js/directives/jersey-icon.js"></script>
     <script src="./js/directives/bench-formation.js"></script>
+    <script src="./js/directives/game-data-confirm.js"></script>
 
     <!-- Services -->
     <script src="./js/services/viewService.js"></script>

@@ -121,6 +121,7 @@ soccerStats.controller('gameReviewController',
                     _.each(gameTeamStats.get("roster"), function(gamePlayer) {
                         // for every player in the roster, we create a javascript object with all of their information and stats
                         $scope.players.push(dataService.gamePlayerConstructor(gamePlayer.get("player"), gamePlayer));
+                        //console.log($scope.players);
                     });
 
                     promise.resolve('success');
@@ -193,6 +194,7 @@ soccerStats.controller('gameReviewController',
             $scope.passData.successRate = $scope.passData.total && $scope.passData.completed ? Math.round(( $scope.passData.completed / $scope.passData.total)*100) : 0;
             $scope.passData.data[1].value = $scope.passData.successRate;
             $scope.passData.data[0].value = 100 - $scope.passData.successRate;
+            console.log($scope.passData);
 
             // initialize the current formation
             $scope.initCurrFormation();
