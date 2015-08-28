@@ -58,12 +58,10 @@ soccerStats.directive('gameDataConfirm', function ($location, $timeout, $route, 
 
             $scope.addYellow = function(gamePlayer) {
                 gamePlayer.cards.yellows.push(0);
-                gamePlayer.fouls++;
             };
 
             $scope.addRed = function(gamePlayer) {
                 gamePlayer.cards.reds.push(0);
-                gamePlayer.fouls++;
             };
 
             $scope.addGoal = function(gamePlayer) {
@@ -77,12 +75,10 @@ soccerStats.directive('gameDataConfirm', function ($location, $timeout, $route, 
 
             $scope.removeYellow = function(gamePlayer, index) {
                 gamePlayer.cards.yellows.splice(index, 1);
-                gamePlayer.fouls--;
             };
 
             $scope.removeRed = function(gamePlayer, index) {
                 gamePlayer.cards.reds.splice(index, 1);
-                gamePlayer.fouls--;
             };
 
             $scope.removeGoal = function(gamePlayer, index) {
@@ -95,34 +91,23 @@ soccerStats.directive('gameDataConfirm', function ($location, $timeout, $route, 
                     $timeout(function() {
 
                         // get pending data from the team and player game stats
-                        var teamData = game.get("pendingTeamStats");
+                        $scope.gameTeamStats = game.get("pendingTeamStats");
+                        $scope.gameTeamStats.opponent = game.get("opponent");
                         var playerData = game.get("pendingPlayerStats");
-                        var currentTeam = dataService.getCurrentTeam();
+                        var startTime = new Date(game.get("startTime")).getTime();
+
+                        // get currentTeam
+                        $scope.currentTeam = dataService.getCurrentTeam();
+
+                        // array of players
                         $scope.players = [];
 
-                        // get team pending stats
-                        console.log(teamData);
-                        // create an object with the pending team stats
-                        $scope.gameTeamStats = {
-                            passes: teamData.passes,
-                            tackles: teamData.tackles,
-                            fouls: teamData.fouls,
-                            corners: teamData.corners,
-                            possession: teamData.possession,
-                            offsides: teamData.offsides,
-                            opponentScore: teamData.goalsTaken,
-                            saves: teamData.saves,
-                            opponent: game.get("opponent"),
-                            currentTeam: currentTeam.get("name"),
-                            homeScore: teamData.goalsMade,
-                            substitutions: teamData.substitutions
-                        };
-
-                        console.log(playerData);
-
                         // create objects with pending player stats and push to players array
+
                         _.each(playerData, function(player, index) {
-                            var index = $scope.players.push({
+                            if (player.subbedIn.length || player.subbedOut.length)
+                                console.log(player);
+                            var i = $scope.players.push({
                                 playerId: index,
                                 firstName: player.player.firstName,
                                 lastName: player.player.lastName,
@@ -153,30 +138,35 @@ soccerStats.directive('gameDataConfirm', function ($location, $timeout, $route, 
 
                             // get card data from each player
                             _.each(player.cards, function(card) {
-                                $scope.players[index].cards.total++;
-                                var d = moment.duration(card.time);
+                                $scope.players[i].cards.total++;
+                                var d = moment.duration(card.time - startTime);
                                 if (card.type === "yellow")
-                                    $scope.players[index].cards.yellows.push(d.minutes());
+                                    $scope.players[i].cards.yellows.push(d.minutes());
                                 if (card.type === "red")
-                                    $scope.players[index].cards.reds.push(d.minutes());
+                                    $scope.players[i].cards.reds.push(d.minutes());
                             });
 
                             // get shot data from each player
                             _.each(player.shots, function(shot) {
-                                $scope.players[index].shots.total++;
-                                if (shot.type === "on") $scope.players[index].shots.on++;
-                                if (shot.type === "off") $scope.players[index].shots.off++;
-                                if (shot.type === "blocked") $scope.players[index].shots.blocked++;
+                                $scope.players[i].shots.total++;
+                                if (shot.type === "on") $scope.players[i].shots.on++;
+                                if (shot.type === "off") $scope.players[i].shots.off++;
+                                if (shot.type === "blocked") $scope.players[i].shots.blocked++;
                                 if (shot.type === "goal") {
+                                    //console.log(shot.timeStamp - startTime);
+                                    //console.log(moment.duration(shot.timeStamp - startTime).minutes());
+                                    $scope.players[i].shots.on++;
                                     var player;
                                     if (shot.assistedBy) {
-                                        player = _.find($scope.players, function (player) {
-                                            return player.playerId === shot.assistedBy;
+                                        player = _.find(playerData, function (p) {
+                                            return p.player.objectId === shot.assistedBy;
                                         });
+                                        // console.log(player);
                                     }
-                                    $scope.players[index].shots.goals.push({
-                                        time: moment.duration(shot.timeStamp).minutes(),
-                                        assistedBy: shot.assistedBy ? player.playerName : ''
+                                    $scope.players[i].shots.goals.push({
+                                        time: moment.duration(shot.timeStamp-startTime).minutes(),
+                                        assistedBy: shot.assistedBy ? player.player.name : '',
+                                        id: shot.assistedBy ? player.player.objectId : ''
                                     });
                                 }
                             });

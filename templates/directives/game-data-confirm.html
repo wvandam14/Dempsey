@@ -35,15 +35,15 @@
         <form name="gameTeamStatsForm" class="body flex two-column" ng-show="isTab(0)">
             <div class="flex-one">
                 <h3 class="ellipse">Home Score</h3>
-                <input type="text" ng-model="gameTeamStats.homeScore" disabled />
+                <input type="text" ng-model="gameTeamStats.goalsMade" disabled />
                 <h3 class="ellipse">Opponent Score</h3>
-                <input type="text" ng-model="gameTeamStats.opponentScore" list="opponentScoreList" required />
+                <input type="text" ng-model="gameTeamStats.goalsTaken" list="opponentScoreList" required />
                 <datalist id="opponentScoreList">
                     <option label="label1" value="value1"></option>
                     <option label="label2" value="value2"></option>
                 </datalist>
                 <h3 class="ellipse">Possession</h3>
-                <h4 class="ellipse">{{gameTeamStats.currentTeam}}: {{gameTeamStats.possession}}%</h4>
+                <h4 class="ellipse">{{currentTeam.get("name")}}: {{gameTeamStats.possession}}%</h4>
                 <h4 class="ellipse">{{gameTeamStats.opponent}}: {{100 - gameTeamStats.possession}}%</h4>
                 <input type="range" ng-model="gameTeamStats.possession" min="0" max="100" value="50" required />
 
