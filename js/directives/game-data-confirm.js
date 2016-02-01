@@ -7,7 +7,7 @@ soccerStats.directive('gameDataConfirm', function ($location, $timeout, $route, 
             var self = 'gameDataConfirm';  // name of modal
 
             $scope.toggleShowPlayer = function(index) {
-                console.log($scope.players);
+                //console.log($scope.players);
                 $scope.players[index].showPlayer = $scope.players[index].showPlayer === false ? true : false;
             };
 

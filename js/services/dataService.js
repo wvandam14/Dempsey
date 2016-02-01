@@ -1194,6 +1194,7 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
         }
 
         , submitGame = function(currentRoster, gameTeamStats) {
+
             getGameByGameId(getCurrentGame().id).then(function(game) {
                 game.set("status", "review");
                 return game.save();
