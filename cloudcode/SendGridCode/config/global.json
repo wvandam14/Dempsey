@@ -1,0 +1,14 @@
+{
+    "applications": {
+        "Premier Stats (Dempsey)": {
+            "applicationId": "z9Sl23m5E0Ezun8NvpnBqk6NPzWvQpiIER1D2msS", 
+            "masterKey": "SzrXuvM82O1w67xrLebNKNNQjreMmNgP1dI5iP8f"
+        }, 
+        "_default": {
+            "link": "Premier Stats (Dempsey)"
+        }
+    }, 
+    "global": {
+        "parseVersion": "1.3.5"
+    }
+}

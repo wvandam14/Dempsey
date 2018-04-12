@@ -1,0 +1,49 @@
+<!-- panel that shows up on main pages - shows all games -->
+<div class="schedule">
+<!-- NOT DONE Scroll left -->
+<div class="scroll-arrow left flex flex-center flex-left" ng-click="goLeft()">
+	<h1>&#9664</h1>
+</div>
+
+<div class="games-container slider" style="width: {{games.length * 204}}px; {{getTransform()}}">
+	<div class="summary-box {{game.status}}" ng-repeat="game in games | orderBy:'date'" ng-class="{'selected': currGame === game && currentPage === 'game-review' }" ng-click="setGame(game)">
+		<!-- Summary of the game -->
+		<div class="summary flex flex-center flex-column">
+			<div class="flex flex-center flex-one">
+				<div class="flex flex-one">
+					<h5>{{game.team.symbol}}</h5>
+				</div>
+				<div class="flex flex-one">
+					<div class="score flex flex-center">
+						<h5 class="text-center">{{game.team.score}}</h5>
+					</div>
+				</div>
+			</div>
+			<div class="flex flex-center flex-one">
+				<div class="flex flex-one">
+					<h5>{{game.opponent.symbol}}</h5>
+				</div>
+				<div class="flex flex-one">
+					<div class="score flex flex-center">
+						<h5 class="text-center">{{game.opponent.score}}</h5>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Action box -->
+		<div class="action text-center flex flex-center">
+			<h6>{{game.date | date:'MM/dd'}}</h6>
+		</div>
+	</div>
+
+</div>
+
+<!-- NOT DONE Scroll right -->
+<div class="scroll-arrow right flex flex-center flex-right" ng-click="goRight()">
+	<h1>&#9654</h1>
+</div>
+
+
+
+</div>

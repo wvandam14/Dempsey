@@ -1,0 +1,21 @@
+<!-- format for the formation field shown on the game setup and game review -->
+<div class="relative">
+    <div class="back-layer">
+        <img src="./img/half-field.svg">
+    </div>
+
+    <div class="player-layer">
+        <div class="player flex flex-column flex-center" ng-class="{selected: isSelected({player: position.player})}" ng-click="selectPlayer({player: position.player})" ng-repeat="position in formation"
+               style="position:absolute; left:{{position.x}}%; top:{{position.y}}%">
+
+            <!-- jersey icon -->
+            <jersey-icon></jersey-icon>
+
+            <div class="num flex flex-center">
+                <h5>{{position.player.number}}</h5>
+            </div>
+
+            <h5>{{position.player.lname}}</h5>
+        </div>
+    </div>
+</div>

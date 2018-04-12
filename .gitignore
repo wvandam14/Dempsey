@@ -5,6 +5,10 @@
 *.suo
 *.user
 *.sln.docstates
+[Ww]eb.config
+
+# Webstorm
+.idea/workspace.xml
 
 # Build results
 [Dd]ebug/
@@ -181,3 +185,13 @@ UpgradeLog*.htm
 
 # Microsoft Fakes
 FakesAssemblies/
+
+# Prepros
+.*min.js
+js/min/
+js/controllers/min/
+js/directives/min/
+js/services/min/
+cloudcode/SendGridCode/cloud/min/
+prepros.cfg
+js/services/min/dataService.min.js

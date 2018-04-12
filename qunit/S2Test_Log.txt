@@ -1,0 +1,130 @@
+Test log Sprint 2
+Testing Toast in coach registration
+	testing fields with empty, filling out and removing and refilling out
+	// problem with email field remaining red after entering valid email, 
+		even after moving on and coming back to create coach account page
+	// does not require a coach photo
+	// can still add non-image files with no UI error
+	// after removing team color and leaving field blank, field does not rest, 
+		reselecting same image does not reset, changing images does/changing back
+	// trying to go from 1 page to 3 page brings up toast "Please fill out required fields"
+	// can back from page 2 to 1 with page 2 information not complete
+7:33
+	// submit problem solved
+	// non-square images (tall) are cut off on display (not save)
+	// non-square images (fat) are distplayed as such (not cut off, not stretched to square)
+	// submit successful
+	// toast stacks
+4/2/15 3:00
+before anything is entered
+	//ng-pristine ng-untouched ng-valid-email ng-invalid ng-invalid-required
+	// field is white
+
+when invalid is submitted
+	//ng-invalid ng-dirty ng-invalid-email ng-vali-required ng-touched ng-invalid-required
+	// field is red
+
+when valid is resubmitted after invalid
+	//ng-dirty ng-valid-required ng-touched ng-invalid-required ng-valid ng-valid-email
+	// field is red
+
+when valid is submitted from refresh
+	//ng-dirty ng-valid-required ng-valid ng-valid-email ng-touched
+	// field is white
+
+when blank is submitted
+	//ng-pristine ng-untouched ng-valid-email ng-invalid ng-invalid-required ng-touched
+	// field is red
+
+when valid is submitted after blank
+	//ng-touched ng-dirty ng-valid-required ng-valid ng-valid-email
+	// field is white
+
+
+4/6/15 6:47
+	back to registration
+		//display has shifted down, page is cut off and does not scroll
+		//known error for user not submitting a profile pic
+
+	testing create a team
+		//displaying the team select, names are not lined up if images are different sizes
+		//leaving Team logo blank generates toast "There was an error (111). Please try again."
+		// adding a team does not refresh the page, 
+			so new team does not show up until page refresh is manuely done by user
+		// non primary team can not be selected
+		// Create A New Team window stays up after new team is submitted, and can be resubmitted, changed and submitted,
+			canceled after submition (stays submitted) and closed out of after submition (stays submitted)
+First image fix (team select menu)
+		// images now fill a square space limit
+		// wide images have space at the bottom, tall images the bottom is cut off
+		// long team names fill out more than their space (expanding up) and can shrink the team logo image,
+			there action box also expands past its space and covers the team above them's box,	
+		// long team names also get cut off at a certian point 
+			(dont know if hight is centered on the correct box location or if it just cuts off at a certain length)
+		// create a new team does not find a primary color
+	text ellipses added
+		//images are still to small but text is fixed
+	images fixed
+side problems
+	// having multiple browser windows with the project running causes problems 
+		(only one user per computer, possibly more problems)
+	// on coach registration, if there is an error elsewhere in the submition, the team will be created multiple times 
+		(each time submition is attempted)		
+Login verification
+	// currently does not work for pages /test /game-review
+
+4/7/15 6:30
+view/edit account
+	// "passwords do not match" error appears on load of edit account
+------->// change passwords does not work <------------------------------------------------------------------------------------
+view/edit account testing failed moved back to inprogress
+8:04 after fix
+	// "passwords do not match" error still present
+	// does nothing if new password is the same as current password
+		worse than that if breaks the password
+		(can not be reporduced keep an eye on this)
+		// reproduced, when new password is submitted
+
+
+Side problems
+	// users remain logged in possible indefinently until they log out
+	// user can be logged in on mulitple computers and can cause update issues
+
+4/9/15 2:46
+testing edit team & team select bar
+	// interactions with team select and edit team button often take multiple clicks before anything happens
+	// select team resets after page refresh but not page change
+	// option for delete team is needed somewhere
+	// if image is changed & modal is saved & closed bofore preview is loaded, 
+		then the wrong image can load for the team initialy
+	// team select bar is resizing when teams with longer names are selected
+3:03 
+	// multiple click problem might be resolved, can not reproduce at the present
+
+4/13/15 8:33
+team edit
+	// finished no bugs
+
+multi user problems retest next sprint <-----------------------------------------------------------------------------------------
+
+
+team create round 2
+	// changes operate as intended
+	// problem with page refresh resetting selected team back to first team
+	// adding parent emails, breaks account if an email is already used for an account on the team
+	// State field is blank on load
+	// created teams disappear after relogging in, however if logging a thrid time the reappear
+		might require another team to be created altogether
+	// team disappeared altogether, created a new team that worked fine, 
+		but team "Hextech Anivia" exists on Parse but does not exist on coach page
+
+testing parent
+	// functionality of homepage is now there for parent
+create player
+	// took several clicks on first attempt to open
+	// still has auto filled values
+	// does not fit on the screen
+	// does not close on save
+	// Emergency Contact should auto fill to current parent's information
+	// there is only add new player, no edit
+	// 

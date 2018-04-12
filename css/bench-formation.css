@@ -1,0 +1,100 @@
+bench-formation {
+    display: block;
+}
+
+bench-formation > div:first-child {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+bench-formation .back-layer {
+    width: 100%;
+    height: 100%;
+}
+
+bench-formation .back-layer img {
+    width: 100%;
+}
+
+bench-formation .player-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index:1;
+}
+
+bench-formation .formation {
+    position: absolute;
+    top:0;
+    left:0;
+}
+
+bench-formation jersey-icon {
+
+}
+
+bench-formation jersey-icon svg {
+    width:100%;
+    height: 100%;
+}
+
+bench-formation .player {
+    width: 5vw;
+    height: 5vw;
+}
+
+bench-formation .player.selected svg path {
+    fill: #5DA97B;
+}
+
+bench-formation .num {
+    position: absolute;
+    top: 25%;
+    left: 0;
+    width: 100%;
+    box-shadow: 0px 0px 0px rgba(0,0,0,0);
+}
+
+bench-formation h5 {
+    text-align: center;
+    color: #FFF;
+    font-size: 1vw;
+    text-shadow: 0 0 10px rgba(0,0,0,0.25);
+    font-family: 'RobotoBoldWeb';
+}
+
+bench-formation .player > h5 {
+    position: absolute;
+    bottom: -.5vw;
+    width: 100%;
+}
+
+/*formation-field .key {
+    margin-top: 20px;
+}
+
+formation-field .key > div {
+    margin-right: 5px;
+}
+
+formation-field .key .circle {
+    width:10px;
+    height: 10px;
+}
+
+formation-field .key .circle.goal {
+    background-color:#5DA979;
+}
+
+formation-field .key .circle.on {
+    background-color:#FFF;
+    border: 1px solid #5DA979;
+}
+
+formation-field .key h5 {
+    font-size:10px;
+    color:#5DA979;
+}*/

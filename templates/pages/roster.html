@@ -1,0 +1,100 @@
+<!-- View roster page that displays all players and emergency contact information as well as minimal player statistics -->
+<div class="roster-page">
+    <div class="content">
+        <!-- Roster -->
+        <div class="player-stats-container flex">
+            <!-- Lineup -->
+            <div class="roster-container">
+                <div class="list">
+                    <h5 class="title">LINEUP</h5>
+                    <div class="item player-selector flex flex-center-vertical" ng-repeat="player in players | orderBy:'lname'" ng-class="{selected: isSelected(player)}" ng-click="selectPlayer(player)">
+                        <div class="circle flex flex-center">
+                            <h5>{{player.number}}</h5>
+                        </div>
+                        <div class="flex flex-one">
+                            <h5 class="ellipse">{{player.fname + ' ' + player.lname}}</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- player information -->
+            <div class="stats-display-container flex-one flex flex-column">
+                <div class="player-card flex flex-space-between">
+                    <div class="player-info">
+                        <div class="info flex">
+                            <div class="img-container">
+                                <img src="{{currPlayer.photo}}" />
+                            </div>
+                            <div  class="flex flex-column">
+                                <h3 class="ellipse">{{currPlayer.fname}}</h3>
+                                <h3 class="ellipse">{{currPlayer.lname}}</h3>
+                                <div class="flex">
+                                    <h5>{{currPlayer.number}}</h5>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="flex personal-info">
+                            <h5>PHONE</h5> <span>{{currPlayer.phone}}</span>
+                        </div>
+                        <div class="contact-info">
+                            <h5 class="">EMERGENCY CONTACT</h5>
+                            <div class="flex">
+                                <h5>NAME</h5> <span>{{currPlayer.emergencyContact.name}}</span>
+                            </div>
+                            <div class="flex">
+                                <h5>PHONE</h5> <span>{{currPlayer.emergencyContact.phone}}</span>
+                            </div>
+                            <div class="flex">
+                                <h5>RELATION</h5 ><span>{{currPlayer.emergencyContact.relationship}}</span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- player statistics -->
+                    <div class="stats-display numbers flex flex-column flex-one" role="coach">
+                        <div class="flex">
+                            <div class="flex flex-center flex-column flex-one">
+                                <h6>{{currPlayer.total.goals}}</h6>
+                                <h5>GOALS</h5>
+                            </div>
+                            <div class="flex flex-center flex-column flex-one">
+                                <h6>{{currPlayer.passes.total}}</h6>
+                                <h5>PASSES</h5>
+                            </div>
+                            <!--<div class="flex flex-center flex-column flex-one">-->
+                                <!--<h6>{{currPlayer.total.corners}}</h6>-->
+                                <!--<h5>CORNERS</h5>-->
+                            <!--</div>-->
+                        </div>
+                        <div class="flex">
+                            <div class="flex flex-center flex-one">
+                                <doughnut-chart data="currPlayer.passes.data" num="currPlayer.passes.completion" label="'PASSES COMPLETED'" style="zoom: 0.5;"></doughnut-chart>
+                            </div>
+                            <div class="flex flex-center flex-one">  
+                                <doughnut-chart data="currPlayer.shots.data" num="currPlayer.shots.accuracy + '%'" label="'SHOTS ON GOAL'"  style="zoom: 0.5;"></doughnut-chart>
+                            </div>
+                        </div>
+                        <div class="flex">
+                            <div class="flex flex-center flex-column flex-one">
+                                <h6>{{currPlayer.total.fouls}}</h6>
+                                <h5>FOULS</h5>
+                            </div>
+                            <!-- cards -->
+                            <div class="flex flex-center flex-column flex-one">
+                                <h6>{{currPlayer.total.yellows}}</h6>
+                                <h5>YELLOW</h5>
+                            </div>
+                            <div class="flex flex-center flex-column flex-one">
+                                <h6>{{currPlayer.total.reds}}</h6>
+                                <h5>RED</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,33 @@
+<!-- Enables coach to setup the roster to ready a game for statistical retrieval -->
+<div class="game-setup-page">
+    <div class="content">
+        <!-- enables coach to select lineup -->
+        <div class="player-stats-container flex" role="coach">
+            <div class="roster-container">
+                <p>Select your lineup by clicking on the players in the list and inserting them into the desired position or bench. Inserted players can be disabled by clicking on their position.</p><br>
+                <div class="list">
+                    <!-- TODO: Figure out how we want to store the roster vs lineup data and then display accordingly -->
+                    <h5 class="title">LINEUP</h5>
+                    <div class="item player-selector flex flex-center-vertical"
+                         ng-repeat="player in roster | orderBy:'lname'"
+                         ng-class="{selected: isSelected(player), disabled: player.selected}"
+                         ng-click="selectPlayer(player)">
+                        <div class="circle flex flex-center">
+                            <h5>{{player.number}}</h5>
+                        </div>
+                        <div class="flex flex-one">
+                            <h5 class="ellipse">{{player.name}}</h5><h5><span class="flex flex-center">{{player.position}}</span></h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="field-container flex flex-column flex-one">
+                <formation-field formation="currFormation" select-player="assignPosition(player)" is-selected="isSelected(player)"></formation-field>
+                <bench-formation formation="bench" select-player="assignBench(player)" is-selected="isSelected(player)"></bench-formation>
+                <div class="button green" ng-click="saveRoster()" ng-class="{disabled: !checkRoster()}">
+                    <h1>Save Roster</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

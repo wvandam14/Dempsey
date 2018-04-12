@@ -1,0 +1,175 @@
+﻿Copy paste into notepad
+
+test log 3/16/15 10:24 PM
+test 1;
+	test username
+		__+++_()!@~@##$%20gitoutoufhear48964您好admin
+	test password
+		asldfoweuroop123124576234456567123556756您好您好45486421123
+	// console message "failed to login" on single click and following tries (fields do not reset)
+test 2;
+	use correct username and test password
+	// console message "failed to login" on single click and following tries (fields do not reset)
+test 3;
+	use correct password and test username
+	// console message "failed to login" on single click and following tries (fields do not reset)
+test 4;
+	use correct login info
+	// no concole message, login successful after second click (nothing on first click, fields do not reset)
+
+test 5;
+	after first click of correct info, attempt alter fields to test password/username
+	// page reloads to home page (log in successful) fields where not altered.  copy paste and manule alterations where not completed.  
+		Moving text within the field allowed on one attemp, was not able to replicate.  
+		able to add space to begining/end of username but no other character values
+
+
+test reg.  
+	test username used for every field except state which used Arizona
+	// page advances, at "Finish" :
+	//	TypeError: Cannot read property 'name' of undefined
+	// 		at Scope.$scope.register (http://localhost:8000/js/controllers/registrationController.js:33:45)
+	// 		at $parseFunctionCall (http://localhost:8000/lib/angular.js:12345:26)    
+	//		at ngEventDirectives.(anonymous function).compile.element.on.callback (http://localhost:8000/lib/angular.js:21435:37)    
+	//		at Scope.$get.Scope.$eval (http://localhost:8000/lib/angular.js:14401:44)   
+	//		at Scope.$get.Scope.$apply (http://localhost:8000/lib/angular.js:14500:41)   
+	//		at HTMLDivElement.<anonymous> (http://localhost:8000/lib/angular.js:21440:43)   
+	//		at HTMLDivElement.eventHandler (http://localhost:8000/lib/angular.js:3014:33)
+
+
+	change fields one at a time to realistic values of 
+	Name: Peter
+	// TypeError remains, issues with current registration page?
+	test blank values for reg.
+	// TypeError remains
+// test concluded for registration page
+
+test log 3/18/15 4:45
+testing mobile (chrome emulation)
+	load login page on iPad mini
+	// double tap still required on login page but fully operational
+	// tested access to registration page, page accessable through direct URL
+	login page on other devices
+	// works as intended with the exception of the previously stated errors remaining present
+	// smaller devices have an inflated "Welcome to Premier Stats!" window, 
+		but might actualy be favorable so that the window is still useable on those smaller devices
+	// screen rotation is miss scailing the Premier Stats window
+	registration page
+	testing registration with test username from last error log (__+++_()!@~@##$%20gitoutoufhear48964您好admin) in all open text fields
+		Arizona for all state fields and U12 for age group field, test username and test password as two emails for the members
+	// emails endline around the Chinese in the test username and test password (css bug, email is should be displayed on one line)
+	// receved message Error:-1 Cannot sign up user with an empty name
+
+actual Samsung Galaxy S5 
+	login page
+	// scales nicely both vertical and horizontal on load
+	// over zooms at keyboard open
+	// homepage is off scale and loads at bottom of screen (still zoomed from login page)
+
+email testing
+	test email asldfoweuroop123124576234456567123556756您好您好45486421123@__+++_()!~##$%20gitoutoufhear48964您好.admin
+	// does not work as an email
+
+
+
+test log 3/18/15 8:02
+testing "final" version of registration form
+testing realistic input
+	Name: Pete Larson
+	Email: theColourC@yahoo.com
+	password: helloMyNameIsBob
+	conf: " "
+	Phone: 555-555-5555
+	City: Spokane
+	State: Washington
+
+	Team Name: the Five
+	Team Number: 111
+	League Name: of Legends
+	Age Group: U12
+	City: Spokane
+	State: Washington
+
+	add emails: plarson15@my.whitworth.edu
+			theColorC.larson@gmail.com
+
+	// nothing happens on pressing finish, console agnologes Team registered
+	// was able to log in using account created
+	// accounts created for added emails are able to log in (passwords, theColorC - fk8fd7 || plarson15 - fw45me)
+	// everything seems to work fine form a common user perspective, time to break
+testing overly large inputs
+
+
+	Name: __+++_()!@~@##$%20gitoutoufhear48964您好admin
+	Email: __+++_()!@~@##$%20gitoutoufhear48964您好admin
+	password: __+++_()!@~@##$%20gitoutoufhear48964您好admin
+	conf: " "
+	Phone: __+++_()!@~@##$%20gitoutoufhear48964您好admin
+	City: __+++_()!@~@##$%20gitoutoufhear48964您好admin
+	State: Washington
+		// blocked by email field, change to __+++_()!@~@##$%20gitoutoufhear48964您好@admin.com
+		// blocked by email field, change to __+++_()!@~@##$%20gitoutoufhear48964@admin.com
+		// blocked by email field, change to __+++_()!~##$%20gitoutoufhear48964您好@admin.com
+		// blocked by email field, change to __+++_()!~##$%20gitoutoufhear48964@admin.com
+		// blocked by email field, change to 20gitoutoufhear48964@admin.com
+		// email field does not allow symbols except one @?
+	Team Name: __+++_()!@~@##$%20gitoutoufhear48964您好admin
+	Team Number: __+++_()!@~@##$%20gitoutoufhear48964您好admin
+	League Name: __+++_()!@~@##$%20gitoutoufhear48964您好admin
+	Age Group: U16
+	City: __+++_()!@~@##$%20gitoutoufhear48964您好admin
+	State: West Virginia
+
+	add emails: plarson15@my.whitworth.edu
+			20gitoutoufhear48964@admin.com
+			__+++_()!~##$%20gitoutoufhear48964您好@admin.com
+			// __+++_()!~##$%20gitoutoufhear48964您好@admin.com once again not allowed, prevented before email was added to list
+		// team registared
+
+
+	Name: Robert'); DROP TABLE students;
+	Email: gitoutoufhear48964@admincom
+	password: __+++_()!@~@##$%20gitoutoufhear48964您好admin
+	conf: " "
+	Phone: __+++_()!@~@##$%20gitoutoufhear48964您好admin
+	City: __+++_()!@~@##$%20gitoutoufhear48964您好admin
+	State: Washington
+
+	Team Name: __+++_()!@~@##$%20gitoutoufhear48964您好admin
+	Team Number: __+++_()!@~@##$%20gitoutoufhear48964您好admin
+	League Name: __+++_()!@~@##$%20gitoutoufhear48964您好admin
+	Age Group: U16
+	City: __+++_()!@~@##$%20gitoutoufhear48964您好admin
+	State: West Virginia
+
+	email: youKnowYouWant@it.me
+		// after adding a failed email, the field remains red
+		// email failed change email from first page to gitoutoufhear48964@admin.com
+		// forgot to add email at end, team registared anyway
+
+
+
+		// testing redding of add email field
+	!!#$%20^&*gitoutoufhear489gitoutoufhear48964'%%$#$%'@admin.com 
+		// works
+	!!#$%20^&*gitoutoufhear489gitoutoufhear48964'%()%$#$%'@admin.com
+		// does not work, and should.   BUT WE DONT CARE!
+Testing team logo file adding
+	// normal file addes fine (temp display is squished, fix in progress)
+	// able to add word doc instead of image file, need data validation
+
+test log 2/18/15 11:28
+testing create a new player
+	player name: soem
+	birthday: 12/12/1212
+	Team:
+	Jersey Number: 12
+	City: twelve
+	State:
+	Emergency contact: smoe
+	Phone Number: 12121212121
+	Relationship to Player: stranger
+
+
+team registration team logo
+//dragging "large" files after adding them to the page causes the page to crash, need data validation and size restrictions on file add

@@ -1,0 +1,136 @@
+schedule {
+    width: 100%;
+}
+
+.schedule {
+	width: 100%;
+	height: 100px;
+	background-color: #222;
+	color: #FFF;
+    position: relative;
+}
+
+.schedule h6 {
+	font-size: 15px;
+}
+
+.schedule .scroll-arrow {
+    z-index: 1;
+    top: 0;
+	width: 50px;
+	height: 100px;
+	background-color: #222;
+}
+
+.schedule .scroll-arrow.left {
+	position: absolute;
+	left: 0;
+}
+
+.schedule .scroll-arrow.right {
+	position: absolute;
+	right: 0;
+}
+
+.schedule .scroll-arrow h1 {
+	color: #FFF;
+}
+
+.schedule .games-container {
+    padding: 0 51px;
+    display: block;
+    -webkit-transition: all .3s ease-in-out;
+    -moz-transition: all .3s ease-in-out;
+    -ms-transition: all .3s ease-in-out;
+    -o-transition: all .3s ease-in-out;
+    transition: all .3s ease-in-out;
+}
+
+.schedule .summary-box {
+    cursor: pointer;
+	background-color: #444;
+	width: 100px;
+    float: left;
+	border: solid #222;
+	border-width: 2px 1px;
+}
+
+.schedule .summary-box.win .action,
+.schedule .summary-box.win .score {
+    background-color: #5DA97B;
+}
+
+.schedule .summary-box.loss .action,
+.schedule .summary-box.loss .score {
+    background-color: #FF7373;
+}
+
+.schedule .summary-box.not_started .action,
+.schedule .summary-box.draw .action,
+.schedule .summary-box.draw .score
+{
+    background-color: #DDD;
+    color: #1C3D68;
+}
+
+.schedule .summary-box.ready .action,
+.schedule .summary-box.ready .score
+{
+    background-color: #FFFF73;
+    color: #444;
+}
+
+.schedule .summary-box.selected {
+    background-color: #222;
+}
+.schedule .summary-box.selected .summary {
+    padding: 8px 13px 10px 13px;
+}
+
+.schedule .summary-box.win.selected .summary {
+    border-left: 2px solid #5DA97B;
+    border-right: 2px solid #5DA97B;
+    border-top: 2px solid #5DA97B;
+}
+
+.schedule .summary-box.loss.selected .summary {
+    border-left: 2px solid #FF7373;
+    border-right: 2px solid #FF7373;
+    border-top: 2px solid #FF7373;
+}
+
+.schedule .summary-box.not_started.selected .summary,
+.schedule .summary-box.draw.selected .summary {
+    border-left: 2px solid #DDD;
+    border-right: 2px solid #DDD;
+    border-top: 2px solid #DDD;
+}
+
+.schedule .summary-box > h1 {
+	text-align: center;
+	color: #333;
+	font-size: 18px;
+}
+
+.schedule .summary-box .summary {
+	height: 73px;
+	padding: 10px 15px;
+}
+
+.summary > div {
+	width: 100%;
+}
+
+.schedule .summary-box .summary .score {
+    height: 23px;
+    width: 23px;
+    margin: 1px;
+    position: relative;
+    left: 9px;
+}
+
+.schedule .summary-box .action {
+	height: 23px;
+	padding: 4px;
+}
+

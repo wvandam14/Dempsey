@@ -1,0 +1,197 @@
+<!-- Viewing a game that has been submitted or yet to be submitted. Shows all player and team statistics -->
+<div class="game-review">
+
+    <div class="content">
+
+        <div class="section flex">
+            <!-- shows all notable events during the game: cards, goals, substitutions -->
+            <game-timeline></game-timeline>
+        </div>
+
+        <!-- Game team statistics -->
+        <div class="section flex">
+            <div class="flex-one flex flex-center">
+                <doughnut-chart data="gameStats.teamPossession.data" num="gameStats.possession+ '%'" label="'POSSESSION'"></doughnut-chart>
+            </div>
+
+            <div class="flex-one flex flex-column flex-center">
+                <h5 class="stat-title">SHOT ACCURACY</h5>
+                <shot-accuracy-chart data="shotLinesData"></shot-accuracy-chart>
+            </div>
+        </div>
+
+        <div class="section flex">
+            <div class="flex-one flex flex-column flex-center">
+                <h5 class="stat-title">SHOTS</h5>
+                <bar-chart data="shotCountData"></bar-chart>
+            </div>
+
+            <div class="flex-one flex flex-center">
+                <doughnut-chart data="passData.data" num="passData.successRate + '%'" label="'PASSES COMPLETED'"></doughnut-chart>
+            </div>
+
+            <div class="numbers flex-one flex flex-column">
+                <div class="flex-one">
+                    <h5 class="text-center stat-title">TEAM STATS</h5>
+                </div>
+                <div class="flex">
+                    <div class="flex flex-center flex-column flex-one">
+                        <h6>{{otherData.goals}}</h6>
+                        <h5>GOALS</h5>
+                    </div>
+                    <div class="flex flex-center flex-column flex-one">
+                        <h6>{{passData.total}}</h6>
+                        <h5>PASSES</h5>
+                    </div>
+                    <div class="flex flex-center flex-column flex-one">
+                        <h6>{{gameStats.corners}}</h6>
+                        <h5>CORNERS</h5>
+                    </div>
+                    <div class="flex flex-center flex-column flex-one">
+                        <h6>{{gameStats.offsides}}</h6>
+                        <h5>OFFSIDES</h5>
+                    </div>
+                </div>
+                <div class="flex-one"></div>
+                <div class="flex">
+                    <div class="flex flex-center flex-column flex-one">
+                        <h6>{{gameStats.tackles}}</h6>
+                        <h5>TACKLES</h5>
+                    </div>
+                    <div class="flex flex-center flex-column flex-one">
+                        <h6>{{otherData.fouls}}</h6>
+                        <h5>FOUL</h5>
+                    </div>
+                    <div class="flex flex-center flex-column flex-one">
+                        <h6>{{gameStats.saves}}</h6>
+                        <h5>SAVES</h5>
+                    </div>
+                    <div class="flex flex-center flex-column flex-one">
+                        <h6>{{otherData.yellows}}</h6>
+                        <h5>YELLOW</h5>
+                    </div>
+                    <div class="flex flex-center flex-column flex-one">
+                        <h6>{{otherData.reds}}</h6>
+                        <h5>REDS</h5>
+                    </div>
+                </div>
+                <div class="flex-one"></div>
+            </div>
+        </div>
+
+        <!-- List of lineup and bench information  -->
+        <div class="player-stats-container flex section">
+            <div class="roster-container">
+                <div class="list">
+                    <h5 class="title">LINEUP</h5>
+                    <div ng-if="!player.benched" class="player-selector flex flex-center-vertical" ng-repeat="player in players | orderBy:'lname'" ng-class="{selected: isSelected(player)}" ng-click="selectPlayer(player)">
+                        <div class="circle flex flex-center">
+                            <h5>{{player.number}}</h5>
+                        </div>
+                        <div class="flex flex-one">
+                            <h5 class="ellipse">{{player.fname}} {{player.lname}}</h5><h5><span class="flex flex-center">{{player.position}}</span></h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="list">
+                    <h5 class="title">BENCH</h5>
+                    <div ng-if="player.benched" class="player-selector flex flex-center-vertical" ng-repeat="player in players | orderBy:'lname'" ng-class="{selected: isSelected(player)}" ng-click="selectPlayer(player)">
+                        <div class="circle flex flex-center">
+                            <h5>{{player.number}}</h5>
+                        </div>
+                        <div class="flex flex-one">
+                            <h5 class="ellipse">{{player.fname}} {{player.lname}}</h5><h5><span class="flex flex-center">{{player.position}}</span></h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- displays player statistics information when player is clicked -->
+            <div class="stats-display-container flex-one flex flex-column">
+                <div class="player-card flex flex-space-between">
+                    <div class="player-info">
+                        <!-- player information -->
+                        <div class="info flex">
+                            <div class="img-container">
+                                <img src="{{currPlayer.photo}}" />
+                            </div>
+                            <div  class="flex flex-column">
+                                <h3 class="ellipse">{{currPlayer.fname}}</h3>
+                                <h3 class="ellipse">{{currPlayer.lname}}</h3>
+                                <div class="flex">
+                                    <h5>{{currPlayer.position}} <span>{{currPlayer.number}}</span></h5>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- displays player's notable events -->
+                        <div class="notable-events">
+                            <div class="event-container flex flex-center-vertical" ng-repeat="event in currPlayer.notableEvents">
+                                <!-- TODO: make this image change based on event type -->
+                                <img ng-if="event.type === 'yellow'" src="./img/timeline-card-yellow.svg"/>
+                                <img ng-if="event.type === 'red'" src="./img/timeline-card-red.svg"/>
+                                <img ng-if="event.type === 'Subbed In'" src="./img/timeline-sub-in.svg"/>
+                                <img ng-if="event.type === 'Subbed Out'" src="./img/timeline-sub-out.svg"/>
+                                <img ng-if="event.type === 'goal'" src="./img/timeline-goal-dark.svg"/>
+                                <!--<img ng-if="event.type === 'Assisted By'" src="./img/timeline-goal-dark.svg"/>-->
+                                <h5 class="minute">{{event.time}}</h5>
+                                <h5 class="event">{{event.assistedBy}}</h5>
+                                <!--<h5 ng-if="event.type === 'Assisted By'" class="event">{{event.assistedBy}}</h5>-->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- displays player statistics -->
+                    <div class="stats-display numbers flex flex-column flex-one" ng-if="currPlayer.myKid">
+                        <div class="flex">
+                            <div class="flex flex-center flex-column flex-one">
+                                <h6>{{currPlayer.shots.goals.total}}</h6>
+                                <h5>GOALS</h5>
+                            </div>
+                            <div class="flex flex-center flex-column flex-one">
+                                <h6>{{currPlayer.total.playingTime + "'"}}</h6>
+                                <h5>TIME</h5>
+                            </div>
+                            <div class="flex flex-center flex-column flex-one">
+                                <h6>{{currPlayer.passes.total}}</h6>
+                                <h5>PASSES</h5>
+                            </div>
+                            <div class="flex flex-center flex-column flex-one">
+                                <h6>{{currPlayer.total.assists}}</h6>
+                                <h5>ASSISTS</h5>
+                            </div>
+                        </div>
+                        <div class="flex">
+                            <div class="flex flex-center flex-one">
+                                <doughnut-chart data="currPlayer.passes.data" num="currPlayer.passes.completed + '/' + currPlayer.passes.total" label="'PASSES COMPLETED'" style="zoom: 0.5;"></doughnut-chart>
+                            </div>
+                            <div class="flex flex-center flex-one">  
+                                <doughnut-chart data="currPlayer.shots.data" num="currPlayer.shots.accuracy + '%'" label="'SHOTS ACCURACY' + '%'" style="zoom: 0.5;"></doughnut-chart>
+                            </div>
+                        </div>
+                        <div class="flex">
+                            <div class="flex flex-center flex-column flex-one">
+                                <h6>{{currPlayer.total.fouls}}</h6>
+                                <h5>FOULS</h5>
+                            </div>
+                            <div class="flex flex-center flex-column flex-one">
+                                <h6>{{currPlayer.total.yellow.total}}</h6>
+                                <h5>YELLOW</h5>
+                            </div>
+                            <div class="flex flex-center flex-column flex-one">
+                                <h6>{{currPlayer.total.red.total}}</h6>
+                                <h5>RED</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- displays the formation of the team that was setup from the game setup page -->
+                <formation-field formation="currFormation" select-player="selectPlayer(player)" is-selected="isSelected(player)"></formation-field>
+                <!-- coach can submit game notes: special events, plays, improvements, notable memories, etc -->
+                <div role="coach" class="game-notes list ">
+                    <h5 class="title">GAME NOTES</h5>
+                    <textarea class="notes" ng-model="notes"></textarea>
+                    <div class="inline green button" ng-click="saveGameNotes()"><h1>Save</h1></div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>

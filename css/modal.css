@@ -1,22 +1,60 @@
+/* ---------- Default Modal ---------- */
+body.isModal {
+    overflow-x: hidden;
+}
+
+.modal-container {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 3;
+    top: 0;
+    background-color: rgba(0,0,0,.5);
+    overflow-x: auto;
+}
+
+.modal-container > div {
+    width: 100%;
+    height: 100%;
+}
+
+.modal:not(.login) {
+    margin: 80px auto 0 auto;
+}
+
 .modal {
     background-color: #F2F2F2;
     min-width: 420px;
+    max-width: 700px;
     width: 60%;
+    color:#1B3D67;
 }
 
 .modal h3 {
     margin-bottom: 5px;
 }
 
-.modal .head h1 {
+.modal .head {
     padding: 24px 20px;
 }
 
-.modal .foot > .button:first-child {
-    border-right:1px solid #DDD;
+.modal .head h1 {
+    margin-bottom: 10px;
 }
 
+.modal .body > div {
+    padding: 20px;
+    border-top: 1px solid #DDD;
+    border-bottom: 1px solid #DDD;
+}
 
+.modal .body.two-column > div:first-child {
+    border-right:1px solid #DDD;
+}
+/* ---------- END Default Modal ---------- */
+
+
+/* ---------- Login Modal ---------- */
 .modal.login {
 
 }
@@ -25,12 +63,100 @@
     margin-bottom: 15px;
 }
 
-.modal.login .body > div {
-    padding: 20px;
-    border-top: 1px solid #DDD;
-    border-bottom: 1px solid #DDD;
+.modal.login .text-center {
+    width:100%; /* A freaking IE fix */
 }
 
-.modal.login .body > div:first-child {
-    border-right:1px solid #DDD;
+/* ---------- END Login Modal ---------- */
+
+/* ---------- Registration Modal ---------- */
+.modal.registration {
 }
+
+.modal.registration .circle {
+    margin:16px 0;
+}
+
+.modal.registration .email-box {
+    background-color: #5DA97B;
+    padding: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    max-width: 100%;
+    float: left;
+}
+
+.modal.registration .email-box p {
+    color: #FFF;
+    width: 100%;
+}
+
+.modal.registration .logo-text {
+    color: #B3B3B3;
+    padding: 15px;
+}
+
+.modal.registration .logo-container {
+    padding: 22px 0;
+}
+
+.modal.registration .color-container .color {
+    width: 100px;
+    height: 50px;
+    margin-right: 10px;
+}
+
+.modal.registration .button.inline {
+    margin-left: 10px;
+    width: 150px;
+}
+
+.modal.registration .first {
+    margin-right: 10px;
+}
+
+/* Hacky as sh** */
+.modal.registration img[src="./img/team-logo-icon.svg"] {
+    padding-right: 12px;
+}
+
+/* ---------- END Registration Modal ---------- */
+
+/* ---------- Player Modal ---------- */
+.modal.player {
+}
+
+.modal.player .photo-text {
+    color: #B3B3B3;
+}
+
+.modal.player .photo-container {
+    padding: 22px 0 22px 0;
+}
+
+/* ---------- END Player Modal ---------- */
+
+/* ---------- Create a game Modal ---------- */
+.modal.create-game h2 {
+    padding-bottom: 5px;
+}
+
+.modal.create-game .body > div {
+    padding: 0 20px;
+    border-top: 0;
+    border-bottom: 0;
+}
+
+.modal.create-game .box {
+    margin-top: 15px;
+}
+
+.modal.create-game .button.inline {
+    margin: 0;
+    height: 50px;
+    width: 100%;
+}
+
+/* ---------- END Create a game Modal ---------- */
+
+

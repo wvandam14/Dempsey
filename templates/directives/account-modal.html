@@ -1,0 +1,53 @@
+<!-- Modal to allow user to edit their account information -->
+<div class="modal account registration">
+    <div class="head flex">
+        <h1 class="flex-one">Edit your account information</h1>
+        <div>
+            <x ng-click="closeModal()"/>
+        </div>
+    </div>
+
+    <!-- User Registration Form -->
+    <form name="accountForm" class="body flex two-column">
+        <div class="flex-one">
+            <h3>Profile Picture</h3>
+            <div class="flex flex-center logo-container">
+                <image-upload image="editUser.newPhoto" placeholder="editUser.photo"></image-upload>
+                <p class="flex-one text-center logo-text">Click the photo to add a new one</p>
+            </div>
+            <h3 class="ellipse">Email</h3>
+            <input type="email" ng-model="editUser.email" placeholder="Email" required />
+            <h3 class="ellipse">New Password</h3>
+            <p>Note: This is to update your password</p>
+            <input type="password" ng-model="editUser.newPassword" placeholder="New Password" />
+            <h3 class="ellipse">Confirm Password</h3>
+            <input type="password" ng-model="editUser.confirmPassword" placeholder="Confirm Password" />
+            <p ng-show="!confirmPassword()" class="error"><img src="./img/alert-icon.svg"/> Passwords do not match</p>
+        </div>
+        <div class="flex-one">
+            <h3 class="ellipse">Name</h3>
+            <div class="flex">
+                <input type="text" ng-model="editUser.firstName" placeholder="First Name" required class="first" />
+                <input type="text" ng-model="editUser.lastName" placeholder="Last Name" required />
+            </div>
+            <h3 class="ellipse">Phone</h3>
+            <input type="text" ng-model="editUser.phone" placeholder="(123) 456-7890" required />
+            <h3 class="ellipse">City</h3>
+            <input type="text" ng-model="editUser.city" placeholder="City" required />
+            <h3 class="ellipse">State</h3>
+            <select ng-model="editUser.state" ng-options="v for (k, v) in states" required>
+                <option value="">Select a State</option>
+            </select>
+        </div>
+    </form>
+
+    <div class="foot flex">
+        <div class="button green flex-one" ng-click="updateAccount(editUser)">
+            <h1>Save</h1>
+        </div>
+        <div class="button navy flex-one" ng-click="closeModal()">
+            <h1>Cancel</h1>
+        </div>
+    </div>
+</div>
+

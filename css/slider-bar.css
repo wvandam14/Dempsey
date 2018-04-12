@@ -1,0 +1,20 @@
+/*http://www.hongkiat.com/blog/html5-range-slider-style/*/
+
+input[type=range] {
+    -webkit-appearance: none;
+    width: 100%;
+    border-radius: 8px;
+    height: 5px;
+    border: 1px solid #bdc3c7;
+    background-color: #fff;
+}
+
+input[type='range']::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    background-color: #ecf0f1;
+    border: 1px solid #bdc3c7;
+    width: 35px;
+    height: 35px;
+    border-radius: 25px;
+    cursor: pointer;
+}

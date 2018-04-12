@@ -1,0 +1,51 @@
+<!-- Allows a coach to create a game-->
+<div class="modal create-game registration">
+    <div class="head flex flex-column">
+        <div class="flex">
+            <h1 class="flex-one">Add A Game</h1>
+            <div>
+                <x ng-click="closeModal()"/>
+            </div>
+        </div>
+        <p>Add your upcoming games to the schedule so you can prepare for gametime and submit your game stats.</p>
+    </div>
+
+    <!-- Create game form -->
+    <div class="body flex flex-column body">
+        <form name="gameForm" class="flex flex-one body">
+            <div class="flex-one">
+                <h3>Opponent Name</h3>
+                <input type="text" class="flex-one" ng-model="opponentName" placeholder="Opponent Name" required/>
+                <h3>Opponent Symbol</h3>
+                <input type="text" class="flex-one" ng-model="opponentSymbol" placeholder="ex: SEA" required/>
+            </div>
+            <div class="flex-one">
+                <h3>Game Date</h3>
+                <input type="date" class="date" ng-model="date" required />
+                <h3>Game Time</h3>
+                <input type="time" class="flex-one" ng-model="gameTime" placeholder="Game Time" required/>
+            </div>
+        </form>
+        <div>
+            <div class="button green inline" ng-click="addGame()"><h1>Add Game</h1></div>
+        </div>
+        <div>
+            <div class="box">
+                <div class="email-box flex" ng-repeat="game in games track by $index">
+                    <p class="ellipse">{{game.opponent.name}} - {{game.date.getMonth() + 1}}/{{game.date.getDate()}}</p><div class="close-button" ng-click="removeGame($index)"><p>x</p></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- buttons -->
+    <div class="foot flex">
+        <!-- TODO: implement sendGames() in create-game-modal.js -->
+        <div class="button green flex-one" ng-click="sendGames()">
+            <h1>Save</h1>
+        </div>
+        <div class="button navy flex-one" ng-click="closeModal()">
+            <h1>Cancel</h1>
+        </div>
+    </div>
+</div>
+
