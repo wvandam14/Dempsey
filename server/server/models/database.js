@@ -28,6 +28,7 @@ const pool = pg.Pool({
 pool.query(
     `create table players(
     id serial primary key,
+    userID integer,
     name varchar(40),
     birthday date,
     teamID integer,

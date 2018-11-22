@@ -20,7 +20,7 @@ router.post('/api/v1/players', function(req, res, next) {
 
   const data = req.body;
   
-  pool.query('INSERT INTO players(name, jerseyNumber, city, state) values($1, $2, $3, $4)', [data.name, data.jerseyNumber, data.city, data.state], function (err, result) {
+  pool.query('INSERT INTO players(name, jerseyNumber, city, state, userID) values($1, $2, $3, $4, $5)', [data.name, data.jerseyNumber, data.city, data.state, data.userID], function (err, result) {
       console.log(result);
   });
   
@@ -37,6 +37,23 @@ router.get('/api/v1/players', function(req, res, next) {
   });
 
   pool.query('select * from players order by id asc', function(err, result){
+    if(err){
+      console.log(err);
+    }
+
+    pool.end();
+    return res.json(result.rows);
+  });
+});
+
+router.get('/api/v1/user/:user_id/players', function(req, res, next) {
+  const results = [];
+  const pool = pg.Pool({
+    connectionString: connectionString,
+  });
+
+  const id = req.params.user_id;
+  pool.query('select * from players where userID = ($1) order by id asc', [id], function(err, result){
     if(err){
       console.log(err);
     }
