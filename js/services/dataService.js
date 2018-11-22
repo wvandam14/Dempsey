@@ -32,7 +32,7 @@ soccerStats.factory('dataService', function ($location, $timeout, $rootScope, co
 
         , getCurrentTeam = function() {
             //console.log(currentTeam);
-            return currentTeam;z
+            return currentTeam;
             //return JSON.parse( window.localStorage['currentTeam'] || '{}');
         }
 
